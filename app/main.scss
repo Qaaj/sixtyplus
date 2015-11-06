@@ -1,0 +1,14 @@
+$icon-font-path: '~bootstrap-sass/assets/fonts/bootstrap/';
+@import "../node_modules/bootstrap-sass/assets/stylesheets/_bootstrap.scss";
+
+body {
+  background-color: #EFEFEF;
+}
+
+
+.page-header{
+    width:500px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
