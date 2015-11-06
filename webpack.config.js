@@ -10,7 +10,7 @@ var config = {
   entry: [
     'webpack-dev-server/client?http://localhost:3000',
     'webpack/hot/dev-server',
-    path.resolve(appPath, 'main.js')],
+    path.resolve(appPath, 'app.js')],
   output: {
     path: buildPath,
     filename: 'js/bundle.js',
@@ -31,7 +31,11 @@ var config = {
       { test: /\.eot$/,    loader: "file-loader" },
       { test: /\.svg$/,    loader: "file-loader" }]
   },
-  plugins: [new Webpack.HotModuleReplacementPlugin()]
+  plugins: [new Webpack.HotModuleReplacementPlugin(),
+  new Webpack.ProvidePlugin({
+            'React': 'react',
+            'moment': 'moment'
+        })]
 };
 
 module.exports = config;

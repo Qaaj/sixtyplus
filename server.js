@@ -12,12 +12,15 @@ var port = isProduction ? process.env.PORT : 3000;
 var publicPath = path.resolve(__dirname, 'public');
 
 app.use(express.static(publicPath));
+app.set('view engine', 'jade');
 
 app.all('/db/*', function (req, res) {
   proxy.web(req, res, {
     target: 'https://glowing-carpet-4534.firebaseio.com/'
   });
 });
+
+var userLang = "EN";
 
 if (!isProduction) {
 
@@ -33,6 +36,10 @@ if (!isProduction) {
       target: 'http://127.0.0.1:3001'
     });
   });
+
+  app.get('/', function (req, res) {
+  res.render('index', { userLang: userLang});
+});
 
 
   proxy.on('error', function(e) {

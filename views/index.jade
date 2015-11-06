@@ -1,0 +1,11 @@
+doctype html
+html
+    head
+        meta(charset="UTF-8")
+        title= '60+ project'
+    body
+        block content
+    #app
+    script(type='text/javascript').
+        window.userLang = '#{userLang}'
+    script(src='/build/js/bundle.js')        
