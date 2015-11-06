@@ -1,7 +1,6 @@
 import { Route, Redirect } from 'react-router';
 import React from 'react';
-
-import Quickstart from '../components/Quickstart';
+import Quickstart from '../components/modules/Quickstart';
 
 export default (App, uiLanguage) => {
     return (

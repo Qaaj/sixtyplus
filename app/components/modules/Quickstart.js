@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import {Jumbotron, Button, Row, Col, Grid, PageHeader, Panel, Input, Label} from 'react-bootstrap';
 import rd3 from 'react-d3';
+import { createRegularFields, createCurrencyFields } from '../../helpers/InputFactory';
 
 class Quickstart extends React.Component {
 
@@ -13,6 +14,11 @@ class Quickstart extends React.Component {
         }
 
         this._handleChange = this._handleChange.bind(this);
+        this._handleInput = this._handleInput.bind(this);
+
+        this.inputFields = createCurrencyFields(['savingsGoal','monthlyIncome','monthlyCostsFixed','monthlyCostsVariable','currentSavings'],this._handleInput);
+        this.inputFields.push(createRegularFields(['Lander is Hip'],this._handleInput));
+
     }
 
     _handleChange(e){
@@ -20,15 +26,13 @@ class Quickstart extends React.Component {
         this.setState({'sliderVal':e.target.value})
     }
 
+    _handleInput(e,i){
+        console.log(e.target.value,e.target.name);
+    }
+
     render() {
 
-        let header = (
-        <div className='page-header'>
-            <Jumbotron>
-                <h1>Quickstart</h1>
-                <p>Take your first steps towards financial independence!</p>
-            </Jumbotron>
-        </div>);
+
 
         let delta = this.state.sliderVal;
         let stocks = 10.0  + parseFloat(delta);
@@ -42,20 +46,24 @@ class Quickstart extends React.Component {
         ];
 
         var PieChart = rd3.PieChart;
+        //
+        //let basicFields = this.inputFields.map(field =>{
+        //   return (
+        //       <Input key={field.key} name={field.name} onSelect={field.handler} type="text" label={field.description} placeholder={field.description} addonBefore={field.currency} />
+        //   );
+        //
+        //});
+        //
+        //console.log(basicFields);
 
         return (<div>
 
 
             <Grid>
                 <Row className="show-grid">
-                    <Col md={12}> {header}</Col>
                     <Col md={6}>
                         <Panel header={<h3>Basics <small>Enter your basic information</small></h3>}>
-                            <Input type="text" label="Your savings goal is" placeholder="100000" addonBefore="€" />
-                            <Input type="text" label="Current monthly income" placeholder="1500" addonBefore="€" />
-                            <Input type="text" label="Monthly fixed costs" placeholder="650" addonBefore="€" />
-                            <Input type="text" label="Monthly variable costs" placeholder="550" addonBefore="€" />
-                            <Input type="text" label="Current savings" placeholder="10000" addonBefore="€" />
+                            {this.inputFields}
                             <div classNale='form-group'>
                                 <label className='control-label'>Risk Tolerance</label>
                                 <Row style={{'marginTop':'5px'}}>
@@ -115,5 +123,11 @@ class Quickstart extends React.Component {
 }
 
 Quickstart.displayName = 'Quickstart';
+Quickstart.PropTypes ={
+    history: React.PropTypes.obj,
+    location: React.PropTypes.obj,
+    urlParams: React.PropTypes.obj,
+    userObject: React.PropTypes.string,
+}
 
 export default Quickstart;
