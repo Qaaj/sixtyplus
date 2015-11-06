@@ -33,11 +33,10 @@ let inputFields = {
 export function createCurrencyFields(fields,func){
    return fields.map(fieldID => {
         if(inputFields[fieldID]) {
-            console.log(fieldID)
             var field = inputFields[fieldID];
-            return  <Input key={'unique_key_' + fieldID} name={field.name} onSelect={func} type="text" label={field.description} placeholder={field.defaultValue} addonBefore={getUserObject().currency} />;
+            return  <Input key={'unique_key_' + fieldID} ref={field.name} name={field.name} onSelect={func} type="text" label={field.description} placeholder={field.defaultValue} addonBefore={getUserObject().currency} />;
         }else{
-            return <Input key={'unique_key_' + fieldID} name={fieldID} onSelect={func} type="text" label={fieldID} placeholder={fieldID} addonBefore={getUserObject().currency} />;
+            return <Input key={'unique_key_' + fieldID} ref={field.name} name={fieldID} onSelect={func} type="text" label={fieldID} placeholder={fieldID} addonBefore={getUserObject().currency} />;
         }
     });
 }

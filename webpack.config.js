@@ -20,10 +20,11 @@ var config = {
     loaders: [{
       test: /\.js$/,
       loader: 'babel',
+      query: {stage: 0},
       exclude: [nodeModulesPath]
     }, {
       test: /\.scss$/,
-      loaders: ["style", "css", "sass"]
+      loaders: ["style", "css?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]", "sass?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]"]
     }, { test: /\.woff$/,   loader: "url-loader?limit=10000&minetype=application/font-woff" },
       { test: /\.woff2$/,   loader: "url-loader?limit=10000&minetype=application/font-woff" },
 
