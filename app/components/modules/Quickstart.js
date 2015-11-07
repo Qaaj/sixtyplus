@@ -52,8 +52,23 @@ class Quickstart extends React.Component {
         let { savingsGoal, monthlyIncome, monthlyCostsFixed, monthlyCostsVariable, currentSavings } = this.state;
         if (savingsGoal && monthlyIncome && monthlyCostsFixed && monthlyCostsVariable && currentSavings){
 
+            let contribution = 12 * (monthlyIncome - monthlyCostsFixed - monthlyCostsVariable);
+            let growth = 0.04; // Correct
+            var C_over_R = contribution/growth; // Correct
+            var lastDivider = Math.log(1 + growth); // Correct
+
+            savingsGoal = parseFloat(savingsGoal);
+            C_over_R = parseFloat(C_over_R);
+            currentSavings = parseFloat(currentSavings);
 
 
+            let first = Math.log( (savingsGoal + C_over_R ) / (currentSavings + C_over_R) ) ;
+
+            let years = first /lastDivider;
+
+            result.years = years;
+
+            return result;
         }else{
             return result;
         }
@@ -91,6 +106,7 @@ class Quickstart extends React.Component {
                                     sectorBorderColor="white"
                                     />
                             </div>
+                            <h3> Years to go: {result.years}</h3>
                         </Panel>
                     </Col>
                     <Col className='collapsible' md={12}>
