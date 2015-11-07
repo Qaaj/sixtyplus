@@ -20,10 +20,6 @@ class Quickstart extends React.Component {
         this._handleChange = this._handleChange.bind(this);
         this._handleInput = this._handleInput.bind(this);
 
-        this.inputFields = createCurrencyFields(['savingsGoal','monthlyIncome','monthlyCostsFixed','monthlyCostsVariable','currentSavings'],this._handleInput);
-        //this.inputFields.push(createRegularFields(['Lander is Hip'],this._handleInput));
-        this.advancedInputFields = createPercentageFields(['stockReturns','intrestRate','bondYield','taxRate','salaryIncrease'],this._handleInput);
-
     }
 
     _handleChange(e){
@@ -52,6 +48,10 @@ class Quickstart extends React.Component {
     render() {
 
         let result = this._calculateResults();
+
+        this.inputFields = createCurrencyFields(['savingsGoal','monthlyIncome','monthlyCostsFixed','monthlyCostsVariable','currentSavings'],this._handleInput,this.props.user.currency);
+        this.advancedInputFields = createPercentageFields(['stockReturns','intrestRate','bondYield','taxRate','salaryIncrease'],this._handleInput);
+        //this.inputFields.push(createRegularFields(['Lander is Hip'],this._handleInput));
 
         var PieChart = rd3.PieChart;
 

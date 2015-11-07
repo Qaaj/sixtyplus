@@ -9,22 +9,21 @@ export function calculateYears(data){
 
         let contribution = 12 * (monthlyIncome - monthlyCostsFixed - monthlyCostsVariable);
         let growth = 0.04; // Correct
-        var C_over_R = contribution/growth; // Correct
-        var lastDivider = Math.log(1 + growth); // Correct
 
         savingsGoal = parseFloat(savingsGoal);
-        C_over_R = parseFloat(C_over_R);
         currentSavings = parseFloat(currentSavings);
 
 
-        let first = Math.log( (savingsGoal + C_over_R ) / (currentSavings + C_over_R) ) ;
+        return Math.log( (savingsGoal + parseFloat(contribution/growth) ) / (currentSavings + parseFloat(contribution/growth)) ) / parseFloat(Math.log(1 + growth)) ;
 
-        years = first /lastDivider;
 
-        return years;
     }
 
     return years ;
+
+}
+
+function weightedAverage(data){
 
 }
 

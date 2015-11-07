@@ -1,5 +1,21 @@
 import {Input} from 'react-bootstrap';
-import { getUserObject } from '../config/User';
+
+import UserActionCreators from '../actions/UserActionCreators';
+import UserStore from '../stores/UserStore';
+
+let user = UserStore.getUser();
+
+function _handleUserStoreChange() {
+
+    user = UserStore.getUser();
+    if(user.currency == "EURO") user.currency = "€";
+    if(user.currency == "DOLLAR") user.currency = "$";
+    if(user.currency == "POUND") user.currency = "£";
+
+}
+
+UserStore.addChangeListener(_handleUserStoreChange);
+
 
 let inputFields = {
     'savingsGoal': {
@@ -54,13 +70,13 @@ let inputFields = {
     }
 }
 
-export function createCurrencyFields(fields,func){
+export function createCurrencyFields(fields,func,currency){
    return fields.map(fieldID => {
         if(inputFields[fieldID]) {
             var field = inputFields[fieldID];
-            return  <Input key={'unique_key_' + fieldID} ref={field.name} name={field.name} onSelect={func} type="text" label={field.description} placeholder={field.defaultValue} addonBefore={getUserObject().currency} />;
+            return  <Input key={'unique_key_' + fieldID} ref={field.name} name={field.name} onSelect={func} type="text" label={field.description} placeholder={field.defaultValue} addonBefore={user.currency} />;
         }else{
-            return <Input key={'unique_key_' + fieldID} ref={field.name} name={fieldID} onSelect={func} type="text" label={fieldID} placeholder={fieldID} addonBefore={getUserObject().currency} />;
+            return <Input key={'unique_key_' + fieldID} ref={field.name} name={fieldID} onSelect={func} type="text" label={fieldID} placeholder={fieldID} addonBefore={user.currency} />;
         }
     });
 }
