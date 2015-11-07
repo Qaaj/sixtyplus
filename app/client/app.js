@@ -43,14 +43,14 @@ class App extends React.Component {
                 NotificationActionCreators.setNotification({
                     isVisible: true,
                     type: 'success',
-                    message:"Hi there! Great to see you're interested in using 60plus.",
+                    message:"Hi there! Everything will be automatically saved for your next visit. Enjoy using 60+ !.",
                     delay: 3000
                 });
             }else{
                 NotificationActionCreators.setNotification({
                     isVisible: true,
                     type: 'success',
-                    message:"Welcome back! Your last login was on " + user.last_login,
+                    message:"Welcome back! Your last visit was on " + user.last_login,
                     delay: 5000
                 });
             }
