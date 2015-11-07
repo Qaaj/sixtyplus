@@ -1,7 +1,5 @@
 import NotificationActionCreators from '../../actions/NotificationActionCreators';
-import { pureRenderDecorator } from '../../../shared/helpers/decorators';
 
-@pureRenderDecorator
 class Notification extends React.Component {
     constructor(props) {
         super(props);

@@ -51,7 +51,7 @@ UserStore.dispatchToken = AppDispatcher.register(function(payload) {
 
 
         case UserConstants.USER_LOADED:
-            _userObject = _userObject.set('currentUser', fromJS(action.data));
+            _userObject = fromJS(action.data);
             UserStore.emitChange();
             break;
 

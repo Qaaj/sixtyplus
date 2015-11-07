@@ -8,6 +8,12 @@ import Quickstart from './components/modules/Quickstart';
 import UserActionCreators from './actions/UserActionCreators';
 import UserStore from './stores/UserStore';
 
+import Notification from './components/modules/NotificationModule';
+import NotificationActionCreators from './actions/NotificationActionCreators';
+import asap from 'asap';
+
+
+
 import { getUserObject } from './config/User';
 
 class App extends React.Component {
@@ -25,8 +31,29 @@ class App extends React.Component {
     }
 
     _handleUserStoreChange() {
+
+        let user = UserStore.getUser();
+
         this.setState({
-            user: UserStore.getUser(),
+            user: user,
+        });
+
+        asap(()=>{
+            if(user.last_login == null){
+                NotificationActionCreators.setNotification({
+                    isVisible: true,
+                    type: 'success',
+                    message:"Hi there! Great to see you're interested in using 60plus.",
+                    delay: 3000
+                });
+            }else{
+                NotificationActionCreators.setNotification({
+                    isVisible: true,
+                    type: 'success',
+                    message:"Welcome back! Your last login was on " + user.last_login,
+                    delay: 5000
+                });
+            }
         });
     }
 
@@ -41,12 +68,14 @@ class App extends React.Component {
 
     render() {
 
+
         const history = this.props.history;
         const location = this.props.location;
         const params = this.props.params;
 
         return (<div>
                     <Header />
+                    <Notification />
 
                     {React.cloneElement(
                         this.props.children, {

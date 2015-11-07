@@ -23,22 +23,15 @@ const NotificationStore = assign({}, EventEmitter.prototype, {
         this.emit(CHANGE_EVENT);
     },
 
-    /**
-     * @param {function} callback
-     */
     addChangeListener(callback) {
         this.on(CHANGE_EVENT, callback);
     },
 
-    /**
-     * @param {function} callback
-     */
     removeChangeListener(callback) {
         this.removeListener(CHANGE_EVENT, callback);
     },
 });
 
-// Register to handle all updates
 NotificationStore.dispatchToken = AppDispatcher.register(function(payload) {
     const action = payload.action;
     switch (action.actionType) {
@@ -56,7 +49,7 @@ NotificationStore.dispatchToken = AppDispatcher.register(function(payload) {
             return true;
     }
 
-    return true; // No errors.  Needed by promise in dispatcher.
+    return true;
 });
 
 export default NotificationStore;

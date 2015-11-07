@@ -1,13 +1,15 @@
+$animation-time: .5s;
+
 .notification {
-    @include m-height(90px);
-    z-index: $zIndex-7--notification;
+    height: 90px;
+    z-index: 100;
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
-    font-size: $font-size--xlarge;
+    font-size: 12px;
     text-align: center;
-    color: $grayLight;
+    color: lightgrey;
     background: transparent;
 }
 
@@ -20,22 +22,22 @@
 
 .notification--info,
 .notification--loader {
-    color: $whiteDark;
+    color: white;
     .notification-message{
-        border-color: $mBlue800;
+        border-color: blue;
     }
 }
 .notification--warning {
-    color: $whiteDark;
+    color: white;
     .notification-message{
         .background-overlay{
             background-color:  rgba(194, 24, 91, 0.07);
         }
-        border-color:  $mPink700;
+        border-color:  red;
     }
 }
 .notification--success {
-    color: $whiteDark;
+    color: white;
     .notification-message{
         .background-overlay{
             background-color:  rgba(119, 173, 26, 0.07);
@@ -76,7 +78,7 @@
     right: 15px;
     cursor: pointer;
     font-weight: normal;
-    font-size: $font-size--xxlarge;
+    font-size: 15px;
 }
 
 // Animations
