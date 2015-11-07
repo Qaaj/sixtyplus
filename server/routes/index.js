@@ -2,8 +2,11 @@ import express from 'express';
 import request from 'request';
 import fileSystem from 'fs';
 import path from 'path';
+import services from '../services/allServices';
+
 var httpProxy = require('http-proxy');
 var http = require('http');
+
 
 
 const router = express.Router();
@@ -70,8 +73,17 @@ function routingWrapper(isProduction,app) {
         });
     });
 
-    function apiRouteHandler(req, res) {
+    router.route('/api/:serviceId').all(
+        apiRouteHandler
+    );
 
+    function apiRouteHandler(req, res) {
+        console.log(req.params.serviceId)
+        if (typeof services[req.params.serviceId] === 'function') {
+            services[req.params.serviceId](req, res);
+        } else {
+            res.send('This endpoint does not exist');
+        }
     }
 
     return router;

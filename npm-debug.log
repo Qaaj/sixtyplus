@@ -10,7 +10,7 @@
 6 info dev boilerplate@0.1.0
 7 verbose unsafe-perm in lifecycle true
 8 info boilerplate@0.1.0 Failed to exec dev script
-9 verbose stack Error: boilerplate@0.1.0 dev: `NODE_ENV=development node index.js`
+9 verbose stack Error: boilerplate@0.1.0 dev: `DEBUG=debug:* NODE_ENV=development node index.js`
 9 verbose stack Exit status 1
 9 verbose stack     at EventEmitter.<anonymous> (/usr/local/lib/node_modules/npm/lib/utils/lifecycle.js:214:16)
 9 verbose stack     at emitTwo (events.js:87:13)
@@ -27,13 +27,13 @@
 14 error node v4.1.1
 15 error npm  v2.14.4
 16 error code ELIFECYCLE
-17 error boilerplate@0.1.0 dev: `NODE_ENV=development node index.js`
+17 error boilerplate@0.1.0 dev: `DEBUG=debug:* NODE_ENV=development node index.js`
 17 error Exit status 1
-18 error Failed at the boilerplate@0.1.0 dev script 'NODE_ENV=development node index.js'.
+18 error Failed at the boilerplate@0.1.0 dev script 'DEBUG=debug:* NODE_ENV=development node index.js'.
 18 error This is most likely a problem with the boilerplate package,
 18 error not with npm itself.
 18 error Tell the author that this fails on your system:
-18 error     NODE_ENV=development node index.js
+18 error     DEBUG=debug:* NODE_ENV=development node index.js
 18 error You can get their info via:
 18 error     npm owner ls boilerplate
 18 error There is likely additional logging output above.
