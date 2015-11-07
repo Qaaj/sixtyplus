@@ -30,17 +30,11 @@ const UserStore = assign({}, EventEmitter.prototype, {
         this.emit(CHANGE_EVENT);
     },
 
-    /**
-     * @param {function} callback
-     */
-        addChangeListener(callback) {
+    addChangeListener(callback) {
         this.on(CHANGE_EVENT, callback);
     },
 
-    /**
-     * @param {function} callback
-     */
-        removeChangeListener(callback) {
+    removeChangeListener(callback) {
         this.removeListener(CHANGE_EVENT, callback);
     },
 });
@@ -52,6 +46,12 @@ UserStore.dispatchToken = AppDispatcher.register(function(payload) {
 
         case UserConstants.USER_CHANGE_LANGUAGE:
 
+            UserStore.emitChange();
+            break;
+
+
+        case UserConstants.USER_LOADED:
+            _userObject = _userObject.set('currentUser', fromJS(action.data));
             UserStore.emitChange();
             break;
 

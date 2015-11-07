@@ -1,5 +1,5 @@
-import { get, post, put, del } from '../RequestUtil';
-import Constants from '../../config/Constants';
+import { get, post, put, del } from './RequestUtil';
+import ServerActionCreators from '../actions/ServerActionCreators';
 
 let currentProtocol = window.location.protocol;
 let baseUrl = window.location.host;
@@ -24,3 +24,21 @@ export function changeUILanguage(data) {
         }
     );
 };
+
+export function loadUser(data){
+
+    let url = `${API_URL}/loadUser`;
+
+    post({url, data})
+        .then(
+        (response) => {
+
+            ServerActionCreators.userLoaded(response.body);
+        },
+
+        (error) => {
+
+            console.error('Error: ', error);
+        }
+    );
+}

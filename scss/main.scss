@@ -1,8 +1,13 @@
 $icon-font-path: '~bootstrap-sass/assets/fonts/bootstrap/';
+
 @import "../node_modules/bootstrap-sass/assets/stylesheets/_bootstrap.scss";
+@import './fonts/material_icons';
+@import './fonts/roboto';
+
 
 body {
   background-color: #EFEFEF;
+    font-family: 'robotomedium';
 }
 
 .currency-selection{

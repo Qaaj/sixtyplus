@@ -2,10 +2,10 @@
 
 // LIVE EDITOR / BRIEFING
 import calculateSavingsGoal from './calculators/SavingsGoal';
-import createUser from './user/CreateUser.js';
+import loadUser from './user/LoadUser.js';
 
 
 export default {
     calculateSavingsGoal,
-    createUser
+    loadUser
 };

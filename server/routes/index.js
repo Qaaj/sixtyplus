@@ -3,6 +3,7 @@ import request from 'request';
 import fileSystem from 'fs';
 import path from 'path';
 import services from '../services/allServices';
+const debug = require('debug')('debug:routes/index');
 
 var httpProxy = require('http-proxy');
 var http = require('http');
@@ -65,6 +66,8 @@ function routingWrapper(isProduction,app) {
             console.log('Server running on port ' + port);
         });
     }
+
+    debug('Listening for API calls');
 
     router.route('/api/:serviceId').all(
         apiRouteHandler

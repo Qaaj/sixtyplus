@@ -1,0 +1,96 @@
+.notification {
+    @include m-height(90px);
+    z-index: $zIndex-7--notification;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    font-size: $font-size--xlarge;
+    text-align: center;
+    color: $grayLight;
+    background: transparent;
+}
+
+.notification .spin {
+    border: 2px solid rgba(#fff, 0.8);
+    border-top-color: transparent;
+    border-left-color: transparent;
+    margin-right: .5em;
+}
+
+.notification--info,
+.notification--loader {
+    color: $whiteDark;
+    .notification-message{
+        border-color: $mBlue800;
+    }
+}
+.notification--warning {
+    color: $whiteDark;
+    .notification-message{
+        .background-overlay{
+            background-color:  rgba(194, 24, 91, 0.07);
+        }
+        border-color:  $mPink700;
+    }
+}
+.notification--success {
+    color: $whiteDark;
+    .notification-message{
+        .background-overlay{
+            background-color:  rgba(119, 173, 26, 0.07);
+        }
+        border-color:  #77ad1a;
+    }
+}
+
+.notification-message{
+    position: relative;
+    border-style: solid;
+    border-width: 1px;
+    box-sizing: border-box;
+    background-color:  #ffffff;
+    box-shadow: 0px 2px 8px 0px rgba(0, 0, 0, 0.35);
+    background-color:  #ffffff;
+    color:  #3e3e40;
+    font-size: 13px;
+    font-weight: 400;
+    min-width: 250px;
+    height: 50px;
+    line-height: 50px;
+    display: inline-block;
+    margin-top:15px;
+    padding: 0px 20px 0px 20px;
+    vertical-align: middle;
+}
+
+.background-overlay{
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    left: 0px;
+}
+.notification-close {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    cursor: pointer;
+    font-weight: normal;
+    font-size: $font-size--xxlarge;
+}
+
+// Animations
+.notification-animation-enter {
+    transform: translate(0, -106px);
+    transition: transform $animation-time ease-in;
+}
+.notification-animation-enter.notification-animation-enter-active {
+    transform: translate(0, 0);
+}
+.notification-animation-leave {
+    transform: translate(0, 0);
+    transition: transform $animation-time ease-in;
+}
+.notification-animation-leave.notification-animation-leave-active {
+    transform: translate(0, -106px);
+}

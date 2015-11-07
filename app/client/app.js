@@ -5,6 +5,9 @@ import routes from './routes/routes';
 import Header from './components/layout/Header';
 import Quickstart from './components/modules/Quickstart';
 
+import UserActionCreators from './actions/UserActionCreators';
+import UserStore from './stores/UserStore';
+
 import { getUserObject } from './config/User';
 
 class App extends React.Component {
@@ -13,21 +16,27 @@ class App extends React.Component {
         super(props);
 
         this.state = {
-            user: getUserObject()
+            user: UserStore.getUser()
         }
+
+        this._handleUserStoreChange = this._handleUserStoreChange.bind(this);
+
+        UserActionCreators.loadUser();
     }
 
-    componentWillUpdate(nextProps) {
-
+    _handleUserStoreChange() {
+        this.setState({
+            user: UserStore.getUser(),
+        });
     }
+
+    componentWillUpdate(nextProps) {}
 
     componentDidMount() {
-
+        UserStore.addChangeListener(this._handleUserStoreChange);
     }
 
-    componentWillUnmount() {
-
-    }
+    componentWillUnmount() {}
 
 
     render() {
@@ -44,7 +53,7 @@ class App extends React.Component {
                             history: history,
                             location: location,
                             urlParams: params,
-                            userObject: this.state.user,
+                            user: this.state.user,
                         }
                     )}
                 </div>);

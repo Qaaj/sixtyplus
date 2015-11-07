@@ -2,15 +2,29 @@
 
 import AppDispatcher from '../dispatcher/AppDispatcher.js';
 import UserConstants from '../constants/UserConstants.js';
-import { changeUILanguage } from '../utils/ApiUtils';
+import { changeUILanguage, loadUser } from '../utils/ApiUtils';
 
 var UserActionCreators = {
+
     changeUILanguage(language) {
-        ApiUtils.updateUser({language:language});
-        AppDispatcher.handleViewAction({
-            actionType: UserConstants.USER_CHANGE_LANGUAGE,
-            language: language,
-        });
+        //AppDispatcher.handleViewAction({
+        //    actionType: UserConstants.USER_CHANGE_LANGUAGE,
+        //    language: language,
+        //});
+    },
+
+    loadUser() {
+
+        let uid;
+
+        if(localStorage.getItem('uid') == null){
+            uid = new Date().getTime() + "-" + Math.round(Math.random()*10000);
+            localStorage.setItem('uid', userID);
+        }else{
+            uid = localStorage.getItem('uid');
+        }
+
+        loadUser({uid:uid});
     },
 };
 

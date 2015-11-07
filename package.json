@@ -30,6 +30,7 @@
     "http-proxy": "^1.10.1",
     "immutable": "^3.7.5",
     "jade": "^1.11.0",
+    "keymirror": "^0.1.1",
     "moment": "^2.10.6",
     "object-assign": "^4.0.1",
     "react": "^0.14.2",

@@ -6,7 +6,7 @@ var usersRef = ref.child("users");
 
 export default (req, res) => {
 
-    const params = req.body;
+    debug('calculating savings goal');
 
 
     usersRef.child("gracehop").set({
@@ -14,6 +14,5 @@ export default (req, res) => {
         full_name: "Grace Hopper"
     });
 
-    debug(req.params,req.body);
     res.send('weeeeee');
 };
