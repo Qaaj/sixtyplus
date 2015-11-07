@@ -10,5 +10,7 @@ export function getUserObject(){
         userID = localStorage.getItem('uid');
     }
 
-    return {userID, currency: "$"};
+    //return {userID, currency: "£́"};
+    return {userID, currency: "€"};
+    //return {userID, currency: "$"};
 }

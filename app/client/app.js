@@ -1,5 +1,5 @@
 import ReactDOM from 'react-dom';
-import styles from '../scss/main.scss';
+import styles from '../../scss/main.scss';
 import { Router } from 'react-router';
 import routes from './routes/routes';
 import Header from './components/layout/Header';

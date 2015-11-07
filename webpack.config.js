@@ -1,6 +1,6 @@
 var Webpack = require('webpack');
 var path = require('path');
-var appPath = path.resolve(__dirname, 'app');
+var appPath = path.resolve(__dirname, 'app/client');
 var nodeModulesPath = path.resolve(__dirname, 'node_modules');
 var buildPath = path.resolve(__dirname, 'public', 'build');
 

@@ -5,7 +5,12 @@ body {
   background-color: #EFEFEF;
 }
 
-
+.currency-selection{
+    position: fixed;
+    width: 100px;
+    top: 20px;
+    right:20px;
+}
 .page-header{
     width:500px;
     margin-left: auto;

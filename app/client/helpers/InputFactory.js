@@ -26,9 +26,33 @@ let inputFields = {
         name: 'currentSavings',
         defaultValue: 10000,
         description: 'Current savings',
+    },
+    'stockReturns': {
+        name: 'stockReturns',
+        defaultValue: 4,
+        description: 'Average Stock Returns',
+    },
+    'intrestRate': {
+        name: 'intrestRate',
+        defaultValue: 2,
+        description: 'Average Intrest Rate',
+    },
+    'bondYield': {
+        name: 'bondYield',
+        defaultValue: 3,
+        description: 'Average Bond Yield',
+    },
+    'taxRate': {
+        name: 'taxRate',
+        defaultValue: 15,
+        description: 'Tax Rate',
+    },
+    'salaryIncrease': {
+        name: 'salaryIncrease',
+        defaultValue: 2.7,
+        description: 'Average Yearly Salary Increase',
     }
 }
-
 
 export function createCurrencyFields(fields,func){
    return fields.map(fieldID => {
@@ -41,6 +65,16 @@ export function createCurrencyFields(fields,func){
     });
 }
 
+export function createPercentageFields(fields,func){
+    return fields.map(fieldID => {
+        if(inputFields[fieldID]) {
+            var field = inputFields[fieldID];
+            return  <Input key={'unique_key_' + fieldID} ref={field.name} name={field.name} onSelect={func} type="text" label={field.description} placeholder={field.defaultValue} addonBefore={'%'} />;
+        }else{
+            return <Input key={'unique_key_' + fieldID} ref={field.name} name={fieldID} onSelect={func} type="text" label={fieldID} placeholder={fieldID} addonBefore={'%'} />;
+        }
+    });
+}
 
 export function createRegularFields(fields,func){
     return fields.map(fieldID => {
@@ -53,3 +87,4 @@ export function createRegularFields(fields,func){
         }
     });
 }
+

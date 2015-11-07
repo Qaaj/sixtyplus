@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import {Jumbotron, Button, Row, Col, Grid, PageHeader, Panel, Input, Label} from 'react-bootstrap';
 import rd3 from 'react-d3';
-import { createRegularFields, createCurrencyFields } from '../../helpers/InputFactory';
+import { createRegularFields, createCurrencyFields, createPercentageFields } from '../../helpers/InputFactory';
 import Slider from '../ui/Slider'
 
 class Quickstart extends React.Component {
@@ -20,6 +20,9 @@ class Quickstart extends React.Component {
 
         this.inputFields = createCurrencyFields(['savingsGoal','monthlyIncome','monthlyCostsFixed','monthlyCostsVariable','currentSavings'],this._handleInput);
         //this.inputFields.push(createRegularFields(['Lander is Hip'],this._handleInput));
+        this.advancedInputFields = createPercentageFields(['stockReturns','intrestRate','bondYield','taxRate','salaryIncrease'],this._handleInput);
+
+
 
     }
 
@@ -114,13 +117,10 @@ class Quickstart extends React.Component {
                                header={<h3>Advanced Settings</h3>}>
                             <Row className="show-grid">
                                 <Col md={6}>
-                                        <Input type="text" label="Expected Stock Returns" placeholder="4" addonBefore="%" />
-                                        <Input type="text" label="Expected Interest Rate" placeholder="2" addonBefore="%" />
-                                        <Input type="text" label="Expected Bond Yield" placeholder="3" addonBefore="%" />
+                                        {this.advancedInputFields.slice(0,3)}
                                 </Col>
                                 <Col md={6}>
-                                    <Input type="text" label="Tax Rate" placeholder="4" addonBefore="%" />
-                                    <Input type="text" label="Expected Salary Increase (Yearly)" placeholder="2" addonBefore="%" />
+                                        {this.advancedInputFields.slice(3,5)}
                                 </Col>
                                 </Row>
                         </Panel>
