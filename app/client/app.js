@@ -10,11 +10,6 @@ import UserStore from './stores/UserStore';
 
 import Notification from './components/modules/NotificationModule';
 import NotificationActionCreators from './actions/NotificationActionCreators';
-import asap from 'asap';
-
-
-
-import { getUserObject } from './config/User';
 
 class App extends React.Component {
 
@@ -38,23 +33,8 @@ class App extends React.Component {
             user: user,
         });
 
-        asap(()=>{
-            if(user.last_login == null){
-                NotificationActionCreators.setNotification({
-                    isVisible: true,
-                    type: 'success',
-                    message:"Hi there! Everything will be automatically saved for your next visit. Enjoy using 60+ !.",
-                    delay: 3000
-                });
-            }else{
-                NotificationActionCreators.setNotification({
-                    isVisible: true,
-                    type: 'success',
-                    message:"Welcome back! Your last visit was on " + user.last_login,
-                    delay: 5000
-                });
-            }
-        });
+        NotificationActionCreators.userLoggedIn(user);
+
     }
 
     componentWillUpdate(nextProps) {}
