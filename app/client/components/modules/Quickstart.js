@@ -5,6 +5,8 @@ import rd3 from 'react-d3';
 import { createRegularFields, createCurrencyFields, createPercentageFields } from '../../helpers/InputFactory';
 import Slider from '../ui/Slider'
 
+import { calculateYears,calculatePortfolio,calculatePieData } from '../../helpers/calculators/SavingsGoalCalculator';
+
 class Quickstart extends React.Component {
 
     constructor(props) {
@@ -34,45 +36,16 @@ class Quickstart extends React.Component {
 
     _calculateResults(){
 
-        let result = {};
-
-        let delta = this.state.risk * 2;
-        let stocks = 10.0  + parseFloat(delta*1.5);
-        let bonds = 30.0 - parseFloat(delta/2);
-        let savings = 60 - parseFloat(delta)
 
 
-        let pieData = [
-            {label: 'Bonds', value: bonds},
-            {label: 'Stocks', value: stocks},
-            {label: 'Savings', value: savings}
-        ];
+        let data = {};
 
-        result.pieData = pieData;
+        data.portfolio = calculatePortfolio(this.state);
+        data.years = calculateYears(this.state);
+        data.pieData = calculatePieData(data.portfolio);
 
-        let { savingsGoal, monthlyIncome, monthlyCostsFixed, monthlyCostsVariable, currentSavings } = this.state;
-        if (savingsGoal && monthlyIncome && monthlyCostsFixed && monthlyCostsVariable && currentSavings){
+        return data;
 
-            let contribution = 12 * (monthlyIncome - monthlyCostsFixed - monthlyCostsVariable);
-            let growth = 0.04; // Correct
-            var C_over_R = contribution/growth; // Correct
-            var lastDivider = Math.log(1 + growth); // Correct
-
-            savingsGoal = parseFloat(savingsGoal);
-            C_over_R = parseFloat(C_over_R);
-            currentSavings = parseFloat(currentSavings);
-
-
-            let first = Math.log( (savingsGoal + C_over_R ) / (currentSavings + C_over_R) ) ;
-
-            let years = first /lastDivider;
-
-            result.years = years;
-
-            return result;
-        }else{
-            return result;
-        }
 
     }
 
@@ -81,8 +54,6 @@ class Quickstart extends React.Component {
         let result = this._calculateResults();
 
         var PieChart = rd3.PieChart;
-
-        console.log(this.props.user);
 
         return (<div>
 

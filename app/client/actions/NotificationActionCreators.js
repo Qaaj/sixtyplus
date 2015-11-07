@@ -28,7 +28,7 @@ const NotificationActionCreators = {
                 this.setNotification({
                     isVisible: true,
                     type: 'success',
-                    message:"Hi there! Everything will be automatically saved for your next visit. Enjoy using 60+ !.",
+                    message:"Hi there! Everything will be automatically saved for your next visit.",
                     delay: 3000
                 });
             }else{

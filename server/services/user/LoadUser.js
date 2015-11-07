@@ -16,9 +16,9 @@ export default (req, res) => {
     user.once('value', function(snapshot) {
         if(snapshot.val()){
 
-            userObject.last_login = snapshot.val().last_login;
+            userObject = snapshot.val();
 
-            usersRef.child(req.body.uid + "").set({
+            usersRef.child(req.body.uid + "").update({
                 last_login: moment().format('LLLL'),
             });
 
