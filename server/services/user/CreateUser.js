@@ -10,10 +10,10 @@ export default (req, res) => {
 
 
     usersRef.child("gracehop").set({
-        date_of_birth: "December 9, 1906",
-        full_name: "Grace Hopper"
+        full_name: "Test User",
+        uid: '1921929192192'
     });
 
     debug(req.params,req.body);
-    res.send('weeeeee');
+    res.send('User Created');
 };

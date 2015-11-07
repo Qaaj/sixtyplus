@@ -42,7 +42,6 @@ function routingWrapper(isProduction,app) {
             res.render('index', { userLang: userLang});
         });
 
-
         proxy.on('error', function(e) {
             // Just catch it
         });
@@ -66,12 +65,6 @@ function routingWrapper(isProduction,app) {
             console.log('Server running on port ' + port);
         });
     }
-
-    app.all('/db/*', function (req, res) {
-        proxy.web(req, res, {
-            target: 'https://crackling-torch-5091.firebaseio.com/'
-        });
-    });
 
     router.route('/api/:serviceId').all(
         apiRouteHandler
