@@ -65,6 +65,10 @@ function routingWrapper(isProduction,app) {
         app.listen(port, function () {
             console.log('Server running on port ' + port);
         });
+
+        app.get('/', function (req, res) {
+            res.render('index', { userLang: userLang});
+        });
     }
 
     debug('Listening for API calls');
