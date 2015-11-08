@@ -37,7 +37,7 @@ class Quickstart extends React.Component {
         let data = {};
 
         data.portfolio = calculatePortfolio(this.state);
-        data.years = calculateYears(this.state);
+        data.years = calculateYears(this.state,data.portfolio);
         data.pieData = calculatePieData(data.portfolio);
 
         return data;
@@ -80,7 +80,7 @@ class Quickstart extends React.Component {
                                     sectorBorderColor="white"
                                     />
                             </div>
-                            <h3> Years to go: {result.years}</h3>
+                            <h3>Projected timeframe: {result.years}</h3>
                         </Panel>
                     </Col>
                     <Col className='collapsible' md={12}>

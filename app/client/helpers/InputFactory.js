@@ -2,6 +2,7 @@ import {Input} from 'react-bootstrap';
 
 import UserActionCreators from '../actions/UserActionCreators';
 import UserStore from '../stores/UserStore';
+import defaults from '../config/Defaults';
 
 let user = UserStore.getUser();
 
@@ -45,27 +46,27 @@ let inputFields = {
     },
     'stockReturns': {
         name: 'stockReturns',
-        defaultValue: 4,
+        defaultValue: defaults['stockReturns'],
         description: 'Average Stock Returns',
     },
     'intrestRate': {
         name: 'intrestRate',
-        defaultValue: 2,
+        defaultValue: defaults['intrestRate'],
         description: 'Average Intrest Rate',
     },
     'bondYield': {
         name: 'bondYield',
-        defaultValue: 3,
+        defaultValue: defaults['bondYield'],
         description: 'Average Bond Yield',
     },
     'taxRate': {
         name: 'taxRate',
-        defaultValue: 15,
+        defaultValue: defaults['taxRate'],
         description: 'Tax Rate',
     },
     'salaryIncrease': {
         name: 'salaryIncrease',
-        defaultValue: 2.7,
+        defaultValue: defaults['salaryIncrease'],
         description: 'Average Yearly Salary Increase',
     }
 }
