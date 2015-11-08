@@ -7,6 +7,8 @@ var mainPath = path.resolve(__dirname, 'app/client', 'app.js');
 var reactPath = path.join(nodeModulesPath, 'react', 'react.js')
     , reactDOMPath = path.join(nodeModulesPath, 'react', 'lib', 'ReactDOM.js')
     , reactCSSTransitionGroupPath = path.join(nodeModulesPath, 'react', 'lib', 'ReactCSSTransitionGroup.js');
+var cssLoaders = ['style', 'css', 'autoprefixer-loader?{browsers:["> 1%", "IE 9"]}'];
+
 var config = {
 
     entry: mainPath,
@@ -19,10 +21,15 @@ var config = {
             test: /\.jsx?$/,
             exclude: /(node_modules|bower_components)/,
             loader: 'babel'
-        }, {
-            test: /\.scss$/,
-            loaders: ["style", "css", "sass"]
-        }, { test: /\.woff$/,   loader: "url-loader?limit=10000&minetype=application/font-woff" },
+        }, styleModLoaders = [
+            {
+                test: /\.scss$/,
+                loaders: cssLoaders.concat([
+                    "sass?precision=10&outputStyle=compressed"
+                ])
+            },
+            { test: /\.css$/ , loaders: cssLoaders }
+        ], { test: /\.woff$/,   loader: "url-loader?limit=10000&minetype=application/font-woff" },
             { test: /\.woff2$/,   loader: "url-loader?limit=10000&minetype=application/font-woff" },
 
             { test: /\.ttf$/,    loader: "file-loader" },

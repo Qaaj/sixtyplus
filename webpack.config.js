@@ -24,7 +24,7 @@ var config = {
       exclude: [nodeModulesPath]
     }, {
       test: /\.scss$/,
-      loaders: ["style", "css?modules", "sass"]
+      loaders: ["style", "css", "sass"]
     }, { test: /\.woff$/,   loader: "url-loader?limit=10000&minetype=application/font-woff" },
       { test: /\.woff2$/,   loader: "url-loader?limit=10000&minetype=application/font-woff" },
 
