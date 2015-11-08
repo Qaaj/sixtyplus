@@ -30,12 +30,6 @@ var config = {
             { test: /\.svg$/,    loader: "file-loader" }
         ]
     },
-    resolve: {
-        extensions: ['', '.js', '.jsx'],
-        alias: {
-          'react': pathToReact
-        }
-    },
     plugins: [
         new Webpack.optimize.UglifyJsPlugin({
         compress: {
