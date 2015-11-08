@@ -1,5 +1,5 @@
 {
-  "name": "boilerplate",
+  "name": "60plus",
   "version": "0.1.0",
   "description": "webpack/express boilerplate",
   "main": "server.js",
@@ -9,7 +9,8 @@
     "postinstall": "node heroku",
     "test": "echo \"Error: no test specified\" && exit 1",
     "local": "NODE_ENV=production npm build && NODE_ENV=production PORT=8080 npm start",
-    "deploy" : "npm run build && git add . && git commit -m 'release build' && git push heroku master"
+    "deploy": "npm run build && git add . && git commit -m 'release build' && git push heroku master",
+    "start": "node server.js"
   },
   "author": "Jan Jorissen",
   "license": "MIT",
@@ -29,6 +30,7 @@
     "extract-text-webpack-plugin": "^0.8.2",
     "file-loader": "^0.8.4",
     "firebase": "^2.3.1",
+    "fixed-data-table": "^0.5.0",
     "flux": "^2.1.1",
     "history": "^1.13.0",
     "http-proxy": "^1.10.1",
@@ -62,5 +64,10 @@
     "react-addons-css-transition-group": "^0.14.2",
     "request": "^2.65.0",
     "superagent": "^1.4.0"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://mordhau@bitbucket.org/mordhau/60plus.git"
+  },
+  "homepage": "https://bitbucket.org/mordhau/60plus#readme"
 }
