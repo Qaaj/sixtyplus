@@ -3,8 +3,7 @@ var node_modules_dir = path.join(__dirname, 'node_modules');
 var Webpack = require('webpack');
 var nodeModulesPath = path.resolve(__dirname, 'node_modules');
 var buildPath = path.resolve(__dirname, 'public', 'build');
-var mainPath = path.resolve(__dirname, 'app', 'main.js');
-var ExtractTextPlugin = require("extract-text-webpack-plugin");
+var mainPath = path.resolve(__dirname, 'app/client', 'app.js');
 
 var pathToReact = path.resolve(node_modules_dir, 'react/dist/react.min.js');
 
@@ -21,11 +20,15 @@ var config = {
             exclude: /(node_modules|bower_components)/,
             loader: 'babel'
         }, {
-            test: /\.css$/,
-            loader: ExtractTextPlugin.extract("style-loader", "css-loader")
-        }
-        ],
-        noParse: [pathToReact]
+            test: /\.scss$/,
+            loaders: ["style", "css?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]", "sass?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]"]
+        }, { test: /\.woff$/,   loader: "url-loader?limit=10000&minetype=application/font-woff" },
+            { test: /\.woff2$/,   loader: "url-loader?limit=10000&minetype=application/font-woff" },
+
+            { test: /\.ttf$/,    loader: "file-loader" },
+            { test: /\.eot$/,    loader: "file-loader" },
+            { test: /\.svg$/,    loader: "file-loader" }
+        ]
     },
     resolve: {
         extensions: ['', '.js', '.jsx'],
@@ -37,10 +40,7 @@ var config = {
         new Webpack.optimize.UglifyJsPlugin({
         compress: {
            warnings: false
-        }}),
-        new ExtractTextPlugin("css/main.css", {
-            allChunks: true
-        })
+        }})
     ]
 };
 
