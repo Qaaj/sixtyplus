@@ -11,8 +11,8 @@ export function calculateYears(data,portfolio){
 
         if(!data.taxRate) data.taxRate = defaults['taxRate'];
         if(!data.salaryIncrease) data.salaryIncrease = defaults['salaryIncrease'];
-
-        let contribution = 12 * (monthlyIncome - monthlyCostsFixed - monthlyCostsVariable);
+        data.monthlyBudget = (monthlyIncome - monthlyCostsFixed - monthlyCostsVariable);
+        let contribution = 12 * data.monthlyBudget;
         let growth = weightedAverage(data,portfolio) ; // Correct
         console.log(growth);
         savingsGoal = parseFloat(savingsGoal);

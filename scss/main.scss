@@ -28,3 +28,16 @@ body {
     padding-bottom: 0px;
 }
 
+.tab-content{
+    padding-top: 30px;
+    background-color: white;
+    position: relative;
+    border-left: 1px solid #ddd;
+    border-bottom: 1px solid #ddd;
+    border-right: 1px solid #ddd;
+
+    .row{
+        width: 100%;
+    }
+}
+
