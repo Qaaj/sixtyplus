@@ -8,7 +8,7 @@ var cssLoaders = ['style', 'css', 'autoprefixer-loader?{browsers:["> 1%", "IE 9"
 var config = {
 
     // set the `app` directory as the context
-    context: path.join(__dirname + '/app'),
+    context: path.join(__dirname , 'app'),
 
     // Entry points, can be multiple
     entry: {
@@ -21,7 +21,7 @@ var config = {
 
     // the output for DEVELOPMENT
     output: {
-        path: path.join(__dirname + '/src'),
+        path: path.join(__dirname , 'app', 'client'),
         publicPath: 'http://localhost:8080/',
         filename: '[name].js' // based on the entry point key name
     },
@@ -120,7 +120,7 @@ if (process.env.NODE_ENV === 'production') {
     );
 
     // Change destination folder for Production code
-    config.output.path = path.join(__dirname, 'public','dist');
+    config.output.path = path.join(__dirname, 'public/dist');
     config.output.publicPath = '/public';
     config.output.filename = '[name].min.js';
 
