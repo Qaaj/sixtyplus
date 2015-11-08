@@ -52,6 +52,7 @@ class Quickstart extends React.Component {
         this.inputFields = createCurrencyFields(['savingsGoal','monthlyIncome','monthlyCostsFixed','monthlyCostsVariable','currentSavings'],this._handleInput,this.props.user.currency);
         this.advancedInputFields = createPercentageFields(['stockReturns','intrestRate','bondYield','taxRate','salaryIncrease'],this._handleInput);
         //this.inputFields.push(createRegularFields(['Lander is Hip'],this._handleInput));
+        //<Slider value={this.state['age']} min={29} max={99} minLabel='29' maxLabel='99' label='Age at which you want to achieve your goal' name='age' onChange={this._handleChange} step={1} />
 
         var PieChart = rd3.PieChart;
 
@@ -63,7 +64,6 @@ class Quickstart extends React.Component {
                     <Col md={6}>
                         <Panel header={<h3>Basics <small>Enter your basic information</small></h3>}>
                             {this.inputFields}
-                            <Slider value={this.state['age']} min={29} max={99} minLabel='29' maxLabel='99' label='Age at which you want to achieve your goal' name='age' onChange={this._handleChange} step={1} />
                             <Slider value={this.state['risk']} min={0} max={10}  minLabel='Low' maxLabel='High' label='Risk Tolerance' name='risk' onChange={this._handleChange} step={1} />
                         </Panel>
                     </Col>
