@@ -7,7 +7,9 @@
     "build": "NODE_ENV=production webpack -p --config webpack.production.config.js",
     "dev": "DEBUG=debug:* NODE_ENV=development node server.js",
     "postinstall": "node heroku",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "local": "NODE_ENV=production npm build && NODE_ENV=production PORT=8080 npm start",
+    "deploy" : "npm run build && git add . && git commit -m 'release build' && git push heroku master"
   },
   "author": "Jan Jorissen",
   "license": "MIT",

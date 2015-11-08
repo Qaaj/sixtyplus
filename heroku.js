@@ -5,6 +5,9 @@ if (process.env.NODE_ENV === 'production') {
 
   // We basically just create a child process that will run
   // the production bundle command
+
+    // disabled remote building for now
+
   //var child_process = require('child_process');
   //return child_process.exec("webpack -p --config webpack.production.config.js", function (error, stdout, stderr) {
   //  console.log('stdout: ' + stdout);

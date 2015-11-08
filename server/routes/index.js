@@ -77,10 +77,6 @@ function routingWrapper(isProduction,app) {
         apiRouteHandler
     );
 
-    app.get('/resources', function (req, res) {
-        res.redirect('/dist/resources');
-    });
-
     function apiRouteHandler(req, res) {
         console.log(req.params.serviceId)
         if (typeof services[req.params.serviceId] === 'function') {
