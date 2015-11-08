@@ -72,7 +72,7 @@ class Quickstart extends React.Component {
 
         return (<div>
             <Grid>
-                <Tabs defaultActiveKey={2}>
+                <Tabs defaultActiveKey={1}>
                     <Tab eventKey={1} title="Basics">
                         <Grid>
                             <Row className="show-grid ">
