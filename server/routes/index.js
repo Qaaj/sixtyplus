@@ -67,7 +67,7 @@ function routingWrapper(isProduction,app) {
         });
 
         app.get('/', function (req, res) {
-            res.render('index', { userLang: userLang});
+            res.render('index_production', { userLang: userLang});
         });
     }
 
