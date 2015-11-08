@@ -7,12 +7,7 @@ import defaults from '../config/Defaults';
 let user = UserStore.getUser();
 
 function _handleUserStoreChange() {
-
     user = UserStore.getUser();
-    if(user.currency == "EURO") user.currency = "€";
-    if(user.currency == "DOLLAR") user.currency = "$";
-    if(user.currency == "POUND") user.currency = "£";
-
 }
 
 UserStore.addChangeListener(_handleUserStoreChange);

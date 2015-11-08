@@ -5,7 +5,7 @@ import { PieChart } from 'react-d3';
 import { createRegularFields, createCurrencyFields, createPercentageFields } from '../../helpers/InputFactory';
 import Slider from '../ui/Slider'
 
-import { calculateYears,calculatePortfolio,calculatePieData } from '../../helpers/calculators/SavingsGoalCalculator';
+import { calculateYears,calculatePortfolio,calculatePieData,calculateMonthlyBudget } from '../../helpers/calculators/SavingsGoalCalculator';
 
 class Quickstart extends React.Component {
 
@@ -32,26 +32,27 @@ class Quickstart extends React.Component {
 
     _calculateResults(){
 
-
-
         let data = {};
 
         data.portfolio = calculatePortfolio(this.state);
+        data.monthlyBudget = calculateMonthlyBudget(this.state);
         data.years = calculateYears(this.state,data.portfolio);
         data.pieData = calculatePieData(data.portfolio);
 
         return data;
-
-
     }
 
     render() {
 
         let result = this._calculateResults();
-        result.monthlyBudget = (this.state.monthlyIncome - this.state.monthlyCostsFixed - this.state.monthlyCostsVariable);
 
         this.inputFields = createCurrencyFields(['savingsGoal','monthlyIncome','monthlyCostsFixed','monthlyCostsVariable','currentSavings'],this._handleInput);
         this.advancedInputFields = createPercentageFields(['stockReturns','intrestRate','bondYield','taxRate','salaryIncrease'],this._handleInput);
+        let cx='success';
+        if(result.monthlyBudget < 1) cx = 'warning';
+
+        let timeFrame = null;
+        if(result.years != "") timeFrame = (<h3>Projected timeframe: {result.years}</h3>);
         //this.inputFields.push(createRegularFields(['Lander is Hip'],this._handleInput));
         //<Slider value={this.state['age']} min={29} max={99} minLabel='29' maxLabel='99' label='Age at which you want to achieve your goal' name='age' onChange={this._handleChange} step={1} />
 
@@ -68,8 +69,8 @@ class Quickstart extends React.Component {
                                     </Panel>
                                 </Col>
                                 <Col md={6} >
-                                    <Panel header={<h3>Analysis <small>Projections based on your settings</small></h3>}>
-                                        <Input disabled={true} type="text" label="Monthly savings budget:" value={result.monthlyBudget} addonBefore="€" />
+                                    <Panel style={{'textAlign':'center'}} header={<h3>Analysis <small>Projections based on your settings</small></h3>}>
+                                        <h3>Monthly budget:  <Label bsStyle={cx}>{this.props.user.currency} {result.monthlyBudget}</Label></h3>
                                         <div style={{'width':'400px','marginLeft':'auto','marginRight':'auto'}}>
                                             <PieChart
                                                 data={result.pieData}
@@ -80,7 +81,7 @@ class Quickstart extends React.Component {
                                                 sectorBorderColor="white"
                                                 />
                                         </div>
-                                        <h3>Projected timeframe: {result.years}</h3>
+                                        {timeFrame}
                                     </Panel>
                                 </Col>
                                 <Col className='collapsible' md={12}>

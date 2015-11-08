@@ -36,6 +36,12 @@ export function calculateYears(data,portfolio){
 
 }
 
+export function calculateMonthlyBudget(data){
+    let { monthlyIncome, monthlyCostsFixed, monthlyCostsVariable } = data;
+    if(monthlyIncome && monthlyCostsFixed && monthlyCostsVariable) return (monthlyIncome - monthlyCostsFixed - monthlyCostsVariable);
+    return 0;
+}
+
 function weightedAverage(data,portfolio){
     if(!data.stockReturns) data.stockReturns = defaults['stockReturns'];
     if(!data.bondYield) data.bondYield = defaults['bondYield'];
