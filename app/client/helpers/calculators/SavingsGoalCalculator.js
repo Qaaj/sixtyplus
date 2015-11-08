@@ -3,7 +3,7 @@ import moment from 'moment';
 
 export function calculateYears(data,portfolio){
 
-    let years = 0;
+    data.years = "";
 
     let { savingsGoal, monthlyIncome, monthlyCostsFixed, monthlyCostsVariable, currentSavings } = data;
 
@@ -14,7 +14,6 @@ export function calculateYears(data,portfolio){
         data.monthlyBudget = (monthlyIncome - monthlyCostsFixed - monthlyCostsVariable);
         let contribution = 12 * data.monthlyBudget;
         let growth = weightedAverage(data,portfolio) ; // Correct
-        console.log(growth);
         savingsGoal = parseFloat(savingsGoal);
         currentSavings = parseFloat(currentSavings);
 
@@ -25,36 +24,31 @@ export function calculateYears(data,portfolio){
         if(m > 1) xtra = 's';
         if(y > 1) xtra2 = 's';
 
-
-
-        return y + " year" + xtra2 + " and " + m + " month" +xtra + ".";
+        data.years =  y + " year" + xtra2 + " and " + m + " month" +xtra + ".";
     }
-
-
-
-    return "" ;
-
 }
 
 export function calculateMonthlyBudget(data){
     let { monthlyIncome, monthlyCostsFixed, monthlyCostsVariable } = data;
-    if(monthlyIncome && monthlyCostsFixed && monthlyCostsVariable) return (monthlyIncome - monthlyCostsFixed - monthlyCostsVariable);
-    return 0;
+    data.monthlyBudget = 0;
+    if(monthlyIncome && monthlyCostsFixed && monthlyCostsVariable) {
+        data.monthlyBudget = (monthlyIncome - monthlyCostsFixed - monthlyCostsVariable);
+    }
 }
 
 function weightedAverage(data,portfolio){
     if(!data.stockReturns) data.stockReturns = defaults['stockReturns'];
     if(!data.bondYield) data.bondYield = defaults['bondYield'];
     if(!data.intrestRate) data.intrestRate = defaults['intrestRate'];
-    var average = ((1+(data.intrestRate/100)) * portfolio.savings) + ((1+(data.stockReturns/100)) *portfolio.stocks) + ((1+(data.bondYield/100)) * portfolio.bonds)
+    var average = ((1+(data.intrestRate/100)) * data.portfolio.savings) + ((1+(data.stockReturns/100)) *data.portfolio.stocks) + ((1+(data.bondYield/100)) * data.portfolio.bonds)
     return ((average-100)/100);
 }
 
-export function calculatePieData(portfolio){
-    return [
-        {label: 'Bonds', value: portfolio.bonds},
-        {label: 'Stocks', value: portfolio.stocks},
-        {label: 'Savings', value: portfolio.savings}
+export function calculatePieData(data){
+    data.pieData = [
+        {label: 'Bonds', value: data.portfolio.bonds},
+        {label: 'Stocks', value: data.portfolio.stocks},
+        {label: 'Savings', value: data.portfolio.savings}
     ];
 }
 
@@ -67,6 +61,6 @@ export function calculatePortfolio(data){
     portfolio.bonds = 30.0 - parseFloat(delta/2);
     portfolio.savings = 60 - parseFloat(delta)
 
-    return portfolio;
+    data.portfolio = portfolio;
 
 }

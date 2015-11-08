@@ -3,17 +3,16 @@ import ReactDOM from 'react-dom';
 import {Jumbotron, Button, Row, Col, Grid, PageHeader, Panel, Input, Label, Tabs, Tab} from 'react-bootstrap';
 import { PieChart } from 'react-d3';
 import { createRegularFields, createCurrencyFields, createPercentageFields } from '../../helpers/InputFactory';
-import Slider from '../ui/Slider'
-
+import Slider from '../ui/Slider';
 import { calculateYears,calculatePortfolio,calculatePieData,calculateMonthlyBudget } from '../../helpers/calculators/SavingsGoalCalculator';
+import { saveUserData } from '../../actions/UserActionCreators';
+
 
 class Quickstart extends React.Component {
 
     constructor(props) {
         super(props);
         this.state ={
-            'sliderVal':0,
-            'age': 60,
             'risk': 2
         }
 
@@ -22,37 +21,52 @@ class Quickstart extends React.Component {
 
     }
 
+    componentWillReceiveProps(newProps){
+        if(newProps.user.userData){
+            this.setState(newProps.user.userData);
+        }
+    }
     _handleChange(e){
         this.setState({[e.target.name]:e.target.value})
+
+        if(this.state[e.target.name] != e.target.value) {
+            this.state[e.target.name] = e.target.value;
+            saveUserData(this.state);
+        }
+
     }
 
     _handleInput(e,i){
         this.setState({[e.target.name]:e.target.value})
+
+        if(this.state[e.target.name] != e.target.value) {
+            this.state[e.target.name] = e.target.value;
+            saveUserData(this.state);
+        }
+
     }
 
     _calculateResults(){
 
-        let data = {};
+        calculatePortfolio(this.state);
+        calculateMonthlyBudget(this.state);
+        calculateYears(this.state);
+        calculatePieData(this.state);
 
-        data.portfolio = calculatePortfolio(this.state);
-        data.monthlyBudget = calculateMonthlyBudget(this.state);
-        data.years = calculateYears(this.state,data.portfolio);
-        data.pieData = calculatePieData(data.portfolio);
 
-        return data;
     }
 
     render() {
 
-        let result = this._calculateResults();
+        this._calculateResults();
 
-        this.inputFields = createCurrencyFields(['savingsGoal','monthlyIncome','monthlyCostsFixed','monthlyCostsVariable','currentSavings'],this._handleInput);
-        this.advancedInputFields = createPercentageFields(['stockReturns','intrestRate','bondYield','taxRate','salaryIncrease'],this._handleInput);
+        this.inputFields = createCurrencyFields(['savingsGoal','monthlyIncome','monthlyCostsFixed','monthlyCostsVariable','currentSavings'],this._handleInput,this.state);
+        this.advancedInputFields = createPercentageFields(['stockReturns','intrestRate','bondYield','taxRate','salaryIncrease'],this._handleInput,this.state);
         let cx='success';
-        if(result.monthlyBudget < 1) cx = 'warning';
+        if(this.state.monthlyBudget < 1) cx = 'warning';
 
         let timeFrame = null;
-        if(result.years != "") timeFrame = (<h3>Projected timeframe: {result.years}</h3>);
+        if(this.state.years != "") timeFrame = (<h3>Projected timeframe: {this.state.years}</h3>);
         //this.inputFields.push(createRegularFields(['Lander is Hip'],this._handleInput));
         //<Slider value={this.state['age']} min={29} max={99} minLabel='29' maxLabel='99' label='Age at which you want to achieve your goal' name='age' onChange={this._handleChange} step={1} />
 
@@ -70,10 +84,10 @@ class Quickstart extends React.Component {
                                 </Col>
                                 <Col md={6} >
                                     <Panel style={{'textAlign':'center'}} header={<h3>Analysis <small>Projections based on your settings</small></h3>}>
-                                        <h3>Monthly budget:  <Label bsStyle={cx}>{this.props.user.currency} {result.monthlyBudget}</Label></h3>
+                                        <h3>Monthly budget:  <Label bsStyle={cx}>{this.props.user.currency} {this.state.monthlyBudget}</Label></h3>
                                         <div style={{'width':'400px','marginLeft':'auto','marginRight':'auto'}}>
                                             <PieChart
-                                                data={result.pieData}
+                                                data={this.state.pieData}
                                                 width={400}
                                                 height={300}
                                                 radius={100}
@@ -100,8 +114,8 @@ class Quickstart extends React.Component {
                             </Row>
                         </Grid>
                     </Tab>
-                    <Tab eventKey={2} title="Detailed View">Tab 2 content</Tab>
-                    <Tab eventKey={3} title="Tab 3" disabled>Tab 3 content</Tab>
+                    <Tab eventKey={2} title="Detailed View" disabled>Tab 2 content</Tab>
+                    <Tab eventKey={3} title="Settings" disabled>Tab 3 content</Tab>
                 </Tabs>
             </Grid>
 

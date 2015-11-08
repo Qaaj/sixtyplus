@@ -66,24 +66,26 @@ let inputFields = {
     }
 }
 
-export function createCurrencyFields(fields,func,currency){
+export function createCurrencyFields(fields,func,state){
    return fields.map(fieldID => {
+        let value =  state[fieldID] ? state[fieldID] : '';
         if(inputFields[fieldID]) {
             var field = inputFields[fieldID];
-            return  <Input key={'unique_key_' + fieldID} ref={field.name} name={field.name} onSelect={func} type="text" label={field.description} placeholder={field.defaultValue} addonBefore={user.currency} />;
+            return  <Input key={'unique_key_' + fieldID} ref={field.name} name={field.name} onChange={func} type="text" label={field.description} placeholder={field.defaultValue} value={value} addonBefore={user.currency} />;
         }else{
-            return <Input key={'unique_key_' + fieldID} ref={field.name} name={fieldID} onSelect={func} type="text" label={fieldID} placeholder={fieldID} addonBefore={user.currency} />;
+            return <Input key={'unique_key_' + fieldID} ref={field.name} name={fieldID} onChange={func} type="text" label={fieldID} placeholder={fieldID} value={value} addonBefore={user.currency} />;
         }
     });
 }
 
-export function createPercentageFields(fields,func){
+export function createPercentageFields(fields,func,state){
     return fields.map(fieldID => {
+        let value =  state[fieldID] ? state[fieldID] : '';
         if(inputFields[fieldID]) {
             var field = inputFields[fieldID];
-            return  <Input key={'unique_key_' + fieldID} ref={field.name} name={field.name} onSelect={func} type="text" label={field.description} placeholder={field.defaultValue} addonBefore={'%'} />;
+            return  <Input key={'unique_key_' + fieldID} ref={field.name} name={field.name} onChange={func} type="text" label={field.description} placeholder={field.defaultValue} value={value} addonBefore={'%'} />;
         }else{
-            return <Input key={'unique_key_' + fieldID} ref={field.name} name={fieldID} onSelect={func} type="text" label={fieldID} placeholder={fieldID} addonBefore={'%'} />;
+            return <Input key={'unique_key_' + fieldID} ref={field.name} name={fieldID} onChange={func} type="text" label={fieldID} placeholder={fieldID} value={value} addonBefore={'%'} />;
         }
     });
 }
@@ -93,9 +95,9 @@ export function createRegularFields(fields,func){
         if(inputFields[fieldID]) {
             console.log(fieldID)
             var field = inputFields[fieldID];
-            return  <Input key={'unique_key_' + fieldID} name={field.name} onSelect={func} type="text" label={field.description} placeholder={field.defaultValue}  />;
+            return  <Input key={'unique_key_' + fieldID} name={field.name} onChange={func} type="text" label={field.description} placeholder={field.defaultValue}  />;
         }else{
-            return <Input key={'unique_key_' + fieldID} name={fieldID} onSelect={func} type="text" label={fieldID} placeholder={fieldID}  />;
+            return <Input key={'unique_key_' + fieldID} name={fieldID} onChange={func} type="text" label={fieldID} placeholder={fieldID}  />;
         }
     });
 }

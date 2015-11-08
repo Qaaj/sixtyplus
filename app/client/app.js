@@ -48,7 +48,6 @@ class App extends React.Component {
 
     render() {
 
-
         const history = this.props.history;
         const location = this.props.location;
         const params = this.props.params;

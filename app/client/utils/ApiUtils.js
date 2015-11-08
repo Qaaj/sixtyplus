@@ -25,6 +25,23 @@ export function changeUILanguage(data) {
     );
 };
 
+export function updateUserData(data,uid){
+
+    let url = `${API_URL}/saveUserData`;
+
+    post({url, data})
+        .then(
+        (response) => {
+            //ServerActionCreators.userUpdated(response.body);
+        },
+
+        (error) => {
+
+            console.error('Error: ', error);
+        }
+    );
+}
+
 export function loadUser(data){
 
     let url = `${API_URL}/loadUser`;

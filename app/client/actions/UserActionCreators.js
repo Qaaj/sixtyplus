@@ -2,7 +2,13 @@
 
 import AppDispatcher from '../dispatcher/AppDispatcher.js';
 import UserConstants from '../constants/UserConstants.js';
-import { changeUILanguage, loadUser } from '../utils/ApiUtils';
+import { changeUILanguage, loadUser, updateUserData } from '../utils/ApiUtils';
+import { fromJS } from 'immutable';
+import UserStore from '../stores/UserStore.js';
+import defaults from '../config/Defaults';
+
+let userDataToSave =  {};
+let lastTimeOut;
 
 var UserActionCreators = {
 
@@ -11,6 +17,26 @@ var UserActionCreators = {
         //    actionType: UserConstants.USER_CHANGE_LANGUAGE,
         //    language: language,
         //});
+    },
+
+    saveUserData(userData){
+
+        userDataToSave = userData;
+
+        // Don't spam the API, set a timeout for saving
+        clearTimeout(lastTimeOut);
+        lastTimeOut = setTimeout(()=>{
+
+            userData.uid = UserStore.getUser().uid;
+
+            AppDispatcher.handleViewAction({
+                actionType: UserConstants.USER_SAVE_DATA,
+                data: userDataToSave,
+            });
+
+            updateUserData(userDataToSave);
+        },defaults.saveTimeout);
+
     },
 
     loadUser() {
