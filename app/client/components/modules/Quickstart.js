@@ -6,7 +6,7 @@ import { createRegularFields, createCurrencyFields, createPercentageFields } fro
 import Slider from '../ui/Slider';
 import { calculateYears,calculatePortfolio,calculatePieData,calculateMonthlyBudget } from '../../helpers/calculators/SavingsGoalCalculator';
 import { saveUserData } from '../../actions/UserActionCreators';
-
+import StockTable from '../tables/StockTable';
 
 class Quickstart extends React.Component {
 
@@ -72,7 +72,7 @@ class Quickstart extends React.Component {
 
         return (<div>
             <Grid>
-                <Tabs defaultActiveKey={1}>
+                <Tabs defaultActiveKey={2}>
                     <Tab eventKey={1} title="Basics">
                         <Grid>
                             <Row className="show-grid ">
@@ -99,7 +99,7 @@ class Quickstart extends React.Component {
                                     </Panel>
                                 </Col>
                                 <Col className='collapsible' md={12}>
-                                    <Panel className='opportunities-panel' collapsible
+                                    <Panel className='advanced-panel' collapsible
                                            header={<h3>Advanced Settings</h3>}>
                                         <Row className="show-grid">
                                             <Col md={6}>
@@ -114,7 +114,9 @@ class Quickstart extends React.Component {
                             </Row>
                         </Grid>
                     </Tab>
-                    <Tab eventKey={2} title="Detailed View" disabled>Tab 2 content</Tab>
+                    <Tab eventKey={2} title="Stocks">
+                        <StockTable />
+                    </Tab>
                     <Tab eventKey={3} title="Settings" disabled>Tab 3 content</Tab>
                 </Tabs>
             </Grid>

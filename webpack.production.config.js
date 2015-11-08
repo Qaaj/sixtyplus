@@ -79,6 +79,7 @@ var config = {
             { test: /\.ttf$/,    loader: "file-loader" },
             { test: /\.eot$/,    loader: "file-loader" },
             { test: /\.svg$/,    loader: "file-loader" },
+            { test: /\.csv?$/, loader: 'dsv-loader' },
             {
                 test: /\.(png|jpg|jpeg|gif)$/,
                 loader: 'file?name=resources/images/[name].[ext]?[hash]|image-webpack?bypassOnDebug&optimizationLevel=7&interlaced=false'

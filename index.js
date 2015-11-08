@@ -19,6 +19,3 @@ app.set('view engine', 'jade');
 
 
 app.use('/', routesIndex(isProduction,app));
-
-
-

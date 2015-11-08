@@ -30,7 +30,8 @@ var config = {
 
       { test: /\.ttf$/,    loader: "file-loader" },
       { test: /\.eot$/,    loader: "file-loader" },
-      { test: /\.svg$/,    loader: "file-loader" }]
+      { test: /\.svg$/,    loader: "file-loader" },
+      { test: /\.csv?$/, loader: 'dsv-loader' }]
   },
   plugins: [new Webpack.HotModuleReplacementPlugin(),
   new Webpack.ProvidePlugin({
