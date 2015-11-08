@@ -4,9 +4,9 @@ var Webpack = require('webpack');
 var nodeModulesPath = path.resolve(__dirname, 'node_modules');
 var buildPath = path.resolve(__dirname, 'public', 'build');
 var mainPath = path.resolve(__dirname, 'app/client', 'app.js');
-
-var pathToReact = path.resolve(node_modules_dir, 'react/dist/react.min.js');
-
+var reactPath = path.join(nodeModulesPath, 'react', 'react.js')
+    , reactDOMPath = path.join(nodeModulesPath, 'react', 'lib', 'ReactDOM.js')
+    , reactCSSTransitionGroupPath = path.join(nodeModulesPath, 'react', 'lib', 'ReactCSSTransitionGroup.js');
 var config = {
 
     entry: mainPath,
@@ -29,6 +29,13 @@ var config = {
             { test: /\.eot$/,    loader: "file-loader" },
             { test: /\.svg$/,    loader: "file-loader" }
         ]
+    },
+    resolve: {
+        alias: {
+            'react': reactPath,
+            'react-dom': reactDOMPath,
+            'react-addons-css-transition-group': reactCSSTransitionGroupPath
+        }
     },
     plugins: [
         new Webpack.optimize.UglifyJsPlugin({
