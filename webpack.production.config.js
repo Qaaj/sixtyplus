@@ -61,7 +61,7 @@ var config = {
 
     module: {
         loaders: [
-            styleModLoaders = [
+            [
                 {
                     test: /\.scss$/,
                     loaders: cssLoaders.concat([
