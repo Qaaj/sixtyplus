@@ -120,7 +120,7 @@ if (process.env.NODE_ENV === 'production') {
     );
 
     // Change destination folder for Production code
-    config.output.path = path.join(__dirname, 'public/dist');
+    config.output.path = path.join(__dirname, '/public/dist');
     config.output.publicPath = '/public';
     config.output.filename = '[name].min.js';
 
