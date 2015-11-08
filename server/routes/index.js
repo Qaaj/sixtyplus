@@ -78,7 +78,7 @@ function routingWrapper(isProduction,app) {
     );
 
     app.get('/resources', function (req, res) {
-        res.send('/dist/resources');
+        res.redirect('/dist/resources');
     });
 
     function apiRouteHandler(req, res) {
