@@ -1,11 +1,13 @@
-'use strict';
 
-// LIVE EDITOR / BRIEFING
-import calculateSavingsGoal from './calculators/SavingsGoal';
-import loadUser from './user/LoadUser.js';
+import calculateSavingsGoal from './quickstart/SavingsGoal';
+import loadUser from './user/LoadUser';
+import saveUserData from './user/SaveData';
+import getStockPrice from './stocks/GetPrice';
 
 
 export default {
     calculateSavingsGoal,
-    loadUser
+    loadUser,
+    saveUserData,
+    getStockPrice
 };

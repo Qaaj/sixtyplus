@@ -9,9 +9,8 @@ import { Map, fromJS } from 'immutable';
 const CHANGE_EVENT = 'change';
 
 let _userObject = Map();
-let _userSettings = fromJS({
-
-});
+let _userData = Map();
+let _userSettings = Map();
 
 function _setSettings(userSettingsObj) {
     _userSettings = _userSettings.merge(userSettingsObj);
@@ -49,8 +48,15 @@ UserStore.dispatchToken = AppDispatcher.register(function(payload) {
             UserStore.emitChange();
             break;
 
+        case UserConstants.USER_SAVE_DATA:
+            _userData = _userData.merge(fromJS(action.data));
+            //UserStore.emitChange();
+            break;
 
         case UserConstants.USER_LOADED:
+            if(action.data.currency == "EURO") action.data.currency = "€";
+            if(action.data.currency == "DOLLAR") action.data.currency = "$";
+            if(action.data.currency == "POUND") action.data.currency = "£";
             _userObject = fromJS(action.data);
             UserStore.emitChange();
             break;

@@ -2,6 +2,7 @@
 
 import AppDispatcher from '../dispatcher/AppDispatcher.js';
 import NotificationConstants from '../constants/NotificationConstants';
+import asap from 'asap';
 
 const NotificationActionCreators = {
     /**
@@ -18,6 +19,28 @@ const NotificationActionCreators = {
         AppDispatcher.handleViewAction({
             actionType: NotificationConstants.NOTIFICATION_DESTROY,
         });
+    },
+
+    userLoggedIn(user) {
+        asap(() =>{
+
+            if(user.last_login == null){
+                this.setNotification({
+                    isVisible: true,
+                    type: 'success',
+                    message:"Hi there! Everything will be automatically saved for your next visit.",
+                    delay: 3000
+                });
+            }else{
+                this.setNotification({
+                    isVisible: true,
+                    type: 'success',
+                    message:"Welcome back! Your last visit was on " + user.last_login,
+                    delay: 5000
+                });
+            }
+        });
+
     },
 };
 

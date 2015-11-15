@@ -65,6 +65,10 @@ function routingWrapper(isProduction,app) {
         app.listen(port, function () {
             console.log('Server running on port ' + port);
         });
+        console.log('prod');
+        app.get('/', function (req, res) {
+            res.render('index_production', { userLang: userLang});
+        });
     }
 
     debug('Listening for API calls');
@@ -72,6 +76,7 @@ function routingWrapper(isProduction,app) {
     router.route('/api/:serviceId').all(
         apiRouteHandler
     );
+
 
     function apiRouteHandler(req, res) {
         console.log(req.params.serviceId)

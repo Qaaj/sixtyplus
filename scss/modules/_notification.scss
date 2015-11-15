@@ -7,7 +7,7 @@ $animation-time: .5s;
     top: 0;
     left: 0;
     width: 100%;
-    font-size: 12px;
+    font-size: 15px;
     text-align: center;
     color: lightgrey;
     background: transparent;
@@ -31,7 +31,6 @@ $animation-time: .5s;
     color: white;
     .notification-message{
         .background-overlay{
-            background-color:  rgba(194, 24, 91, 0.07);
         }
         border-color:  red;
     }
@@ -40,7 +39,6 @@ $animation-time: .5s;
     color: white;
     .notification-message{
         .background-overlay{
-            background-color:  rgba(119, 173, 26, 0.07);
         }
         border-color:  #77ad1a;
     }
@@ -55,7 +53,7 @@ $animation-time: .5s;
     box-shadow: 0px 2px 8px 0px rgba(0, 0, 0, 0.35);
     background-color:  #ffffff;
     color:  #3e3e40;
-    font-size: 13px;
+    font-size: 16px;
     font-weight: 400;
     min-width: 250px;
     height: 50px;
@@ -81,7 +79,6 @@ $animation-time: .5s;
     font-size: 15px;
 }
 
-// Animations
 .notification-animation-enter {
     transform: translate(0, -106px);
     transition: transform $animation-time ease-in;
