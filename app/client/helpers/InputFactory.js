@@ -1,6 +1,5 @@
 import {Input} from 'react-bootstrap';
 
-import UserActionCreators from '../actions/UserActionCreators';
 import UserStore from '../stores/UserStore';
 import defaults from '../config/Defaults';
 

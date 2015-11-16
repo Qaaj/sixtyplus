@@ -45,6 +45,8 @@ class SingleStock extends React.Component {
             return (<h5 key={'stock_entry_' + entry.name + i}>{entry.amount} @ {entry.price}</h5>);
         });
 
+
+
         let avg = Math.round((totalPrice/totalAmount) * 100) / 100;
         let PL =  (this.state.price * totalAmount) - totalPrice;
         PL = Math.round((PL) * 100) / 100;

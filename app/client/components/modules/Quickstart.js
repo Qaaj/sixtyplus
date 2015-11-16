@@ -5,33 +5,45 @@ import { PieChart } from 'react-d3';
 import { createRegularFields, createCurrencyFields, createPercentageFields } from '../../helpers/InputFactory';
 import Slider from '../ui/Slider';
 import { calculateYears,calculatePortfolio,calculatePieData,calculateMonthlyBudget } from '../../helpers/calculators/SavingsGoalCalculator';
-import { saveUserData } from '../../actions/UserActionCreators';
+import UserActionCreators from '../../actions/UserActionCreators';
 import StockTable from '../tables/StockTable';
+import Importer from './Importer';
 
 class Quickstart extends React.Component {
 
     constructor(props) {
         super(props);
         this.state ={
-            'risk': 2
+            'risk': 2,
+            'tabIndex' : 1,
         }
 
         this._handleChange = this._handleChange.bind(this);
         this._handleInput = this._handleInput.bind(this);
+        this._handleTabChange = this._handleTabChange.bind(this);
 
     }
 
     componentWillReceiveProps(newProps){
+        var state = {};
+
         if(newProps.user.userData){
-            this.setState(newProps.user.userData);
+            state = newProps.user.userData;
         }
+
+
+        if(newProps.location.pathname.indexOf("Import") !== -1){
+            state.tabIndex = 3;
+        }
+
+        this.setState(state);
     }
     _handleChange(e){
         this.setState({[e.target.name]:e.target.value})
 
         if(this.state[e.target.name] != e.target.value) {
             this.state[e.target.name] = e.target.value;
-            saveUserData(this.state);
+            UserActionCreators.saveUserData(this.state);
         }
 
     }
@@ -41,9 +53,13 @@ class Quickstart extends React.Component {
 
         if(this.state[e.target.name] != e.target.value) {
             this.state[e.target.name] = e.target.value;
-            saveUserData(this.state);
+            UserActionCreators.saveUserData(this.state);
         }
 
+    }
+
+    _handleTabChange(i){
+       this.setState({tabIndex:i});
     }
 
     _calculateResults(){
@@ -72,8 +88,8 @@ class Quickstart extends React.Component {
 
         return (<div>
             <Grid>
-                <Tabs defaultActiveKey={1}>
-                    <Tab eventKey={1} title="Basics">
+                <Tabs onSelect={this._handleTabChange} activeKey={this.state.tabIndex}>
+                    <Tab eventKey={1} title="Quickstart">
                         <Grid>
                             <Row className="show-grid ">
                                 <Col md={6}>
@@ -117,7 +133,9 @@ class Quickstart extends React.Component {
                     <Tab eventKey={2} title="Stocks">
                         <StockTable />
                     </Tab>
-                    <Tab eventKey={3} title="Settings" disabled>Tab 3 content</Tab>
+                    <Tab eventKey={3} title="Import">
+                        <Importer />
+                    </Tab>
                 </Tabs>
             </Grid>
 

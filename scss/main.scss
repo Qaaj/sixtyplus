@@ -41,8 +41,26 @@ body {
     }
 }
 
+.importer {
+    text-align: right;
+    position: relative;
+    textarea {
+        height:500px;
+        margin-top:10px;
+    }
+    .tab-pane{
+        padding:2%;
+    }
+
+    .btn{
+       display: inline-block;
+    }
+    padding:2%;
+}
+
 
 .singlestock-panel{
-    margin-left:20px;
-    margin-right:20px;
+        margin-left:20px;
+        margin-right:20px;
 }
+
