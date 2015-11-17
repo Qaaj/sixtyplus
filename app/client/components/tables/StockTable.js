@@ -5,45 +5,43 @@ import SingleStock from '../ui/SingleStock';
 
 class StockTable extends React.Component {
 
-    constructor(props) {
-        super(props);
+  constructor(props) {
+    super(props);
+    this.state = { fields: null};
+  }
 
-        let sortedStocks = {};
+  capitalizeFirstLetter(string) {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+  }
 
-        stockData.map(tx =>{
-            if(!sortedStocks[tx.ticker]) sortedStocks[tx.ticker] = [];
-            let formattedTX = {};
-            formattedTX.date = moment(tx.date, "YYYYMMDD");
-            formattedTX.ticker = tx.ticker;
-            formattedTX.name = this.capitalizeFirstLetter(tx.name.toLowerCase());
-            formattedTX.amount = parseFloat(tx.amount);
-            formattedTX.price = parseFloat(tx.price);
-            formattedTX.total = parseFloat(tx.total);
-            sortedStocks[tx.ticker].push(formattedTX);
-        });
+  componentWillReceiveProps(newProps) {
 
-        this.fields = [];
-        for(let key in sortedStocks){
-            let single = (<SingleStock key={Math.random()} entries={sortedStocks[key]} ticker={key} />);
-            this.fields.push(single)
-        }
+
+
+  }
+
+  render() {
+
+
+    if(!this.props.user.userData) return null;
+
+    let sortedStocks = this.props.user.userData.portfolio;
+
+    let fields = [];
+    for (let key in sortedStocks) {
+      let single = (<SingleStock key={Math.random()} entries={sortedStocks[key]} ticker={key}/>);
+      fields.push(single)
     }
 
-    capitalizeFirstLetter(string) {
-        return string.charAt(0).toUpperCase() + string.slice(1);
-    }
 
-    render() {
+    let table = (
+      <div>
+        {fields}
+      </div>
+    );
 
-        let table = (
-
-            <div>
-                {this.fields}
-            </div>
-        );
-
-        return table;
-    }
+    return table;
+  }
 }
 
 StockTable.displayName = 'StockTable';

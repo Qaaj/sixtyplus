@@ -131,7 +131,7 @@ class Quickstart extends React.Component {
                         </Grid>
                     </Tab>
                     <Tab eventKey={2} title="Stocks">
-                        <StockTable />
+                        <StockTable user={this.props.user} />
                     </Tab>
                     <Tab eventKey={3} title="Import">
                         <Importer />
@@ -148,7 +148,7 @@ Quickstart.PropTypes ={
     history: React.PropTypes.obj,
     location: React.PropTypes.obj,
     urlParams: React.PropTypes.obj,
-    userObject: React.PropTypes.string,
+    user: React.PropTypes.string,
 }
 
 export default Quickstart;

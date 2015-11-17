@@ -7,51 +7,58 @@ import { fromJS } from 'immutable';
 import UserStore from '../stores/UserStore.js';
 import defaults from '../config/Defaults';
 
-let userDataToSave =  {};
+let userDataToSave = {};
 let lastTimeOut;
 
 var UserActionCreators = {
 
-    changeUILanguage(language) {
-        //AppDispatcher.handleViewAction({
-        //    actionType: UserConstants.USER_CHANGE_LANGUAGE,
-        //    language: language,
-        //});
-    },
+  changeUILanguage(language) {
+    //AppDispatcher.handleViewAction({
+    //    actionType: UserConstants.USER_CHANGE_LANGUAGE,
+    //    language: language,
+    //});
+  },
 
-    saveUserData(userData){
+  updatePortfolio(portfolioData){
+    var mergeUserData = fromJS({ portfolio: portfolioData });
+    var userData = fromJS(UserStore.getUser().userData);
+    var mergedUserData = userData.mergeDeep(mergeUserData).toJS();
+    this.saveUserData(mergedUserData);
+  },
 
-        userDataToSave = userData;
+  saveUserData(userData){
 
-        // Don't spam the API, set a timeout for saving
-        clearTimeout(lastTimeOut);
-        lastTimeOut = setTimeout(()=>{
+    userDataToSave = userData;
 
-            userData.uid = UserStore.getUser().uid;
+    // Don't spam the API, set a timeout for saving
+    clearTimeout(lastTimeOut);
+    lastTimeOut = setTimeout(()=> {
 
-            AppDispatcher.handleViewAction({
-                actionType: UserConstants.USER_SAVE_DATA,
-                data: userDataToSave,
-            });
+      userData.uid = UserStore.getUser().uid;
 
-            updateUserData(userDataToSave);
-        },defaults.saveTimeout);
+      AppDispatcher.handleViewAction({
+        actionType: UserConstants.USER_SAVE_DATA,
+        data: userDataToSave,
+      });
 
-    },
+      updateUserData(userDataToSave);
+    }, defaults.saveTimeout);
 
-    loadUser() {
+  },
 
-        let uid;
+  loadUser() {
 
-        if(localStorage.getItem('uid') == null){
-            uid = new Date().getTime() + "-" + Math.round(Math.random()*10000);
-            localStorage.setItem('uid', uid);
-        }else{
-            uid = localStorage.getItem('uid');
-        }
+    let uid;
 
-        loadUser({uid:uid});
-    },
+    if (localStorage.getItem('uid') == null) {
+      uid = new Date().getTime() + "-" + Math.round(Math.random() * 10000);
+      localStorage.setItem('uid', uid);
+    } else {
+      uid = localStorage.getItem('uid');
+    }
+
+    loadUser({uid: uid});
+  },
 };
 
 export default UserActionCreators;

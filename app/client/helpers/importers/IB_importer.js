@@ -1,7 +1,7 @@
 import defaults from '../../config/Defaults';
 import moment from 'moment';
 
-const firstLine = "SKT_LOT,account,ticker,name,currency,date,time,amount,commission,price,total,commission_eur".split(",");
+const firstLine = "STK_LOT,account,ticker,name,currency,date,time,amount,commission,price,total,commission_eur".split(",");
 
 export function doImport(rawText){
 

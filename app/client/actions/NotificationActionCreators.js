@@ -21,6 +21,15 @@ const NotificationActionCreators = {
         });
     },
 
+    doError(msg){
+        this.setNotification({
+            isVisible: true,
+            type: 'warning',
+            message: msg,
+            delay: 3000
+        });
+    },
+
     userLoggedIn(user) {
         asap(() =>{
 
