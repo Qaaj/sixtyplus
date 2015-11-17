@@ -29,7 +29,7 @@ class StockTable extends React.Component {
     let fields = [];
     for (let key in sortedStocks) {
       let single = (<SingleStock key={Math.random()} entries={sortedStocks[key]} ticker={key}/>);
-      fields.push(single)
+      if(key != 'bonds ' && key != 'stocks' && key != 'savings') fields.push(single)
     }
 
 
