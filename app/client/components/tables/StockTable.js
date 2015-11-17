@@ -1,5 +1,4 @@
 import moment from 'moment';
-var stockData = require("json!../../../../static/trades.json");
 import { Label } from 'react-bootstrap';
 import SingleStock from '../ui/SingleStock';
 
