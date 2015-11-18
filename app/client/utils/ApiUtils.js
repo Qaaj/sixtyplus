@@ -25,6 +25,43 @@ export function changeUILanguage(data) {
     );
 };
 
+export function getStockPrice(ticker){
+
+    let data = {ticker: ticker};
+
+    let url = `${API_URL}/getStockPrice`;
+
+    post({url, data})
+      .then(
+        (response) => {
+            ServerActionCreators.tickerLoaded( { ticker: response.body })
+        },
+
+        (error) => {
+            console.error('Error: ', error);
+        }
+      );
+}
+
+export function getStockPrices(tickers){
+    console.log('getting prices', tickers)
+    let data = {tickers: tickers};
+
+    let url = `${API_URL}/getStockPrices`;
+
+    post({url, data})
+      .then(
+        (response) => {
+            console.log(response.body);
+            ServerActionCreators.tickersLoaded(  response.body)
+        },
+
+        (error) => {
+            console.error('Error: ', error);
+        }
+      );
+}
+
 export function updateUserData(data,uid){
 
     let url = `${API_URL}/saveUserData`;

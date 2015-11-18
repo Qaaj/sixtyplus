@@ -7,70 +7,85 @@ import Quickstart from './components/modules/Quickstart';
 
 import UserActionCreators from './actions/UserActionCreators';
 import UserStore from './stores/UserStore';
+import RealTimeStore from './stores/RealTimeStore';
 
 import Notification from './components/modules/NotificationModule';
 import NotificationActionCreators from './actions/NotificationActionCreators';
 
 class App extends React.Component {
 
-    constructor(props) {
-        super(props);
+  constructor(props) {
+    super(props);
 
-        this.state = {
-            user: UserStore.getUser()
+    this.state = {
+      user: UserStore.getUser()
+    }
+
+    this._handleUserStoreChange = this._handleUserStoreChange.bind(this);
+    this._handleRealTimeStoreChange = this._handleRealTimeStoreChange.bind(this);
+
+    UserActionCreators.loadUser();
+  }
+
+  _handleUserStoreChange() {
+
+    let user = UserStore.getUser();
+
+    this.setState({
+      user: user,
+    });
+
+    NotificationActionCreators.userLoggedIn(user);
+
+  }
+
+  _handleRealTimeStoreChange() {
+
+    let rt = RealTimeStore.getRealTimeData();
+    this.setState({
+      rt: rt,
+    });
+
+  }
+
+  componentWillUpdate(nextProps) {
+  }
+
+  componentDidMount() {
+    UserStore.addChangeListener(this._handleUserStoreChange);
+    RealTimeStore.addChangeListener(this._handleRealTimeStoreChange);
+  }
+
+  componentWillUnmount() {
+  }
+
+
+  render() {
+
+    const history = this.props.history;
+    const location = this.props.location;
+    const params = this.props.params;
+
+    return (<div>
+      <Header />
+      <Notification />
+
+      {React.cloneElement(
+        this.props.children, {
+          history: history,
+          location: location,
+          urlParams: params,
+          user: this.state.user,
+          rt: this.state.rt
         }
-
-        this._handleUserStoreChange = this._handleUserStoreChange.bind(this);
-
-        UserActionCreators.loadUser();
-    }
-
-    _handleUserStoreChange() {
-
-        let user = UserStore.getUser();
-
-        this.setState({
-            user: user,
-        });
-
-        NotificationActionCreators.userLoggedIn(user);
-
-    }
-
-    componentWillUpdate(nextProps) {}
-
-    componentDidMount() {
-        UserStore.addChangeListener(this._handleUserStoreChange);
-    }
-
-    componentWillUnmount() {}
-
-
-    render() {
-
-        const history = this.props.history;
-        const location = this.props.location;
-        const params = this.props.params;
-
-        return (<div>
-                    <Header />
-                    <Notification />
-
-                    {React.cloneElement(
-                        this.props.children, {
-                            history: history,
-                            location: location,
-                            urlParams: params,
-                            user: this.state.user,
-                        }
-                    )}
-                </div>);
-    }
+      )}
+    </div>);
+  }
 }
 
 const uiLang = window.userLang;
 
 ReactDOM.render(
-        <Router  routes={routes(App, uiLang)} />,
-        document.getElementById('app')
+  <Router routes={routes(App, uiLang)}/>,
+  document.getElementById('app')
 );

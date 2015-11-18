@@ -22,12 +22,13 @@ var UserActionCreators = {
   updatePortfolio(portfolioData){
     var mergeUserData = fromJS({ portfolio: portfolioData });
     var userData = fromJS(UserStore.getUser().userData);
-    var mergedUserData = userData.mergeDeep(mergeUserData).toJS();
+    if(userData)var mergedUserData = userData.mergeDeep(mergeUserData).toJS();
     this.saveUserData(mergedUserData);
   },
 
   saveUserData(userData){
 
+    console.log(userData);
     userDataToSave = userData;
 
     // Don't spam the API, set a timeout for saving
