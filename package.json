@@ -10,8 +10,9 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "local": "NODE_ENV=production npm build && NODE_ENV=production PORT=8080 npm start",
     "deploy": "npm run build && git add . && git commit -m 'release build' && git push heroku master",
-    "test-deploy": "npm run build && git add . && git commit -m 'release build' && git push heroku-test master",
-    "start": "node server.js"
+    "test-deploy": "npm run build && git add . && git commit -m 'test build' && git push heroku-test master",
+    "start": "node server.js",
+    "log": "git log --pretty=format:'%h - %an, %ar : %s' > commits.txt"
   },
   "author": "Jan Jorissen",
   "license": "MIT",

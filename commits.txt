@@ -1,0 +1,70 @@
+ebe4882 - Jan Jorissen, 9 minutes ago : release build
+e6fad6e - Jan Jorissen, 11 minutes ago : cleanup
+e4854a6 - Jan Jorissen, 33 minutes ago : added name decorator and autosave decorator
+2123366 - Jan Jorissen, 2 hours ago : release build
+a8b5e28 - Jan Jorissen, 3 hours ago : release build
+c0aafeb - Jan Jorissen, 3 hours ago : refactor modules
+91b6087 - Jan Jorissen, 23 hours ago : fix error for new users. lots done - promises, realtime store etc
+b47c705 - Jan Jorissen, 2 days ago : release build
+0668e6f - Jan Jorissen, 2 days ago :  added checks for empty portoflios
+9b09422 - Jan Jorissen, 2 days ago : release build
+141539a - Jan Jorissen, 2 days ago :  removed import
+2791d89 - Jan Jorissen, 2 days ago : saving user import
+0b7e2d9 - Jan Jorissen, 3 days ago : added importing of stocks
+865115d - Jan Jorissen, 11 days ago : release build
+647c841 - Jan Jorissen, 11 days ago : release build
+0005cf0 - Jan Jorissen, 11 days ago : release build
+84b9709 - Jan Jorissen, 11 days ago : default tab 1
+c89cc53 - Jan Jorissen, 11 days ago : added stock data
+ae17e95 - Jan Jorissen, 11 days ago : updated json and added data file
+4e7bb78 - Jan Jorissen, 11 days ago : release build
+a3938be - Jan Jorissen, 11 days ago : added AUTOSAVE HAPPY WEEKEND
+cdd9e0a - Jan Jorissen, 11 days ago : release build
+4625957 - Jan Jorissen, 11 days ago : styling
+e752fe6 - Jan Jorissen, 11 days ago : tabs
+8c17ec0 - Jan Jorissen, 11 days ago : removed unused vaR
+73a25fc - Jan Jorissen, 11 days ago : release build
+b734d51 - Jan Jorissen, 11 days ago : new url
+e0dd43a - Jan Jorissen, 11 days ago : redirect
+d09abdd - Jan Jorissen, 11 days ago : new
+7c540a8 - Jan Jorissen, 11 days ago : reroute font call
+ee01f84 - Jan Jorissen, 11 days ago : removed postinstall
+b77b2fd - Jan Jorissen, 12 days ago : changes
+a8704b9 - Jan Jorissen, 12 days ago :  new webpack
+2839872 - Jan Jorissen, 12 days ago : updated webpack config
+03fb44a - Jan Jorissen, 12 days ago : test
+17d9032 - Jan Jorissen, 12 days ago : another build
+2e3a2ba - Jan Jorissen, 12 days ago : rewiring dist directory
+878ff6b - Jan Jorissen, 12 days ago :  moved dist folder
+a685337 - Jan Jorissen, 12 days ago :  trying new production webpack
+ed50b26 - Jan Jorissen, 12 days ago : lets try again
+aec608a - Jan Jorissen, 12 days ago : removed modules support for scss
+29c1745 - Jan Jorissen, 12 days ago : final bundle test
+227c8a4 - Jan Jorissen, 12 days ago : smaller bundle
+f394f34 - Jan Jorissen, 12 days ago :  lol 8 mb bundle
+36d0b63 - Jan Jorissen, 12 days ago : added bundle for heroku
+f556a2b - Jan Jorissen, 12 days ago : changes for heroku
+a52081e - Jan Jorissen, 12 days ago : switched server and index
+6cc31ef - Jan Jorissen, 12 days ago : pretty time
+6f9745a - Jan Jorissen, 12 days ago : minor enhancements
+c2ea3db - Jan Jorissen, 12 days ago : new gitignore
+7b1b07b - Jan Jorissen, 12 days ago :  using ncie helpers
+9a2acc7 - Jan Jorissen, 12 days ago : Merge branch 'master' of https://bitbucket.org/mordhau/60plus
+586165d - Jan Jorissen, 12 days ago : updated json package
+e9a91d3 - WWWillems, 12 days ago : Added missing npm packages
+204eebe - Jan Jorissen, 12 days ago :  moved notifications
+06ca05c - Jan Jorissen, 12 days ago :  new message
+ff40538 - Jan Jorissen, 12 days ago : ntifications addeD
+fd50dc4 - Jan Jorissen, 12 days ago : added working flux and material design icons+fonts
+258231d - Jan Jorissen, 12 days ago : added basic flux
+306b074 - Jan Jorissen, 12 days ago : API working
+d1526f3 - Jan Jorissen, 12 days ago : new dir structure
+3b5b124 - Jan Jorissen, 13 days ago : BS
+a900f78 - Jan Jorissen, 13 days ago : merge done
+fd27309 - Jan Jorissen, 13 days ago : better values
+39a1715 - WWWillems, 13 days ago : Updated package.json to include missing npm  packages
+4a4d546 - Jan Jorissen, 13 days ago : added input creator
+a91eae4 - Jan Jorissen, 13 days ago : added routing and jade
+2a18964 - Jan Jorissen, 13 days ago : workspace xml changed
+99753a1 - Jan Jorissen, 2 weeks ago : first commit
+2f3d3d9 - Jan Jorissen, 2 weeks ago : first commit
