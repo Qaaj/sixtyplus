@@ -1,7 +1,9 @@
 import moment from 'moment';
 import { Label } from 'react-bootstrap';
 import SingleStock from '../ui/SingleStock';
+import { pureRenderDecorator } from '../../../shared/helpers/decorators';
 
+@pureRenderDecorator
 class StockTable extends React.Component {
 
   constructor(props) {
@@ -22,6 +24,7 @@ class StockTable extends React.Component {
   render() {
     if(!this.props.user.userData) return null;
 
+    console.log(this.props.rt);
     let sortedStocks = this.props.user.userData.portfolio;
 
     let fields = [];

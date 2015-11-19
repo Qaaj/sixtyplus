@@ -8,6 +8,7 @@ import UserActionCreators from '../../actions/UserActionCreators';
 import { doImport } from '../../helpers/importers/IB_importer';
 import NotificationActionCreators from '../../actions/NotificationActionCreators';
 import SingleStock from '../ui/SingleStock';
+import { Grid } from 'react-bootstrap';
 
 
 class Importer extends React.Component {
@@ -89,7 +90,7 @@ class Importer extends React.Component {
     }
 
     return (
-      <div className='importer'>
+      <Grid className='importer'>
         <Input onChange={this._handleChange} name='rawStockData' type='textarea' label="Import from IB" placeholder="STK_LOT|U1418343|VZ|VERIZON COMMUNICATIONS INC|USD|20150520|15:00:18|10.00|1.00|49.83|498.30|0.92813
 STK_LOT|U1418343|XOM|EXXON MOBIL CORP|USD|20150724|12:42:07|10.00|1.00|80.11|801.10|0.92813
 ..."/>
@@ -97,7 +98,7 @@ STK_LOT|U1418343|XOM|EXXON MOBIL CORP|USD|20150724|12:42:07|10.00|1.00|80.11|801
         <hr />
         {this.state.fields}
         {btn}
-      </div>
+      </Grid>
     );
   }
 }

@@ -3,7 +3,8 @@ import styles from '../../scss/main.scss';
 import { Router } from 'react-router';
 import routes from './routes/routes';
 import Header from './components/layout/Header';
-import Quickstart from './components/modules/Quickstart';
+import TopMenu from './components/layout/TopMenu';
+import Quickstart from './components/modules/QuickstartModule';
 
 import UserActionCreators from './actions/UserActionCreators';
 import UserStore from './stores/UserStore';
@@ -11,8 +12,11 @@ import RealTimeStore from './stores/RealTimeStore';
 
 import Notification from './components/modules/NotificationModule';
 import NotificationActionCreators from './actions/NotificationActionCreators';
+const uiLang = window.userLang;
+
 
 class App extends React.Component {
+
 
   constructor(props) {
     super(props);
@@ -67,11 +71,14 @@ class App extends React.Component {
     const params = this.props.params;
 
     return (<div>
+
       <Header />
+      <TopMenu history={history} location={location} urlParams={params} lang={uiLang} />
       <Notification />
 
       {React.cloneElement(
         this.props.children, {
+          lang:uiLang,
           history: history,
           location: location,
           urlParams: params,
@@ -83,7 +90,6 @@ class App extends React.Component {
   }
 }
 
-const uiLang = window.userLang;
 
 ReactDOM.render(
   <Router routes={routes(App, uiLang)}/>,

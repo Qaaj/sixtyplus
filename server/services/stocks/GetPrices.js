@@ -4,7 +4,7 @@ var yahooFinance = require('yahoo-finance');
 
 export default (req, res) => {
 
-  debug("getting stock prices for ", req.body.tickers);
+  debug("getting stock prices");
 
   var promise = new Promise(function (resolve, reject) {
     let returnList = [];

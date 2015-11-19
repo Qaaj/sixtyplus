@@ -1,47 +1,14 @@
 import { Panel , Label, Button} from 'react-bootstrap';
 import { get, post, put, del } from '../../utils/RequestUtil';
 import {getStockPrice  } from '../../actions/RealTimeActionCreators';
+import { pureRenderDecorator } from '../../../shared/helpers/decorators';
 
+@pureRenderDecorator
 class SingleStock extends React.Component {
-
 
   constructor(props) {
     super(props);
     this.state = {price: "N/A"};
-  }
-
-  componentDidMount() {
-    //let currentProtocol = window.location.protocol;
-    //let baseUrl = window.location.host;
-
-    //const API_URL = `${currentProtocol}//${baseUrl}/api`;
-    //
-    //let data = {ticker: this.props.ticker};
-    //let url = `${API_URL}/getStockPrice`;
-    //
-    //this.timeOutID = setTimeout(()=> {
-    //  post({url, data})
-    //    .then(
-    //      (response) => {
-    //        console.log(response.body.lastTradePriceOnly);
-    //        this.setState({price: response.body.lastTradePriceOnly})
-    //      },
-    //
-    //      (error) => {
-    //        console.error('Error: ', error);
-    //      }
-    //    );
-    //}, 200);
-    //getStockPrice(this.props.ticker);
-
-  }
-
-  componentWillUnmount(){
-
-  }
-
-  componentDidMount(){
-
   }
 
   componentWillReceiveProps(newProps) {
@@ -52,6 +19,13 @@ class SingleStock extends React.Component {
     if(stockPrice) this.setState({price: stockPrice.lastTradePriceOnly});
   }
 
+  componentDidMount(){
+    let stockPrice = 0;
+    if(this.props.rt) {
+      stockPrice = this.props.rt[this.props.ticker];
+    }
+    if(stockPrice) this.setState({price: stockPrice.lastTradePriceOnly});
+  }
 
   render() {
 

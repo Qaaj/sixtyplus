@@ -7,7 +7,7 @@ import Slider from '../ui/Slider';
 import { calculateYears,calculatePortfolio,calculatePieData,calculateMonthlyBudget } from '../../helpers/calculators/SavingsGoalCalculator';
 import UserActionCreators from '../../actions/UserActionCreators';
 import StockTable from '../tables/StockTable';
-import Importer from './Importer';
+import Importer from './ImporterModule';
 
 import {getStockPrice  } from '../../actions/RealTimeActionCreators';
 
@@ -18,12 +18,10 @@ class Quickstart extends React.Component {
     super(props);
     this.state = {
       'risk': 2,
-      'tabIndex': 1,
     }
 
     this._handleChange = this._handleChange.bind(this);
     this._handleInput = this._handleInput.bind(this);
-    this._handleTabChange = this._handleTabChange.bind(this);
 
   }
 
@@ -62,10 +60,6 @@ class Quickstart extends React.Component {
 
   }
 
-  _handleTabChange(i) {
-    this.setState({tabIndex: i});
-  }
-
   _calculateResults() {
 
     calculatePortfolio(this.state);
@@ -90,11 +84,7 @@ class Quickstart extends React.Component {
     //this.inputFields.push(createRegularFields(['Lander is Hip'],this._handleInput));
     //<Slider value={this.state['age']} min={29} max={99} minLabel='29' maxLabel='99' label='Age at which you want to achieve your goal' name='age' onChange={this._handleChange} step={1} />
 
-    return (<div>
-      <Grid>
-        <Tabs onSelect={this._handleTabChange} activeKey={this.state.tabIndex}>
-          <Tab eventKey={1} title="Quickstart">
-            <Grid>
+    return (<Grid>
               <Row className="show-grid ">
                 <Col md={6}>
                   <Panel header={<h3>Basics <small>Enter your basic information</small></h3>}>
@@ -135,18 +125,7 @@ class Quickstart extends React.Component {
                   </Panel>
                 </Col>
               </Row>
-            </Grid>
-          </Tab>
-          <Tab eventKey={2} title="Stocks">
-            <StockTable rt={this.props.rt} user={this.props.user}/>
-          </Tab>
-          <Tab eventKey={3} title="Import">
-            <Importer />
-          </Tab>
-        </Tabs>
-      </Grid>
-
-    </div>);
+            </Grid>);
   }
 }
 

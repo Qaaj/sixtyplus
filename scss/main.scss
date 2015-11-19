@@ -21,6 +21,8 @@ body {
     width:600px;
     margin-left: auto;
     margin-right: auto;
+    margin-bottom:0px;
+    margin-top:0px;
 }
 
 .jumbotron{
@@ -41,6 +43,10 @@ body {
     }
 }
 
+.topMenu{
+    margin-bottom: 20px;
+}
+
 .importer {
     text-align: right;
     position: relative;
@@ -58,6 +64,11 @@ body {
     padding:2%;
 }
 
+
+*:focus{
+    outline-offset: 0px;
+    outline-style: none !important;
+}
 
 .singlestock-panel{
         margin-left:20px;
