@@ -56,25 +56,24 @@ UserStore.dispatchToken = AppDispatcher.register(function (payload) {
       break;
 
     case UserConstants.USER_LOADED:
-
       if (action.data.currency == "EURO") action.data.currency = "€";
       if (action.data.currency == "DOLLAR") action.data.currency = "$";
       if (action.data.currency == "POUND") action.data.currency = "£";
       _userObject = fromJS(action.data);
 
       // Move this logic elsewhere
-
-      if(_userObject.toJS().userData && _userObject.toJS().userData.allocation && _userObject.toJS().userData.portfolio){
-
-        let portfolio = _userObject.getIn(['userData', 'portfolio']).toList().toJS();
-
-        const portfolioList = portfolio.reduce((prev,curr,i ) =>{
-          prev.push(curr[0].ticker);
-          return prev
-        },[]);
-
-        RealTimeActionCreators.getStockPrices(portfolioList);
-      }
+      //
+      //if(_userObject.toJS().userData && _userObject.toJS().userData.allocation && _userObject.toJS().userData.portfolio){
+      //
+      //  let portfolio = _userObject.getIn(['userData', 'portfolio']).toList().toJS();
+      //
+      //  const portfolioList = portfolio.reduce((prev,curr,i ) =>{
+      //    prev.push(curr[0].ticker);
+      //    return prev
+      //  },[]);
+      //
+      //  RealTimeActionCreators.getStockPrices(portfolioList);
+      //}
 
 
       UserStore.emitChange();

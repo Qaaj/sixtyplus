@@ -4,14 +4,18 @@ import {Jumbotron, Button, Row, Col, Grid, PageHeader, Panel, Input, Label, Tabs
 import { PieChart } from 'react-d3';
 import { createRegularFields, createCurrencyFields, createPercentageFields } from '../../helpers/InputFactory';
 import Slider from '../ui/Slider';
-import { calculateYears,calculatePortfolio,calculatePieData,calculateMonthlyBudget } from '../../helpers/calculators/SavingsGoalCalculator';
+import { calculateYears,calculatePortfolio,calculatePieData,calculateMonthlyBudget } from '../../../shared/helpers/calculators/SavingsGoalCalculator';
 import UserActionCreators from '../../actions/UserActionCreators';
 import StockTable from '../tables/StockTable';
 import Importer from './ImporterModule';
 
-import {getStockPrice  } from '../../actions/RealTimeActionCreators';
+import AutoSaveStore from '../../stores/AutoSaveStore';
+import {nameCreator,autoSaver} from '../../../shared/helpers/decorators';
 
+import {getStockPrice } from '../../actions/RealTimeActionCreators';
 
+@nameCreator
+@autoSaver
 class Quickstart extends React.Component {
 
   constructor(props) {
@@ -19,6 +23,8 @@ class Quickstart extends React.Component {
     this.state = {
       'risk': 2,
     }
+
+    //this.name = Quickstart.displayName;
 
     this._handleChange = this._handleChange.bind(this);
     this._handleInput = this._handleInput.bind(this);
@@ -54,7 +60,8 @@ class Quickstart extends React.Component {
 
     if (this.state[e.target.name] != e.target.value) {
       this.state[e.target.name] = e.target.value;
-      console.log(this.state);
+
+      AutoSaveStore.saveModuleSetting(this);
       UserActionCreators.saveUserData(this.state);
     }
 
@@ -85,47 +92,47 @@ class Quickstart extends React.Component {
     //<Slider value={this.state['age']} min={29} max={99} minLabel='29' maxLabel='99' label='Age at which you want to achieve your goal' name='age' onChange={this._handleChange} step={1} />
 
     return (<Grid>
-              <Row className="show-grid ">
-                <Col md={6}>
-                  <Panel header={<h3>Basics <small>Enter your basic information</small></h3>}>
-                    {this.inputFields}
-                    <Slider value={this.state['risk']} min={0} max={10} minLabel='Low' maxLabel='High'
-                            label='Risk Tolerance' name='risk' onChange={this._handleChange} step={1}/>
-                  </Panel>
-                </Col>
-                <Col md={6}>
-                  <Panel style={{'textAlign':'center'}}
-                         header={<h3>Analysis <small>Projections based on your settings</small></h3>}>
-                    <h3>Monthly budget: <Label
-                      bsStyle={cx}>{this.props.user.currency} {this.state.monthlyBudget}</Label></h3>
-                    <div style={{'width':'400px','marginLeft':'auto','marginRight':'auto'}}>
-                      <PieChart
-                        data={this.state.pieData}
-                        width={400}
-                        height={300}
-                        radius={100}
-                        innerRadius={20}
-                        sectorBorderColor="white"
-                      />
-                    </div>
-                    {timeFrame}
-                  </Panel>
-                </Col>
-                <Col className='collapsible' md={12}>
-                  <Panel className='advanced-panel' collapsible
-                         header={<h3>Advanced Settings</h3>}>
-                    <Row className="show-grid">
-                      <Col md={6}>
-                        {this.advancedInputFields.slice(0, 3)}
-                      </Col>
-                      <Col md={6}>
-                        {this.advancedInputFields.slice(3, 5)}
-                      </Col>
-                    </Row>
-                  </Panel>
-                </Col>
-              </Row>
-            </Grid>);
+      <Row className="show-grid ">
+        <Col md={6}>
+          <Panel header={<h3>Basics <small>Enter your basic information</small></h3>}>
+            {this.inputFields}
+            <Slider value={this.state['risk']} min={0} max={10} minLabel='Low' maxLabel='High'
+                    label='Risk Tolerance' name='risk' onChange={this._handleChange} step={1}/>
+          </Panel>
+        </Col>
+        <Col md={6}>
+          <Panel style={{'textAlign':'center'}}
+                 header={<h3>Analysis <small>Projections based on your settings</small></h3>}>
+            <h3>Monthly budget: <Label
+              bsStyle={cx}>{this.props.user.currency} {this.state.monthlyBudget}</Label></h3>
+            <div style={{'width':'400px','marginLeft':'auto','marginRight':'auto'}}>
+              <PieChart
+                data={this.state.pieData}
+                width={400}
+                height={300}
+                radius={100}
+                innerRadius={20}
+                sectorBorderColor="white"
+              />
+            </div>
+            {timeFrame}
+          </Panel>
+        </Col>
+        <Col className='collapsible' md={12}>
+          <Panel className='advanced-panel' collapsible
+                 header={<h3>Advanced Settings</h3>}>
+            <Row className="show-grid">
+              <Col md={6}>
+                {this.advancedInputFields.slice(0, 3)}
+              </Col>
+              <Col md={6}>
+                {this.advancedInputFields.slice(3, 5)}
+              </Col>
+            </Row>
+          </Panel>
+        </Col>
+      </Row>
+    </Grid>);
   }
 }
 

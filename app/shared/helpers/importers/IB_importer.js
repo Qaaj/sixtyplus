@@ -1,4 +1,4 @@
-import defaults from '../../config/Defaults';
+import defaults from '../../../client/config/Defaults';
 import moment from 'moment';
 
 const firstLine = "STK_LOT,account,ticker,name,currency,date,time,amount,commission,price,total,commission_eur".split(",");

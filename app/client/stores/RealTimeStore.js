@@ -2,6 +2,8 @@
 
 import AppDispatcher from '../dispatcher/AppDispatcher';
 import RealTimeConstants from '../constants/RealTimeConstants';
+import RealTimeActionCreators from '../actions/RealTimeActionCreators';
+import UserConstants from '../constants/UserConstants';
 import assign from 'object-assign';
 import { EventEmitter } from 'events';
 import { Map, fromJS } from 'immutable';
@@ -42,6 +44,23 @@ RealTimeStore.dispatchToken = AppDispatcher.register(function (payload) {
   const action = payload.action;
 
   switch (action.actionType) {
+
+    case UserConstants.USER_LOADED:
+
+      let _userObject = UserStore.getUser();
+
+      if(_userObject.userData && _userObject.userData.allocation && _userObject.userData.portfolio){
+
+        let portfolio = fromJS(_userObject).getIn(['userData', 'portfolio']).toList().toJS();
+
+        const portfolioList = portfolio.reduce((prev,curr,i ) =>{
+          prev.push(curr[0].ticker);
+          return prev
+        },[]);
+
+        RealTimeActionCreators.getStockPrices(portfolioList);
+      }
+    break;
 
     case RealTimeConstants.REAL_TIME_STOCKS_UPDATE:
 

@@ -1,4 +1,4 @@
-import defaults from '../../config/Defaults';
+import defaults from '../../../client/config/Defaults';
 import moment from 'moment';
 
 export function calculateYears(data){

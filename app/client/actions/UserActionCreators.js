@@ -51,7 +51,7 @@ var UserActionCreators = {
 
     let uid;
 
-    if (localStorage.getItem('uid') == null) {
+    if (localStorage.getItem('uid') == null || localStorage.getItem('uid') == "") {
       uid = new Date().getTime() + "-" + Math.round(Math.random() * 10000);
       localStorage.setItem('uid', uid);
     } else {
