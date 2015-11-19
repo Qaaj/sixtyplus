@@ -24,8 +24,6 @@ class Quickstart extends React.Component {
       'risk': 2,
     }
 
-    //this.name = Quickstart.displayName;
-
     this._handleChange = this._handleChange.bind(this);
     this._handleInput = this._handleInput.bind(this);
 
@@ -38,10 +36,6 @@ class Quickstart extends React.Component {
       state = newProps.user.userData;
     }
 
-
-    if (newProps.location.pathname.indexOf("Import") !== -1) {
-      state.tabIndex = 3;
-    }
     this.setState(state);
   }
 

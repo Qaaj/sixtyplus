@@ -1,5 +1,5 @@
 export default {
 
-  'Quickstart': ['risk', 'savingsGoal', 'monthlyBudget'],
-  
+  'Quickstart': ['monthlyBudget','monthlyCostsFixed','monthlyCostsVariable','currentSavings','monthlyIncome','risk','savingsGoal'],
+
 }
