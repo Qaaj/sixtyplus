@@ -7,8 +7,9 @@ import { fromJS } from 'immutable';
 import UserStore from '../stores/UserStore.js';
 import defaults from '../config/Defaults';
 
+import RealTimeActionCreators from './RealTimeActionCreators';
+
 let userDataToSave = {};
-let lastTimeOut;
 
 var UserActionCreators = {
 
@@ -20,30 +21,39 @@ var UserActionCreators = {
   },
 
   updatePortfolio(portfolioData){
-    var mergeUserData = fromJS({ portfolio: portfolioData });
+
+    var mergeUserData = fromJS({portfolio: portfolioData});
     var userData = fromJS(UserStore.getUser().userData);
-    if(userData)var mergedUserData = userData.mergeDeep(mergeUserData).toJS();
+    let mergedUserData = userData;
+    if (userData) mergedUserData = userData.mergeDeep(mergeUserData).toJS();
+    AppDispatcher.handleViewAction({
+      actionType: UserConstants.USER_SAVE_DATA,
+      data: mergedUserData,
+    });
+
+
+    if (userData && userData.portfolio) {
+
+      const portfolioList = userData.portfolio.reduce((prev, curr, i) => {
+        prev.push(curr[0].ticker);
+        return prev
+      }, []);
+
+      RealTimeActionCreators.getStockPrices(portfolioList);
+    }
+    //RealTimeActionCreators.getStockPrices()
     this.saveUserData(mergedUserData);
   },
 
   saveUserData(userData){
 
-    console.log(userData);
-    userDataToSave = userData;
 
-    // Don't spam the API, set a timeout for saving
-    clearTimeout(lastTimeOut);
-    lastTimeOut = setTimeout(()=> {
+    AppDispatcher.handleViewAction({
+      actionType: UserConstants.USER_SAVE_DATA,
+      data: userData,
+    });
 
-      userData.uid = UserStore.getUser().uid;
-
-      AppDispatcher.handleViewAction({
-        actionType: UserConstants.USER_SAVE_DATA,
-        data: userDataToSave,
-      });
-
-      updateUserData(userDataToSave);
-    }, defaults.saveTimeout);
+    updateUserData(userData,UserStore.getUser().uid);
 
   },
 

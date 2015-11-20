@@ -9,6 +9,9 @@ import { EventEmitter } from 'events';
 import { Map, fromJS } from 'immutable';
 const CHANGE_EVENT = 'change';
 import UserStore from './UserStore';
+import defaults from '../config/Defaults';
+
+let timer = null;
 
 let _realTimeObject = Map();
 
@@ -32,6 +35,32 @@ const RealTimeStore = assign({}, EventEmitter.prototype, {
   },
 });
 
+
+function startTimer() {
+
+  if (!timer) {
+    timer = setInterval(()=> {
+      refreshPortfolio();
+    }, defaults.refreshRate);
+  }
+}
+
+function refreshPortfolio() {
+
+  let _userObject = UserStore.getUser();
+
+  if (_userObject.userData && _userObject.userData.portfolio) {
+    let portfolio = fromJS(_userObject).getIn(['userData', 'portfolio']).toList().toJS();
+
+    const portfolioList = portfolio.reduce((prev, curr, i) => {
+      prev.push(curr[0].ticker);
+      return prev
+    }, []);
+
+    RealTimeActionCreators.getStockPrices(portfolioList);
+  }
+}
+
 //dividendYield: 1.68
 //lastTradeDate: "2015-11-17T23:00:00.000Z"
 //lastTradePriceOnly: 107.63
@@ -47,43 +76,38 @@ RealTimeStore.dispatchToken = AppDispatcher.register(function (payload) {
 
     case UserConstants.USER_LOADED:
 
-      let _userObject = UserStore.getUser();
+      refreshPortfolio();
+      startTimer();
 
-      if(_userObject.userData && _userObject.userData.allocation && _userObject.userData.portfolio){
+  break;
 
-        let portfolio = fromJS(_userObject).getIn(['userData', 'portfolio']).toList().toJS();
+  case
+  RealTimeConstants.REAL_TIME_STOCKS_UPDATE
+  :
 
-        const portfolioList = portfolio.reduce((prev,curr,i ) =>{
-          prev.push(curr[0].ticker);
-          return prev
-        },[]);
+  action.data.map(ticker => {
+    _realTimeObject = _realTimeObject.set(ticker.symbol, ticker)
+  });
 
-        RealTimeActionCreators.getStockPrices(portfolioList);
-      }
-    break;
+  RealTimeStore.emitChange();
 
-    case RealTimeConstants.REAL_TIME_STOCKS_UPDATE:
+  break;
 
-      action.data.map(ticker => {
-        _realTimeObject = _realTimeObject.set(ticker.symbol, ticker)
-      });
+  case
+  RealTimeConstants.REAL_TIME_STOCK_UPDATE
+  :
 
-      RealTimeStore.emitChange();
+  _realTimeObject = _realTimeObject.set(action.data.ticker.symbol, action.data.ticker);
+  RealTimeStore.emitChange();
 
-      break;
+  break;
 
-    case RealTimeConstants.REAL_TIME_STOCK_UPDATE:
-
-      _realTimeObject = _realTimeObject.set(action.data.ticker.symbol, action.data.ticker);
-      RealTimeStore.emitChange();
-
-      break;
-
-    default:
-      return true;
-  }
-
+  default:
   return true;
-});
+}
+
+return true;
+})
+;
 
 export default RealTimeStore;

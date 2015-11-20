@@ -7,7 +7,13 @@ import { EventEmitter } from 'events';
 import { Map, fromJS } from 'immutable';
 import asap from 'asap';
 import RealTimeActionCreators from '../actions/RealTimeActionCreators';
+import UserActionCreators from '../actions/UserActionCreators';
 const CHANGE_EVENT = 'change';
+
+import defaults from '../config/Defaults';
+let lastTimeOut = 0;
+
+
 import { getModuleSaveData } from '../../shared/helpers/autosave/saveModule';
 
 let _saveObject = Map();
@@ -22,9 +28,17 @@ const AutoSaveStore = assign({}, EventEmitter.prototype, {
     return _saveObject.toJS();
   },
 
-  saveModuleSetting(data) {
-    let saveData = getModuleSaveData(data)
-    console.log(saveData);
+  saveModuleSetting(module) {
+
+    clearTimeout(lastTimeOut);
+
+    // Don't spam the API, set a timeout for saving
+    lastTimeOut = setTimeout(()=> {
+      let saveData = getModuleSaveData(module);
+      console.log("xxx" ,saveData);
+      UserActionCreators.saveUserData(saveData);
+    }, defaults.saveTimeout);
+
   },
 
   emitChange() {

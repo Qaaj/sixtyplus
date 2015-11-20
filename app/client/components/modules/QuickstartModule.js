@@ -8,11 +8,9 @@ import { calculateYears,calculatePortfolio,calculatePieData,calculateMonthlyBudg
 import UserActionCreators from '../../actions/UserActionCreators';
 import StockTable from '../tables/StockTable';
 import Importer from './ImporterModule';
-
+import {fromJS } from 'immutable';
 import AutoSaveStore from '../../stores/AutoSaveStore';
 import {nameCreator,autoSaver} from '../../../shared/helpers/decorators';
-
-import {getStockPrice } from '../../actions/RealTimeActionCreators';
 
 @nameCreator
 @autoSaver
@@ -20,16 +18,24 @@ class Quickstart extends React.Component {
 
   constructor(props) {
     super(props);
+
     this.state = {
       'risk': 2,
     }
 
-    this._handleChange = this._handleChange.bind(this);
-    this._handleInput = this._handleInput.bind(this);
-
   }
 
   componentWillReceiveProps(newProps) {
+    this._getStateFromProps(newProps);
+  }
+
+  componentDidMount() {
+    this._getStateFromProps();
+  }
+
+  _getStateFromProps(newProps) {
+
+    if (!newProps) newProps = this.props;
     var state = {};
 
     if (newProps.user.userData) {
@@ -37,61 +43,51 @@ class Quickstart extends React.Component {
     }
 
     this.setState(state);
+    this.setState({cool:'guy'});
   }
 
-  _handleChange(e) {
-    this.setState({[e.target.name]: e.target.value})
-
+  _saveStateFromInput(e) {
+    this.setState({[e.target.name]: e.target.value});
     if (this.state[e.target.name] != e.target.value) {
       this.state[e.target.name] = e.target.value;
-      UserActionCreators.saveUserData(this.state);
+      AutoSaveStore.saveModuleSetting(this);
     }
-
   }
 
   _handleInput(e, i) {
-    this.setState({[e.target.name]: e.target.value})
-
-    if (this.state[e.target.name] != e.target.value) {
-      this.state[e.target.name] = e.target.value;
-
-      AutoSaveStore.saveModuleSetting(this);
-      UserActionCreators.saveUserData(this.state);
-    }
-
+    this._saveStateFromInput(e);
   }
 
   _calculateResults() {
 
-    calculatePortfolio(this.state);
-    calculateMonthlyBudget(this.state);
-    calculateYears(this.state);
-    calculatePieData(this.state);
-
+    let state = fromJS(this.state).toJS();
+    calculatePortfolio(state);
+    calculateMonthlyBudget(state);
+    calculateYears(state);
+    calculatePieData(state);
+    return state;
 
   }
 
   render() {
 
-    this._calculateResults();
+    let state = this._calculateResults();
 
-    this.inputFields = createCurrencyFields(['savingsGoal', 'monthlyIncome', 'monthlyCostsFixed', 'monthlyCostsVariable', 'currentSavings'], this._handleInput, this.state);
-    this.advancedInputFields = createPercentageFields(['stockReturns', 'intrestRate', 'bondYield', 'taxRate', 'salaryIncrease'], this._handleInput, this.state);
+    this.inputFields = createCurrencyFields(['savingsGoal', 'monthlyIncome', 'monthlyCostsFixed', 'monthlyCostsVariable', 'currentSavings'],::this._handleInput, state);
+    this.advancedInputFields = createPercentageFields(['stockReturns', 'intrestRate', 'bondYield', 'taxRate', 'salaryIncrease'],::this._handleInput, state);
     let cx = 'success';
-    if (this.state.monthlyBudget < 1) cx = 'warning';
+    if (state.monthlyBudget < 1) cx = 'warning';
 
     let timeFrame = null;
-    if (this.state.years != "") timeFrame = (<h3>Projected timeframe: {this.state.years}</h3>);
+    if (state.years != "") timeFrame = (<h3>Projected timeframe: {state.years}</h3>);
     //this.inputFields.push(createRegularFields(['Lander is Hip'],this._handleInput));
-    //<Slider value={this.state['age']} min={29} max={99} minLabel='29' maxLabel='99' label='Age at which you want to achieve your goal' name='age' onChange={this._handleChange} step={1} />
 
     return (<Grid>
       <Row className="show-grid ">
         <Col md={6}>
           <Panel header={<h3>Basics <small>Enter your basic information</small></h3>}>
             {this.inputFields}
-            <Slider value={this.state['risk']} min={0} max={10} minLabel='Low' maxLabel='High'
-                    label='Risk Tolerance' name='risk' onChange={this._handleChange} step={1}/>
+            <Slider value={state['risk']} min={0} max={10} minLabel='Low' maxLabel='High' label='Risk Tolerance' name='risk' onChange={::this._handleInput} step={1}/>
           </Panel>
         </Col>
         <Col md={6}>
@@ -101,7 +97,7 @@ class Quickstart extends React.Component {
               bsStyle={cx}>{this.props.user.currency} {this.state.monthlyBudget}</Label></h3>
             <div style={{'width':'400px','marginLeft':'auto','marginRight':'auto'}}>
               <PieChart
-                data={this.state.pieData}
+                data={state.pieData}
                 width={400}
                 height={300}
                 radius={100}
@@ -127,7 +123,7 @@ class Quickstart extends React.Component {
         </Col>
       </Row>
     </Grid>);
-  }
+  };;
 }
 
 Quickstart.displayName = 'Quickstart';
@@ -136,6 +132,6 @@ Quickstart.PropTypes = {
   location: React.PropTypes.obj,
   urlParams: React.PropTypes.obj,
   user: React.PropTypes.string,
-}
+};
 
 export default Quickstart;

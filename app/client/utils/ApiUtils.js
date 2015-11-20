@@ -23,8 +23,7 @@ export function changeUILanguage(data) {
             console.error('Error: ', error);
         }
     );
-};
-
+}
 export function getStockPrice(ticker){
 
     let data = {ticker: ticker};
@@ -44,7 +43,6 @@ export function getStockPrice(ticker){
 }
 
 export function getStockPrices(tickers){
-    console.log('getting prices', tickers)
     let data = {tickers: tickers};
 
     let url = `${API_URL}/getStockPrices`;
@@ -52,7 +50,6 @@ export function getStockPrices(tickers){
     post({url, data})
       .then(
         (response) => {
-            console.log(response.body);
             ServerActionCreators.tickersLoaded(  response.body)
         },
 
@@ -62,9 +59,10 @@ export function getStockPrices(tickers){
       );
 }
 
-export function updateUserData(data,uid){
+export function updateUserData(userData,uid){
 
     let url = `${API_URL}/saveUserData`;
+    let data = {userData, uid};
 
     post({url, data})
         .then(

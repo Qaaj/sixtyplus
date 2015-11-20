@@ -47,7 +47,6 @@ class Importer extends React.Component {
         if (tx.STK_LOT !== 'STK_LOT') return;
         if (!sortedStocks[tx.ticker]) sortedStocks[tx.ticker] = [];
         let formattedTX = {};
-        console.log(tx);
         formattedTX.date = moment(tx.date, "YYYYMMDD");
         formattedTX.ticker = tx.ticker;
         formattedTX.name = this.capitalizeFirstLetter(tx.name.toLowerCase());
@@ -109,6 +108,6 @@ Importer.PropTypes = {
   location: React.PropTypes.obj,
   urlParams: React.PropTypes.obj,
   userObject: React.PropTypes.string,
-}
+};
 
 export default Importer;

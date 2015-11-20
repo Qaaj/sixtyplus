@@ -55,6 +55,6 @@ PortfolioOverview.PropTypes = {
   urlParams: React.PropTypes.obj,
   rt: React.PropTypes.obj,
   user: React.PropTypes.string,
-}
+};
 
 export default PortfolioOverview;

@@ -15,7 +15,7 @@ export default (req, res) => {
         if(snapshot.val()){
 
            user.update({
-                userData: req.body,
+                userData: req.body.userData,
             });
 
             res.send(req.body.uid);

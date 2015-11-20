@@ -20,7 +20,7 @@ export function calculateYears(data){
         var temp =  Math.log( (savingsGoal + parseFloat(contribution/growth) ) / (currentSavings + parseFloat(contribution/growth)) ) / parseFloat(Math.log(1 + growth)) ;
         let y = Math.floor(moment.duration(temp, 'years').asYears());
         let m = Math.floor(moment.duration(temp, 'years').asMonths()) -(y * 12);
-        let xtra = ''; let xtra2 = ''
+        let xtra = ''; let xtra2 = '';
         if(m > 1) xtra = 's';
         if(y > 1) xtra2 = 's';
 
@@ -40,7 +40,7 @@ function weightedAverage(data){
     if(!data.stockReturns) data.stockReturns = defaults['stockReturns'];
     if(!data.bondYield) data.bondYield = defaults['bondYield'];
     if(!data.intrestRate) data.intrestRate = defaults['intrestRate'];
-    var average = ((1+(data.intrestRate/100)) * data.allocation.savings) + ((1+(data.stockReturns/100)) *data.allocation.stocks) + ((1+(data.bondYield/100)) * data.allocation.bonds)
+    var average = ((1+(data.intrestRate/100)) * data.allocation.savings) + ((1+(data.stockReturns/100)) *data.allocation.stocks) + ((1+(data.bondYield/100)) * data.allocation.bonds);
     return ((average-100)/100);
 }
 
@@ -59,7 +59,7 @@ export function calculatePortfolio(data){
     let delta = data.risk * 2;
     allocation.stocks = 10.0  + parseFloat(delta*1.5);
     allocation.bonds = 30.0 - parseFloat(delta/2);
-    allocation.savings = 60 - parseFloat(delta)
+    allocation.savings = 60 - parseFloat(delta);
 
     data.allocation = allocation;
 

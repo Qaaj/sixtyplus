@@ -11,7 +11,6 @@ import UserStore from './stores/UserStore';
 import RealTimeStore from './stores/RealTimeStore';
 
 import Notification from './components/modules/NotificationModule';
-import NotificationActionCreators from './actions/NotificationActionCreators';
 const uiLang = window.userLang;
 
 
@@ -25,7 +24,7 @@ class App extends React.Component {
 
     this.state = {
       user: UserStore.getUser()
-    }
+    };
 
     this._handleUserStoreChange = this._handleUserStoreChange.bind(this);
     this._handleRealTimeStoreChange = this._handleRealTimeStoreChange.bind(this);
@@ -36,12 +35,10 @@ class App extends React.Component {
   _handleUserStoreChange() {
 
     let user = UserStore.getUser();
-
     this.setState({
       user: user,
     });
 
-    NotificationActionCreators.userLoggedIn(user);
 
   }
 

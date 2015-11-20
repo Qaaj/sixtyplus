@@ -10,7 +10,6 @@ class TopMenu extends React.Component {
   }
 
   render() {
-  console.log(this.props.location)
     let topMenu = (
       <Grid className="topMenu">
         <Row>
@@ -34,5 +33,5 @@ TopMenu.PropTypes = {
   history: React.PropTypes.obj,
   location: React.PropTypes.obj,
   urlParams: React.PropTypes.obj,
-}
+};
 export default TopMenu;

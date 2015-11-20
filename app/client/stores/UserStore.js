@@ -10,6 +10,9 @@ import asap from 'asap';
 import RealTimeActionCreators from '../actions/RealTimeActionCreators';
 const CHANGE_EVENT = 'change';
 
+import NotificationActionCreators from '../actions/NotificationActionCreators';
+
+
 let _userObject = Map();
 let _userData = Map();
 let _userSettings = Map();
@@ -52,7 +55,8 @@ UserStore.dispatchToken = AppDispatcher.register(function (payload) {
 
     case UserConstants.USER_SAVE_DATA:
       _userData = _userData.merge(fromJS(action.data));
-      //UserStore.emitChange();
+      _userObject = _userObject.set("userData",_userData);
+      UserStore.emitChange();
       break;
 
     case UserConstants.USER_LOADED:
@@ -61,20 +65,7 @@ UserStore.dispatchToken = AppDispatcher.register(function (payload) {
       if (action.data.currency == "POUND") action.data.currency = "£";
       _userObject = fromJS(action.data);
 
-      // Move this logic elsewhere
-      //
-      //if(_userObject.toJS().userData && _userObject.toJS().userData.allocation && _userObject.toJS().userData.portfolio){
-      //
-      //  let portfolio = _userObject.getIn(['userData', 'portfolio']).toList().toJS();
-      //
-      //  const portfolioList = portfolio.reduce((prev,curr,i ) =>{
-      //    prev.push(curr[0].ticker);
-      //    return prev
-      //  },[]);
-      //
-      //  RealTimeActionCreators.getStockPrices(portfolioList);
-      //}
-
+      NotificationActionCreators.userLoggedIn(_userObject.toJS());
 
       UserStore.emitChange();
       break;

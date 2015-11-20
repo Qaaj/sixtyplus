@@ -79,7 +79,7 @@ function routingWrapper(isProduction,app) {
 
 
     function apiRouteHandler(req, res) {
-        debug(req.params.serviceId)
+        debug(req.params.serviceId);
         if (typeof services[req.params.serviceId] === 'function') {
             services[req.params.serviceId](req, res);
         } else {

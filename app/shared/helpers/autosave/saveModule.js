@@ -5,6 +5,8 @@ export function getModuleSaveData(data) {
 
   let obj = {};
 
+  console.log(data.saveObject);
+
   switch (data.name) {
 
     case "Quickstart":

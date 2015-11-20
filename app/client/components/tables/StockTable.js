@@ -22,9 +22,9 @@ class StockTable extends React.Component {
   }
 
   render() {
-    if(!this.props.user.userData) return null;
 
-    console.log(this.props.rt);
+    if(!this.props.user.userData && !this.props.rt) return null;
+
     let sortedStocks = this.props.user.userData.portfolio;
 
     let fields = [];

@@ -12,7 +12,5 @@ export function doImport(rawText){
         },{});
     });
 
-    console.log(allStocks);
-
     return allStocks;
 }

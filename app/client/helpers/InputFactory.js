@@ -63,7 +63,7 @@ let inputFields = {
         defaultValue: defaults['salaryIncrease'],
         description: 'Average Yearly Salary Increase',
     }
-}
+};
 
 export function createCurrencyFields(fields,func,state){
    return fields.map(fieldID => {
@@ -92,7 +92,7 @@ export function createPercentageFields(fields,func,state){
 export function createRegularFields(fields,func){
     return fields.map(fieldID => {
         if(inputFields[fieldID]) {
-            console.log(fieldID)
+            console.log(fieldID);
             var field = inputFields[fieldID];
             return  <Input key={'unique_key_' + fieldID} name={field.name} onChange={func} type="text" label={field.description} placeholder={field.defaultValue}  />;
         }else{

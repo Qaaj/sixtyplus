@@ -1,6 +1,5 @@
 import { Panel , Label, Button} from 'react-bootstrap';
 import { get, post, put, del } from '../../utils/RequestUtil';
-import {getStockPrice  } from '../../actions/RealTimeActionCreators';
 import { pureRenderDecorator } from '../../../shared/helpers/decorators';
 
 @pureRenderDecorator
