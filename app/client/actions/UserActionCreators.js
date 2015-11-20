@@ -45,15 +45,19 @@ var UserActionCreators = {
     this.saveUserData(mergedUserData);
   },
 
-  saveUserData(userData){
+  saveUserData(mergeUserData){
 
+
+    var userData = fromJS(UserStore.getUser().userData);
+    let mergedUserData = userData;
+    if (userData) mergedUserData = userData.mergeDeep(mergeUserData).toJS();
 
     AppDispatcher.handleViewAction({
       actionType: UserConstants.USER_SAVE_DATA,
-      data: userData,
+      data: mergedUserData,
     });
 
-    updateUserData(userData,UserStore.getUser().uid);
+    updateUserData(mergedUserData,UserStore.getUser().uid);
 
   },
 

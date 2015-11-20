@@ -5,73 +5,75 @@ $icon-font-path: '~bootstrap-sass/assets/fonts/bootstrap/';
 @import './fonts/roboto';
 @import './modules/notification';
 
-
 body {
   background-color: #EFEFEF;
-    font-family: 'robotomedium';
+  font-family: 'robotomedium';
 }
 
-.currency-selection{
-    position: fixed;
-    width: 100px;
-    top: 20px;
-    right:20px;
-}
-.page-header{
-    width:600px;
-    margin-left: auto;
-    margin-right: auto;
-    margin-bottom:0px;
-    margin-top:0px;
+.currency-selection {
+  position: fixed;
+  width: 100px;
+  top: 20px;
+  right: 20px;
 }
 
-.jumbotron{
-    padding-top:25px;
-    padding-bottom: 0px;
+.page-header {
+  width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 0px;
+  margin-top: 0px;
 }
 
-.tab-content{
-    padding-top: 30px;
-    background-color: white;
-    position: relative;
-    border-left: 1px solid #ddd;
-    border-bottom: 1px solid #ddd;
-    border-right: 1px solid #ddd;
-
-    .row{
-        width: 100%;
-    }
+.jumbotron {
+  padding-top: 25px;
+  padding-bottom: 0px;
 }
 
-.topMenu{
-    margin-bottom: 20px;
+.tab-content {
+  padding-top: 30px;
+  background-color: white;
+  position: relative;
+  border-left: 1px solid #ddd;
+  border-bottom: 1px solid #ddd;
+  border-right: 1px solid #ddd;
+
+  .row {
+    width: 100%;
+  }
+}
+
+.topMenu {
+  margin-bottom: 20px;
 }
 
 .importer {
-    text-align: right;
-    position: relative;
-    textarea {
-        height:500px;
-        margin-top:10px;
-    }
-    .tab-pane{
-        padding:2%;
-    }
+  text-align: right;
+  position: relative;
+  textarea {
+    height: 500px;
+    margin-top: 10px;
+  }
+  .tab-pane {
+    padding: 2%;
+  }
 
-    .btn{
-       display: inline-block;
-    }
-    padding:2%;
+  .btn {
+    display: inline-block;
+  }
+  padding: 2%;
 }
 
-
-*:focus{
-    outline-offset: 0px;
-    outline-style: none !important;
+*:focus {
+  outline-offset: 0px;
+  outline-style: none !important;
 }
 
-.singlestock-panel{
-        margin-left:20px;
-        margin-right:20px;
+.singlestock-panel {
+  margin-left: 20px;
+  margin-right: 20px;
+  .panel-title{
+    font-size: 20px;
+  }
 }
 

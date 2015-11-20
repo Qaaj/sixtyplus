@@ -94,7 +94,7 @@ class Quickstart extends React.Component {
           <Panel style={{'textAlign':'center'}}
                  header={<h3>Analysis <small>Projections based on your settings</small></h3>}>
             <h3>Monthly budget: <Label
-              bsStyle={cx}>{this.props.user.currency} {this.state.monthlyBudget}</Label></h3>
+              bsStyle={cx}>{this.props.user.currency} {state.monthlyBudget}</Label></h3>
             <div style={{'width':'400px','marginLeft':'auto','marginRight':'auto'}}>
               <PieChart
                 data={state.pieData}

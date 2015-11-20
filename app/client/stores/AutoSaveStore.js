@@ -35,7 +35,6 @@ const AutoSaveStore = assign({}, EventEmitter.prototype, {
     // Don't spam the API, set a timeout for saving
     lastTimeOut = setTimeout(()=> {
       let saveData = getModuleSaveData(module);
-      console.log("xxx" ,saveData);
       UserActionCreators.saveUserData(saveData);
     }, defaults.saveTimeout);
 

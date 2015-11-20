@@ -1,10 +1,10 @@
 
  //
- //Handle loading of realtime portfolio server side
+ // OK Handle loading of realtime portfolio server side
  //Implement growth and salary stuff
-// Make seperate components for Quikstart / Stocks/ Import etc
-// Make seperate object for the state in Quickstart > Only save relevant items
- //Move loading of portoflio data away from UserStore
- //Promises on the serverside
+// OK Make seperate components for Quikstart / Stocks/ Import etc
+// OK Make seperate object for the state in Quickstart > Only save relevant items
+ //OK Move loading of portoflio data away from UserStore
+ //OK Promises on the serverside
  //Normalise DATA
- //Make userdata persistent
+ //OK Make userdata persistent
