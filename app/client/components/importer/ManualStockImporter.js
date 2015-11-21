@@ -1,6 +1,9 @@
 import { Grid, Panel, ListGroup,Accordion, Table, Button } from 'react-bootstrap';
 import { createRegularFields, createCurrencyFields, createPercentageFields, createRegularFieldsNoLabel } from '../../helpers/InputFactory';
 import moment from 'moment';
+import RealTimeActionCreators from '../../actions/RealTimeActionCreators';
+import Autosuggest from 'react-autosuggest';
+import DateInput from '../ui/DateInput'
 
 class ManualStockImporter extends React.Component {
 
@@ -14,12 +17,16 @@ class ManualStockImporter extends React.Component {
     this.stockObjects = [];
   }
 
-  _handleInput(row,e) {
+  _handleInput(row,e,val) {
 
-    let column = e.target.alt;
+    let column = e;
+    let input = val;
+    console.log(row,e,val);
+    if(e.target) input = e.target.value;
+    if(e.target) column = e.target.alt;
 
     if(!this.stockRows[row]) this.stockRows[row] = [];
-    this.stockRows[row][column] = e.target.value;
+    this.stockRows[row][column] = input;
 
 
     if(this.stockRows[row].length == 4){
@@ -27,6 +34,12 @@ class ManualStockImporter extends React.Component {
     }
 
   }
+
+
+  _getSuggestions(input, callback){
+    RealTimeActionCreators.getStockSuggestion(input,callback);
+  }
+
 
   _checkIfValid(row,rowID){
 
@@ -45,6 +58,10 @@ class ManualStockImporter extends React.Component {
     if(this.props.onSuccess) this.props.onSuccess.call(null,this.stockObjects);
   }
 
+  _onInputChanged(){
+
+  }
+
    _isNumeric(n) {
     return !isNaN(parseFloat(n)) && isFinite(n);
   }
@@ -59,12 +76,21 @@ class ManualStockImporter extends React.Component {
     if(this.state.fields) line = this.state.fields.length
     let inputFields = createRegularFieldsNoLabel([name, amount, price, date],this._handleInput.bind(this,line), this.state);
 
+
+    const inputAttributes = {
+        className: 'main_topic',
+        placeholder: name,
+        onChange: this._handleInput.bind(this,line,0),
+        alt:0
+      };
     return (
     <tr key={'stock_input_' + date + name + amount}>
-      <td>{inputFields[0]}</td>
+      <td> <Autosuggest
+        inputAttributes={inputAttributes}
+        suggestions={::this._getSuggestions} /></td>
       <td>{inputFields[1]}</td>
       <td>{inputFields[2]}</td>
-      <td>{inputFields[3]}</td>
+      <td> <DateInput /></td>
     </tr>);
   }
 
@@ -83,8 +109,12 @@ class ManualStockImporter extends React.Component {
 
   render() {
 
+
+
     let importer = (
       <div className='manual-stock-importer'>
+
+
         <Button className="addMoreButton" bsStyle="success" bsSize="xsmall" onClick={::this._addRow}>Add More</Button>
         <Table striped bordered condensed hover>
           <thead>

@@ -44,6 +44,22 @@ body {
   }
 }
 
+.hideCal{
+  display: none !important;
+}
+
+.importer .DayPicker{
+  padding-top:15px;
+  position: absolute;
+  border-radius: 4px;
+  background-color: rgba(255,255,255,.8) !important;
+  z-index: 2;
+  width:100%;
+}
+.calendarPicker{
+  position: relative;
+  width:100%;
+}
 .topMenu {
   margin-bottom: 20px;
 }

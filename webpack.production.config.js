@@ -63,6 +63,7 @@ var config = {
         loaders: [
             [
                 {
+
                     test: /\.scss$/,
                     loaders: cssLoaders.concat([
                         "sass?precision=10&outputStyle=compressed"

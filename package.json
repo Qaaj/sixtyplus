@@ -47,6 +47,7 @@
     "react-autosuggest": "^2.1.1",
     "react-bootstrap": "^0.27.3",
     "react-d3": "^0.4.0",
+    "react-day-picker": "^1.1.5",
     "react-dom": "^0.14.2",
     "react-router": "^1.0.0-rc3",
     "request": "^2.65.0",
