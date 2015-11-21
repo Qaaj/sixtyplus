@@ -50,6 +50,9 @@ body {
 .importer {
   text-align: right;
   position: relative;
+  .panel{
+    text-align: left;
+  }
   textarea {
     height: 500px;
     margin-top: 10px;
@@ -58,10 +61,20 @@ body {
     padding: 2%;
   }
 
+  .form-group{
+    margin-bottom: 0px;
+  }
+
   .btn {
     display: inline-block;
   }
   padding: 2%;
+
+  .addMoreButton{
+    margin-top:0px;
+    float:right;
+    margin-bottom: 10px;
+  }
 }
 
 *:focus {

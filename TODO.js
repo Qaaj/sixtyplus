@@ -8,3 +8,4 @@
  //OK Promises on the serverside
  //Normalise DATA
  //OK Make userdata persistent
+ // Load prices of import stocks that arent saved yet

@@ -8,7 +8,9 @@ import UserActionCreators from '../../actions/UserActionCreators';
 import { doImport } from '../../../shared/helpers/importers/IB_importer';
 import NotificationActionCreators from '../../actions/NotificationActionCreators';
 import SingleStock from '../ui/SingleStock';
-import { Grid } from 'react-bootstrap';
+import { Grid, Panel, ListGroup,Accordion, Table } from 'react-bootstrap';
+import { createRegularFields, createCurrencyFields, createPercentageFields, createRegularFieldsNoLabel } from '../../helpers/InputFactory';
+import ManualStockImporter from '../../components/importer/ManualStockImporter'
 
 
 class Importer extends React.Component {
@@ -41,7 +43,7 @@ class Importer extends React.Component {
 
     let stockData = doImport(this.state.rawStockData);
     let sortedStocks = {};
-
+ // move this to importer
     try {
       stockData.map(tx => {
         if (tx.STK_LOT !== 'STK_LOT') return;
@@ -50,7 +52,7 @@ class Importer extends React.Component {
         formattedTX.date = moment(tx.date, "YYYYMMDD");
         formattedTX.ticker = tx.ticker;
         formattedTX.name = this.capitalizeFirstLetter(tx.name.toLowerCase());
-        formattedTX.name = formattedTX.name.replace(".","_");
+        formattedTX.name = formattedTX.name.replace(".", "_");
         formattedTX.amount = parseFloat(tx.amount);
         formattedTX.price = parseFloat(tx.price);
         formattedTX.total = parseFloat(tx.total);
@@ -63,6 +65,43 @@ class Importer extends React.Component {
     }
 
     let fields = [];
+
+    for (let key in sortedStocks) {
+      let single = (<SingleStock key={Math.random()} entries={sortedStocks[key]} ticker={key}/>);
+      fields.push(single)
+    }
+
+    this.setState({
+      sortedStocks: sortedStocks,
+      fields: fields
+    })
+
+  }
+
+  _onManualImport(data){
+
+    let sortedStocks = {};
+
+    try {
+      data.map(tx => {
+        if (!sortedStocks[tx.ticker]) sortedStocks[tx.ticker] = [];
+        let formattedTX = {};
+        formattedTX.date = moment(tx.date, "YYYYMMDD");
+        formattedTX.ticker = tx.ticker;
+        formattedTX.name = tx.ticker
+        formattedTX.amount = parseFloat(tx.amount);
+        formattedTX.price = parseFloat(tx.price);
+        formattedTX.total = parseFloat(tx.amount * tx.price);
+        sortedStocks[tx.ticker].push(formattedTX);
+      });
+
+    } catch (err) {
+      NotificationActionCreators.doError("Something went wrong with the import. Please double-check your input!");
+      return;
+    }
+
+    let fields = [];
+
     for (let key in sortedStocks) {
       let single = (<SingleStock key={Math.random()} entries={sortedStocks[key]} ticker={key}/>);
       fields.push(single)
@@ -79,8 +118,8 @@ class Importer extends React.Component {
     return string.charAt(0).toUpperCase() + string.slice(1);
   }
 
-
   render() {
+
 
     let btn = null;
 
@@ -90,11 +129,30 @@ class Importer extends React.Component {
 
     return (
       <Grid className='importer'>
-        <Input onChange={this._handleChange} name='rawStockData' type='textarea' label="Import from IB" placeholder="STK_LOT|U1418343|VZ|VERIZON COMMUNICATIONS INC|USD|20150520|15:00:18|10.00|1.00|49.83|498.30|0.92813
+        <Accordion defaultActiveKey="1">
+          <Panel header="Import Manually" eventKey="1">
+            <ManualStockImporter onSuccess={::this._onManualImport} />
+          </Panel>
+          <Panel header="Import from Interactive Brokers" eventKey="2">
+            <ul>
+              <li>Log in to IB Account Management.</li>
+              <li>Go to Reports > Activity > Third-Party Downloads</li>
+              <li>Select the desired time period.</li>
+              <li>Format > TradeLog</li>
+              <li>Click Download and wait a few seconds.</li>
+              <li>Sroll Down to 'STOCK_POSITIONS'</li>
+              <li>Copy and Paste everything below it in the textfield below.</li>
+              <li>Click the Import button.</li>
+              <li>Review your positions and click 'Save'.</li>
+            </ul>
+            <Input onChange={this._handleChange} name='rawStockData' type='textarea' placeholder="STK_LOT|U1418343|VZ|VERIZON COMMUNICATIONS INC|USD|20150520|15:00:18|10.00|1.00|49.83|498.30|0.92813
 STK_LOT|U1418343|XOM|EXXON MOBIL CORP|USD|20150724|12:42:07|10.00|1.00|80.11|801.10|0.92813
 ..."/>
+          </Panel>
+        </Accordion>
         <Button onClick={this._onImportClickHandler} bsStyle="primary" bsSize="large">Import</Button>
         <hr />
+
         {this.state.fields}
         {btn}
       </Grid>
