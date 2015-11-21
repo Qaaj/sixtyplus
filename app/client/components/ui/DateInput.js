@@ -24,6 +24,7 @@ export default class InputField extends React.Component {
       month = moment(value, "L").toDate();
     }
 
+    this.props.onChange(e.target.value);
     this.setState({ value, month }, this.showCurrentDate);
 
   }
@@ -32,14 +33,20 @@ export default class InputField extends React.Component {
     if (modifiers.indexOf("disabled") > -1) {
       return;
     }
+
+
     this.setState({
       value: moment(day).format("L"),
-      month: day
+      month: day,
     });
+
+
+    this.props.onChange(moment(day).format("L"));
+
   }
 
   showCurrentDate() {
-    this.refs.daypicker.showMonth(this.state.month);
+    //this.refs.daypicker.showMonth(this.state.month);
     this.setState({
       showCalendar: true
     })
@@ -54,7 +61,6 @@ export default class InputField extends React.Component {
 
   render() {
     const selectedDay = moment(this.state.value, "L", true).toDate();
-
     let hideCal = 'hideCal';
     if(this.state.showCalendar) hideCal = ''
     return (
