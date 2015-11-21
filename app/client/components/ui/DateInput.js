@@ -53,7 +53,6 @@ export default class InputField extends React.Component {
   }
 
   hidePicker(e,i){
-    console.log(e.target);
     this.setState({
       showCalendar: false
     })

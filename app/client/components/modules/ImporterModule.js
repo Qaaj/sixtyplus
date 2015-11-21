@@ -83,6 +83,7 @@ class Importer extends React.Component {
 
   _onManualImport(data){
 
+    console.log(data);
     let sortedStocks = {};
 
     try {
@@ -137,7 +138,7 @@ class Importer extends React.Component {
           <Panel header="Import Manually" eventKey="1">
             <ManualStockImporter onSuccess={::this._onManualImport} />
           </Panel>
-          <Panel header="Import from Interactive Brokers" eventKey="2">
+          <Panel className="IBimport" header="Import from Interactive Brokers" eventKey="2">
             <ul>
               <li>Log in to IB Account Management.</li>
               <li>Go to Reports > Activity > Third-Party Downloads</li>
@@ -152,9 +153,11 @@ class Importer extends React.Component {
             <Input onChange={this._handleChange} name='rawStockData' type='textarea' placeholder="STK_LOT|U1418343|VZ|VERIZON COMMUNICATIONS INC|USD|20150520|15:00:18|10.00|1.00|49.83|498.30|0.92813
 STK_LOT|U1418343|XOM|EXXON MOBIL CORP|USD|20150724|12:42:07|10.00|1.00|80.11|801.10|0.92813
 ..."/>
+            <Button onClick={this._onImportClickHandler} bsStyle="primary" bsSize="large">Import</Button>
           </Panel>
+
         </Accordion>
-        <Button onClick={this._onImportClickHandler} bsStyle="primary" bsSize="large">Import</Button>
+
         <hr />
 
         {this.state.fields}

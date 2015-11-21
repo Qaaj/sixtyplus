@@ -38,6 +38,7 @@ class PortfolioOverview extends React.Component {
 
   render() {
 
+    if(!this.props.user.userData && !this.props.rt) return <Grid style={{'textAlign':'center','padding':'20px'}}> There doesn't seem to be anything here! Head over to the <a href={"#/" +this.props.lang +"/Import"}>Importer</a> to change that.</Grid>;
     return (
       <Grid>
       <div className='portfolioOverview'>

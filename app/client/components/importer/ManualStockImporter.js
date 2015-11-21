@@ -24,8 +24,6 @@ class ManualStockImporter extends React.Component {
     if(e.target) input = e.target.value;
     if(e.target) column = e.target.alt;
 
-    console.log(input,row,column);
-
     if(!this.stockRows[row]) this.stockRows[row] = [];
     this.stockRows[row][column] = input;
 
@@ -55,7 +53,6 @@ class ManualStockImporter extends React.Component {
     let obj  = { ticker, amount, price, date};
 
     this.stockObjects[rowID] = obj;
-    console.log(this.stockObjects);
 
     if(this.props.onSuccess) this.props.onSuccess.call(null,this.stockObjects);
   }
@@ -88,6 +85,7 @@ class ManualStockImporter extends React.Component {
     return (
     <tr key={'stock_input_' + date + name + amount}>
       <td> <Autosuggest
+        scrollBar={true}
         inputAttributes={inputAttributes}
         suggestions={::this._getSuggestions} /></td>
       <td>{inputFields[1]}</td>
