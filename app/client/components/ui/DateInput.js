@@ -71,6 +71,7 @@ export default class InputField extends React.Component {
             type="text"
             value={ this.state.value }
             placeholder="YYYY-MM-DD"
+            onBlur={ this.hidePicker.bind(this)}
             onChange={ this.handleInputChange.bind(this) }
              />
         <DayPicker
