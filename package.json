@@ -44,6 +44,7 @@
     "object-assign": "^4.0.1",
     "react": "^0.14.2",
     "react-addons-css-transition-group": "^0.14.2",
+    "react-autosuggest": "^2.1.1",
     "react-bootstrap": "^0.27.3",
     "react-d3": "^0.4.0",
     "react-dom": "^0.14.2",

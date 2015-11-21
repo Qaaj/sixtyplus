@@ -7,10 +7,13 @@ import { Input,Button } from 'react-bootstrap';
 import UserActionCreators from '../../actions/UserActionCreators';
 import { doImport } from '../../../shared/helpers/importers/IB_importer';
 import NotificationActionCreators from '../../actions/NotificationActionCreators';
+import RealTimeActionCreators from '../../actions/RealTimeActionCreators';
 import SingleStock from '../ui/SingleStock';
 import { Grid, Panel, ListGroup,Accordion, Table } from 'react-bootstrap';
 import { createRegularFields, createCurrencyFields, createPercentageFields, createRegularFieldsNoLabel } from '../../helpers/InputFactory';
 import ManualStockImporter from '../../components/importer/ManualStockImporter'
+import Autosuggest from 'react-autosuggest';
+
 
 
 class Importer extends React.Component {
@@ -19,6 +22,7 @@ class Importer extends React.Component {
     super(props);
 
     this.state = {fields: null};
+
 
     this._handleChange = this._handleChange.bind(this);
     this._onImportClickHandler = this._onImportClickHandler.bind(this);
@@ -118,6 +122,14 @@ class Importer extends React.Component {
     return string.charAt(0).toUpperCase() + string.slice(1);
   }
 
+  _getSuggestions(input, callback){
+   RealTimeActionCreators.getStockSuggestion(input,callback);
+  }
+
+  _onInputChanged(){
+
+  }
+
   render() {
 
 
@@ -127,8 +139,17 @@ class Importer extends React.Component {
       btn = <Button onClick={this._onSaveClickHandler} bsStyle="primary" bsSize="large">Save</Button>;
     }
 
+    const inputAttributes = {
+        className: 'main_topic',
+        placeholder: "test",
+        onChange: ::this._onInputChanged,
+      };
     return (
       <Grid className='importer'>
+        <Autosuggest
+          ref="main_topic"
+          inputAttributes={inputAttributes}
+          suggestions={::this._getSuggestions} />
         <Accordion defaultActiveKey="1">
           <Panel header="Import Manually" eventKey="1">
             <ManualStockImporter onSuccess={::this._onManualImport} />

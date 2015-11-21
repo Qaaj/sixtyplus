@@ -42,6 +42,25 @@ export function getStockPrice(ticker){
       );
 }
 
+export function getStockSuggestions(input,callback){
+
+    let url = `${API_URL}/getStockSuggestions`;
+
+    let data = { input };
+
+    post({url, data})
+      .then(
+        (response) => {
+            callback(null, response.body); // Emulate API call
+        },
+
+        (error) => {
+            console.error('Error: ', error);
+        }
+      );
+
+}
+
 export function getStockPrices(tickers){
     let data = {tickers: tickers};
 

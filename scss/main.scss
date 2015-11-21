@@ -4,6 +4,7 @@ $icon-font-path: '~bootstrap-sass/assets/fonts/bootstrap/';
 @import './fonts/material_icons';
 @import './fonts/roboto';
 @import './modules/notification';
+@import './modules/autoSuggest';
 
 body {
   background-color: #EFEFEF;

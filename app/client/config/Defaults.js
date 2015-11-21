@@ -10,5 +10,5 @@ export default {
 
     // Application
     saveTimeout: 1000,
-    refreshRate: 5000,
+    refreshRate: 50000,
 }
