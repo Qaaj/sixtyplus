@@ -30,6 +30,7 @@ class SingleStock extends React.Component {
 
     let totalPrice = 0;
     let totalAmount = 0;
+
     if (!this.props.entries || this.props.entries.length == 0) return null;
 
     let list = this.props.entries.map((entry, i) => {

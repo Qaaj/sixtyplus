@@ -22,7 +22,9 @@ class Quickstart extends React.Component {
     this.state = {
       'risk': 2,
     }
-
+    // Decorators not working on production
+    this.name = "Quickstart";
+    this.saveObject = ['monthlyBudget','monthlyCostsFixed','monthlyCostsVariable','currentSavings','monthlyIncome','risk','savingsGoal'];
   }
 
   componentWillReceiveProps(newProps) {

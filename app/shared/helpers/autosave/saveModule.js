@@ -5,7 +5,7 @@ export function getModuleSaveData(data) {
 
   let obj = {};
 
-  console.log(data.saveObject);
+  console.log("CLASS :",data);
 
   switch (data.name) {
 

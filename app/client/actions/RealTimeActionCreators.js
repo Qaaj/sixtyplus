@@ -3,7 +3,6 @@
 import AppDispatcher from '../dispatcher/AppDispatcher.js';
 import UserConstants from '../constants/UserConstants.js';
 import { getStockPrice, getStockPrices, getStockSuggestions } from '../utils/ApiUtils';
-import { fromJS } from 'immutable';
 import UserStore from '../stores/UserStore.js';
 import defaults from '../config/Defaults';
 

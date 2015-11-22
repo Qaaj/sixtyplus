@@ -23,7 +23,7 @@ class ManualStockImporter extends React.Component {
     let fields = [];
     if(this.state.fields) fields = this.state.fields;
 
-    fields.push(<SingleManualImportLine />);
+    fields.push(<SingleManualImportLine onSuccess={this.props.onSuccess} key={"single_importer_" + fields.length} line_id={fields.length} />);
 
     this.setState({
       fields: fields

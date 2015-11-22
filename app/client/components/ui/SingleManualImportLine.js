@@ -57,9 +57,8 @@ class SingleManualImportLine extends React.Component {
     let obj  = { ticker, amount, price, date};
 
     this.stockObject = obj;
-    console.log(this.stockObject);
 
-    if(this.props.onSuccess) this.props.onSuccess.call(null,this.stockObject);
+    this.props.onSuccess.call(null,this.stockObject,this.props.line_id);
   }
 
   _createLine(){
@@ -91,8 +90,6 @@ class SingleManualImportLine extends React.Component {
   }
 
   render() {
-
-
 
     let body = this._createLine();
 

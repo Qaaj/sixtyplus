@@ -1,18 +1,13 @@
-/**
- * Created by janjorissen on 11/16/15.
- */
-import React from 'react';
-import ReactDOM from 'react-dom';
 import { Input,Button } from 'react-bootstrap';
 import UserActionCreators from '../../actions/UserActionCreators';
 import { doImport } from '../../../shared/helpers/importers/IB_importer';
+import { mapByTicker} from '../../../shared/helpers/stocks/mapStocksByTicker';
 import NotificationActionCreators from '../../actions/NotificationActionCreators';
-
+import RealTimeActionCreators from '../../actions/RealTimeActionCreators';
 import SingleStock from '../ui/SingleStock';
 import { Grid, Panel, ListGroup,Accordion, Table } from 'react-bootstrap';
 import { createRegularFields, createCurrencyFields, createPercentageFields, createRegularFieldsNoLabel } from '../../helpers/InputFactory';
 import ManualStockImporter from '../../components/importer/ManualStockImporter'
-
 
 
 class Importer extends React.Component {
@@ -21,15 +16,11 @@ class Importer extends React.Component {
     super(props);
 
     this.state = {fields: null};
-
+    this.previewStocks = [];
 
     this._handleChange = this._handleChange.bind(this);
     this._onImportClickHandler = this._onImportClickHandler.bind(this);
     this._onSaveClickHandler = this._onSaveClickHandler.bind(this);
-
-  }
-
-  componentWillReceiveProps(newProps) {
 
   }
 
@@ -45,75 +36,23 @@ class Importer extends React.Component {
   _onImportClickHandler(e) {
 
     let stockData = doImport(this.state.rawStockData);
-    let sortedStocks = {};
- // move this to importer
-    try {
-      stockData.map(tx => {
-        if (tx.STK_LOT !== 'STK_LOT') return;
-        if (!sortedStocks[tx.ticker]) sortedStocks[tx.ticker] = [];
-        let formattedTX = {};
-        formattedTX.date = moment(tx.date, "YYYYMMDD");
-        formattedTX.ticker = tx.ticker;
-        formattedTX.name = this.capitalizeFirstLetter(tx.name.toLowerCase());
-        formattedTX.name = formattedTX.name.replace(".", "_");
-        formattedTX.amount = parseFloat(tx.amount);
-        formattedTX.price = parseFloat(tx.price);
-        formattedTX.total = parseFloat(tx.total);
-        sortedStocks[tx.ticker].push(formattedTX);
-      });
-
-    } catch (err) {
-      NotificationActionCreators.doError("Something went wrong with the import. Please double-check your input!");
-      return;
-    }
-
-    let fields = [];
-
-    for (let key in sortedStocks) {
-      let single = (<SingleStock key={Math.random()} entries={sortedStocks[key]} ticker={key}/>);
-      fields.push(single)
-    }
+    let sortedStocks = mapByTicker(stockData);
 
     this.setState({
       sortedStocks: sortedStocks,
-      fields: fields
     })
 
   }
 
-  _onManualImport(data){
+  _onManualImportPreview(data, line) {
 
-    console.log(data);
-    let sortedStocks = {};
+    RealTimeActionCreators.getStockPrice(data.ticker);
+    this.previewStocks[line] = data;
 
-    try {
-      data.map(tx => {
-        if (!sortedStocks[tx.ticker]) sortedStocks[tx.ticker] = [];
-        let formattedTX = {};
-        formattedTX.date = moment(tx.date, "YYYYMMDD");
-        formattedTX.ticker = tx.ticker;
-        formattedTX.name = tx.ticker
-        formattedTX.amount = parseFloat(tx.amount);
-        formattedTX.price = parseFloat(tx.price);
-        formattedTX.total = parseFloat(tx.amount * tx.price);
-        sortedStocks[tx.ticker].push(formattedTX);
-      });
-
-    } catch (err) {
-      NotificationActionCreators.doError("Something went wrong with the import. Please double-check your input!");
-      return;
-    }
-
-    let fields = [];
-
-    for (let key in sortedStocks) {
-      let single = (<SingleStock key={Math.random()} entries={sortedStocks[key]} ticker={key}/>);
-      fields.push(single)
-    }
+    let sortedStocks = mapByTicker(this.previewStocks);
 
     this.setState({
       sortedStocks: sortedStocks,
-      fields: fields
     })
 
   }
@@ -124,10 +63,17 @@ class Importer extends React.Component {
 
   render() {
 
+    let fields = [];
+    if(this.state.sortedStocks){
+      for (let key in this.state.sortedStocks) {
+        let single = (<SingleStock key={Math.random()} entries={this.state.sortedStocks[key]} rt={this.props.rt} ticker={key}/>);
+        fields.push(single)
+      }
+    }
 
     let btn = null;
 
-    if (this.state.fields && this.state.fields.length > 0) {
+    if (fields && fields.length > 0) {
       btn = <Button onClick={this._onSaveClickHandler} bsStyle="primary" bsSize="large">Save</Button>;
     }
 
@@ -136,7 +82,7 @@ class Importer extends React.Component {
 
         <Accordion defaultActiveKey="1">
           <Panel header="Import Manually" eventKey="1">
-            <ManualStockImporter onSuccess={::this._onManualImport} />
+            <ManualStockImporter onSuccess={::this._onManualImportPreview}/>
           </Panel>
           <Panel className="IBimport" header="Import from Interactive Brokers" eventKey="2">
             <ul>
@@ -160,7 +106,7 @@ STK_LOT|U1418343|XOM|EXXON MOBIL CORP|USD|20150724|12:42:07|10.00|1.00|80.11|801
 
         <hr />
 
-        {this.state.fields}
+        {fields}
         {btn}
       </Grid>
     );
