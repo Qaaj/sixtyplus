@@ -60,11 +60,13 @@ UserStore.dispatchToken = AppDispatcher.register(function (payload) {
       break;
 
     case UserConstants.USER_LOADED:
+
       if (action.data.currency == "EURO") action.data.currency = "€";
       if (action.data.currency == "DOLLAR") action.data.currency = "$";
       if (action.data.currency == "POUND") action.data.currency = "£";
+      console.log(action.data);
       _userObject = fromJS(action.data);
-
+      console.log(_userObject.toJS())
       NotificationActionCreators.userLoggedIn(_userObject.toJS());
 
       UserStore.emitChange();

@@ -30,7 +30,7 @@ export default (req, res) => {
       userObject.currency = "EURO";
       userObject.language = "EN";
       userObject.last_login = moment().format('LLLL');
-      userObject.userData = {};
+      userObject.userData = { uid: req.body.uid};
       usersRef.child(req.body.uid + "").set(userObject);
 
       userObject.last_login = null;

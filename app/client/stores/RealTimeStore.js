@@ -94,7 +94,6 @@ RealTimeStore.dispatchToken = AppDispatcher.register(function (payload) {
   case RealTimeConstants.REAL_TIME_STOCK_UPDATE:
 
   _realTimeObject = _realTimeObject.set(action.data.ticker.symbol, action.data.ticker);
-    console.log("Got new price, ",action.data.ticker,action.data);
   RealTimeStore.emitChange();
 
   break;

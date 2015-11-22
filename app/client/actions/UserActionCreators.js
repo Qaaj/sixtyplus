@@ -24,6 +24,7 @@ var UserActionCreators = {
 
     var userData = UserStore.getUser().userData;
     let existingPortfolio = userData.portfolio;
+    if(!userData.portfolio) existingPortfolio = {};
 
     let stocksToAdd = Object.keys(portfolioData);
 
