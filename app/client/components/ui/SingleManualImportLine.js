@@ -65,11 +65,12 @@ class SingleManualImportLine extends React.Component {
     let name =  ['NFLX','MO','AAPL','TSLA','MSFT','GOOG','AMZN'][Math.floor(Math.random()*7)];
     let amount = Math.floor(Math.random()*200);
     let price = Math.floor(Math.random()*20000)/100;
-    let date = moment().subtract(Math.round(Math.random()*1000), 'days').format("DD/MM/YYYY");
+    let date = moment().format("L");
     var line = 0;
     //if(this.state.fields) line = this.state.fields.length
     let inputFields = createRegularFieldsNoLabel([name, amount, price, date],this._handleInput.bind(this,line), this.state);
 
+    this.stockRow[3] = date;
 
     const inputAttributes = {
       className: 'main_topic',

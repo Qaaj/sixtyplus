@@ -22,27 +22,31 @@ var UserActionCreators = {
 
   updatePortfolio(portfolioData){
 
-    var mergeUserData = fromJS({portfolio: portfolioData});
-    var userData = fromJS(UserStore.getUser().userData);
-    let mergedUserData = userData;
-    if (userData) mergedUserData = userData.mergeDeep(mergeUserData).toJS();
+    var userData = UserStore.getUser().userData;
+    let existingPortfolio = userData.portfolio;
+
+    let stocksToAdd = Object.keys(portfolioData);
+
+    stocksToAdd.map(ticker => {
+      if (existingPortfolio[ticker]) {
+        existingPortfolio[ticker] = existingPortfolio[ticker].concat(portfolioData[ticker]);
+      } else {
+        existingPortfolio[ticker] = (portfolioData[ticker]);
+      }
+    })
+
+    if (userData) userData.portfolio = existingPortfolio;
+
     AppDispatcher.handleViewAction({
       actionType: UserConstants.USER_SAVE_DATA,
-      data: mergedUserData,
+      data: userData,
     });
 
+    let portfolioList = Object.keys(userData.portfolio);
 
-    if (userData && userData.portfolio) {
+    RealTimeActionCreators.getStockPrices(portfolioList);
 
-      const portfolioList = userData.portfolio.reduce((prev, curr, i) => {
-        prev.push(curr[0].ticker);
-        return prev
-      }, []);
-
-      RealTimeActionCreators.getStockPrices(portfolioList);
-    }
-    //RealTimeActionCreators.getStockPrices()
-    this.saveUserData(mergedUserData);
+    this.saveUserData(userData);
   },
 
   saveUserData(mergeUserData){
@@ -57,7 +61,7 @@ var UserActionCreators = {
       data: mergedUserData,
     });
 
-    updateUserData(mergedUserData,UserStore.getUser().uid);
+    updateUserData(mergedUserData, UserStore.getUser().uid);
 
   },
 
