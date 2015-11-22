@@ -38,6 +38,7 @@ export default class InputField extends React.Component {
     this.setState({
       value: moment(day).format("L"),
       month: day,
+      showCalendar:false
     });
 
 
