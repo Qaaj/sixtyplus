@@ -29,7 +29,7 @@ class StockTable extends React.Component {
 
     let fields = [];
     for (let key in sortedStocks) {
-      let single = (<SingleStock key="" rt={this.props.rt}key={'singlestock_' + key} entries={sortedStocks[key]} ticker={key}/>);
+      let single = (<SingleStock  rt={this.props.rt}key={'singlestock_' + key} entries={sortedStocks[key]} ticker={key}/>);
       if(key != 'bonds ' && key != 'stocks' && key != 'savings') fields.push(single)
     }
 
