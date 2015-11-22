@@ -57,7 +57,7 @@ function refreshPortfolio() {
       return prev
     }, []);
 
-    RealTimeActionCreators.getStockPrices(portfolioList);
+    RealTimeActionCreators.getStockData(portfolioList);
   }
 }
 

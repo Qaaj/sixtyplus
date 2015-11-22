@@ -1,4 +1,4 @@
-const debug = require('debug')('debug:user/getPrices');
+const debug = require('debug')('debug:stocks/getPrices');
 
 var yahooFinance = require('yahoo-finance');
 
@@ -11,7 +11,7 @@ export default (req, res) => {
     let list = req.body.tickers.map(tickr => {
       yahooFinance.snapshot({
         symbol: tickr,
-        fields: ['s', 'n', 'd1', 'l1', 'y', 'r'],
+        fields: ['s', 'n', 'l1'],
       }, function (err, snapshot) {
         returnList.push(snapshot);
         if(returnList.length == req.body.tickers.length) resolve(returnList);

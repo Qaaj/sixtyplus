@@ -78,6 +78,23 @@ export function getStockPrices(tickers){
       );
 }
 
+export function getStockData(tickers){
+    let data = {tickers: tickers};
+
+    let url = `${API_URL}/getStockData`;
+
+    post({url, data})
+      .then(
+        (response) => {
+            ServerActionCreators.tickersLoaded(  response.body)
+        },
+
+        (error) => {
+            console.error('Error: ', error);
+        }
+      );
+}
+
 export function updateUserData(userData,uid){
 
     let url = `${API_URL}/saveUserData`;

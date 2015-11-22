@@ -1,4 +1,4 @@
-const debug = require('debug')('debug:user/getPrice');
+const debug = require('debug')('debug:stock/getPrice');
 
 var yahooFinance = require('yahoo-finance');
 
@@ -8,7 +8,7 @@ export default (req, res) => {
 
     yahooFinance.snapshot({
         symbol: req.body.ticker,
-        fields: ['s', 'n', 'd1', 'l1', 'y', 'r'],
+        fields: ['s', 'n', 'l1'],
     }, function (err, snapshot) {
         res.send(snapshot)
     });

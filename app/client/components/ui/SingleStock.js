@@ -39,7 +39,6 @@ class SingleStock extends React.Component {
       return (<h5 key={'stock_entry_' + entry.name + i}>{entry.amount} @ {entry.price}</h5>);
     });
 
-
     let avg = Math.round((totalPrice / totalAmount) * 100) / 100;
     let PL = (this.state.price * totalAmount) - totalPrice;
     PL = Math.round((PL) * 100) / 100;
@@ -47,10 +46,13 @@ class SingleStock extends React.Component {
     let cx = 'success';
     if (PL < 0) cx = 'danger';
 
+    let name = this.props.entries[0].name;
+    if(this.props.rt && this.props.rt[name]) name = this.props.rt[name].name;
+
 
     let body = (<div>
         <Panel className='singlestock-panel' collapsible defaultExpanded={false}
-               header={<h4>{this.props.ticker} ({this.props.entries[0].name})
+               header={<h4>{this.props.ticker} ({name})
                        Last price: <Label bsStyle={cx}>{this.state.price}</Label> -
                        Average price: <Label bsStyle={cx}>{avg}</Label> -
                        P/L: <Label bsStyle={cx}>{PL}</Label></h4>}>
