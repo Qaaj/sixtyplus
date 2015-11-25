@@ -1,9 +1,9 @@
 import { Input } from 'react-bootstrap';
-import { pureRenderDecorator } from '../../../shared/helpers/decorators';
+import { pureRenderDecorator } from '../../../../shared/helpers/decorators';
 import Autosuggest from 'react-autosuggest';
-import DateInput from '../ui/DateInput';
-import { createRegularFieldsNoLabel } from '../../helpers/InputFactory';
-import RealTimeActionCreators from '../../actions/RealTimeActionCreators';
+import DateInput from '../../ui/DateInput';
+import { createRegularFieldsNoLabel } from '../../../helpers/InputFactory';
+import RealTimeActionCreators from '../../../actions/RealTimeActionCreators';
 
 @pureRenderDecorator
 class SingleManualImportLine extends React.Component {
@@ -54,6 +54,8 @@ class SingleManualImportLine extends React.Component {
     let price = row[2];
     let date = row[3];
 
+    ticker = ticker.toUpperCase();
+
     let obj  = { ticker, amount, price, date};
 
     this.stockObject = obj;
@@ -73,7 +75,7 @@ class SingleManualImportLine extends React.Component {
     this.stockRow[3] = date;
 
     const inputAttributes = {
-      className: 'main_topic',
+      className: 'ticker',
       placeholder: name,
       onChange: this._handleInput.bind(this,line,0),
       alt:0

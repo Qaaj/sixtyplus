@@ -93,8 +93,10 @@ RealTimeStore.dispatchToken = AppDispatcher.register(function (payload) {
 
   case RealTimeConstants.REAL_TIME_STOCK_UPDATE:
 
-  _realTimeObject = _realTimeObject.set(action.data.ticker.symbol, action.data.ticker);
-  RealTimeStore.emitChange();
+  if(action.data.ticker && action.data.ticker.symbol){
+    _realTimeObject = _realTimeObject.set(action.data.ticker.symbol, action.data.ticker);
+    RealTimeStore.emitChange();
+  }
 
   break;
 

@@ -1,10 +1,10 @@
 import moment from 'moment';
 import { Label } from 'react-bootstrap';
-import SingleStock from '../ui/SingleStock';
+import SingleStock from '../importer/ui/SinglePreviewImportStock';
 import { pureRenderDecorator } from '../../../shared/helpers/decorators';
 
 @pureRenderDecorator
-class StockTable extends React.Component {
+class ImportStockTable extends React.Component {
 
   constructor(props) {
     super(props);
@@ -23,7 +23,7 @@ class StockTable extends React.Component {
 
   render() {
 
-    if(!this.props.user.userData && !this.props.rt) return null;
+    if(!this.props.user.userData && !this.props.rt) return <div className="loader"></div>;
 
     let sortedStocks = this.props.user.userData.portfolio;
 
@@ -44,6 +44,6 @@ class StockTable extends React.Component {
   }
 }
 
-StockTable.displayName = 'StockTable';
+ImportStockTable.displayName = 'ImportStockTable';
 
-export default StockTable;
+export default ImportStockTable;

@@ -8,9 +8,9 @@ export default (req, res) => {
 
   debug("getting stock suggestions for: ", req.body.input);
 
-  let suburbs = DataStore.getData().stockKeys;
+  let keys = DataStore.getData().stockKeys;
   const regex = new RegExp('^' + req.body.input, 'i');
-  const suggestions = suburbs.filter(suburb => regex.test(suburb));
+  const suggestions = keys.filter(result => regex.test(result));
 
 
   res.send(suggestions);

@@ -4,7 +4,7 @@ import { doImport } from '../../../shared/helpers/importers/IB_importer';
 import { mapByTicker} from '../../../shared/helpers/stocks/mapStocksByTicker';
 import NotificationActionCreators from '../../actions/NotificationActionCreators';
 import RealTimeActionCreators from '../../actions/RealTimeActionCreators';
-import SingleStock from '../ui/SingleStock';
+import SingleStock from '../importer/ui/SinglePreviewImportStock';
 import { Grid, Panel, ListGroup,Accordion, Table } from 'react-bootstrap';
 import { createRegularFields, createCurrencyFields, createPercentageFields, createRegularFieldsNoLabel } from '../../helpers/InputFactory';
 import ManualStockImporter from '../../components/importer/ManualStockImporter'

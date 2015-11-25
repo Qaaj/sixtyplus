@@ -6,7 +6,7 @@ import { createRegularFields, createCurrencyFields, createPercentageFields } fro
 import Slider from '../ui/Slider';
 import { calculateYears,calculatePortfolio,calculatePieData,calculateMonthlyBudget } from '../../../shared/helpers/calculators/SavingsGoalCalculator';
 import UserActionCreators from '../../actions/UserActionCreators';
-import StockTable from '../tables/StockTable';
+import StockTable from '../tables/ImportStockTable';
 import Importer from './ImporterModule';
 import {fromJS } from 'immutable';
 import AutoSaveStore from '../../stores/AutoSaveStore';

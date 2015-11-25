@@ -5,6 +5,7 @@ $icon-font-path: '~bootstrap-sass/assets/fonts/bootstrap/';
 @import './fonts/roboto';
 @import './modules/notification';
 @import './modules/autoSuggest';
+@import './modules/spinners';
 
 body {
   background-color: #EFEFEF;
@@ -44,22 +45,24 @@ body {
   }
 }
 
-.hideCal{
+.hideCal {
   display: none !important;
 }
 
-.importer .DayPicker{
-  padding-top:15px;
+.importer .DayPicker {
+  padding-top: 15px;
   position: absolute;
   border-radius: 4px;
-  background-color: rgba(255,255,255,.8) !important;
+  background-color: rgba(255, 255, 255, .8) !important;
   z-index: 2;
-  width:100%;
+  width: 100%;
 }
-.calendarPicker{
+
+.calendarPicker {
   position: relative;
-  width:100%;
+  width: 100%;
 }
+
 .topMenu {
   margin-bottom: 20px;
 }
@@ -67,7 +70,7 @@ body {
 .importer {
   text-align: right;
   position: relative;
-  .panel{
+  .panel {
     text-align: left;
   }
   textarea {
@@ -78,13 +81,13 @@ body {
     padding: 2%;
   }
 
-  .form-group{
+  .form-group {
     margin-bottom: 0px;
   }
 
-  .IBimport .btn{
-    margin-top:10px;
-    float:right;
+  .IBimport .btn {
+    margin-top: 10px;
+    float: right;
   }
 
   .btn {
@@ -92,9 +95,9 @@ body {
   }
   padding: 2%;
 
-  .addMoreButton{
-    margin-top:0px;
-    float:right;
+  .addMoreButton {
+    margin-top: 0px;
+    float: right;
     margin-bottom: 10px;
   }
 }
@@ -105,10 +108,19 @@ body {
 }
 
 .singlestock-panel {
+  position: relative;
   margin-left: 20px;
   margin-right: 20px;
-  .panel-title{
+  .panel-title {
     font-size: 20px;
+  }
+  .stockName {
+    font-size: 16px;
+    color: rgba(0, 0, 0, .5);
+  }
+
+  .profitLoss {
+   float:right;
   }
 }
 

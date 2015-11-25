@@ -4,7 +4,7 @@ import moment from 'moment';
 import RealTimeActionCreators from '../../actions/RealTimeActionCreators';
 import Autosuggest from 'react-autosuggest';
 import DateInput from '../ui/DateInput'
-import SingleManualImportLine from '../ui/SingleManualImportLine';
+import SingleManualImportLine from './../tables/ui/SingleManualImportLine';
 class ManualStockImporter extends React.Component {
 
   constructor(props) {

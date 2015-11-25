@@ -40,7 +40,7 @@ const AppDispatcher = assign(new Dispatcher(), {
 
     handleServerAction(action) {
         if (devEnv) {
-         //console.info('dispatcher server', action);
+         console.info('dispatcher server', action);
         }
         this.dispatch({
             source: 'SERVER_ACTION',

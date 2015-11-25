@@ -1,5 +1,5 @@
 const debug = require('debug')('debug:stock/getData');
-
+import { enhanceStock } from '../../helpers/EnhanceStockResult';
 var yahooFinance = require('yahoo-finance');
 
 export default (req, res) => {
@@ -18,6 +18,7 @@ export default (req, res) => {
           'e9', 'g', 'h', 'j', 'j5', 'k', 'k4', 'l1', 'm3', 'm4', 'm5',
           'm7', 'o', 'p', 'p5', 'p6', 'r', 'r5', 'r6', 'r7', 't8', 'y'],
       }, function (err, snapshot) {
+        snapshot = enhanceStock(snapshot);
         returnList.push(snapshot);
         if (returnList.length == req.body.tickers.length) resolve(returnList);
       });

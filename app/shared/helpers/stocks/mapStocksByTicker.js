@@ -12,6 +12,7 @@ export function mapByTicker(array) {
       formattedTX.amount = parseFloat(tx.amount);
       formattedTX.price = parseFloat(tx.price);
       formattedTX.total = parseFloat(tx.amount * tx.price);
+      formattedTX.sector = tx.sector;
       sortedStocks[tx.ticker].push(formattedTX);
     });
 
