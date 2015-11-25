@@ -34,6 +34,7 @@ export function getStockEntriesData(entries,rt){
   if(rt && rt[ticker]){
     data.sector = rt[ticker].sector;
     data.price = rt[ticker].lastTradePriceOnly;
+    data.name = rt[ticker].name;
   }
 
   data.totalAmount = 0;
@@ -48,7 +49,7 @@ export function getStockEntriesData(entries,rt){
   data.profitLoss = (data.price * data.totalAmount) - data.totalPrice;
   data.profitLoss = Math.round((data.profitLoss) * 100) / 100;
   if (data.price == 0)  data.profitLoss = "N/A";
-  data.name = entries[0].name;
+  //data.name = entries[0].name;
 
   return data;
 }

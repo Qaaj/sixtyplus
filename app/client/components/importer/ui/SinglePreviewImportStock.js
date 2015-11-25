@@ -54,7 +54,7 @@ class SinglePreviewImportStock extends React.Component {
 
     let body = (<div>
         <Panel className='singlestock-panel' collapsible defaultExpanded={false}
-               header={<h4>{this.props.ticker} <span className="stockName">{name} | {data.totalAmount} @ {data.averagePrice}</span>
+               header={<h4>{this.props.ticker} <span className="stockName">{data.name} | {data.totalAmount} @ {data.averagePrice}</span>
           <div className="profitLoss">P/L: <Label bsStyle={cx}>{data.profitLoss}</Label></div>
                                   <Label className="sector" style={style} bsStyle={cx}>{data.sector}</Label>
 
