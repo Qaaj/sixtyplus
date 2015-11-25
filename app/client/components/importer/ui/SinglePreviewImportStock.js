@@ -1,7 +1,7 @@
 import { Panel , Label, Button} from 'react-bootstrap';
 import { get, post, put, del } from '../../../utils/RequestUtil';
 import { pureRenderDecorator } from '../../../../shared/helpers/decorators';
-import { getStockEntriesData } from '../../../../shared/helpers/stocks/getStockEntriesData';
+import { getStockEntriesData } from '../../../../shared/helpers/stocks';
 import {getUniqueColor} from '../../../../shared/helpers/colors/ColorUtils';
 @pureRenderDecorator
 class SinglePreviewImportStock extends React.Component {
@@ -29,23 +29,19 @@ class SinglePreviewImportStock extends React.Component {
 
   render() {
 
-    let totalPrice = 0;
-    let totalAmount = 0;
-
     if (!this.props.entries || this.props.entries.length == 0) return null;
 
-    const data = getStockEntriesData(this.props.entries,this.props.rt);
+    const data = getStockEntriesData(this.props.entries, this.props.rt);
 
     let list = this.props.entries.map((entry, i) => {
       return (<h5 key={'stock_entry_' + entry.name + i}>{entry.amount} @ {entry.price}</h5>);
     });
 
-    let cx = 'success';
-    if (data.profitLoss < 0) cx = 'danger';
+    let cx = data.profitLoss < 0 ? 'danger' : 'success';
 
     let style = {};
 
-    if(data.sector){
+    if (data.sector) {
       let color = getUniqueColor(data.sector);
       style = {
         backgroundColor: color,
@@ -66,8 +62,8 @@ class SinglePreviewImportStock extends React.Component {
 
           {list}
 
-      </Panel>
-      < / div >
+        </Panel>
+      </div>
     );
 
     return body;

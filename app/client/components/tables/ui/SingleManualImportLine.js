@@ -14,14 +14,6 @@ class SingleManualImportLine extends React.Component {
     this.stockObject = {};
   }
 
-  componentWillReceiveProps(newProps) {
-
-  }
-
-  componentDidMount(){
-
-  }
-
   _handleInput(row,e,val) {
     let column = e;
     let input = val;
@@ -30,7 +22,6 @@ class SingleManualImportLine extends React.Component {
     if(e.target) column = e.target.alt;
 
     this.stockRow[column] = input;
-
 
     if(this.stockRow.length == 4){
       this._checkIfValid(this.stockRow);

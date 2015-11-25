@@ -1,7 +1,7 @@
 import { Input,Button } from 'react-bootstrap';
 import UserActionCreators from '../../actions/UserActionCreators';
 import { doImport } from '../../../shared/helpers/importers/IB_importer';
-import { mapByTicker} from '../../../shared/helpers/stocks/mapStocksByTicker';
+import { mapByTicker} from '../../../shared/helpers/stocks';
 import NotificationActionCreators from '../../actions/NotificationActionCreators';
 import RealTimeActionCreators from '../../actions/RealTimeActionCreators';
 import SingleStock from '../importer/ui/SinglePreviewImportStock';
