@@ -1,0 +1,101 @@
+
+$black: rgb(30, 30, 30);
+$white: rgb(255, 255, 255);
+
+$whiteDark: #F0F1F3;
+$colorSmSecondaryRed: #DB342B;
+$colorSmSecondaryOrange: #FF9A02;
+$colorSmSecondaryBlue: #009CAF;
+$colorSmSecondaryGreen: #8CC334;
+$colorSmSecondaryGrey: #E1E1E1;
+$mGrey50: #fafafa;
+$mGrey300: #e0e0e0;
+$mGrey350: #c4c4c4;
+$mGrey400: #BDBDBD;
+$mGrey500: #9e9e9e;
+$mGrey600: #757575;
+
+$mRed500: #F44336;
+$mRed700: #D32F2F;
+
+$green: #95b660;
+$greenDark: darken($green, 10%);
+$greenLight: #A8CA78;
+
+$mGreen200: #A5D6A7;
+$mGreen500: #4CAF50;
+$mGreen700: #388E3C;
+$mGreen800: #2E7D32;
+
+$blue: #47a5b2;
+$blueDark: darken($blue, 10);
+$blueLight: #6AB7C1;
+
+$mBlue50: #E1F5FE;
+$mBlue100: #B3E5FC;
+$mBlue300: #4FC3F7;
+$mBlue400: #29B6F6;
+$mBlue500: #03A9F4;
+$mBlue600: #039BE5;
+$mBlue700: #0288D1;
+$mBlue800: #0277BD;
+$mBlue900: #01579B;
+
+$mGreen300: #81C784;
+$mGreen350: #77ad1a;
+
+$mPink300: #F06292;
+$mPink500: #E91E63;
+$mPink700: #C2185B;
+
+$customPurpleDark: #6e5b88;
+$customPurpleLight: #806f97;
+
+$mPurple200: #CE93D8;
+$mPurple400: #AB47BC;
+$mPurple600: #8E24AA;
+
+$orange: #FF9B1B;
+$orangeDark: darken(#FF9B1B, 10%);
+$orangeLight: lighten(#FF9B1B, 10%);
+
+$mOrange50: #FFF3E0;
+$mOrange300: #FFB74D;
+$mOrange500: #FF9800;
+$mOrange600: #FB8C00;
+$mOrange650: #FAA900;
+$mOrange700: #F57C00;
+$mOrange800: #EF6C00;
+
+$red: #DD332A;
+$redDark: darken(#DD332A, 10%);
+$redLight: lighten(#DD332A, 10%);
+
+$pastelYellow: #f7da98;
+$pastelYellowDark: darken($pastelYellow, 10);
+$pastelYellowLight: lighten($pastelYellow, 10);
+
+$pastelRed: #f7a398;
+$pastelRedDark: #a13e32;
+$pastelRedLight: lighten($pastelRed, 10);
+
+$pastelBlue: #608f99;
+$pastelBlueDark: darken($pastelBlue, 10);
+$pastelBlueLight: lighten($pastelBlue, 10);
+
+$pastelGreen: #72b985;
+$pastelGreenDark: darken($pastelGreen, 10);
+$pastelGreenLight: lighten($pastelGreen, 10);
+
+$pastelPetrol: #1f5663;
+$pastelPetrolDark: darken($pastelPetrol, 10);
+$pastelPetrolLight: lighten($pastelPetrol, 10);
+
+$colorFacebook: #016FC3;
+$colorTwitter: #08BEEF;
+$colorGoogleplus: #DD4C3B;
+$colorPinterest: #BF0C1F;
+$colorLinkedIn: #009CAF;
+
+$grayLight: #B0B0B1;
+$grayVeryLight: #D9DADC;

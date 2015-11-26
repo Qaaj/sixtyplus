@@ -1,11 +1,13 @@
 $icon-font-path: '~bootstrap-sass/assets/fonts/bootstrap/';
-
+@import './base/branding';
+@import './base/stockdata';
 @import "../node_modules/bootstrap-sass/assets/stylesheets/_bootstrap.scss";
 @import './fonts/material_icons';
 @import './fonts/roboto';
 @import './modules/notification';
 @import './modules/autoSuggest';
 @import './modules/spinners';
+@import './components/sectorComponent';
 
 body {
   background-color: #EFEFEF;
@@ -143,7 +145,7 @@ body {
   .sector{
     margin-left: 20px;
     color:black;
-    opacity: .8;
+    opacity: .7;
   }
 }
 

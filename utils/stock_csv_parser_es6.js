@@ -16,6 +16,7 @@ fs.readFile(__dirname + '/../static/us_stocks.csv', function (err, data) {
 
   allStocks = allStocks.splice(1);
   let mappedStocks = {};
+  let sectorMap = {};
 
   allStocks.map(singleLine => {
     let singleStock = singleLine.slice(0, -1).split("|,|").reduce((prev, curr, i) => {
@@ -23,14 +24,17 @@ fs.readFile(__dirname + '/../static/us_stocks.csv', function (err, data) {
       return prev;
     }, {});
     mappedStocks[singleStock.Symbol] = singleStock;
+    sectorMap[singleStock.Sector] = singleStock.Sector;
   });
 
-  fs.writeFile(__dirname + '/../static/mapped_stocks.json', JSON.stringify(mappedStocks), function(err) {
-    if(err) {
-      return console.log(err);
-    }
+  //fs.writeFile(__dirname + '/../static/mapped_stocks.json', JSON.stringify(mappedStocks), function(err) {
+  //  if(err) {
+  //    return console.log(err);
+  //  }
+  //
+  //  console.log("The file was saved!");
+  //});
 
-    console.log("The file was saved!");
-  });
+  console.log(Object.keys(sectorMap));
 
 });

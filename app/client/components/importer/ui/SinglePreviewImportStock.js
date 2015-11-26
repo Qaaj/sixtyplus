@@ -2,7 +2,9 @@ import { Panel , Label, Button} from 'react-bootstrap';
 import { get, post, put, del } from '../../../utils/RequestUtil';
 import { pureRenderDecorator } from '../../../../shared/helpers/decorators';
 import { getStockEntriesData } from '../../../../shared/helpers/stocks';
-import {getUniqueColor} from '../../../../shared/helpers/colors/ColorUtils';
+import {getUniqueColor, getClassBySector} from '../../../../shared/helpers/colors/ColorUtils';
+import SectorComponent from '../../ui/SectorComponent';
+
 @pureRenderDecorator
 class SinglePreviewImportStock extends React.Component {
 
@@ -39,13 +41,10 @@ class SinglePreviewImportStock extends React.Component {
 
     let cx = data.profitLoss < 0 ? 'danger' : 'success';
 
-    let style = {};
+    let sectorClass = '';
 
     if (data.sector) {
-      let color = getUniqueColor(data.sector);
-      style = {
-        backgroundColor: color,
-      };
+     sectorClass = getClassBySector(data.sector)
     }
 
 
@@ -56,8 +55,7 @@ class SinglePreviewImportStock extends React.Component {
         <Panel className='singlestock-panel' collapsible defaultExpanded={false}
                header={<h4>{this.props.ticker} <span className="stockName">{data.name} | {data.totalAmount} @ {data.averagePrice}</span>
           <div className="profitLoss">P/L: <Label bsStyle={cx}>{data.profitLoss}</Label></div>
-                                  <Label className="sector" style={style} bsStyle={cx}>{data.sector}</Label>
-
+          <SectorComponent cx={sectorClass} sector={data.sector} />
           </h4>}>
 
           {list}

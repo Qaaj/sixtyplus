@@ -15,3 +15,13 @@ export function getUniqueColor(string){
 
     return color
 }
+
+
+export function getClassBySector(sector){
+    sector = sector.toLowerCase();
+    if(sector === 'n/a' || !sector) return 'na';
+    sector = sector.replace(" ","");
+    sector = sector.replace("-","");
+    sector = sector.replace("/","");
+    return sector;
+}
