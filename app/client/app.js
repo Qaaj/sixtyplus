@@ -68,6 +68,7 @@ class App extends React.Component {
     const history = this.props.history;
     const location = this.props.location;
     const params = this.props.params;
+    console.log(this.state.user);
 
     return (<div>
 

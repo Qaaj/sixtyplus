@@ -7,6 +7,8 @@ import { EventEmitter } from 'events';
 import { Map, fromJS } from 'immutable';
 import asap from 'asap';
 
+import StockEntry from '../classes/StockEntry';
+import { createEntriesFromUserObjectPortfolio } from '../../shared/helpers/stocks'
 import RealTimeActionCreators from '../actions/RealTimeActionCreators';
 const CHANGE_EVENT = 'change';
 
@@ -64,9 +66,12 @@ UserStore.dispatchToken = AppDispatcher.register(function (payload) {
       if (action.data.currency == "EURO") action.data.currency = "€";
       if (action.data.currency == "DOLLAR") action.data.currency = "$";
       if (action.data.currency == "POUND") action.data.currency = "£";
-      console.log(action.data);
       _userObject = fromJS(action.data);
+
       console.log(_userObject.toJS())
+
+      let entryArray = createEntriesFromUserObjectPortfolio(_userObject.toJS().userData.portfolio);
+      _userObject = _userObject.set("stockEntries", entryArray);
       NotificationActionCreators.userLoggedIn(_userObject.toJS());
 
       UserStore.emitChange();

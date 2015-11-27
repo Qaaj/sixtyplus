@@ -1,4 +1,5 @@
 import defaults from '../../client/config/Defaults';
+import StockEntryCollection from '../../client/classes/StockEntryCollection';
 
 export function mapByTicker(array) {
   let sortedStocks = {};
@@ -28,8 +29,10 @@ export function mapByTicker(array) {
 
 export function getStockEntriesData(entries,rt){
 
+
   let data = {};
   let ticker = entries[0].name;
+
 
   if(rt && rt[ticker]){
     data.sector = rt[ticker].sector;
@@ -52,5 +55,16 @@ export function getStockEntriesData(entries,rt){
   //data.name = entries[0].name;
 
   return data;
+}
+
+export function createEntriesFromUserObjectPortfolio(portfolio){
+
+  let collection = [];
+  for (let key in portfolio) {
+    collection.push(new StockEntryCollection(portfolio[key]));
+  }
+  console.log(collection);
+
+  return collection;
 }
 
