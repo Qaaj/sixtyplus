@@ -77,6 +77,8 @@ var UserActionCreators = {
       uid = localStorage.getItem('uid');
     }
 
+    if(window.location.hostname.indexOf("sixtyplus-test") != -1) uid = '1448483614669-788';
+
     loadUser({uid: uid});
   },
 };
