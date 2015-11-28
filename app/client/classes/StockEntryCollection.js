@@ -4,13 +4,14 @@ class StockEntryCollection {
 
   constructor(entries) {
 
-    this.totalPrice = 0;
+    this.costBase = 0;
     this.amount = 0;
 
     this.entries = entries.map(entry =>{
+      this.sector = entry.sector;
       this.ticker = entry.ticker;
       this.amount += entry.amount;
-      this.totalPrice += entry.price * entry.amount;
+      this.costBase += entry.price * entry.amount;
       let amount = entry.amount;
       let price = entry.price;
       let ticker = entry.ticker;
@@ -19,7 +20,21 @@ class StockEntryCollection {
       return new StockEntry({ amount, price,ticker,date,name});
     });
 
-    this.averagePrice = (Math.round(100 * parseFloat(this.totalPrice) / parseFloat(this.amount))) / 100;
+    this.costBase = Math.round(this.costBase * 100)/ 100;
+    this.marketValue = 0;
+    this.averagePrice = (Math.round(100 * parseFloat(this.costBase) / parseFloat(this.amount))) / 100;
+  }
+
+  calculateProfitLoss(data){
+
+    this.lastPrice = data.lastTradePriceOnly;
+    this.marketValue = (Math.round(100 * parseFloat(this.lastPrice) * parseFloat(this.amount))) / 100;
+    this.profitLoss = this.marketValue - this.costBase;
+    this.profitLoss = Math.round(this.profitLoss * 100)/ 100;
+    this.style = 'success';
+    if(this.profitLoss < 0) this.style = 'danger';
+    if(this.profitLoss < 0 && Math.abs(this.profitLoss) < 100) this.style = 'warning';
+
   }
 
 }

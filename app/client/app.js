@@ -51,24 +51,16 @@ class App extends React.Component {
 
   }
 
-  componentWillUpdate(nextProps) {
-  }
-
   componentDidMount() {
     UserStore.addChangeListener(this._handleUserStoreChange);
     RealTimeStore.addChangeListener(this._handleRealTimeStoreChange);
   }
-
-  componentWillUnmount() {
-  }
-
 
   render() {
 
     const history = this.props.history;
     const location = this.props.location;
     const params = this.props.params;
-    console.log(this.state.user);
 
     return (<div>
 

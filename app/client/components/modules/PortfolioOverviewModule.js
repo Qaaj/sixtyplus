@@ -8,7 +8,7 @@ import UserActionCreators from '../../actions/UserActionCreators';
 import { doImport } from '../../../shared/helpers/importers/IB_importer';
 import NotificationActionCreators from '../../actions/NotificationActionCreators';
 import SingleStock from '../importer/ui/SinglePreviewImportStock';
-import StockTable from '../tables/ImportStockTable';
+import StockTable from '../tables/StockTable';
 import { Grid } from 'react-bootstrap';
 
 

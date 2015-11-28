@@ -1,0 +1,56 @@
+
+.stockCard{
+  position: relative;
+  display: inline-block;
+  width:95%;
+  height: auto;
+  padding: 5px 5px;
+  margin:10px;
+  background-color: #fff;
+  box-shadow: $grayVeryLight ;
+  -webkit-box-shadow: 0 0 10px -2px rgba(0,0,0,.4);
+  box-shadow: 0 0 10px -2px rgba(0,0,0,.4);
+
+  h4{
+    margin-left:5px;
+    margin-top:5px;
+  }
+
+  .well{
+    margin-bottom: 10px;
+    padding:5px 10px;
+  }
+
+  .list-group-item{
+    vertical-align: middle;
+    line-height: 25px;
+  }
+
+  hr{
+    margin:10px;
+  }
+  .stockName {
+    float:right;
+    position: relative;
+    margin-left:10px;
+    top:0px;
+    left:-5px;
+    font-size: 14px;
+    color: rgba(0, 0, 0, .5);
+    overflow: hidden;
+  }
+
+  .cardContent{
+    margin: 5px 5px;
+  }
+
+  .prop{
+    font-size:15px;
+    opacity: .75;
+  }
+
+  .val{
+    float:right;
+    display: inline-block;
+  }
+}

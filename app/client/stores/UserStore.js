@@ -68,8 +68,6 @@ UserStore.dispatchToken = AppDispatcher.register(function (payload) {
       if (action.data.currency == "POUND") action.data.currency = "£";
       _userObject = fromJS(action.data);
 
-      console.log(_userObject.toJS())
-
       let entryArray = createEntriesFromUserObjectPortfolio(_userObject.toJS().userData.portfolio);
       _userObject = _userObject.set("stockEntries", entryArray);
       NotificationActionCreators.userLoggedIn(_userObject.toJS());
