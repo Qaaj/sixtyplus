@@ -8,6 +8,9 @@ import SectorComponent from '../ui/SectorComponent';
 class StockCard extends React.Component {
 
   constructor(props) {
+    this.state = {
+      expanded = true;
+    }
     super(props);
   }
 
