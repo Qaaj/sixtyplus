@@ -42,6 +42,10 @@ class PortfolioOverview extends React.Component {
       {
         name: 'Ticker',
         prop: 'ticker'
+      },
+      {
+        name: '# Shares',
+        prop: 'amount'
       }
     ];
 
@@ -70,9 +74,6 @@ class PortfolioOverview extends React.Component {
     let currentSortName = this.sortKeys.filter((sorter) =>{
       if(sorter.prop === this.state.sorter.key) return 1;
     })[0].name;
-
-    console.log(currentSortName);
-    console.log(this.state);
 
     if (!this.props.user.userData) return (<Grid style={{'textAlign':'center','padding':'20px'}}> There
       doesn't seem to be anything here! Head over to the <a href={"#/" +this.props.lang +"/Import"}>Importer</a> to

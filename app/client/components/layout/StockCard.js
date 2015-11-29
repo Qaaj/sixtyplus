@@ -39,6 +39,10 @@ class StockCard extends React.Component {
           </Well>
           <ListGroup>
             <ListGroupItem>
+              <span className="prop">Average Price</span>
+              <div className="val">{entries.averagePrice} (x {entries.amount})</div>
+            </ListGroupItem>
+            <ListGroupItem>
               <span className="prop">Cost Base </span>
               <div className="val">{entries.costBase}</div>
             </ListGroupItem>
