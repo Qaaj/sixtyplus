@@ -3,13 +3,12 @@
  */
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { Input,Button } from 'react-bootstrap';
 import UserActionCreators from '../../actions/UserActionCreators';
 import { doImport } from '../../../shared/helpers/importers/IB_importer';
 import NotificationActionCreators from '../../actions/NotificationActionCreators';
 import SingleStock from '../importer/ui/SinglePreviewImportStock';
 import StockTable from '../tables/StockTable';
-import { Grid, DropdownButton, MenuItem  } from 'react-bootstrap';
+import { Input, Grid, DropdownButton, MenuItem, ButtonToolbar, Button, ButtonGroup } from 'react-bootstrap';
 
 
 class PortfolioOverview extends React.Component {
@@ -21,7 +20,8 @@ class PortfolioOverview extends React.Component {
       sorter: {
         key: 'profitLoss',
         reverse: true
-      }
+      },
+      filter: 'All'
     }
 
     this.sortReverse = true;
@@ -49,6 +49,10 @@ class PortfolioOverview extends React.Component {
       }
     ];
 
+    this.filters = ['All','Profit','Loss'];
+
+
+    this.filterItems = this.filters.map(::this.createFilters);
     this.dropdownItems = this.sortKeys.map(this.createDropdown);
   }
 
@@ -65,11 +69,18 @@ class PortfolioOverview extends React.Component {
 
   }
 
+  createFilters(filter ,i){
+    let selected = (filter === this.state.filter) ? 'primary' : 'default';
+    return <Button bsStyle={selected} onClick={()=> this.setState({'filter': filter})} eventKey={filter} key={'filter'+i}>{filter}</Button>;
+  }
+
   createDropdown(sorter, i){
     return <MenuItem eventKey={sorter.prop} key={'sorter_'+i}>{sorter.name}</MenuItem>;
   }
 
   render() {
+
+    this.filterItems = this.filters.map(::this.createFilters);
 
     let currentSortName = this.sortKeys.filter((sorter) =>{
       if(sorter.prop === this.state.sorter.key) return 1;
@@ -83,13 +94,18 @@ class PortfolioOverview extends React.Component {
 
     return (
       <Grid className="portfolio-page">
+        <ButtonToolbar>
+          <ButtonGroup>
+            {this.filterItems}
+          </ButtonGroup>
+        </ButtonToolbar>
         <div className="sorter">
           <DropdownButton onSelect={::this._onSelect} bsStyle={'default'} title={'Sorted by: ' + currentSortName} id="sorter-dropdown">
             {this.dropdownItems}
           </DropdownButton>
         </div>
         <div className='portfolioOverview'>
-          <StockTable rt={this.props.rt} user={this.props.user} sorter={this.state.sorter} />
+          <StockTable rt={this.props.rt} user={this.props.user} sorter={this.state.sorter} filter={this.state.filter} />
         </div>
       </Grid>
     );
