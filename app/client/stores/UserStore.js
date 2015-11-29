@@ -6,22 +6,19 @@ import assign from 'object-assign';
 import { EventEmitter } from 'events';
 import { Map, fromJS } from 'immutable';
 import asap from 'asap';
-
 import StockEntry from '../classes/StockEntry';
 import { createEntriesFromUserObjectPortfolio } from '../../shared/helpers/stocks'
 import RealTimeActionCreators from '../actions/RealTimeActionCreators';
-const CHANGE_EVENT = 'change';
-
 import NotificationActionCreators from '../actions/NotificationActionCreators';
+import {getTranslation,setLang } from '../utils/LangUtils';
 
+const CHANGE_EVENT = 'change';
 
 let _userObject = Map();
 let _userData = Map();
-let _userSettings = Map();
 
-function _setSettings(userSettingsObj) {
-  _userSettings = _userSettings.merge(userSettingsObj);
-}
+let newLangInstance = (...args)=>{return getTranslation(...args)};
+_userObject = _userObject.set('lang', newLangInstance);
 
 const UserStore = assign({}, EventEmitter.prototype, {
   getUser() {
@@ -70,6 +67,16 @@ UserStore.dispatchToken = AppDispatcher.register(function (payload) {
 
       let entryArray = createEntriesFromUserObjectPortfolio(_userObject.toJS().userData.portfolio);
       _userObject = _userObject.set("stockEntries", entryArray);
+
+      let newLangInstance = (...args)=>{return getTranslation(...args)};
+      _userObject = _userObject.set('lang',newLangInstance);
+      let temp = {
+        'test':'test string 2',
+        'ok': 'everything ok 2'
+      }
+
+      setLang(temp);
+
       NotificationActionCreators.userLoggedIn(_userObject.toJS());
 
       UserStore.emitChange();

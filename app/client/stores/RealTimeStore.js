@@ -84,7 +84,7 @@ RealTimeStore.dispatchToken = AppDispatcher.register(function (payload) {
   case RealTimeConstants.REAL_TIME_STOCKS_UPDATE:
 
   action.data.map(ticker => {
-    _realTimeObject = _realTimeObject.set(ticker.symbol, ticker)
+    if(ticker) _realTimeObject = _realTimeObject.set(ticker.symbol, ticker)
   });
 
   RealTimeStore.emitChange();

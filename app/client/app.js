@@ -11,7 +11,6 @@ import UserStore from './stores/UserStore';
 import RealTimeStore from './stores/RealTimeStore';
 
 import Notification from './components/modules/NotificationModule';
-const uiLang = window.userLang;
 
 
 // UID 1446931000055-1371
@@ -65,12 +64,12 @@ class App extends React.Component {
     return (<div>
 
       <Header />
-      <TopMenu history={history} location={location} urlParams={params} lang={uiLang} />
+      <TopMenu history={history} location={location} urlParams={params} lang={this.state.user.lang} />
       <Notification />
 
       {React.cloneElement(
         this.props.children, {
-          lang:uiLang,
+          lang:this.state.user.lang,
           history: history,
           location: location,
           urlParams: params,
@@ -84,6 +83,6 @@ class App extends React.Component {
 
 
 ReactDOM.render(
-  <Router routes={routes(App, uiLang)}/>,
+  <Router routes={routes(App)}/>,
   document.getElementById('app')
 );
