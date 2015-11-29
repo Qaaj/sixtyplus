@@ -45,7 +45,7 @@ const NotificationActionCreators = {
                     isVisible: true,
                     type: 'success',
                     message:"Welcome back! Your last visit was on " + user.last_login,
-                    delay: 5000
+                    delay: 2000
                 });
             }
         });

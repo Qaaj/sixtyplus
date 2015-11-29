@@ -3,7 +3,6 @@ import { Label, Col, Grid, Row } from 'react-bootstrap';
 import SingleStockPreview from '../importer/ui/SinglePreviewImportStock';
 import StockCard from '../layout/StockCard';
 import { pureRenderDecorator } from '../../../shared/helpers/decorators';
-import {updateEntriesData} from '../../../shared/helpers/stocks';
 import {sortByKey} from '../../../shared/helpers/sorting';
 import {filterStockEntries} from '../../../shared/helpers/filtering';
 
@@ -18,12 +17,9 @@ class StockTable extends React.Component {
 
   render() {
 
-    if(!this.props.user.userData && !this.props.rt) return <div className="loader"></div>;
 
-    let stockEntries = this.props.user.stockEntries;
+    let stockEntries = this.props.entries;
 
-
-    stockEntries  = updateEntriesData(stockEntries, this.props.rt);
     stockEntries = filterStockEntries(stockEntries, this.props.filter)
     stockEntries = sortByKey(stockEntries, this.props.sorter.key, this.props.sorter.reverse);
 

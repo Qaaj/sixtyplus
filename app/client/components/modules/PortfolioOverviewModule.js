@@ -8,7 +8,8 @@ import { doImport } from '../../../shared/helpers/importers/IB_importer';
 import NotificationActionCreators from '../../actions/NotificationActionCreators';
 import SingleStock from '../importer/ui/SinglePreviewImportStock';
 import StockTable from '../tables/StockTable';
-import { Input, Grid, DropdownButton, MenuItem, ButtonToolbar, Button, ButtonGroup } from 'react-bootstrap';
+import { Input, Grid, DropdownButton, MenuItem, ButtonToolbar, Button, ButtonGroup,ListGroup,ListGroupItem } from 'react-bootstrap';
+import {updateEntriesData, createPortfolioStats} from '../../../shared/helpers/stocks';
 
 
 class PortfolioOverview extends React.Component {
@@ -80,34 +81,61 @@ class PortfolioOverview extends React.Component {
 
   render() {
 
-    this.filterItems = this.filters.map(::this.createFilters);
-
-    let currentSortName = this.sortKeys.filter((sorter) =>{
-      if(sorter.prop === this.state.sorter.key) return 1;
-    })[0].name;
-
     if (!this.props.user.userData) return (<Grid style={{'textAlign':'center','padding':'20px'}}> There
       doesn't seem to be anything here! Head over to the <a href={"#/" +this.props.lang +"/Import"}>Importer</a> to
       change that.</Grid>);
 
     if(!this.props.rt) return (<Grid style={{'textAlign':'center','padding':'20px'}}> <div className="loader"></div></Grid>);
 
+    this.filterItems = this.filters.map(::this.createFilters);
+
+    let stockEntries = updateEntriesData(this.props.user.stockEntries, this.props.rt);
+    let portfolioData = createPortfolioStats(stockEntries);
+
+    let currentSortName = this.sortKeys.filter((sorter) =>{
+      if(sorter.prop === this.state.sorter.key) return 1;
+    })[0].name;
+
+
+    let profitOrLoss = 'success';
+    if(portfolioData.profitLoss < 0) profitOrLoss = 'danger';
+
     return (
-      <Grid className="portfolio-page">
-        <ButtonToolbar>
-          <ButtonGroup>
-            {this.filterItems}
-          </ButtonGroup>
-        </ButtonToolbar>
+
+      <div className="portfolio-page">
+        <Grid>
+
+        <ListGroup>
+          <ListGroupItem bsStyle={profitOrLoss}>
+            <span className="prop">Profit/Loss: </span>
+            <div className="val">{portfolioData.profitLoss} ({portfolioData.percent_change_string})</div>
+          </ListGroupItem>
+          <ListGroupItem>
+            <span className="prop">Portfolio Market Value: </span>
+            <div className="val">{portfolioData.marketValue}</div>
+          </ListGroupItem>
+        </ListGroup>
+        <div className="filter">
+          <ButtonToolbar>
+            <ButtonGroup>
+              {this.filterItems}
+            </ButtonGroup>
+          </ButtonToolbar>
+        </div>
         <div className="sorter">
-          <DropdownButton onSelect={::this._onSelect} bsStyle={'default'} title={'Sorted by: ' + currentSortName} id="sorter-dropdown">
+          <DropdownButton onSelect={::this._onSelect} bsStyle={'default'} title={'Sorted by: ' + currentSortName}
+                          id="sorter-dropdown">
             {this.dropdownItems}
           </DropdownButton>
         </div>
-        <div className='portfolioOverview'>
-          <StockTable rt={this.props.rt} user={this.props.user} sorter={this.state.sorter} filter={this.state.filter} />
-        </div>
-      </Grid>
+          </Grid>
+        <Grid>
+          <div className='portfolioOverview'>
+            <StockTable rt={this.props.rt} user={this.props.user} sorter={this.state.sorter}
+                        filter={this.state.filter} entries={stockEntries}/>
+          </div>
+        </Grid>
+      </div>
     );
   }
 }

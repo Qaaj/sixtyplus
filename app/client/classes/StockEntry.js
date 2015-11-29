@@ -32,6 +32,7 @@ class StockEntry {
     let data = rt[this.ticker];
     if(data){
       this.change = data.change;
+      this.industry = data.industry;
       this.previousClose = data.previousClose;
       this.percent_change =  100 * Math.round((data.change/data.previousClose) * 10000) / 10000;
     }

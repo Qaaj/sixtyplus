@@ -15,12 +15,12 @@ body {
   font-family: 'robotomedium';
 }
 
-.profitColor{
-  color:$mGreen350;
+.profitColor {
+  color: $mGreen350;
 }
 
-.lossColor{
-  color:$pastelRedDark;
+.lossColor {
+  color: $pastelRedDark;
 }
 
 .currency-selection {
@@ -36,6 +36,7 @@ body {
   margin-right: auto;
   margin-bottom: 0px;
   margin-top: 0px;
+  text-align: center;
 }
 
 .jumbotron {
@@ -75,6 +76,7 @@ body {
 }
 
 .topMenu {
+  margin-top: 10px;
   margin-bottom: 20px;
 }
 
@@ -120,7 +122,7 @@ body {
 
 .singlestock-panel {
 
-  a:hover, a:focus{
+  a:hover, a:focus {
     text-decoration: none;
   }
   a:hover {
@@ -133,61 +135,68 @@ body {
     font-size: 20px;
   }
   .stockName {
-    margin-left:10px;
+    margin-left: 10px;
     font-size: 16px;
     color: rgba(0, 0, 0, .5);
   }
 
   .profitLoss {
-    margin-top:1px;
-   float:right;
+    margin-top: 1px;
+    float: right;
     color: #999;
     opacity: 1;
     font-size: 18px;
 
-    .label{
+    .label {
       font-weight: 100;
 
     }
   }
 
-  .sector{
+  .sector {
     margin-left: 20px;
-    color:black;
+    color: black;
     opacity: .7;
   }
 }
 
-.translation_debug{
+.translation_debug {
   color: red;
-  z-index:10;
+  z-index: 10;
 }
 
+.portfolio-page {
 
-.portfolio-page{
-
-  top:25px;
+  top: 25px;
   position: relative;
 
-  .btn-toolbar{
-    .btn{
-      line-height:15px;
+  .btn-toolbar {
+    .btn {
+      line-height: 15px;
       font-size: 15px;
 
     }
   }
 
-  .portfolioOverview{
+  .portfolioOverview {
     .container {
-      padding:0px;
-      margin-top:25px;
+      padding: 0px;
+      margin-top: 25px;
     }
   }
 
-  .sorter{
-    right: -15px;
-    top: -3px;
-    position: absolute;
+  .filter {
+    display: inline-block;
+  }
+  .sorter {
+    display: inline-block;
+    margin-left: 10px;
+    position: relative;
+    top: -12px;
+
+    .btn{
+      padding: 4px 10px;
+    }
   }
 }
 

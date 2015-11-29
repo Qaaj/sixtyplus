@@ -66,6 +66,7 @@ export function updateEntriesData(entries,rt){
 
     if(rt && rt[ticker]){
       entry.sector = rt[ticker].sector;
+      entry.industry = rt[ticker].industry;
       entry.name = rt[ticker].name;
       entry.calculateProfitLoss(rt[ticker]);
     }
@@ -87,5 +88,25 @@ export function createEntriesFromUserObjectPortfolio(portfolio){
   }
 
   return collection;
+}
+
+export function createPortfolioStats(entries){
+
+  let portfolio = entries.reduce((prev,curr) => {
+    prev.costBase += curr.costBase;
+    prev.marketValue += curr.marketValue;
+    return prev;
+  },{costBase:0, marketValue:0 });
+
+  portfolio.profitLoss = portfolio.marketValue - portfolio.costBase;
+  portfolio.percent_change = 100 * (portfolio.profitLoss / portfolio.costBase)
+
+  portfolio.costBase = Math.round((portfolio.costBase) * 100) / 100;
+  portfolio.marketValue = Math.round((portfolio.marketValue) * 100) / 100;
+  portfolio.profitLoss = Math.round((portfolio.profitLoss) * 100) / 100;
+  portfolio.percent_change = Math.round((portfolio.percent_change) * 100) / 100;
+  portfolio.percent_change_string = portfolio.percent_change + '%';
+
+  return portfolio;
 }
 

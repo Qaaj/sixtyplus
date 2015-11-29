@@ -14,8 +14,7 @@ class Header extends React.Component {
     let header = (
       <div className='page-header'>
         <Jumbotron>
-          <h1>60+</h1>
-          <p>Take your first steps towards financial independence!</p>
+          <h1>{this.props.location.pathname.replace('/','')}</h1>
         </Jumbotron>
       </div>);
 

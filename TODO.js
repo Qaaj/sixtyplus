@@ -13,3 +13,5 @@
  // OK AUTO SUGGEST
 // HOw many stocks make up how much of the loss / profit?
  // What is the best performing sector? Sectors?
+ // Clean up CSS
+ // Make portfolio class

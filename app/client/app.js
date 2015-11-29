@@ -63,8 +63,9 @@ class App extends React.Component {
 
     return (<div>
 
-      <Header />
+      <Header location={location} />
       <TopMenu history={history} location={location} urlParams={params} lang={this.state.user.lang} />
+
       <Notification />
 
       {React.cloneElement(
