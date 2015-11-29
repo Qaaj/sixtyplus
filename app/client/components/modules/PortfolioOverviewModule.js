@@ -9,8 +9,7 @@ import { doImport } from '../../../shared/helpers/importers/IB_importer';
 import NotificationActionCreators from '../../actions/NotificationActionCreators';
 import SingleStock from '../importer/ui/SinglePreviewImportStock';
 import StockTable from '../tables/StockTable';
-import { Grid } from 'react-bootstrap';
-
+import { Grid, DropdownButton, MenuItem  } from 'react-bootstrap';
 
 
 class PortfolioOverview extends React.Component {
@@ -18,32 +17,80 @@ class PortfolioOverview extends React.Component {
   constructor(props) {
     super(props);
 
-    this._handleChange = this._handleChange.bind(this);
-    this._onSaveClickHandler = this._onSaveClickHandler.bind(this);
+    this.state = {
+      sorter: {
+        key: 'profitLoss',
+        reverse: true
+      }
+    }
+
+    this.sortReverse = true;
+
+    this.sortKeys = [
+      {
+        name: 'Profit/Loss',
+        prop: 'profitLoss'
+      },
+      {
+        name: 'Market Value',
+        prop: 'marketValue'
+      },
+      {
+        name: 'Sector',
+        prop: 'sector'
+      },
+      {
+        name: 'Ticker',
+        prop: 'ticker'
+      }
+    ];
+
+    this.dropdownItems = this.sortKeys.map(this.createDropdown);
+  }
+
+  _onSelect(e,key){
+
+    this.sortReverse = !this.sortReverse;
+
+    let sorter = {
+      key: key,
+      reverse:  this.sortReverse
+    }
+
+    this.setState({'sorter':sorter});
 
   }
 
-  componentWillReceiveProps(newProps) {
-
-  }
-
-  _handleChange(e) {
-    this.setState({[e.target.name]: e.target.value})
-
-  }
-
-  _onSaveClickHandler(e) {
-    UserActionCreators.updatePortfolio(this.state.sortedStocks);
+  createDropdown(sorter, i){
+    return <MenuItem eventKey={sorter.prop} key={'sorter_'+i}>{sorter.name}</MenuItem>;
   }
 
   render() {
-    if(!this.props.user.userData || !this.props.rt) return <Grid style={{'textAlign':'center','padding':'20px'}}> There doesn't seem to be anything here! Head over to the <a href={"#/" +this.props.lang +"/Import"}>Importer</a> to change that.</Grid>;
+
+    let currentSortName = this.sortKeys.filter((sorter) =>{
+      if(sorter.prop === this.state.sorter.key) return 1;
+    })[0].name;
+
+    console.log(currentSortName);
+    console.log(this.state);
+
+    if (!this.props.user.userData) return (<Grid style={{'textAlign':'center','padding':'20px'}}> There
+      doesn't seem to be anything here! Head over to the <a href={"#/" +this.props.lang +"/Import"}>Importer</a> to
+      change that.</Grid>);
+
+    if(!this.props.rt) return (<Grid style={{'textAlign':'center','padding':'20px'}}> <div className="loader"></div></Grid>);
+
     return (
-      <Grid>
-      <div className='portfolioOverview'>
-        <StockTable rt={this.props.rt} user={this.props.user}/>
-      </div>
-        </Grid>
+      <Grid className="portfolio-page">
+        <div className="sorter">
+          <DropdownButton onSelect={::this._onSelect} bsStyle={'default'} title={'Sorted by: ' + currentSortName} id="sorter-dropdown">
+            {this.dropdownItems}
+          </DropdownButton>
+        </div>
+        <div className='portfolioOverview'>
+          <StockTable rt={this.props.rt} user={this.props.user} sorter={this.state.sorter} />
+        </div>
+      </Grid>
     );
   }
 }

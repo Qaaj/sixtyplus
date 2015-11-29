@@ -10,7 +10,7 @@ import StockEntry from '../classes/StockEntry';
 import { createEntriesFromUserObjectPortfolio } from '../../shared/helpers/stocks'
 import RealTimeActionCreators from '../actions/RealTimeActionCreators';
 import NotificationActionCreators from '../actions/NotificationActionCreators';
-import {getTranslation,setLang } from '../utils/LangUtils';
+import {getTranslation, setLanguageMap } from '../utils/LangUtils';
 
 const CHANGE_EVENT = 'change';
 
@@ -70,12 +70,14 @@ UserStore.dispatchToken = AppDispatcher.register(function (payload) {
 
       let newLangInstance = (...args)=>{return getTranslation(...args)};
       _userObject = _userObject.set('lang',newLangInstance);
+
       let temp = {
-        'test':'test string 2',
-        'ok': 'everything ok 2'
+        'quickstart':'Quickstart',
+        'portfolio': 'Portfolio',
+        'import': 'Import'
       }
 
-      setLang(temp);
+      setLanguageMap(temp);
 
       NotificationActionCreators.userLoggedIn(_userObject.toJS());
 

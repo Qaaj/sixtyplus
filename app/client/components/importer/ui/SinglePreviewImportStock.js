@@ -33,6 +33,7 @@ class SinglePreviewImportStock extends React.Component {
 
     if (!this.props.entries || this.props.entries.length == 0) return null;
 
+    // TODO: use new Stock Entry class
     const data = getStockEntriesData(this.props.entries, this.props.rt);
 
     let list = this.props.entries.map((entry, i) => {

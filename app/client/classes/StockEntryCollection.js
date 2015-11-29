@@ -25,6 +25,15 @@ class StockEntryCollection {
     this.averagePrice = (Math.round(100 * parseFloat(this.costBase) / parseFloat(this.amount))) / 100;
   }
 
+  get first() {
+    return this.entries[0];
+  }
+
+  get totalChangePercentageString(){
+    if(this.totalChangePercentage >= 0) return  '+' + this.totalChangePercentage + '%';
+    return this.totalChangePercentage + '%';
+  }
+
   calculateProfitLoss(data){
 
     this.lastPrice = data.lastTradePriceOnly;
@@ -34,6 +43,7 @@ class StockEntryCollection {
     this.style = 'success';
     if(this.profitLoss < 0) this.style = 'danger';
     if(this.profitLoss < 0 && Math.abs(this.profitLoss) < 100) this.style = 'warning';
+    this.totalChangePercentage =  100 * Math.round((this.profitLoss/this.costBase) * 10000) / 10000;
 
   }
 

@@ -15,6 +15,14 @@ body {
   font-family: 'robotomedium';
 }
 
+.profitColor{
+  color:$mGreen350;
+}
+
+.lossColor{
+  color:$pastelRedDark;
+}
+
 .currency-selection {
   position: fixed;
   width: 100px;
@@ -154,4 +162,25 @@ body {
   color: red;
   z-index:10;
 }
+
+
+.portfolio-page{
+
+  top:25px;
+  position: relative;
+
+  .portfolioOverview{
+    .container {
+      padding:0px;
+      margin-top:25px;
+    }
+  }
+
+  .sorter{
+    right: -15px;
+    top: -20px;
+    position: absolute;
+  }
+}
+
 

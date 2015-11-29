@@ -13,6 +13,8 @@ class StockTable extends React.Component {
     super(props);
   }
 
+
+
   render() {
 
     if(!this.props.user.userData && !this.props.rt) return <div className="loader"></div>;
@@ -21,10 +23,10 @@ class StockTable extends React.Component {
 
 
     stockEntries  = updateEntriesData(stockEntries, this.props.rt);
-    stockEntries = sortByKey(stockEntries, 'profitLoss', true);
+    stockEntries = sortByKey(stockEntries, this.props.sorter.key, this.props.sorter.reverse);
 
     let fields = stockEntries.map((entries,i) =>{
-      return (<Col key={'singlestock_' + i  + entries.ticker} xs={6} md={4}><StockCard rt={this.props.rt}  entries={entries} /></Col>);
+      return (<Col key={'singlestock_' + i  + entries.ticker} md={4}><StockCard rt={this.props.rt}  entries={entries} /></Col>);
     });
 
     let table = (

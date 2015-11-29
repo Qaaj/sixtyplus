@@ -57,6 +57,8 @@ export function getStockEntriesData(entries,rt){
   return data;
 }
 
+// Update the collection of stock transactions with latest realtime data
+
 export function updateEntriesData(entries,rt){
 
   return entries.map((entry) =>{
@@ -67,6 +69,11 @@ export function updateEntriesData(entries,rt){
       entry.name = rt[ticker].name;
       entry.calculateProfitLoss(rt[ticker]);
     }
+
+    entry.entries.map(single =>{
+      single.updateWithReltimeData(rt);
+    })
+
     return entry;
   });
 

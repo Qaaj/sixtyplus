@@ -25,3 +25,8 @@ export function getClassBySector(sector){
     sector = sector.replace("/","");
     return sector;
 }
+
+export function getProfitLossClassname(isProfit){
+    if(isProfit) return 'profitColor';
+    return 'lossColor';
+}

@@ -5,9 +5,10 @@ let language = "EN";
 let DEBUG = false;
 
 let temp = {
-  'test':'test string',
-  'ok': 'everything ok'
-}
+  'quickstart':'quickstart',
+  'portfolio': 'portfolio',
+  'import': 'import'
+};
 
 function TranslationText(props) {
   let cx = '';
@@ -19,7 +20,7 @@ function TranslationText(props) {
   );
 }
 
-export function setLang(obj){
+export function setLanguageMap(obj){
   temp = obj;
 }
 

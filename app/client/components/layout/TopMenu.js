@@ -15,9 +15,9 @@ class TopMenu extends React.Component {
         <Row>
           <Col className="text-center" md={12}>
             <ButtonGroup className='header-menu'>
-              <Button onClick={()=>{ this.props.history.replaceState(null, `/Quickstart`); }}>{this.props.lang('Quickstart')}</Button>
-              <Button onClick={()=>{ this.props.history.replaceState(null, `/Portfolio`); }}>{this.props.lang('Portfolio')}</Button>
-              <Button onClick={()=>{ this.props.history.replaceState(null, `/Import`); }}>{this.props.lang('Import')}</Button>
+              <Button onClick={()=>{ this.props.history.replaceState(null, `/Quickstart`); }}>{this.props.lang('quickstart')}</Button>
+              <Button onClick={()=>{ this.props.history.replaceState(null, `/Portfolio`); }}>{this.props.lang('portfolio')}</Button>
+              <Button onClick={()=>{ this.props.history.replaceState(null, `/Import`); }}>{this.props.lang('import')}</Button>
             </ButtonGroup>
           </Col>
         </Row>
