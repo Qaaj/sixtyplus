@@ -46,27 +46,12 @@ function startTimer() {
 }
 
 function refreshPortfolio() {
-
   let _userObject = UserStore.getUser();
-
-  if (_userObject.userData && _userObject.userData.portfolio) {
-    let portfolio = fromJS(_userObject).getIn(['userData', 'portfolio']).toList().toJS();
-
-    const portfolioList = portfolio.reduce((prev, curr, i) => {
-      prev.push(curr[0].ticker);
-      return prev
-    }, []);
-
-    RealTimeActionCreators.getStockData(portfolioList);
+  if (_userObject.stockPortfolio) {
+    RealTimeActionCreators.getStockData(_userObject.stockPortfolio.flatTickerList);
   }
 }
 
-//dividendYield: 1.68
-//lastTradeDate: "2015-11-17T23:00:00.000Z"
-//lastTradePriceOnly: 107.63
-//name: "Gilead Sciences, Inc."
-//peRatio: 9.88
-//symbol: "GILD"
 
 RealTimeStore.dispatchToken = AppDispatcher.register(function (payload) {
 

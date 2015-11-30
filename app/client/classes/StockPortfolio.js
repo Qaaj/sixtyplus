@@ -2,8 +2,11 @@ import StockEntryCollection from './StockEntryCollection';
 
 class StockPortfolio {
 
-  constructor(entryCollectionList) {
-    this.entryCollectionList = entryCollectionList;
+  constructor(rawUserDataObject) {
+    this.entryCollectionList = [];
+    for (let key in rawUserDataObject) {
+      this.entryCollectionList.push(new StockEntryCollection(rawUserDataObject[key]));
+    }
   }
 
   get collectionList() {
@@ -30,6 +33,10 @@ class StockPortfolio {
     return portfolio;
   }
 
+  get flatTickerList(){
+    return Object.keys(this.userDataObject);
+  }
+
   get userDataObject() {
 
     // THIS IS THE DATA THAT WILL BE SAVED TO THE BACKEND
@@ -47,7 +54,6 @@ class StockPortfolio {
 
     return portfolio;
   }
-
 }
 
 export default StockPortfolio;

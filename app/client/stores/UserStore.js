@@ -66,28 +66,20 @@ UserStore.dispatchToken = AppDispatcher.register(function (payload) {
       if (action.data.currency == "EURO") action.data.currency = "€";
       if (action.data.currency == "DOLLAR") action.data.currency = "$";
       if (action.data.currency == "POUND") action.data.currency = "£";
+
       _userObject = fromJS(action.data);
 
-      let entryArray = createEntriesFromUserObjectPortfolio(_userObject.toJS().userData.portfolio);
-
-      _stockPortfolio = new StockPortfolio(entryArray);
+      // Create the stockportfolio object using the data from the server
+      _stockPortfolio = new StockPortfolio(_userObject.toJS().userData.portfolio);
       _userObject = _userObject.set("stockPortfolio", _stockPortfolio);
 
+      // Translation stuff
       let newLangInstance = (...args)=>{return getTranslation(...args)};
-
       _userObject = _userObject.set('lang',newLangInstance);
 
-      let temp = {
-        'quickstart':'Quickstart',
-        'portfolio': 'Portfolio',
-        'import': 'Import'
-      }
-
-      setLanguageMap(temp);
-
       NotificationActionCreators.userLoggedIn(_userObject.toJS());
-
       UserStore.emitChange();
+
       break;
 
     default:

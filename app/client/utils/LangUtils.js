@@ -5,9 +5,9 @@ let language = "EN";
 let DEBUG = false;
 
 let temp = {
-  'quickstart':'quickstart',
-  'portfolio': 'portfolio',
-  'import': 'import'
+  'quickstart':'Quickstart',
+  'portfolio': 'Portfolio',
+  'import': 'Import'
 };
 
 function TranslationText(props) {
