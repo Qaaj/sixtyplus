@@ -12,6 +12,7 @@ class StockEntryCollection {
       this.ticker = entry.ticker;
       this.amount += entry.amount;
       this.costBase += entry.price * entry.amount;
+      if(entry instanceof StockEntry) return entry;
       let amount = entry.amount;
       let price = entry.price;
       let ticker = entry.ticker;

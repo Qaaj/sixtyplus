@@ -1,7 +1,7 @@
 import { Panel , Label, Button, ListGroup, ListGroupItem, Well, Col} from 'react-bootstrap';
 import { pureRenderDecorator } from '../../../shared/helpers/decorators';
 import {getUniqueColor, getClassBySector, getProfitLossClassname} from '../../../shared/helpers/colors/ColorUtils';
-import {updateEntriesData} from '../../../shared/helpers/stocks';
+import {updateArrayOfEntryCollectionsWithRT} from '../../../shared/helpers/stocks';
 import SectorComponent from '../ui/SectorComponent';
 
 @pureRenderDecorator

@@ -1,13 +1,15 @@
 import { Input,Button } from 'react-bootstrap';
 import UserActionCreators from '../../actions/UserActionCreators';
 import { doImport } from '../../../shared/helpers/importers/IB_importer';
-import { mapByTicker} from '../../../shared/helpers/stocks';
+import { mapByTicker, updateArrayOfEntryCollectionsWithRT} from '../../../shared/helpers/stocks';
 import NotificationActionCreators from '../../actions/NotificationActionCreators';
 import RealTimeActionCreators from '../../actions/RealTimeActionCreators';
 import SingleStock from '../importer/ui/SinglePreviewImportStock';
 import { Grid, Panel, ListGroup,Accordion, Table } from 'react-bootstrap';
 import { createRegularFields, createCurrencyFields, createPercentageFields, createRegularFieldsNoLabel } from '../../helpers/InputFactory';
+import {collectionsToPortfolioMap} from '../../../shared/helpers/stocks';
 import ManualStockImporter from '../../components/importer/ManualStockImporter'
+import StockEntryCollection from '../../classes/StockEntryCollection';
 
 
 class Importer extends React.Component {
@@ -30,31 +32,47 @@ class Importer extends React.Component {
   }
 
   _onSaveClickHandler(e) {
-    UserActionCreators.updatePortfolio(this.state.sortedStocks);
+    console.log(collectionsToPortfolioMap(this.state.stockEntryCollections));
+    UserActionCreators.updatePortfolio(collectionsToPortfolioMap(this.state.stockEntryCollections));
   }
 
   _onImportClickHandler(e) {
 
-    let stockData = doImport(this.state.rawStockData);
-    let sortedStocks = mapByTicker(stockData);
+    if(!this.state.rawIBData){
+      NotificationActionCreators.setNotification({
+        isVisible: true,
+        type: 'warning',
+        message:"Something went wrong importing the data.",
+        delay: 3000
+      });
+      return;
+    }
 
-    this.setState({
-      sortedStocks: sortedStocks,
-    })
+    let stockData = doImport(this.state.rawIBData);
+    let sortedStocks = mapByTicker(stockData);
+    RealTimeActionCreators.getStockPrices(Object.keys(sortedStocks));
+    this._refreshList(sortedStocks);
 
   }
 
   _onManualImportPreview(data, line) {
 
-    RealTimeActionCreators.getStockPrice(data.ticker);
     this.previewStocks[line] = data;
-
     let sortedStocks = mapByTicker(this.previewStocks);
+    RealTimeActionCreators.getStockPrices(Object.keys(sortedStocks));
+    this._refreshList(sortedStocks);
+  }
+
+  _refreshList(sortedStocks){
+    let stockEntryCollections = [];
+
+    for (let key in sortedStocks) {
+      stockEntryCollections.push(new StockEntryCollection(sortedStocks[key]));
+    }
 
     this.setState({
-      sortedStocks: sortedStocks,
+      stockEntryCollections: stockEntryCollections
     })
-
   }
 
   capitalizeFirstLetter(string) {
@@ -64,11 +82,12 @@ class Importer extends React.Component {
   render() {
 
     let fields = [];
-    if(this.state.sortedStocks){
-      for (let key in this.state.sortedStocks) {
-        let single = (<SingleStock key={Math.random()} entries={this.state.sortedStocks[key]} rt={this.props.rt} ticker={key}/>);
+
+    if(this.state.stockEntryCollections && this.props.rt){
+      this.state.stockEntryCollections.map(entries =>{
+        let single = (<SingleStock key={Math.random()} stockEntries={entries} rt={this.props.rt}/>);
         fields.push(single)
-      }
+      })
     }
 
     let btn = null;
@@ -96,7 +115,7 @@ class Importer extends React.Component {
               <li>Click the Import button.</li>
               <li>Review your positions and click 'Save'.</li>
             </ul>
-            <Input onChange={this._handleChange} name='rawStockData' type='textarea' placeholder="STK_LOT|U1418343|VZ|VERIZON COMMUNICATIONS INC|USD|20150520|15:00:18|10.00|1.00|49.83|498.30|0.92813
+            <Input onChange={this._handleChange} name='rawIBData' type='textarea' placeholder="STK_LOT|U1418343|VZ|VERIZON COMMUNICATIONS INC|USD|20150520|15:00:18|10.00|1.00|49.83|498.30|0.92813
 STK_LOT|U1418343|XOM|EXXON MOBIL CORP|USD|20150724|12:42:07|10.00|1.00|80.11|801.10|0.92813
 ..."/>
             <Button onClick={this._onImportClickHandler} bsStyle="primary" bsSize="large">Import</Button>

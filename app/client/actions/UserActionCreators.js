@@ -2,7 +2,7 @@
 
 import AppDispatcher from '../dispatcher/AppDispatcher.js';
 import UserConstants from '../constants/UserConstants.js';
-import { changeUILanguage, loadUser, updateUserData } from '../utils/ApiUtils';
+import { changeUILanguage, loadUser, saveUserData } from '../utils/ApiUtils';
 import { fromJS } from 'immutable';
 import UserStore from '../stores/UserStore.js';
 import defaults from '../config/Defaults';
@@ -22,6 +22,7 @@ var UserActionCreators = {
 
   updatePortfolio(portfolioData){
 
+    console.log(portfolioData);
     var userData = UserStore.getUser().userData;
     let existingPortfolio = userData.portfolio;
     if(!userData.portfolio) existingPortfolio = {};
@@ -47,6 +48,7 @@ var UserActionCreators = {
 
     RealTimeActionCreators.getStockPrices(portfolioList);
 
+    console.log(userData);
     this.saveUserData(userData);
   },
 
@@ -62,7 +64,7 @@ var UserActionCreators = {
       data: mergedUserData,
     });
 
-    updateUserData(mergedUserData, UserStore.getUser().uid);
+    saveUserData(mergedUserData, UserStore.getUser().uid);
 
   },
 

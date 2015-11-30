@@ -9,7 +9,7 @@ import NotificationActionCreators from '../../actions/NotificationActionCreators
 import SingleStock from '../importer/ui/SinglePreviewImportStock';
 import StockTable from '../tables/StockTable';
 import { Input, Grid, DropdownButton, MenuItem, ButtonToolbar, Button, ButtonGroup,ListGroup,ListGroupItem } from 'react-bootstrap';
-import {updateEntriesData, createPortfolioStats} from '../../../shared/helpers/stocks';
+import {updateArrayOfEntryCollectionsWithRT, createPortfolioStats} from '../../../shared/helpers/stocks';
 
 
 class PortfolioOverview extends React.Component {
@@ -89,8 +89,9 @@ class PortfolioOverview extends React.Component {
 
     this.filterItems = this.filters.map(::this.createFilters);
 
-    let stockEntries = updateEntriesData(this.props.user.stockEntries, this.props.rt);
-    let portfolioData = createPortfolioStats(stockEntries);
+    let portfolio = this.props.user.stockPortfolio;
+    let stockEntries = updateArrayOfEntryCollectionsWithRT(portfolio.collectionList, this.props.rt);
+    let portfolioData = portfolio.portfolioStats
 
     let currentSortName = this.sortKeys.filter((sorter) =>{
       if(sorter.prop === this.state.sorter.key) return 1;

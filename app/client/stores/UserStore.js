@@ -7,6 +7,7 @@ import { EventEmitter } from 'events';
 import { Map, fromJS } from 'immutable';
 import asap from 'asap';
 import StockEntry from '../classes/StockEntry';
+import StockPortfolio from '../classes/StockPortfolio';
 import { createEntriesFromUserObjectPortfolio } from '../../shared/helpers/stocks'
 import RealTimeActionCreators from '../actions/RealTimeActionCreators';
 import NotificationActionCreators from '../actions/NotificationActionCreators';
@@ -16,6 +17,7 @@ const CHANGE_EVENT = 'change';
 
 let _userObject = Map();
 let _userData = Map();
+let _stockPortfolio = null;
 
 let newLangInstance = (...args)=>{return getTranslation(...args)};
 _userObject = _userObject.set('lang', newLangInstance);
@@ -25,8 +27,9 @@ const UserStore = assign({}, EventEmitter.prototype, {
     return _userObject.toJS();
   },
 
-  getUserSettings() {
-    return _userSettings.toJS();
+
+  getStockPortfolio(){
+    return _stockPortfolio;
   },
 
   emitChange() {
@@ -66,9 +69,12 @@ UserStore.dispatchToken = AppDispatcher.register(function (payload) {
       _userObject = fromJS(action.data);
 
       let entryArray = createEntriesFromUserObjectPortfolio(_userObject.toJS().userData.portfolio);
-      _userObject = _userObject.set("stockEntries", entryArray);
+
+      _stockPortfolio = new StockPortfolio(entryArray);
+      _userObject = _userObject.set("stockPortfolio", _stockPortfolio);
 
       let newLangInstance = (...args)=>{return getTranslation(...args)};
+
       _userObject = _userObject.set('lang',newLangInstance);
 
       let temp = {

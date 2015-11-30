@@ -22,6 +22,18 @@ export default (req, res) => {
         last_login: moment().format('LLLL'),
       });
 
+      let data = userObject.userData;
+
+      // Sanitise keys
+      if(data && data.portfolio){
+        let portfolio = {};
+        for (let key in data.portfolio) {
+          let newKey = key.replace("_",".");
+          portfolio[newKey] = data.portfolio[key];
+        }
+        userObject.userData.portfolio = portfolio;
+      }
+
       res.send(userObject);
 
     } else {

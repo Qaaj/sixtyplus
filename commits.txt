@@ -1,53 +1,61 @@
-418305e - Jan Jorissen, 33 seconds ago : test build
-3223c29 - Jan Jorissen, 2 minutes ago : added suppot for test domain
-daa0c87 - Jan Jorissen, 3 minutes ago : added suppot for test domain
-cb321f8 - Jan Jorissen, 9 minutes ago : test build
-ccc05fd - Jan Jorissen, 11 minutes ago : added stockPanels
-4ff3cad - Jan Jorissen, 24 hours ago : added stock entry classes
-2f906cc - Jan Jorissen, 27 hours ago : test build
-6fefff2 - Jan Jorissen, 27 hours ago :  new sector styles
-ade946c - Jan Jorissen, 2 days ago : release build
-afc8dcc - Jan Jorissen, 2 days ago : name fix
-0f73111 - Jan Jorissen, 2 days ago : release build
-6af4dc9 - Jan Jorissen, 2 days ago : minor change
-94975f3 - Jan Jorissen, 2 days ago :  more cleanup and default route import
-121ae77 - Jan Jorissen, 2 days ago : cleanup code
-fe6c963 - Jan Jorissen, 2 days ago : cleanup code
-ce8f614 - Jan Jorissen, 2 days ago : test build
-01f14f0 - Jan Jorissen, 2 days ago : added unique sector colors
-8737793 - Jan Jorissen, 5 days ago : test build
-88164ef - Jan Jorissen, 5 days ago : release build
-c8d147e - Jan Jorissen, 5 days ago : new user error handling
-f1bc882 - Jan Jorissen, 5 days ago : merge with portfolio is correct
-047661d - Jan Jorissen, 5 days ago : added realtime update for import stocks and added getData
-122ac18 - Jan Jorissen, 5 days ago : release build
-ca27a39 - Jan Jorissen, 6 days ago : test build
-4e937fa - Jan Jorissen, 6 days ago : various improvements to dropdown and importer
-741fa83 - Jan Jorissen, 6 days ago : test build
-1c5fda7 - Jan Jorissen, 6 days ago :  aww yis
-be48439 - Jan Jorissen, 6 days ago : mawfakking datepicker
-3cb36aa - Jan Jorissen, 6 days ago : test build
-5d6c16b - Jan Jorissen, 6 days ago : added autocomplete
-ab1789d - Jan Jorissen, 7 days ago : release build
-5fb07d9 - Jan Jorissen, 7 days ago : added manual import. need refactor
-94c055b - Jan Jorissen, 7 days ago : release build
-9f91351 - Jan Jorissen, 7 days ago : fixed user portfolio object state bug
-2b7fec8 - Jan Jorissen, 7 days ago : test build
-84cfabb - Jan Jorissen, 7 days ago : realtime store working and portfolio is persistent. refactoring
-6c091da - Jan Jorissen, 8 days ago : added git log script
-ebe4882 - Jan Jorissen, 8 days ago : release build
-e6fad6e - Jan Jorissen, 8 days ago : cleanup
-e4854a6 - Jan Jorissen, 8 days ago : added name decorator and autosave decorator
-2123366 - Jan Jorissen, 8 days ago : release build
-a8b5e28 - Jan Jorissen, 8 days ago : release build
-c0aafeb - Jan Jorissen, 8 days ago : refactor modules
-91b6087 - Jan Jorissen, 9 days ago : fix error for new users. lots done - promises, realtime store etc
-b47c705 - Jan Jorissen, 10 days ago : release build
-0668e6f - Jan Jorissen, 10 days ago :  added checks for empty portoflios
-9b09422 - Jan Jorissen, 10 days ago : release build
-141539a - Jan Jorissen, 10 days ago :  removed import
-2791d89 - Jan Jorissen, 10 days ago : saving user import
-0b7e2d9 - Jan Jorissen, 11 days ago : added importing of stocks
+ba98334 - Jan Jorissen, 6 minutes ago : test build
+ba063b5 - Jan Jorissen, 7 minutes ago : more data for portfolio and styling
+e62fa3b - Jan Jorissen, 2 hours ago : release build
+041a175 - Jan Jorissen, 2 hours ago : added filters
+499b6e1 - Jan Jorissen, 3 hours ago : release build
+74cbb4f - Jan Jorissen, 3 hours ago : more info in stockcard
+af34bc6 - Jan Jorissen, 3 hours ago : added sorter
+3d99021 - Jan Jorissen, 5 hours ago : added support for multiple langs'
+418305e - Jan Jorissen, 2 days ago : test build
+3223c29 - Jan Jorissen, 2 days ago : added suppot for test domain
+daa0c87 - Jan Jorissen, 2 days ago : added suppot for test domain
+cb321f8 - Jan Jorissen, 2 days ago : test build
+ccc05fd - Jan Jorissen, 2 days ago : added stockPanels
+4ff3cad - Jan Jorissen, 3 days ago : added stock entry classes
+2f906cc - Jan Jorissen, 3 days ago : test build
+6fefff2 - Jan Jorissen, 3 days ago :  new sector styles
+ade946c - Jan Jorissen, 4 days ago : release build
+afc8dcc - Jan Jorissen, 4 days ago : name fix
+0f73111 - Jan Jorissen, 4 days ago : release build
+6af4dc9 - Jan Jorissen, 4 days ago : minor change
+94975f3 - Jan Jorissen, 4 days ago :  more cleanup and default route import
+121ae77 - Jan Jorissen, 4 days ago : cleanup code
+fe6c963 - Jan Jorissen, 4 days ago : cleanup code
+ce8f614 - Jan Jorissen, 4 days ago : test build
+01f14f0 - Jan Jorissen, 4 days ago : added unique sector colors
+8737793 - Jan Jorissen, 7 days ago : test build
+88164ef - Jan Jorissen, 7 days ago : release build
+c8d147e - Jan Jorissen, 7 days ago : new user error handling
+f1bc882 - Jan Jorissen, 7 days ago : merge with portfolio is correct
+047661d - Jan Jorissen, 7 days ago : added realtime update for import stocks and added getData
+122ac18 - Jan Jorissen, 7 days ago : release build
+ca27a39 - Jan Jorissen, 7 days ago : test build
+4e937fa - Jan Jorissen, 8 days ago : various improvements to dropdown and importer
+741fa83 - Jan Jorissen, 8 days ago : test build
+1c5fda7 - Jan Jorissen, 8 days ago :  aww yis
+be48439 - Jan Jorissen, 8 days ago : mawfakking datepicker
+3cb36aa - Jan Jorissen, 8 days ago : test build
+5d6c16b - Jan Jorissen, 8 days ago : added autocomplete
+ab1789d - Jan Jorissen, 9 days ago : release build
+5fb07d9 - Jan Jorissen, 9 days ago : added manual import. need refactor
+94c055b - Jan Jorissen, 9 days ago : release build
+9f91351 - Jan Jorissen, 9 days ago : fixed user portfolio object state bug
+2b7fec8 - Jan Jorissen, 9 days ago : test build
+84cfabb - Jan Jorissen, 9 days ago : realtime store working and portfolio is persistent. refactoring
+6c091da - Jan Jorissen, 10 days ago : added git log script
+ebe4882 - Jan Jorissen, 10 days ago : release build
+e6fad6e - Jan Jorissen, 10 days ago : cleanup
+e4854a6 - Jan Jorissen, 10 days ago : added name decorator and autosave decorator
+2123366 - Jan Jorissen, 10 days ago : release build
+a8b5e28 - Jan Jorissen, 10 days ago : release build
+c0aafeb - Jan Jorissen, 10 days ago : refactor modules
+91b6087 - Jan Jorissen, 11 days ago : fix error for new users. lots done - promises, realtime store etc
+b47c705 - Jan Jorissen, 12 days ago : release build
+0668e6f - Jan Jorissen, 12 days ago :  added checks for empty portoflios
+9b09422 - Jan Jorissen, 12 days ago : release build
+141539a - Jan Jorissen, 12 days ago :  removed import
+2791d89 - Jan Jorissen, 12 days ago : saving user import
+0b7e2d9 - Jan Jorissen, 13 days ago : added importing of stocks
 865115d - Jan Jorissen, 3 weeks ago : release build
 647c841 - Jan Jorissen, 3 weeks ago : release build
 0005cf0 - Jan Jorissen, 3 weeks ago : release build

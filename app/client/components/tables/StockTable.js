@@ -17,7 +17,6 @@ class StockTable extends React.Component {
 
   render() {
 
-
     let stockEntries = this.props.entries;
 
     stockEntries = filterStockEntries(stockEntries, this.props.filter)

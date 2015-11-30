@@ -4,7 +4,8 @@ class StockEntry {
 
   constructor({ amount, date, name, price, ticker, sector}) {
     this.amount = amount;
-    this.date = moment(date);
+    this.date = moment(date,'YYYYMMDD');
+    if(date.indexOf('/') !== -1) this.date = moment(date,'MM/YY/YYYY');
     this.name = name;
     this.price = price;
     this.ticker = ticker;

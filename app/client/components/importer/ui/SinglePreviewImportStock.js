@@ -4,59 +4,45 @@ import { pureRenderDecorator } from '../../../../shared/helpers/decorators';
 import { getStockEntriesData } from '../../../../shared/helpers/stocks';
 import {getUniqueColor, getClassBySector} from '../../../../shared/helpers/colors/ColorUtils';
 import SectorComponent from '../../ui/SectorComponent';
+import StockEntryCollection from '../../../classes/StockEntryCollection';
+import { updateArrayOfEntryCollectionsWithRT, updateSingeEntryCollectionWithRT} from '../../../../shared/helpers/stocks';
 
 @pureRenderDecorator
 class SinglePreviewImportStock extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = {price: "N/A"};
   }
 
-  componentWillReceiveProps(newProps) {
-    let stockPrice = 0;
-    if (newProps.rt) {
-      stockPrice = newProps.rt[newProps.ticker];
-    }
-    if (stockPrice) this.setState({price: stockPrice.lastTradePriceOnly});
-  }
-
-  componentDidMount() {
-    let stockPrice = 0;
-    if (this.props.rt) {
-      stockPrice = this.props.rt[this.props.ticker];
-    }
-    if (stockPrice) this.setState({price: stockPrice.lastTradePriceOnly});
-  }
 
   render() {
 
-    if (!this.props.entries || this.props.entries.length == 0) return null;
+    if (!this.props.stockEntries || this.props.stockEntries.entries.length == 0) return null;
 
-    // TODO: use new Stock Entry class
-    const data = getStockEntriesData(this.props.entries, this.props.rt);
+    let stockEntries = this.props.stockEntries;
 
-    let list = this.props.entries.map((entry, i) => {
+    stockEntries = updateSingeEntryCollectionWithRT(stockEntries,this.props.rt);
+
+    let list = stockEntries.entries.map((entry, i) => {
       return (<h5 key={'stock_entry_' + entry.name + i}>{entry.amount} @ {entry.price}</h5>);
     });
 
-    let cx = data.profitLoss < 0 ? 'danger' : 'success';
+    let cx = stockEntries.profitLoss < 0 ? 'danger' : 'success';
 
     let sectorClass = '';
 
-    if (data.sector) {
-     sectorClass = getClassBySector(data.sector)
+    if (stockEntries.sector) {
+     sectorClass = getClassBySector(stockEntries.sector)
     }
 
-
-    if (this.props.rt && this.props.rt[name]) name = this.props.rt[name].name;
-
+    let name = stockEntries.name;
+    if(!stockEntries.name) name = stockEntries.ticker;
 
     let body = (<div>
         <Panel className='singlestock-panel' collapsible defaultExpanded={false}
-               header={<h4>{this.props.ticker} <span className="stockName">{data.name} | {data.totalAmount} @ {data.averagePrice}</span>
-          <div className="profitLoss">P/L: <Label bsStyle={cx}>{data.profitLoss}</Label></div>
-          <SectorComponent cx={sectorClass} sector={data.sector} />
+               header={<h4>{this.props.ticker} <span className="stockName">{name} | {stockEntries.amount} @ {stockEntries.averagePrice}</span>
+          <div className="profitLoss">P/L: <Label bsStyle={cx}>{stockEntries.profitLoss}</Label></div>
+          <SectorComponent cx={sectorClass} sector={stockEntries.sector} />
           </h4>}>
 
           {list}

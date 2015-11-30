@@ -9,7 +9,6 @@ export default (req, res) => {
     let returnList = [];
     let list = req.body.tickers.map(tickr => {
 
-      let moreInfo = stockMap[req.body.ticker];
       yahooFinance.snapshot({
         symbol: tickr,
         fields: ['s', 'n', 'l1'],

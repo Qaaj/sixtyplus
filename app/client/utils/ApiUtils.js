@@ -95,7 +95,7 @@ export function getStockData(tickers){
       );
 }
 
-export function updateUserData(userData,uid){
+export function saveUserData(userData, uid){
 
     let url = `${API_URL}/saveUserData`;
     let data = {userData, uid};

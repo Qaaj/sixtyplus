@@ -1,7 +1,8 @@
 import { Input } from 'react-bootstrap';
-import { pureRenderDecorator } from '../../../../shared/helpers/decorators';
 import Autosuggest from 'react-autosuggest';
 import DateInput from '../../ui/DateInput';
+import StockEntry from '../../../classes/StockEntry';
+import { pureRenderDecorator } from '../../../../shared/helpers/decorators';
 import { createRegularFieldsNoLabel } from '../../../helpers/InputFactory';
 import RealTimeActionCreators from '../../../actions/RealTimeActionCreators';
 
@@ -11,7 +12,7 @@ class SingleManualImportLine extends React.Component {
   constructor(props) {
     super(props);
     this.stockRow = [];
-    this.stockObject = {};
+    this.entry = {};
   }
 
   _handleInput(row,e,val) {
@@ -41,17 +42,15 @@ class SingleManualImportLine extends React.Component {
     if(!Number.isInteger(parseInt(row[2]))) return;
 
     let ticker = row[0];
-    let amount = row[1];
-    let price = row[2];
+    let amount = parseFloat(row[1]);
+    let price = parseFloat(row[2]);
     let date = row[3];
 
     ticker = ticker.toUpperCase();
 
-    let obj  = { ticker, amount, price, date};
+    this.entry = new StockEntry({ticker,amount,price,date});
 
-    this.stockObject = obj;
-
-    this.props.onSuccess.call(null,this.stockObject,this.props.line_id);
+    this.props.onSuccess.call(null,this.entry,this.props.line_id);
   }
 
   _createLine(){
@@ -60,7 +59,7 @@ class SingleManualImportLine extends React.Component {
     let price = Math.floor(Math.random()*20000)/100;
     let date = moment().format("L");
     var line = 0;
-    //if(this.state.fields) line = this.state.fields.length
+
     let inputFields = createRegularFieldsNoLabel([name, amount, price, date],this._handleInput.bind(this,line), this.state);
 
     this.stockRow[3] = date;
