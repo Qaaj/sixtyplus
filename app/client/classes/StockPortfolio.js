@@ -27,12 +27,7 @@ class StockPortfolio {
       if(!this.checkIfCollectionExists(newEntries)) return newEntries;
     })
 
-    console.log(this.entryCollectionList);
-    console.log(newEntryCollection);
     if(newEntryCollection.length > 0) this.entryCollectionList = this.entryCollectionList.concat(newEntryCollection);
-    console.log(this.entryCollectionList);
-
-
   }
 
   get collectionList() {

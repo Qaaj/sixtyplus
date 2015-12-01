@@ -32,10 +32,9 @@ class Importer extends React.Component {
   }
 
   _onSaveClickHandler(e) {
-    // Save this to the portfolio object for an optimistic update and emit the change.
-    //console.log(collectionsToPortfolioMap(this.state.stockEntryCollections));
+
     UserActionCreators.addStockEntryCollectionToPortfolio(this.state.stockEntryCollections);
-    //UserActionCreators.updatePortfolio(collectionsToPortfolioMap(this.state.stockEntryCollections));
+    
   }
 
   _onImportClickHandler(e) {
@@ -75,10 +74,6 @@ class Importer extends React.Component {
     this.setState({
       stockEntryCollections: stockEntryCollections
     })
-  }
-
-  capitalizeFirstLetter(string) {
-    return string.charAt(0).toUpperCase() + string.slice(1);
   }
 
   render() {
