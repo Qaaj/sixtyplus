@@ -53,13 +53,13 @@ UserStore.dispatchToken = AppDispatcher.register(function (payload) {
 
     case UserConstants.USER_ADD_STOCK_ENTRY_COLLECTION:
 
-      _stockPortfolio.addStockEntryCollection(action.data)
+      _stockPortfolio.addStockEntryCollection(action.data.entries)
       // Save the client-side object
       _userObject = _userObject.set("stockPortfolio", _stockPortfolio);
       // Save the server-side object
       _userObject = _userObject.setIn(['userData','portfolio'],_stockPortfolio.userDataObject);
 
-      saveUserPortfolioData(_userObject.get('userData'),_userObject.get('uid'));
+      saveUserPortfolioData(_userObject.get('userData'),_userObject.get('uid'),action.data.resultObject);
 
       UserStore.emitChange();
       break;

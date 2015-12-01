@@ -23,13 +23,13 @@ var UserActionCreators = {
   },
 
 
-  addStockEntryCollectionToPortfolio(stockEntryCollection){
+  addStockEntryCollectionToPortfolio(stockEntryCollection,resultObject){
 
     // optimistically update local portfolio object
 
     AppDispatcher.handleViewAction({
       actionType: UserConstants.USER_ADD_STOCK_ENTRY_COLLECTION,
-      data: stockEntryCollection,
+      data: { entries:stockEntryCollection, resultObject}
     });
 
     let listOfTickers = stockEntryCollection.map(entries => {

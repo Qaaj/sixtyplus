@@ -96,7 +96,7 @@ export function getStockData(tickers){
       );
 }
 
-export function saveUserPortfolioData(userData,uid){
+export function saveUserPortfolioData(userData,uid,resultObject){
 
     let url = `${API_URL}/saveUserData`;
     let data = {userData, uid};
@@ -104,6 +104,7 @@ export function saveUserPortfolioData(userData,uid){
     post({url, data})
       .then(
         (response) => {
+            resultObject.success();
             NotificationActions.setNotification({
                 isVisible: true,
                 type: 'success',
@@ -113,6 +114,7 @@ export function saveUserPortfolioData(userData,uid){
         },
 
         (error) => {
+            resultObject.fail();
             NotificationActions.setNotification({
                 isVisible: true,
                 type: 'warning',

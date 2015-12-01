@@ -17,7 +17,10 @@ class Importer extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = {fields: null};
+    this.state = {
+      fields: null,
+      tryingImport: false,
+    };
     this.previewStocks = [];
 
     this._handleChange = this._handleChange.bind(this);
@@ -31,10 +34,31 @@ class Importer extends React.Component {
 
   }
 
+  _onSuccessImport(){
+    this.setState({
+      tryingImport: false
+    })
+  }
+
+  _onFailImport(){
+    this.setState({
+      tryingImport: false
+    })
+  }
+
   _onSaveClickHandler(e) {
 
-    UserActionCreators.addStockEntryCollectionToPortfolio(this.state.stockEntryCollections);
-    
+    let resultObject = {
+      success: this._onSuccessImport.bind(this),
+      fail: this._onFailImport.bind(this),
+    }
+
+    this.setState({
+      tryingImport: true
+    })
+
+    UserActionCreators.addStockEntryCollectionToPortfolio(this.state.stockEntryCollections,resultObject);
+
   }
 
   _onImportClickHandler(e) {
@@ -93,6 +117,9 @@ class Importer extends React.Component {
       btn = <Button onClick={this._onSaveClickHandler} bsStyle="primary" bsSize="large">Save</Button>;
     }
 
+    if(this.state.tryingImport){
+      fields = <div className="loader"></div>;
+    }
     return (
       <Grid className='importer'>
 
