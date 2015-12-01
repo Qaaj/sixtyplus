@@ -50,8 +50,7 @@ class StockCard extends React.Component {
           <div className="cardContent">
               <Well>
                 <span className="lastPrice">{entries.lastPrice}</span> <span
-                className={"tickerUpDown  " + profitColorClass}>{entries.first.changeString}
-                ({entries.first.percentChangeString})</span>
+                className={"tickerUpDown  " + profitColorClass}> {entries.first.changeString} ({entries.first.percentChangeString})</span>
               </Well>
               <ListGroup>
                 <ListGroupItem>

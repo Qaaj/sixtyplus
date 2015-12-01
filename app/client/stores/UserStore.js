@@ -12,6 +12,7 @@ import { createEntriesFromUserObjectPortfolio } from '../../shared/helpers/stock
 import RealTimeActionCreators from '../actions/RealTimeActionCreators';
 import NotificationActionCreators from '../actions/NotificationActionCreators';
 import {getTranslation, setLanguageMap } from '../utils/LangUtils';
+import { saveUserData,saveUserPortfolioData } from '../utils/ApiUtils';
 
 const CHANGE_EVENT = 'change';
 
@@ -25,11 +26,6 @@ _userObject = _userObject.set('lang', newLangInstance);
 const UserStore = assign({}, EventEmitter.prototype, {
   getUser() {
     return _userObject.toJS();
-  },
-
-
-  getStockPortfolio(){
-    return _stockPortfolio;
   },
 
   emitChange() {
@@ -51,6 +47,19 @@ UserStore.dispatchToken = AppDispatcher.register(function (payload) {
   switch (action.actionType) {
 
     case UserConstants.USER_CHANGE_LANGUAGE:
+
+      UserStore.emitChange();
+      break;
+
+    case UserConstants.USER_ADD_STOCK_ENTRY_COLLECTION:
+
+      _stockPortfolio.addStockEntryCollection(action.data)
+      // Save the client-side object
+      _userObject = _userObject.set("stockPortfolio", _stockPortfolio);
+      // Save the server-side object
+      _userObject = _userObject.setIn(['userData','portfolio'],_stockPortfolio.userDataObject);
+
+      saveUserPortfolioData(_userObject.get('userData'),_userObject.get('uid'));
 
       UserStore.emitChange();
       break;

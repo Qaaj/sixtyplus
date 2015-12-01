@@ -91,6 +91,7 @@ class PortfolioOverview extends React.Component {
 
     let portfolio = this.props.user.stockPortfolio;
     let stockEntries = updateArrayOfEntryCollectionsWithRT(portfolio.collectionList, this.props.rt);
+
     let portfolioData = portfolio.portfolioStats
 
     let currentSortName = this.sortKeys.filter((sorter) =>{

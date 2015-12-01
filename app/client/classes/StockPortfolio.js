@@ -9,6 +9,32 @@ class StockPortfolio {
     }
   }
 
+  checkIfCollectionExists(newEntryCollection){
+    let existingCollection = this.entryCollectionList.filter(currentEntryCollection =>{
+      if(currentEntryCollection.ticker === newEntryCollection.ticker) {
+        currentEntryCollection.addEntries(newEntryCollection.entries);
+        return 1;
+      }
+    })
+
+    if(existingCollection.length > 0) return true;
+    return false;
+
+  }
+  addStockEntryCollection(stockEntryCollection){
+
+    let newEntryCollection = stockEntryCollection.filter(newEntries =>{
+      if(!this.checkIfCollectionExists(newEntries)) return newEntries;
+    })
+
+    console.log(this.entryCollectionList);
+    console.log(newEntryCollection);
+    if(newEntryCollection.length > 0) this.entryCollectionList = this.entryCollectionList.concat(newEntryCollection);
+    console.log(this.entryCollectionList);
+
+
+  }
+
   get collectionList() {
     return this.entryCollectionList;
   }

@@ -1,5 +1,6 @@
 import { get, post, put, del } from './RequestUtil';
 import ServerActionCreators from '../actions/ServerActionCreators';
+import NotificationActions from '../actions/NotificationActionCreators';
 
 let currentProtocol = window.location.protocol;
 let baseUrl = window.location.host;
@@ -95,7 +96,35 @@ export function getStockData(tickers){
       );
 }
 
+export function saveUserPortfolioData(userData,uid){
+
+    let url = `${API_URL}/saveUserData`;
+    let data = {userData, uid};
+
+    post({url, data})
+      .then(
+        (response) => {
+            NotificationActions.setNotification({
+                isVisible: true,
+                type: 'success',
+                message:"Portfolio has been succesfully updated.",
+                delay: 1500
+            });
+        },
+
+        (error) => {
+            NotificationActions.setNotification({
+                isVisible: true,
+                type: 'warning',
+                message:"Something went wrong saving the portfolio.",
+                delay: 1500
+            });
+        }
+      );
+}
+
 export function saveUserData(userData, uid){
+
 
     let url = `${API_URL}/saveUserData`;
     let data = {userData, uid};

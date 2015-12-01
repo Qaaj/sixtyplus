@@ -3,6 +3,11 @@ import StockEntry from './StockEntry';
 class StockEntryCollection {
 
   constructor(entries) {
+    this.lastData = {};
+    this.refreshEntries(entries)
+  }
+
+  refreshEntries(entries){
 
     this.costBase = 0;
     this.amount = 0;
@@ -24,6 +29,13 @@ class StockEntryCollection {
     this.costBase = Math.round(this.costBase * 100)/ 100;
     this.marketValue = 0;
     this.averagePrice = (Math.round(100 * parseFloat(this.costBase) / parseFloat(this.amount))) / 100;
+
+  }
+
+  addEntries(newEntries){
+    //TODO check for duplicates on price/amount/date
+    this.entries = this.entries.concat(newEntries);
+    this.refreshEntries(this.entries);
   }
 
   get first() {
@@ -36,7 +48,7 @@ class StockEntryCollection {
   }
 
   calculateProfitLoss(data){
-
+    this.lastData = data;
     this.lastPrice = data.lastTradePriceOnly;
     this.marketValue = (Math.round(100 * parseFloat(this.lastPrice) * parseFloat(this.amount))) / 100;
     this.profitLoss = this.marketValue - this.costBase;

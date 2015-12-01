@@ -2,10 +2,12 @@
 
 import AppDispatcher from '../dispatcher/AppDispatcher.js';
 import UserConstants from '../constants/UserConstants.js';
+
 import { changeUILanguage, loadUser, saveUserData } from '../utils/ApiUtils';
 import { fromJS } from 'immutable';
 import UserStore from '../stores/UserStore.js';
 import defaults from '../config/Defaults';
+import {collectionsToPortfolioMap} from '../../shared/helpers/stocks';
 
 import RealTimeActionCreators from './RealTimeActionCreators';
 
@@ -20,36 +22,23 @@ var UserActionCreators = {
     //});
   },
 
-  updatePortfolio(portfolioData){
 
-    console.log(portfolioData);
-    var userData = UserStore.getUser().userData;
-    let existingPortfolio = userData.portfolio;
-    if(!userData.portfolio) existingPortfolio = {};
+  addStockEntryCollectionToPortfolio(stockEntryCollection){
 
-    let stocksToAdd = Object.keys(portfolioData);
-
-    stocksToAdd.map(ticker => {
-      if (existingPortfolio[ticker]) {
-        existingPortfolio[ticker] = existingPortfolio[ticker].concat(portfolioData[ticker]);
-      } else {
-        existingPortfolio[ticker] = (portfolioData[ticker]);
-      }
-    })
-
-    if (userData) userData.portfolio = existingPortfolio;
+    // optimistically update local portfolio object
 
     AppDispatcher.handleViewAction({
-      actionType: UserConstants.USER_SAVE_DATA,
-      data: userData,
+      actionType: UserConstants.USER_ADD_STOCK_ENTRY_COLLECTION,
+      data: stockEntryCollection,
     });
 
-    let portfolioList = Object.keys(userData.portfolio);
+    let listOfTickers = stockEntryCollection.map(entries => {
+      return entries.ticker;
+    });
 
-    RealTimeActionCreators.getStockPrices(portfolioList);
+    // Get extensive stock data
+    RealTimeActionCreators.getStockData(listOfTickers);
 
-    console.log(userData);
-    this.saveUserData(userData);
   },
 
   saveUserData(mergeUserData){

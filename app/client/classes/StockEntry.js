@@ -29,8 +29,10 @@ class StockEntry {
     return this.percent_change;
   }
 
-  updateWithReltimeData(rt){
+  updateWithRealtimeData(rt){
+
     let data = rt[this.ticker];
+
     if(data){
       this.change = data.change;
       this.industry = data.industry;

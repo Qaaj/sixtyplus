@@ -33,8 +33,9 @@ class Importer extends React.Component {
 
   _onSaveClickHandler(e) {
     // Save this to the portfolio object for an optimistic update and emit the change.
-    console.log(collectionsToPortfolioMap(this.state.stockEntryCollections));
-    UserActionCreators.updatePortfolio(collectionsToPortfolioMap(this.state.stockEntryCollections));
+    //console.log(collectionsToPortfolioMap(this.state.stockEntryCollections));
+    UserActionCreators.addStockEntryCollectionToPortfolio(this.state.stockEntryCollections);
+    //UserActionCreators.updatePortfolio(collectionsToPortfolioMap(this.state.stockEntryCollections));
   }
 
   _onImportClickHandler(e) {

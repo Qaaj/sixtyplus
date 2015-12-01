@@ -56,7 +56,7 @@ export function updateArrayOfEntryCollectionsWithRT(entries, rt) {
     }
 
     entry.entries.map(single => {
-      single.updateWithReltimeData(rt);
+      single.updateWithRealtimeData(rt);
     })
 
     return entry;
@@ -77,7 +77,7 @@ export function updateSingeEntryCollectionWithRT(entry, rt) {
   }
 
   entry.entries.map(single => {
-    single.updateWithReltimeData(rt);
+    single.updateWithRealtimeData(rt);
   })
 
   return entry;
