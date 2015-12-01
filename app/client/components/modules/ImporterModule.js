@@ -18,7 +18,6 @@ class Importer extends React.Component {
     super(props);
 
     this.state = {
-      fields: null,
       tryingImport: false,
     };
     this.previewStocks = [];
@@ -36,7 +35,8 @@ class Importer extends React.Component {
 
   _onSuccessImport(){
     this.setState({
-      tryingImport: false
+      tryingImport: false,
+      stockEntryCollections: null
     })
   }
 
