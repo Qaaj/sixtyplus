@@ -3,7 +3,6 @@ import StockEntry from './StockEntry';
 class StockEntryCollection {
 
   constructor(entries) {
-    this.lastData = {};
     this.refreshEntries(entries)
   }
 
@@ -42,13 +41,27 @@ class StockEntryCollection {
     return this.entries[0];
   }
 
-  get totalChangePercentageString(){
-    if(this.totalChangePercentage >= 0) return  '+' + this.totalChangePercentage + '%';
-    return this.totalChangePercentage + '%';
+  get data(){
+
+    let data = Object.assign({},this);
+    data.first = this.first;
+    data.totalChangePercentageString = this.totalChangePercentage + '%';
+    if(data.totalChangePercentage >= 0) data.totalChangePercentageString = '+' + this.totalChangePercentage + '%';
+
+    return data;
+  }
+
+  get dataWithDividends(){
+    let data = Object.assign({},this);
+    data.first = this.first;
+    data.profitLoss = data.marketValue - data.costBase + this.total_dividends;
+    data.totalChangePercentage =  100 * Math.round((data.profitLoss/data.costBase) * 10000) / 10000;
+    data.totalChangePercentageString = data.totalChangePercentage + '%';
+    if(data.totalChangePercentage >= 0) data.totalChangePercentageString = '+' + data.totalChangePercentage + '%';
+    return data;
   }
 
   calculateProfitLoss(data){
-    this.lastData = data;
     this.lastPrice = data.lastTradePriceOnly;
     this.marketValue = (Math.round(100 * parseFloat(this.lastPrice) * parseFloat(this.amount))) / 100;
     this.profitLoss = this.marketValue - this.costBase;
@@ -57,7 +70,6 @@ class StockEntryCollection {
     if(this.profitLoss < 0) this.style = 'danger';
     if(this.profitLoss < 0 && Math.abs(this.profitLoss) < 100) this.style = 'warning';
     this.totalChangePercentage =  100 * Math.round((this.profitLoss/this.costBase) * 10000) / 10000;
-
   }
 
   calculateDividends(data){
@@ -74,6 +86,10 @@ class StockEntryCollection {
     },0)
 
     this.total_dividends = Math.round((this.total_dividends) * 10000) / 10000;
+    this.profitLoss_div = this.marketValue - this.costBase + this.total_dividends;
+    this.totalChangePercentageWithDividends =  100 * Math.round((this.totalReturns/this.costBase) * 10000) / 10000;
+
+
 
 
   }

@@ -10,6 +10,7 @@ import defaults from '../config/Defaults';
 import {collectionsToPortfolioMap} from '../../shared/helpers/stocks';
 
 import RealTimeActionCreators from './RealTimeActionCreators';
+import HistoricalActions from './HistoricalActionCreators';
 
 let userDataToSave = {};
 
@@ -38,6 +39,10 @@ var UserActionCreators = {
 
     // Get extensive stock data
     RealTimeActionCreators.getStockData(listOfTickers);
+
+    listOfTickers.forEach(ticker =>{
+      HistoricalActions.getHistoricalDividends({ticker});
+    });
 
   },
 
@@ -71,7 +76,8 @@ var UserActionCreators = {
     if(window.location.hostname.indexOf("sixtyplus-test") != -1) uid = 'TEST_USER';
 
     //uid = '1448488808946-7120';
-    //uid = 'DIV';
+    uid = 'DIV';
+    //uid = 'TEST_USER'
 
     loadUser({uid: uid});
   },

@@ -18,3 +18,4 @@
  // OK Shortcuts to js folders for packages?
  // Graph with total returns / dividends / costbase
  // Modal for stock entry information
+ // Use immutable in the components

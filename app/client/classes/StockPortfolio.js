@@ -8,7 +8,10 @@ class StockPortfolio {
     for (let key in rawUserDataObject) {
       this.entryCollectionList.push(new StockEntryCollection(rawUserDataObject[key]));
     }
-    HistoricalActions.getHistoricalDividends({ticker:'XOM',from:'01-01-2000'})
+    // Get dividend info for existing portfolio
+    this.flatTickerList.forEach(ticker =>{
+      HistoricalActions.getHistoricalDividends({ ticker});
+    });
   }
 
   checkIfCollectionExists(newEntryCollection){
@@ -32,26 +35,51 @@ class StockPortfolio {
     if(newEntryCollection.length > 0) this.entryCollectionList = this.entryCollectionList.concat(newEntryCollection);
   }
 
+  finishStatCalculations(portfolio){
+
+    portfolio.profitLoss = portfolio.totalReturns - portfolio.costBase;
+    portfolio.percent_change = 100 * (portfolio.profitLoss / portfolio.costBase)
+
+    portfolio.costBase = Math.round((portfolio.costBase) * 100) / 100;
+    portfolio.marketValue = Math.round((portfolio.marketValue) * 100) / 100;
+    portfolio.totalReturns = Math.round((portfolio.totalReturns) * 100) / 100;
+    portfolio.profitLoss = Math.round((portfolio.profitLoss) * 100) / 100;
+    portfolio.percent_change = Math.round((portfolio.percent_change) * 100) / 100;
+    portfolio.percent_change_string = portfolio.percent_change + '%';
+
+    return portfolio;
+  }
+
   get collectionList() {
     return this.entryCollectionList;
   }
 
 
   get portfolioStats() {
+
     let portfolio = this.entryCollectionList.reduce((prev, curr) => {
       prev.costBase += curr.costBase;
       prev.marketValue += curr.marketValue;
+      prev.totalReturns += curr.marketValue;
       return prev;
-    }, {costBase: 0, marketValue: 0});
+    }, {costBase: 0, marketValue: 0, totalReturns: 0});
 
-    portfolio.profitLoss = portfolio.marketValue - portfolio.costBase;
-    portfolio.percent_change = 100 * (portfolio.profitLoss / portfolio.costBase)
+    portfolio = this.finishStatCalculations(portfolio)
 
-    portfolio.costBase = Math.round((portfolio.costBase) * 100) / 100;
-    portfolio.marketValue = Math.round((portfolio.marketValue) * 100) / 100;
-    portfolio.profitLoss = Math.round((portfolio.profitLoss) * 100) / 100;
-    portfolio.percent_change = Math.round((portfolio.percent_change) * 100) / 100;
-    portfolio.percent_change_string = portfolio.percent_change + '%';
+    return portfolio;
+  }
+
+  get portfolioStatsWithDividends(){
+
+    let portfolio = this.entryCollectionList.reduce((prev, curr) => {
+      prev.costBase += curr.costBase;
+      prev.marketValue += curr.marketValue;
+      prev.totalReturns += curr.marketValue;
+      if(curr.total_dividends) prev.totalReturns +=  curr.total_dividends;
+      return prev;
+    }, {costBase: 0, marketValue: 0, totalReturns: 0});
+
+    portfolio = this.finishStatCalculations(portfolio)
 
     return portfolio;
   }

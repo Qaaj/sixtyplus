@@ -43,7 +43,9 @@ export function mapByTicker(array) {
 
 // Update the collection of stock transactions with latest realtime data
 
-export function updateArrayOfEntryCollectionsWithRT(entries, rt) {
+export function updateArrayOfEntryCollectionsWithRT(portfolio, rt) {
+
+  let entries = portfolio.collectionList;
 
   return entries.map((entry) => {
     let ticker = entry.ticker;
@@ -95,9 +97,11 @@ export function createEntriesFromUserObjectPortfolio(portfolio) {
   return collection;
 }
 
-export function updatePortfolioDividends(entryList, historical) {
+export function updatePortfolioDividends(portfolio, historical) {
 
-  if(!historical) return entryList;
+  if(!historical) return portfolio;
+
+  let entryList = portfolio.collectionList;
 
   entryList.map(entry =>{
 
@@ -111,6 +115,6 @@ export function updatePortfolioDividends(entryList, historical) {
 
   })
 
-  return entryList;
+  return portfolio;
 }
 

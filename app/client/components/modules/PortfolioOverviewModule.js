@@ -22,7 +22,8 @@ class PortfolioOverview extends React.Component {
         key: 'profitLoss',
         reverse: true
       },
-      filter: 'All'
+      filter: 'All',
+      includeDiv:true
     }
 
     this.sortReverse = true;
@@ -45,37 +46,51 @@ class PortfolioOverview extends React.Component {
         prop: 'ticker'
       },
       {
+        name: 'Dividends',
+        prop: 'total_dividends'
+      },
+      {
         name: '# Shares',
         prop: 'amount'
-      }
+      },
+
     ];
 
-    this.filters = ['All','Profit','Loss'];
+    this.filters = ['All', 'Profit', 'Loss'];
 
 
-    this.filterItems = this.filters.map(::this.createFilters);
+    this.filterItems = this.filters.map(::this.createFilters
+  )
+    ;
     this.dropdownItems = this.sortKeys.map(this.createDropdown);
   }
 
-  _onSelect(e,key){
+  _onSelect(e, key) {
 
     this.sortReverse = !this.sortReverse;
 
     let sorter = {
       key: key,
-      reverse:  this.sortReverse
+      reverse: this.sortReverse
     }
 
-    this.setState({'sorter':sorter});
+    this.setState({'sorter': sorter});
 
   }
 
-  createFilters(filter ,i){
+  onDividendCheckboxClick(){
+    this.setState({
+      includeDiv: !this.state.includeDiv
+    })
+  }
+
+  createFilters(filter, i) {
     let selected = (filter === this.state.filter) ? 'primary' : 'default';
-    return <Button bsStyle={selected} onClick={()=> this.setState({'filter': filter})} eventKey={filter} key={'filter'+i}>{filter}</Button>;
+    return <Button bsStyle={selected} onClick={()=> this.setState({'filter': filter})} eventKey={filter}
+                   key={'filter'+i}>{filter}</Button>;
   }
 
-  createDropdown(sorter, i){
+  createDropdown(sorter, i) {
     return <MenuItem eventKey={sorter.prop} key={'sorter_'+i}>{sorter.name}</MenuItem>;
   }
 
@@ -85,67 +100,78 @@ class PortfolioOverview extends React.Component {
       doesn't seem to be anything here! Head over to the <a href={"#/" +this.props.lang +"/Import"}>Importer</a> to
       change that.</Grid>);
 
-    if(!this.props.rt) return (<Grid style={{'textAlign':'center','padding':'20px'}}> <div className="loader"></div></Grid>);
+    if (!this.props.rt) return (<Grid style={{'textAlign':'center','padding':'20px'}}>
+      <div className="loader"></div>
+    </Grid>);
 
-    this.filterItems = this.filters.map(::this.createFilters);
+    this.filterItems = this.filters.map(::this.createFilters
+  )
+    ;
 
     let portfolio = this.props.user.stockPortfolio;
 
-    let stockEntries = updateArrayOfEntryCollectionsWithRT(portfolio.collectionList, this.props.rt);
-    stockEntries = updatePortfolioDividends(portfolio.collectionList, this.props.historical);
+    updateArrayOfEntryCollectionsWithRT(portfolio, this.props.rt);
+    updatePortfolioDividends(portfolio, this.props.historical);
 
-    let dividends = stockEntries.reduce((prev,curr) => {
-      if(curr.total_dividends) prev += curr.total_dividends;
+    let stockEntries = portfolio.collectionList;
+
+    let dividends = stockEntries.reduce((prev, curr) => {
+      if (curr.total_dividends) prev += curr.total_dividends;
       return prev;
-    },0);
+    }, 0);
 
     let portfolioData = portfolio.portfolioStats
+    if(this.state.includeDiv) portfolioData = portfolio.portfolioStatsWithDividends;
 
-    let currentSortName = this.sortKeys.filter((sorter) =>{
-      if(sorter.prop === this.state.sorter.key) return 1;
+
+    let currentSortName = this.sortKeys.filter((sorter) => {
+      if (sorter.prop === this.state.sorter.key) return 1;
     })[0].name;
 
 
     let profitOrLoss = 'success';
-    if(portfolioData.profitLoss < 0) profitOrLoss = 'danger';
+    if (portfolioData.profitLoss < 0) profitOrLoss = 'danger';
 
     return (
 
       <div className="portfolio-page">
         <Grid>
 
-        <ListGroup>
-          <ListGroupItem bsStyle={profitOrLoss}>
-            <span className="prop">Profit/Loss: </span>
-            <div className="val">{portfolioData.profitLoss} ({portfolioData.percent_change_string})</div>
-          </ListGroupItem>
-          <ListGroupItem>
-            <span className="prop">Dividends Collected: </span>
-            <div className="val">{dividends}</div>
-          </ListGroupItem>
-          <ListGroupItem>
-            <span className="prop">Portfolio Market Value: </span>
-            <div className="val">{portfolioData.marketValue}</div>
-          </ListGroupItem>
-        </ListGroup>
-        <div className="filter">
-          <ButtonToolbar>
-            <ButtonGroup>
-              {this.filterItems}
-            </ButtonGroup>
-          </ButtonToolbar>
-        </div>
-        <div className="sorter">
-          <DropdownButton onSelect={::this._onSelect} bsStyle={'default'} title={'Sorted by: ' + currentSortName}
-                          id="sorter-dropdown">
-            {this.dropdownItems}
-          </DropdownButton>
-        </div>
-          </Grid>
+          <ListGroup>
+            <ListGroupItem bsStyle={profitOrLoss}>
+              <span className="prop">Profit/Loss: </span>
+              <div className="val">{portfolioData.profitLoss} ({portfolioData.percent_change_string})</div>
+            </ListGroupItem>
+            <ListGroupItem>
+              <span className="prop">Dividends Collected: </span>
+              <div className="val">{dividends}</div>
+            </ListGroupItem>
+            <ListGroupItem>
+              <span className="prop">Portfolio Market Value: </span>
+              <div className="val">{portfolioData.marketValue}</div>
+            </ListGroupItem>
+          </ListGroup>
+          <div className="filter">
+            <ButtonToolbar>
+              <ButtonGroup>
+                {this.filterItems}
+              </ButtonGroup>
+            </ButtonToolbar>
+          </div>
+          <div className="sorter">
+            <DropdownButton onSelect={::this._onSelect} bsStyle={'default'} title={'Sorted by: ' + currentSortName}
+                            id="sorter-dropdown">
+              {this.dropdownItems}
+            </DropdownButton>
+          </div>
+          <div className="checkBoxes">
+            <Input type="checkbox" label="Include Dividends in P/L" checked={this.state.includeDiv} onChange={this.onDividendCheckboxClick.bind(this)} />
+          </div>
+        </Grid>
         <Grid>
           <div className='portfolioOverview'>
             <StockTable rt={this.props.rt} user={this.props.user} sorter={this.state.sorter}
-                        filter={this.state.filter} entries={stockEntries} historical={this.props.historical}/>
+                        filter={this.state.filter} entries={stockEntries} historical={this.props.historical} includeDiv={this.state.includeDiv}/>
           </div>
         </Grid>
       </div>
