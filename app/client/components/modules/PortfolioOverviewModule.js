@@ -94,6 +94,11 @@ class PortfolioOverview extends React.Component {
     let stockEntries = updateArrayOfEntryCollectionsWithRT(portfolio.collectionList, this.props.rt);
     stockEntries = updatePortfolioDividends(portfolio.collectionList, this.props.historical);
 
+    let dividends = stockEntries.reduce((prev,curr) => {
+      if(curr.total_dividends) prev += curr.total_dividends;
+      return prev;
+    },0);
+
     let portfolioData = portfolio.portfolioStats
 
     let currentSortName = this.sortKeys.filter((sorter) =>{
@@ -113,6 +118,10 @@ class PortfolioOverview extends React.Component {
           <ListGroupItem bsStyle={profitOrLoss}>
             <span className="prop">Profit/Loss: </span>
             <div className="val">{portfolioData.profitLoss} ({portfolioData.percent_change_string})</div>
+          </ListGroupItem>
+          <ListGroupItem>
+            <span className="prop">Dividends Collected: </span>
+            <div className="val">{dividends}</div>
           </ListGroupItem>
           <ListGroupItem>
             <span className="prop">Portfolio Market Value: </span>

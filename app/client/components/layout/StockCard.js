@@ -40,7 +40,6 @@ class StockCard extends React.Component {
       sector += ' (' + entries.first.industry + ')';
     }
 
-    console.log(entries.total_dividends);
 
     let body = (
       <Col onClick={()=>this.setState({expanded: !this.state.expanded})} xs={column.xs} md={column.md} >

@@ -53,6 +53,8 @@ class StockEntry {
 
     this.dividends_per_share = Math.round((this.dividends_per_share) * 10000) / 10000;
     this.total_dividends = this.dividends_per_share * this.amount;
+    this.total_dividends = Math.round((this.total_dividends) * 10000) / 10000;
+
   }
 
 }

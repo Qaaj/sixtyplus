@@ -73,6 +73,9 @@ class StockEntryCollection {
       return prev;
     },0)
 
+    this.total_dividends = Math.round((this.total_dividends) * 10000) / 10000;
+
+
   }
 
 }

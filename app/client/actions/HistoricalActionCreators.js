@@ -11,7 +11,7 @@ var HistoricalActionCreators = {
 
   getHistoricalDividends(data){
     if(already_fetched.indexOf(data.ticker) !== -1){
-      console.log("Already got dividend data for " + data.ticker);
+      //console.log("Already got dividend data for " + data.ticker);
       return;
     }
     data.options = 'dividends';
