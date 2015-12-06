@@ -21,17 +21,17 @@ export default class InputField extends React.Component {
     if (moment(value, "L", true).isValid()) {
       month = moment(value, "L").toDate();
     }
-
+    this.ignoreHidingOnce = false;
     this.props.onChange(e.target.value);
     this.setState({ value, month }, this.showCurrentDate);
 
   }
 
   handleDayClick(e, day, modifiers) {
+
     if (modifiers.indexOf("disabled") > -1) {
       return;
     }
-
 
     this.setState({
       value: moment(day).format("L"),
@@ -39,49 +39,58 @@ export default class InputField extends React.Component {
       showCalendar:false
     });
 
-
     this.props.onChange(moment(day).format("L"));
 
   }
 
   showCurrentDate() {
-    //this.refs.daypicker.showMonth(this.state.month);
     this.setState({
       showCalendar: true
     })
   }
 
   hidePicker(e,i){
+    if(this.ignoreHidingOnce){
+      this.ignoreHidingOnce = false;
+      return;
+    }
     this.setState({
       showCalendar: false
     })
   }
 
+  onMonthChange(e){
+    this.ignoreHidingOnce = true;
+  }
+
   render() {
     const selectedDay = moment(this.state.value, "L", true).toDate();
     let hideCal = 'hideCal';
-    if(this.state.showCalendar) hideCal = ''
+    if(this.state.showCalendar) hideCal = '';
+
     return (
-      <div className="calendarPicker" onFocus={ this.showCurrentDate.bind(this)}
-           onBlur={ this.hidePicker.bind(this)}>
+      <div className="calendarPicker" onFocus={ this.showCurrentDate.bind(this)}>
           <Input
             ref="input"
             type="text"
             value={ this.state.value }
             placeholder="YYYY-MM-DD"
-            onBlur={ this.hidePicker.bind(this)}
             onChange={ this.handleInputChange.bind(this) }
              />
-        <DayPicker
-          className={hideCal}
-          ref="daypicker"
-          enableOutsideDays
-          initialMonth={ this.state.month }
-          modifiers={{
+        <div onBlur={ this.hidePicker.bind(this)}>
+          <DayPicker
+            onMonthChange={this.onMonthChange.bind(this)}
+            className={hideCal}
+            ref="daypicker"
+            enableOutsideDays
+            initialMonth={ this.state.month }
+            modifiers={{
             selected: day => DateUtils.isSameDay(selectedDay, day)
           }}
-          onDayClick={ this.handleDayClick.bind(this) }
-        />
+            onDayClick={ this.handleDayClick.bind(this) }
+          />
+        </div>
+
 
       </div>
     );
