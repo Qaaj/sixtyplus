@@ -1,5 +1,4 @@
 
-
 export default {
 
     // Financial
@@ -10,5 +9,6 @@ export default {
     taxRate: 15,
 
     // Application
-    saveTimeout: 1000
+    saveTimeout: 1000,
+    refreshRate: 100000,
 }

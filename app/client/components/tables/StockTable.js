@@ -1,49 +1,43 @@
 import moment from 'moment';
-var stockData = require("json!../../../../static/fake_trades.json");
-import { Label } from 'react-bootstrap';
-import SingleStock from '../ui/SingleStock';
+import { Label, Col, Grid, Row } from 'react-bootstrap';
+import SingleStockPreview from '../importer/ui/SinglePreviewImportStock';
+import StockCard from '../layout/StockCard';
+import { pureRenderDecorator } from '../../../shared/helpers/decorators';
+import {sortByKey} from '../../../shared/helpers/sorting';
+import {filterStockEntries} from '../../../shared/helpers/filtering';
 
+@pureRenderDecorator
 class StockTable extends React.Component {
 
-    constructor(props) {
-        super(props);
+  constructor(props) {
+    super(props);
+  }
 
-        let sortedStocks = {};
 
-        stockData.map(tx =>{
-            if(!sortedStocks[tx.ticker]) sortedStocks[tx.ticker] = [];
-            let formattedTX = {};
-            formattedTX.date = moment(tx.date, "YYYYMMDD");
-            formattedTX.ticker = tx.ticker;
-            formattedTX.name = this.capitalizeFirstLetter(tx.name.toLowerCase());
-            formattedTX.amount = tx.amount;
-            formattedTX.price = tx.price;
-            formattedTX.total = tx.total;
-            sortedStocks[tx.ticker].push(formattedTX);
-        });
 
-        this.fields = [];
-        for(let key in sortedStocks){
-            let single = (<SingleStock key={Math.random()} entries={sortedStocks[key]} ticker={key} />);
-            this.fields.push(single)
-        }
-    }
+  render() {
 
-    capitalizeFirstLetter(string) {
-        return string.charAt(0).toUpperCase() + string.slice(1);
-    }
+    let stockEntries = this.props.entries;
 
-    render() {
+    stockEntries = filterStockEntries(stockEntries, this.props.filter)
+    stockEntries = sortByKey(stockEntries, this.props.sorter.key, this.props.sorter.reverse);
 
-        let table = (
+    let fields = stockEntries.map((entries,i) =>{
+      return (<StockCard key={'singlestock_' + i  + entries.ticker} rt={this.props.rt}  entries={entries} />);
+    });
 
-            <div>
-                {this.fields}
-            </div>
-        );
+    let table = (
+      <Grid>
 
-        return table;
-    }
+        <Row className="show-grid">
+         {fields}
+        </Row>
+
+      </Grid>
+    );
+
+    return table;
+  }
 }
 
 StockTable.displayName = 'StockTable';

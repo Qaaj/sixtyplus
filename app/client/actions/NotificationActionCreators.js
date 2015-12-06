@@ -21,6 +21,15 @@ const NotificationActionCreators = {
         });
     },
 
+    doError(msg){
+        this.setNotification({
+            isVisible: true,
+            type: 'warning',
+            message: msg,
+            delay: 3000
+        });
+    },
+
     userLoggedIn(user) {
         asap(() =>{
 
@@ -36,7 +45,7 @@ const NotificationActionCreators = {
                     isVisible: true,
                     type: 'success',
                     message:"Welcome back! Your last visit was on " + user.last_login,
-                    delay: 5000
+                    delay: 2000
                 });
             }
         });

@@ -3,11 +3,19 @@ import calculateSavingsGoal from './quickstart/SavingsGoal';
 import loadUser from './user/LoadUser';
 import saveUserData from './user/SaveData';
 import getStockPrice from './stocks/GetPrice';
+import getStockPrices from './stocks/GetPrices';
+import getStockData from './stocks/GetData';
+import getStockSuggestions from './stocks/GetStockSuggestions';
+import getHistoricalData from './stocks/GetHistoricalData';
 
 
 export default {
     calculateSavingsGoal,
     loadUser,
     saveUserData,
-    getStockPrice
+    getStockPrice,
+    getStockPrices,
+    getStockSuggestions,
+    getStockData,
+    getHistoricalData,
 };

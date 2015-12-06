@@ -1,0 +1,75 @@
+
+.stockCard{
+  margin-left:-15px;
+  padding:5px;
+  position: relative;
+  display: inline-block;
+  width:100%;
+  height: auto;
+  margin-bottom:25px;
+  background-color: #fff;
+  box-shadow: $grayVeryLight ;
+  -webkit-box-shadow: 0 0 10px -2px rgba(0,0,0,.4);
+  box-shadow: 0 0 10px -2px rgba(0,0,0,.4);
+
+
+  .basics.expanded{
+      max-width: 300px;
+  }
+  .lastPrice{
+    font-size: 18px;
+  }
+  .tickerUpDown{
+    margin-left:5px;
+
+  }
+  h4{
+    margin-left:8px;
+    margin-top:8px;
+  }
+
+  .well{
+    margin-bottom: 10px;
+    padding:5px 10px;
+  }
+
+  .list-group-item{
+    vertical-align: middle;
+    line-height: 13px;
+    font-size: 13px;
+  }
+
+  hr{
+    margin:10px;
+  }
+  .stockName {
+    float:right;
+    position: relative;
+    margin-left:10px;
+    top:0px;
+    left:-5px;
+    font-size: 14px;
+    color: rgba(0, 0, 0, .5);
+    overflow: hidden;
+  }
+
+  .cardContent{
+    margin: 5px 5px;
+  }
+
+}
+
+.list-group-item{
+  .prop{
+    font-size:15px;
+    opacity: .75;
+  }
+
+  .val{
+    float:right;
+    display: inline-block;
+  }
+}
+
+.stockCard.expanded{
+}
