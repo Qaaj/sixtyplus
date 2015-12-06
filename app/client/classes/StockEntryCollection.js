@@ -55,8 +55,12 @@ class StockEntryCollection {
     let data = Object.assign({},this);
     data.first = this.first;
     data.profitLoss = data.marketValue - data.costBase + this.total_dividends;
+    data.profitLoss = Math.round(data.profitLoss * 100)/ 100;
     data.totalChangePercentage =  100 * Math.round((data.profitLoss/data.costBase) * 10000) / 10000;
     data.totalChangePercentageString = data.totalChangePercentage + '%';
+    data.style = 'success';
+    if(data.profitLoss < 0) data.style = 'danger';
+    if(data.profitLoss < 0 && Math.abs(data.profitLoss) < 100) data.style = 'warning';
     if(data.totalChangePercentage >= 0) data.totalChangePercentageString = '+' + data.totalChangePercentage + '%';
     return data;
   }
