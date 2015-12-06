@@ -7,8 +7,10 @@ import TopMenu from './components/layout/TopMenu';
 import Quickstart from './components/modules/QuickstartModule';
 
 import UserActionCreators from './actions/UserActionCreators';
+
 import UserStore from './stores/UserStore';
 import RealTimeStore from './stores/RealTimeStore';
+import HistoricalStore from './stores/HistoricalStore';
 
 import Notification from './components/modules/NotificationModule';
 
@@ -27,32 +29,36 @@ class App extends React.Component {
 
     this._handleUserStoreChange = this._handleUserStoreChange.bind(this);
     this._handleRealTimeStoreChange = this._handleRealTimeStoreChange.bind(this);
+    this._handleHistoricalStoreChange = this._handleHistoricalStoreChange.bind(this);
 
     UserActionCreators.loadUser();
   }
 
   _handleUserStoreChange() {
-
     let user = UserStore.getUser();
     this.setState({
       user: user,
     });
-
-
   }
 
   _handleRealTimeStoreChange() {
-
     let rt = RealTimeStore.getRealTimeData();
     this.setState({
       rt: rt,
     });
+  }
 
+  _handleHistoricalStoreChange() {
+    let historical = HistoricalStore.getHistoricalData();
+    this.setState({
+      historical: historical,
+    });
   }
 
   componentDidMount() {
     UserStore.addChangeListener(this._handleUserStoreChange);
     RealTimeStore.addChangeListener(this._handleRealTimeStoreChange);
+    HistoricalStore.addChangeListener(this._handleHistoricalStoreChange);
   }
 
   render() {

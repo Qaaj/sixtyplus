@@ -96,6 +96,39 @@ export function getStockData(tickers){
       );
 }
 
+export function getHistoricalPrices(data){
+
+    let url = `${API_URL}/getHistoricalData`;
+
+    post({url, data})
+      .then(
+        (response) => {
+            ServerActionCreators.historicalPricesLoaded(response.body)
+        },
+
+        (error) => {
+            console.error('Error: ', error);
+        }
+      );
+}
+
+export function getHistoricalDividends(data){
+
+    let url = `${API_URL}/getHistoricalData`;
+
+    post({url, data})
+      .then(
+        (response) => {
+            ServerActionCreators.historicalDividendsLoaded(response.body)
+        },
+
+        (error) => {
+            console.error('Error: ', error);
+        }
+      );
+}
+
+
 export function saveUserPortfolioData(userData,uid,resultObject){
 
     let url = `${API_URL}/saveUserData`;

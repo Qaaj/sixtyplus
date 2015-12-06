@@ -3,6 +3,7 @@
 import AppDispatcher from '../dispatcher/AppDispatcher.js';
 import UserConstants from '../constants/UserConstants.js';
 import RealTimeConstants from '../constants/RealTimeConstants.js';
+import HistoricalConstants from '../constants/HistoricalConstants.js';
 
 var ServerActionCreators = {
 
@@ -26,6 +27,22 @@ var ServerActionCreators = {
       data: data,
     });
   },
+
+  historicalPricesLoaded(data) {
+    AppDispatcher.handleServerAction({
+      actionType: HistoricalConstants.HISTORICAL_PRICES_UPDATE,
+      data: data,
+    });
+  },
+
+   historicalDividendsLoaded(data) {
+    AppDispatcher.handleServerAction({
+      actionType: HistoricalConstants.HISTORICAL_DIVIDENDS_UPDATE,
+      data: data,
+    });
+  },
+
+
 };
 
 export default ServerActionCreators;

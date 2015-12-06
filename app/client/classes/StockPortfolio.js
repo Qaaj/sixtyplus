@@ -1,5 +1,6 @@
 import StockEntryCollection from './StockEntryCollection';
-
+import HistoricalData from '../stores/HistoricalStore';
+import HistoricalActions from '../actions/HistoricalActionCreators';
 class StockPortfolio {
 
   constructor(rawUserDataObject) {
@@ -7,6 +8,7 @@ class StockPortfolio {
     for (let key in rawUserDataObject) {
       this.entryCollectionList.push(new StockEntryCollection(rawUserDataObject[key]));
     }
+    HistoricalActions.getHistoricalDividends({ticker:'XOM',from:'01-01-2000'})
   }
 
   checkIfCollectionExists(newEntryCollection){
