@@ -3,8 +3,6 @@ import moment from "moment";
 import {Input} from 'react-bootstrap';
 import DayPicker, { DateUtils } from "react-day-picker";
 
-import "react-day-picker/lib/style.scss";
-
 export default class InputField extends React.Component {
 
   state = {

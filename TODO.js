@@ -14,5 +14,5 @@
 // HOw many stocks make up how much of the loss / profit?
  // What is the best performing sector? Sectors?
  // Clean up CSS
- // Make portfolio class
+ // OK Make portfolio class
  // Shortcuts to js folders for packages?

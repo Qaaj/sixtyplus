@@ -6,6 +6,7 @@ import getStockPrice from './stocks/GetPrice';
 import getStockPrices from './stocks/GetPrices';
 import getStockData from './stocks/GetData';
 import getStockSuggestions from './stocks/GetStockSuggestions';
+import getDividends from './stocks/GetHistoricalDividends';
 
 
 export default {
@@ -15,5 +16,6 @@ export default {
     getStockPrice,
     getStockPrices,
     getStockSuggestions,
-    getStockData
+    getStockData,
+    getDividends,
 };
