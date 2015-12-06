@@ -60,6 +60,21 @@ class StockEntryCollection {
 
   }
 
+  calculateDividends(data){
+
+    if(data.dividends){
+      this.entries.map(entry =>{
+        entry.calculateDividends(data.dividends.dividends);
+      })
+    }
+
+    this.total_dividends = this.entries.reduce((prev,curr) =>{
+      prev += curr.total_dividends;
+      return prev;
+    },0)
+
+  }
+
 }
 
 export default StockEntryCollection;

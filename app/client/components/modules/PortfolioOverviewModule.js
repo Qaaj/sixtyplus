@@ -9,7 +9,7 @@ import NotificationActionCreators from '../../actions/NotificationActionCreators
 import SingleStock from '../importer/ui/SinglePreviewImportStock';
 import StockTable from '../tables/StockTable';
 import { Input, Grid, DropdownButton, MenuItem, ButtonToolbar, Button, ButtonGroup,ListGroup,ListGroupItem } from 'react-bootstrap';
-import {updateArrayOfEntryCollectionsWithRT, createPortfolioStats} from '../../../shared/helpers/stocks';
+import {updateArrayOfEntryCollectionsWithRT, updatePortfolioDividends} from '../../../shared/helpers/stocks';
 
 
 class PortfolioOverview extends React.Component {
@@ -90,7 +90,9 @@ class PortfolioOverview extends React.Component {
     this.filterItems = this.filters.map(::this.createFilters);
 
     let portfolio = this.props.user.stockPortfolio;
+
     let stockEntries = updateArrayOfEntryCollectionsWithRT(portfolio.collectionList, this.props.rt);
+    stockEntries = updatePortfolioDividends(portfolio.collectionList, this.props.historical);
 
     let portfolioData = portfolio.portfolioStats
 
@@ -134,7 +136,7 @@ class PortfolioOverview extends React.Component {
         <Grid>
           <div className='portfolioOverview'>
             <StockTable rt={this.props.rt} user={this.props.user} sorter={this.state.sorter}
-                        filter={this.state.filter} entries={stockEntries}/>
+                        filter={this.state.filter} entries={stockEntries} historical={this.props.historical}/>
           </div>
         </Grid>
       </div>

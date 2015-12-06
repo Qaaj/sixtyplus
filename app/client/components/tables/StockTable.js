@@ -23,7 +23,7 @@ class StockTable extends React.Component {
     stockEntries = sortByKey(stockEntries, this.props.sorter.key, this.props.sorter.reverse);
 
     let fields = stockEntries.map((entries,i) =>{
-      return (<StockCard key={'singlestock_' + i  + entries.ticker} rt={this.props.rt}  entries={entries} />);
+      return (<StockCard key={'singlestock_' + i  + entries.ticker} rt={this.props.rt} historical={this.props.historical} entries={entries} />);
     });
 
     let table = (

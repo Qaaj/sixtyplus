@@ -15,4 +15,6 @@
  // What is the best performing sector? Sectors?
  // Clean up CSS
  // OK Make portfolio class
- // Shortcuts to js folders for packages?
+ // OK Shortcuts to js folders for packages?
+ // Graph with total returns / dividends / costbase
+ // Modal for stock entry information

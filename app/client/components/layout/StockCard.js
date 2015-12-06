@@ -40,6 +40,7 @@ class StockCard extends React.Component {
       sector += ' (' + entries.first.industry + ')';
     }
 
+    console.log(entries.total_dividends);
 
     let body = (
       <Col onClick={()=>this.setState({expanded: !this.state.expanded})} xs={column.xs} md={column.md} >
@@ -64,6 +65,10 @@ class StockCard extends React.Component {
                 <ListGroupItem>
                   <span className="prop">Market Value </span>
                   <div className="val">{entries.marketValue}</div>
+                </ListGroupItem>
+                <ListGroupItem>
+                  <span className="prop">Dividends Collected </span>
+                  <div className="val">{entries.total_dividends}</div>
                 </ListGroupItem>
                 <ListGroupItem bsStyle={entries.style}>
                   <span className="prop">P/L </span>
