@@ -115,7 +115,7 @@ class PortfolioOverview extends React.Component {
 
     updateArrayOfEntryCollectionsWithRT(portfolio, this.props.rt);
     updatePortfolioDividends(portfolio, this.props.historical);
-    let chartData = getMonthlyChart('BX',this.props.historical);
+    let chartData = getMonthlyChart(portfolio.flatTickerList,this.props.historical);
 
     let stockEntries = portfolio.collectionList;
 

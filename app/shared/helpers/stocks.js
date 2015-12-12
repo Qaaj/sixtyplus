@@ -119,11 +119,25 @@ export function updatePortfolioDividends(portfolio, historical) {
 }
 
 
-export function getMonthlyChart(ticker,historical){
-  let monthly = JSON.parse(historical[ticker].monthly);
-  let chart = monthly.map(month =>{
-    return parseFloat(month['Adj Close']);
-  });
+export function getMonthlyChart(tickers,historical){
+
+  let chart = tickers.reduce((prev,curr) =>{
+
+    let monthly = JSON.parse(historical[curr].monthly);
+
+    let tickr = monthly.map(month =>{
+      return parseFloat(month['Adj Close']);
+    });
+
+    tickr.reverse();
+    tickr.unshift(curr);
+
+    prev.push(tickr);
+    return prev;
+
+  },[]);
+
+  let monthly = JSON.parse(historical[tickers[0]].monthly);
 
   let labels =  monthly.map(month =>{
     return month['Date'];
@@ -132,14 +146,14 @@ export function getMonthlyChart(ticker,historical){
   labels.reverse();
   labels.unshift('x');
 
-  chart.reverse();
-  chart.unshift('BX');
+  let columns = [labels];
+  columns = columns.concat(chart);
 
-  let result = [labels];
-  result.push(chart);
+  let types = tickers.reduce((prev,curr) =>{
+    prev[curr] = 'spline';
+    return prev;
+  },{});
 
-  console.log(result);
-
-  return result;
+  return {columns,types};
 }
 

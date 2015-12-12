@@ -16,8 +16,8 @@ class C3PortfolioChart extends React.Component {
       bindto: '#chart1',
       data: {
         x: 'x',
-        columns: data,
-        types: {BX: 'area-spline'}
+        columns: data.columns,
+        types: data.types,
       },
       axis: {
         x: {
