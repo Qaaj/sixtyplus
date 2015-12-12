@@ -10,6 +10,7 @@ import SingleStock from '../importer/ui/SinglePreviewImportStock';
 import StockTable from '../tables/StockTable';
 import { Input, Grid, DropdownButton, MenuItem, ButtonToolbar, Button, ButtonGroup,ListGroup,ListGroupItem } from 'react-bootstrap';
 import {updateArrayOfEntryCollectionsWithRT, updatePortfolioDividends} from '../../../shared/helpers/stocks';
+import C3PortfolioChart from '../charts/C3PortfolioChart';
 
 
 class PortfolioOverview extends React.Component {
@@ -56,6 +57,8 @@ class PortfolioOverview extends React.Component {
 
     ];
 
+
+
     this.filters = ['All', 'Profit', 'Loss'];
 
 
@@ -96,6 +99,14 @@ class PortfolioOverview extends React.Component {
 
   render() {
 
+    let chartData = {
+      columns: [
+        ['data1', -300, 350, -300, 0, 0, 0],
+        ['data2', -130, -100, 140, -200, 150, -50]
+      ],
+      type: 'area-spline'
+    };
+
     if (!this.props.user.userData) return (<Grid style={{'textAlign':'center','padding':'20px'}}> There
       doesn't seem to be anything here! Head over to the <a href={"#/" +this.props.lang +"/Import"}>Importer</a> to
       change that.</Grid>);
@@ -104,9 +115,7 @@ class PortfolioOverview extends React.Component {
       <div className="loader"></div>
     </Grid>);
 
-    this.filterItems = this.filters.map(::this.createFilters
-  )
-    ;
+    this.filterItems = this.filters.map(::this.createFilters);
 
     let portfolio = this.props.user.stockPortfolio;
 
@@ -136,7 +145,7 @@ class PortfolioOverview extends React.Component {
 
       <div className="portfolio-page">
         <Grid>
-
+          <C3PortfolioChart data={chartData} />
           <ListGroup>
             <ListGroupItem bsStyle={profitOrLoss}>
               <span className="prop">Profit/Loss: </span>

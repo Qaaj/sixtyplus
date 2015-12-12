@@ -12,7 +12,7 @@ $icon-font-path: '~bootstrap-sass/assets/fonts/bootstrap/';
 @import './components/dateInput';
 @import './components/dateInput';
 @import './components/portfolioPage';
-
+@import './vendors/c3/main';
 body {
   background-color: #EFEFEF;
   font-family: 'robotomedium';

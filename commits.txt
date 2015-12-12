@@ -1,40 +1,48 @@
-4288f3a - Jan Jorissen, 9 seconds ago : added dividend classes
-f54d701 - Jan Jorissen, 77 minutes ago : created endpoint for historical dividend and price data
-2aaef09 - Jan Jorissen, 12 hours ago : temp fix for date
-4bd5ed9 - Jan Jorissen, 12 hours ago : new node version and fixed URL for webdevserver
+050bfca - Jan Jorissen, 15 hours ago : release build
+eee7ff0 - Jan Jorissen, 15 hours ago : removed div user
+c5d950a - Jan Jorissen, 16 hours ago : test build
+3c46f58 - Jan Jorissen, 16 hours ago : fixed string formatting
+96239db - Jan Jorissen, 16 hours ago : test build
+6c952d1 - Jan Jorissen, 16 hours ago : added toggle for dividends
+27810f2 - Jan Jorissen, 19 hours ago : added total dividend returns
+4ff475e - Jan Jorissen, 20 hours ago : added information for total dividends collected
+4288f3a - Jan Jorissen, 21 hours ago : added dividend classes
+f54d701 - Jan Jorissen, 22 hours ago : created endpoint for historical dividend and price data
+2aaef09 - Jan Jorissen, 32 hours ago : temp fix for date
+4bd5ed9 - Jan Jorissen, 33 hours ago : new node version and fixed URL for webdevserver
 48f774b - Jan Jorissen, 5 days ago : test build
 b20f87b - Jan Jorissen, 5 days ago : clearing imports after success
 3671d16 - Jan Jorissen, 5 days ago : added spinner
-30bb3d7 - Jan Jorissen, 5 days ago : test build
-dd38fc1 - Jan Jorissen, 5 days ago : added consistent data in the user object
+30bb3d7 - Jan Jorissen, 6 days ago : test build
+dd38fc1 - Jan Jorissen, 6 days ago : added consistent data in the user object
 6d3fba8 - Jan Jorissen, 6 days ago : test build
 cfab022 - Jan Jorissen, 6 days ago : more functions for the portfolio class
-d3c70aa - Jan Jorissen, 6 days ago : shitload of refactoring. created StockPortfolio object
+d3c70aa - Jan Jorissen, 7 days ago : shitload of refactoring. created StockPortfolio object
 ba98334 - Jan Jorissen, 7 days ago : test build
 ba063b5 - Jan Jorissen, 7 days ago : more data for portfolio and styling
-e62fa3b - Jan Jorissen, 7 days ago : release build
-041a175 - Jan Jorissen, 7 days ago : added filters
-499b6e1 - Jan Jorissen, 7 days ago : release build
-74cbb4f - Jan Jorissen, 7 days ago : more info in stockcard
-af34bc6 - Jan Jorissen, 7 days ago : added sorter
-3d99021 - Jan Jorissen, 7 days ago : added support for multiple langs'
+e62fa3b - Jan Jorissen, 8 days ago : release build
+041a175 - Jan Jorissen, 8 days ago : added filters
+499b6e1 - Jan Jorissen, 8 days ago : release build
+74cbb4f - Jan Jorissen, 8 days ago : more info in stockcard
+af34bc6 - Jan Jorissen, 8 days ago : added sorter
+3d99021 - Jan Jorissen, 8 days ago : added support for multiple langs'
 418305e - Jan Jorissen, 9 days ago : test build
 3223c29 - Jan Jorissen, 9 days ago : added suppot for test domain
 daa0c87 - Jan Jorissen, 9 days ago : added suppot for test domain
 cb321f8 - Jan Jorissen, 9 days ago : test build
 ccc05fd - Jan Jorissen, 9 days ago : added stockPanels
 4ff3cad - Jan Jorissen, 10 days ago : added stock entry classes
-2f906cc - Jan Jorissen, 10 days ago : test build
-6fefff2 - Jan Jorissen, 10 days ago :  new sector styles
+2f906cc - Jan Jorissen, 11 days ago : test build
+6fefff2 - Jan Jorissen, 11 days ago :  new sector styles
 ade946c - Jan Jorissen, 11 days ago : release build
 afc8dcc - Jan Jorissen, 11 days ago : name fix
 0f73111 - Jan Jorissen, 11 days ago : release build
 6af4dc9 - Jan Jorissen, 11 days ago : minor change
 94975f3 - Jan Jorissen, 11 days ago :  more cleanup and default route import
 121ae77 - Jan Jorissen, 11 days ago : cleanup code
-fe6c963 - Jan Jorissen, 11 days ago : cleanup code
-ce8f614 - Jan Jorissen, 11 days ago : test build
-01f14f0 - Jan Jorissen, 11 days ago : added unique sector colors
+fe6c963 - Jan Jorissen, 12 days ago : cleanup code
+ce8f614 - Jan Jorissen, 12 days ago : test build
+01f14f0 - Jan Jorissen, 12 days ago : added unique sector colors
 8737793 - Jan Jorissen, 2 weeks ago : test build
 88164ef - Jan Jorissen, 2 weeks ago : release build
 c8d147e - Jan Jorissen, 2 weeks ago : new user error handling
@@ -58,9 +66,9 @@ ab1789d - Jan Jorissen, 2 weeks ago : release build
 ebe4882 - Jan Jorissen, 2 weeks ago : release build
 e6fad6e - Jan Jorissen, 2 weeks ago : cleanup
 e4854a6 - Jan Jorissen, 2 weeks ago : added name decorator and autosave decorator
-2123366 - Jan Jorissen, 2 weeks ago : release build
-a8b5e28 - Jan Jorissen, 2 weeks ago : release build
-c0aafeb - Jan Jorissen, 2 weeks ago : refactor modules
+2123366 - Jan Jorissen, 3 weeks ago : release build
+a8b5e28 - Jan Jorissen, 3 weeks ago : release build
+c0aafeb - Jan Jorissen, 3 weeks ago : refactor modules
 91b6087 - Jan Jorissen, 3 weeks ago : fix error for new users. lots done - promises, realtime store etc
 b47c705 - Jan Jorissen, 3 weeks ago : release build
 0668e6f - Jan Jorissen, 3 weeks ago :  added checks for empty portoflios

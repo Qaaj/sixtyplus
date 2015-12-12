@@ -19,3 +19,10 @@
  // Graph with total returns / dividends / costbase
  // Modal for stock entry information
  // Use immutable in the components
+ // 
+ // // good news section:
+ // // Historical performance of current portfolio
+ // // TIme it takes for dividends to earn back loss
+ // // Time it takes to earn back loss using data from your income
+// Write test
+// Integrate "fake" backend service for offline dev
