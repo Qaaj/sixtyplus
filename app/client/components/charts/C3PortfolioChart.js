@@ -18,6 +18,7 @@ class C3PortfolioChart extends React.Component {
         x: 'x',
         columns: data.columns,
         types: data.types,
+        groups: data.groups,
       },
       axis: {
         x: {

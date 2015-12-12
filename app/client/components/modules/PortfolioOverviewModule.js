@@ -9,7 +9,8 @@ import NotificationActionCreators from '../../actions/NotificationActionCreators
 import SingleStock from '../importer/ui/SinglePreviewImportStock';
 import StockTable from '../tables/StockTable';
 import { Input, Grid, DropdownButton, MenuItem, ButtonToolbar, Button, ButtonGroup,ListGroup,ListGroupItem } from 'react-bootstrap';
-import {updateArrayOfEntryCollectionsWithRT, updatePortfolioDividends, getMonthlyChart} from '../../../shared/helpers/stocks';
+import {updateArrayOfEntryCollectionsWithRT, updatePortfolioDividends} from '../../../shared/helpers/stocks';
+import {getMonthlyChart} from '../../../shared/helpers/charts';
 import C3PortfolioChart from '../charts/C3PortfolioChart';
 
 
@@ -115,7 +116,7 @@ class PortfolioOverview extends React.Component {
 
     updateArrayOfEntryCollectionsWithRT(portfolio, this.props.rt);
     updatePortfolioDividends(portfolio, this.props.historical);
-    let chartData = getMonthlyChart(portfolio.flatTickerList,this.props.historical);
+    let chartData = getMonthlyChart(portfolio,this.props.historical);
 
     let stockEntries = portfolio.collectionList;
 

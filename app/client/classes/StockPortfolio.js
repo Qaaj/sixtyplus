@@ -27,6 +27,12 @@ class StockPortfolio {
     return false;
 
   }
+
+  getEntryCollectionByTicker(ticker){
+    return this.entryCollectionList.filter(entries =>{
+      if(entries.ticker === ticker) return true;
+    })[0];
+  }
   addStockEntryCollection(stockEntryCollection){
 
     let newEntryCollection = stockEntryCollection.filter(newEntries =>{
