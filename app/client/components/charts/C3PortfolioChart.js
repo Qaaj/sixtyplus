@@ -10,20 +10,30 @@ class C3PortfolioChart extends React.Component {
     super(props);
   }
 
-  componentDidMount(){
-    var chart = c3.generate({ bindto:'#chart1', data: { columns: [ ['data1', 300, 350, 300, 0, 0, 0], ['data2', 130, 100, 140, 200, 150, 50] ], types: { data1: 'area', data2: 'area-spline' } } });
+  renderChart(data) {
+    let chartData = {bindto: '#chart1',
+      data: {
+        columns: [
+        ],
+        types: {BX: 'area-spline'}
+      }
+    };
 
+    chartData.data.columns = [data];
+
+    c3.generate(chartData);
   }
 
-  componentDidUpdate() {
-    console.log("Component did update");
-    var chart = c3.generate({ bindto:'#chart1', data: { columns: [ ['data1', 300, 350, 300, 0, 0, 0], ['data2', 130, 100, 140, 200, 150, 50] ], types: { data1: 'area', data2: 'area-spline' } } });
+  componentDidMount(){
+    if(this.props.data) this.renderChart(this.props.data);
+  }
 
+  componentWillReceiveProps(nextProps) {
+   if(nextProps.data) this.renderChart(nextProps.data);
   }
 
   render() {
-    console.log('rendering');
-    return(<div className="row" id="chart1"></div>);
+    return (<div className="row" id="chart1"></div>);
   }
 }
 

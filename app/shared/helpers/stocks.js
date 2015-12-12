@@ -118,3 +118,16 @@ export function updatePortfolioDividends(portfolio, historical) {
   return portfolio;
 }
 
+
+export function getMonthlyChart(ticker,historical){
+  let monthly = JSON.parse(historical[ticker].monthly);
+  let chart = monthly.map(month =>{
+    return parseFloat(month['Adj Close']);
+  })
+
+  chart.reverse();
+  chart.unshift('BX');
+
+  return chart;
+}
+

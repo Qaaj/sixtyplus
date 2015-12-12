@@ -4,11 +4,16 @@ import fs from 'fs';
 const CHANGE_EVENT = 'change';
 
 let dataMap = Map();
+let historicalMap = {};
 
 const DataStore = {
 
   getData() {
     return dataMap.toJS();
+  },
+
+  getHistoricalData(){
+    return historicalMap;
   },
 
   loadData(){

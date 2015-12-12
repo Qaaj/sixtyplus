@@ -3,6 +3,8 @@ var yahooFinance = require('yahoo-finance');
 import http from 'http';
 import {CSVtoJSON} from '../../helpers/json';
 import moment from 'moment';
+import DataStore from '../../stores/DataStore'
+
 
 export default (req, res) => {
 
@@ -29,8 +31,6 @@ export default (req, res) => {
     option_string = req.body.options;
   }
 
-  debug("getting historical data for " +  req.body.ticker + " from " + from.format('DD-MM-YYYY') + " to " + to.format('DD-MM-YYYY') + " (option: " + options + ')');
-
   let query = '/table.csv?s=' + req.body.ticker
             + '&a=' + from.month() //zero indexed
             + '&b=' + from.date()
@@ -47,17 +47,37 @@ export default (req, res) => {
     , path: query
   }
 
-  http.get(url, function (rs) {
-    var data = ''
-    rs.on('data', function (chunk) {
-      data += chunk
-    })
-    rs.on('end', function () {
-      res.setHeader('Content-Type', 'application/json');
-      var result = CSVtoJSON(data);
-      let returnObject = {result, option:option_string, ticker:req.body.ticker};
-      res.send(returnObject);
-    })
-  })
+  let cacheID = req.body.ticker + '_' + options;
+
+  if(!DataStore.getHistoricalData()[cacheID]){
+
+    debug("getting historical " + option_string +" data for " +  req.body.ticker + " from " + from.format('DD-MM-YYYY') + " to " + to.format('DD-MM-YYYY') + 'from SERVER');
+
+    http.get(url, function (rs) {
+      var data = ''
+      rs.on('data', function (chunk) {
+        data += chunk
+      })
+      rs.on('end', function () {
+
+        res.setHeader('Content-Type', 'application/json');
+        var result = CSVtoJSON(data);
+        let returnObject = {result, option:option_string, ticker:req.body.ticker};
+
+        // Save data in the cache
+        DataStore.getHistoricalData()[cacheID] = result;
+
+        res.send(returnObject);
+      })
+    });
+
+  }else{
+    debug("getting historical " + option_string +" data for " +  req.body.ticker + " from " + from.format('DD-MM-YYYY') + " to " + to.format('DD-MM-YYYY') + ' from CACHE (cache_id: ' + cacheID + ")");
+    var result = DataStore.getHistoricalData()[cacheID];
+    let returnObject = {result, option:option_string, ticker:req.body.ticker};
+    res.send(returnObject);
+  }
+
+
 
 };

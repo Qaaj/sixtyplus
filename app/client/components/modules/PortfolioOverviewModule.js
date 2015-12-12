@@ -9,7 +9,7 @@ import NotificationActionCreators from '../../actions/NotificationActionCreators
 import SingleStock from '../importer/ui/SinglePreviewImportStock';
 import StockTable from '../tables/StockTable';
 import { Input, Grid, DropdownButton, MenuItem, ButtonToolbar, Button, ButtonGroup,ListGroup,ListGroupItem } from 'react-bootstrap';
-import {updateArrayOfEntryCollectionsWithRT, updatePortfolioDividends} from '../../../shared/helpers/stocks';
+import {updateArrayOfEntryCollectionsWithRT, updatePortfolioDividends, getMonthlyChart} from '../../../shared/helpers/stocks';
 import C3PortfolioChart from '../charts/C3PortfolioChart';
 
 
@@ -99,13 +99,6 @@ class PortfolioOverview extends React.Component {
 
   render() {
 
-    let chartData = {
-      columns: [
-        ['data1', -300, 350, -300, 0, 0, 0],
-        ['data2', -130, -100, 140, -200, 150, -50]
-      ],
-      type: 'area-spline'
-    };
 
     if (!this.props.user.userData) return (<Grid style={{'textAlign':'center','padding':'20px'}}> There
       doesn't seem to be anything here! Head over to the <a href={"#/" +this.props.lang +"/Import"}>Importer</a> to
@@ -119,8 +112,10 @@ class PortfolioOverview extends React.Component {
 
     let portfolio = this.props.user.stockPortfolio;
 
+
     updateArrayOfEntryCollectionsWithRT(portfolio, this.props.rt);
     updatePortfolioDividends(portfolio, this.props.historical);
+    let chartData = getMonthlyChart('BX',this.props.historical);
 
     let stockEntries = portfolio.collectionList;
 
