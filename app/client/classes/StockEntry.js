@@ -41,6 +41,22 @@ class StockEntry {
     }
   }
 
+  calculateDividends(dividends){
+    let divs = dividends.filter(dividend =>{
+        if(dividend.date.isAfter(this.date)) return true;
+    });
+
+    this.dividends_per_share = divs.reduce((prev,curr) =>{
+      prev += parseFloat(curr.price);
+      return prev;
+    },0)
+
+    this.dividends_per_share = Math.round((this.dividends_per_share) * 10000) / 10000;
+    this.total_dividends = this.dividends_per_share * this.amount;
+    this.total_dividends = Math.round((this.total_dividends) * 10000) / 10000;
+
+  }
+
 }
 
 export default StockEntry;

@@ -17,11 +17,17 @@ class StockCard extends React.Component {
 
   }
 
+  handleClick(){
+
+  }
+
   render() {
 
     if (!this.props.entries || this.props.entries.length == 0) return null;
 
-    let entries = this.props.entries;
+    //let entries = this.props.entries;
+    let entries = this.props.entries.data;
+    if(this.props.includeDiv) entries = this.props.entries.dataWithDividends;
 
     let sectorClass = '';
     let profitColorClass = getProfitLossClassname(entries.first.isUpToday);
@@ -31,21 +37,14 @@ class StockCard extends React.Component {
     }
 
     let column = {xs: 6, md: 4};
-    let expanded = '';
     let sector = entries.sector;
-
-    if (this.state.expanded){
-      column = {xs: 12, md: 12};
-      expanded = 'expanded';
-      sector += ' (' + entries.first.industry + ')';
-    }
 
 
     let body = (
-      <Col onClick={()=>this.setState({expanded: !this.state.expanded})} xs={column.xs} md={column.md} >
-        <div className={"stockCard " +expanded}>
+      <Col onClick={this.handleClick.bind(this)} xs={column.xs} md={column.md} >
+        <div className={"stockCard"}>
             <h4>{entries.ticker} <span className="stockName">{entries.name} </span></h4>
-          <div className={"basics " + expanded}>
+          <div className={"basics"}>
 
           <div className="cardContent">
               <Well>
@@ -64,6 +63,10 @@ class StockCard extends React.Component {
                 <ListGroupItem>
                   <span className="prop">Market Value </span>
                   <div className="val">{entries.marketValue}</div>
+                </ListGroupItem>
+                <ListGroupItem>
+                  <span className="prop">Dividends Collected </span>
+                  <div className="val">{entries.total_dividends}</div>
                 </ListGroupItem>
                 <ListGroupItem bsStyle={entries.style}>
                   <span className="prop">P/L </span>

@@ -81,7 +81,8 @@ class App extends React.Component {
           location: location,
           urlParams: params,
           user: this.state.user,
-          rt: this.state.rt
+          rt: this.state.rt,
+          historical: this.state.historical,
         }
       )}
     </div>);

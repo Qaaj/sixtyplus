@@ -1,6 +1,6 @@
 import defaults from '../../client/config/Defaults';
 import StockEntryCollection from '../../client/classes/StockEntryCollection';
-
+import HistoricalActions from '../../client/actions/HistoricalActionCreators';
 
 export function collectionsToPortfolioMap(stockEntryCollections) {
 
@@ -43,7 +43,9 @@ export function mapByTicker(array) {
 
 // Update the collection of stock transactions with latest realtime data
 
-export function updateArrayOfEntryCollectionsWithRT(entries, rt) {
+export function updateArrayOfEntryCollectionsWithRT(portfolio, rt) {
+
+  let entries = portfolio.collectionList;
 
   return entries.map((entry) => {
     let ticker = entry.ticker;
@@ -95,23 +97,26 @@ export function createEntriesFromUserObjectPortfolio(portfolio) {
   return collection;
 }
 
-export function createPortfolioStats(entries) {
+export function updatePortfolioDividends(portfolio, historical) {
 
-  let portfolio = entries.reduce((prev, curr) => {
-    prev.costBase += curr.costBase;
-    prev.marketValue += curr.marketValue;
-    return prev;
-  }, {costBase: 0, marketValue: 0});
+  if(!historical) return portfolio;
 
-  portfolio.profitLoss = portfolio.marketValue - portfolio.costBase;
-  portfolio.percent_change = 100 * (portfolio.profitLoss / portfolio.costBase)
+  let entryList = portfolio.collectionList;
 
-  portfolio.costBase = Math.round((portfolio.costBase) * 100) / 100;
-  portfolio.marketValue = Math.round((portfolio.marketValue) * 100) / 100;
-  portfolio.profitLoss = Math.round((portfolio.profitLoss) * 100) / 100;
-  portfolio.percent_change = Math.round((portfolio.percent_change) * 100) / 100;
-  portfolio.percent_change_string = portfolio.percent_change + '%';
+  entryList.map(entry =>{
+
+    if(!historical[entry.ticker]){  // if divvies not available, try at least ONCE to get the dividends
+      HistoricalActions.getHistoricalDividends({
+        ticker: entry.ticker
+      });
+    }else{ // if divvies available, add them to the entry
+      entry.calculateDividends(historical[entry.ticker]);
+    }
+
+  })
 
   return portfolio;
 }
+
+
 

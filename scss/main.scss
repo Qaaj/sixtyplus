@@ -10,7 +10,9 @@ $icon-font-path: '~bootstrap-sass/assets/fonts/bootstrap/';
 @import './components/sectorComponent';
 @import './components/stockCard';
 @import './components/dateInput';
-
+@import './components/dateInput';
+@import './components/portfolioPage';
+@import './vendors/c3/main';
 body {
   background-color: #EFEFEF;
   font-family: 'robotomedium';
@@ -165,40 +167,4 @@ body {
   color: red;
   z-index: 10;
 }
-
-.portfolio-page {
-
-  top: 25px;
-  position: relative;
-
-  .btn-toolbar {
-    .btn {
-      line-height: 15px;
-      font-size: 15px;
-
-    }
-  }
-
-  .portfolioOverview {
-    .container {
-      padding: 0px;
-      margin-top: 25px;
-    }
-  }
-
-  .filter {
-    display: inline-block;
-  }
-  .sorter {
-    display: inline-block;
-    margin-left: 10px;
-    position: relative;
-    top: -12px;
-
-    .btn{
-      padding: 4px 10px;
-    }
-  }
-}
-
 
