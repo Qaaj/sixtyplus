@@ -11,15 +11,24 @@ class C3PortfolioChart extends React.Component {
   }
 
   renderChart(data) {
-    let chartData = {bindto: '#chart1',
-      data: {
-        columns: [
-        ],
-        types: {BX: 'area-spline'}
-      }
-    };
 
-    chartData.data.columns = [data];
+    let chartData = {
+      bindto: '#chart1',
+      data: {
+        x: 'x',
+        columns: data,
+        types: {BX: 'area-spline'}
+      },
+      axis: {
+        x: {
+          type: 'timeseries',
+          tick: {
+            format: '%Y-%m'
+          }
+        }
+      }
+    }
+
 
     c3.generate(chartData);
   }

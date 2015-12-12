@@ -123,11 +123,23 @@ export function getMonthlyChart(ticker,historical){
   let monthly = JSON.parse(historical[ticker].monthly);
   let chart = monthly.map(month =>{
     return parseFloat(month['Adj Close']);
-  })
+  });
+
+  let labels =  monthly.map(month =>{
+    return month['Date'];
+  });
+
+  labels.reverse();
+  labels.unshift('x');
 
   chart.reverse();
   chart.unshift('BX');
 
-  return chart;
+  let result = [labels];
+  result.push(chart);
+
+  console.log(result);
+
+  return result;
 }
 
