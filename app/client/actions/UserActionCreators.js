@@ -42,6 +42,7 @@ var UserActionCreators = {
 
     listOfTickers.forEach(ticker =>{
       HistoricalActions.getHistoricalDividends({ticker});
+      HistoricalActions.getHistoricalPrices({ ticker, options:'monthly', from:"01-01-2012"});
     });
 
   },
@@ -75,8 +76,8 @@ var UserActionCreators = {
 
     if(window.location.hostname.indexOf("sixtyplus-test") != -1) uid = 'TEST_USER';
 
-    uid = '1448488808946-7120';
-    //uid = 'DIV';
+    //uid = '1448488808946-7120';
+    uid = 'DIV';
     //uid = 'TEST_USER'
 
     loadUser({uid: uid});

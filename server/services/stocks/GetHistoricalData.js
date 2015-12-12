@@ -20,8 +20,8 @@ export default (req, res) => {
     return;
   }
 
-  if(req.body.from) from = moment(req.body.from,"DD-MM-YYYY");
-  if(req.body.to) to = moment(req.body.to,"DD-MM-YYYY");
+  //if(req.body.from) from = moment(req.body.from,"DD-MM-YYYY");
+  //if(req.body.to) to = moment(req.body.to,"DD-MM-YYYY");
 
   if(req.body.options) {
     if(req.body.options === 'daily') options = 'd';
@@ -60,13 +60,14 @@ export default (req, res) => {
       })
       rs.on('end', function () {
 
-        res.setHeader('Content-Type', 'application/json');
         var result = CSVtoJSON(data);
-        let returnObject = {result, option:option_string, ticker:req.body.ticker};
 
-        // Save data in the cache
+        // Save the all-time data in the cache
         DataStore.getHistoricalData()[cacheID] = result;
-
+        // Retrieve the correct timeframe
+        if(req.body.from) result = DataStore.getPartialHistoricalData( {cacheID, from : moment(req.body.from,"DD-MM-YYYY") } );
+        let returnObject = {result, option:option_string, ticker:req.body.ticker};
+        res.setHeader('Content-Type', 'application/json');
         res.send(returnObject);
       })
     });
@@ -74,6 +75,7 @@ export default (req, res) => {
   }else{
     debug("getting historical " + option_string +" data for " +  req.body.ticker + " from " + from.format('DD-MM-YYYY') + " to " + to.format('DD-MM-YYYY') + ' from CACHE (cache_id: ' + cacheID + ")");
     var result = DataStore.getHistoricalData()[cacheID];
+    if(req.body.from) result = DataStore.getPartialHistoricalData( {cacheID, from : moment(req.body.from,"DD-MM-YYYY") } );
     let returnObject = {result, option:option_string, ticker:req.body.ticker};
     res.send(returnObject);
   }
