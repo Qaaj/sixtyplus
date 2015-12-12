@@ -70,6 +70,15 @@ UserStore.dispatchToken = AppDispatcher.register(function (payload) {
       UserStore.emitChange();
       break;
 
+    case UserConstants.USER_DELETE_PORTFOLIO_DATA:
+      console.log("> Trying to delete data ");
+
+      _userData = _userData.merge(fromJS(action.data));
+      _userObject = _userObject.set("userData",_userData);
+
+        UserStore.emitChange();
+      break;
+
     case UserConstants.USER_LOADED:
 
       if (action.data.currency == "EURO") action.data.currency = "€";

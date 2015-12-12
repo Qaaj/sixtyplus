@@ -177,6 +177,37 @@ export function saveUserData(userData, uid){
     );
 }
 
+export function deleteUserPortfolioData(userData, uid, resultObject){
+    console.log(">> DELETING DATA " , userData);
+
+    let url = `${API_URL}/deleteUserPortfolioData`;
+    let data = {userData, uid};
+
+    post({url, data})
+        .then(
+        (response) => {
+            console.log("> Trying to reach API");
+
+            resultObject.success();
+
+            NotificationActions.setNotification({
+                isVisible: true,
+                type: 'success',
+                message:"Portfolio has been succesfully cleared.",
+                delay: 1500
+            });
+
+            //ServerActionCreators.userUpdated(response.body);
+        },
+
+        (error) => {
+
+            console.error('Error: ', error);
+        }
+    );
+}
+
+
 export function loadUser(data){
 
     let url = `${API_URL}/loadUser`;
