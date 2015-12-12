@@ -11,7 +11,7 @@ class StockPortfolio {
     // Get dividend info for existing portfolio
     this.flatTickerList.forEach(ticker =>{
       HistoricalActions.getHistoricalDividends({ ticker});
-      HistoricalActions.getHistoricalPrices({ ticker, options:'monthly', from:"01-01-2008"});
+      HistoricalActions.getHistoricalPrices({ ticker, options:'monthly', from:"01-01-2015"});
     });
   }
 
@@ -33,6 +33,7 @@ class StockPortfolio {
       if(entries.ticker === ticker) return true;
     })[0];
   }
+
   addStockEntryCollection(stockEntryCollection){
 
     let newEntryCollection = stockEntryCollection.filter(newEntries =>{

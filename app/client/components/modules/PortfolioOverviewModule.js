@@ -25,7 +25,7 @@ class PortfolioOverview extends React.Component {
         reverse: true
       },
       filter: 'All',
-      includeDiv:true
+      includeDiv: true
     }
 
     this.sortReverse = true;
@@ -59,7 +59,6 @@ class PortfolioOverview extends React.Component {
     ];
 
 
-
     this.filters = ['All', 'Profit', 'Loss'];
 
 
@@ -82,7 +81,7 @@ class PortfolioOverview extends React.Component {
 
   }
 
-  onDividendCheckboxClick(){
+  onDividendCheckboxClick() {
     this.setState({
       includeDiv: !this.state.includeDiv
     })
@@ -109,14 +108,16 @@ class PortfolioOverview extends React.Component {
       <div className="loader"></div>
     </Grid>);
 
-    this.filterItems = this.filters.map(::this.createFilters);
+    this.filterItems = this.filters.map(::this.createFilters
+  )
+    ;
 
     let portfolio = this.props.user.stockPortfolio;
 
 
     updateArrayOfEntryCollectionsWithRT(portfolio, this.props.rt);
     updatePortfolioDividends(portfolio, this.props.historical);
-    let chartData = getMonthlyChart(portfolio,this.props.historical);
+    let chartData = getMonthlyChart(portfolio, this.props.historical);
 
     let stockEntries = portfolio.collectionList;
 
@@ -126,7 +127,7 @@ class PortfolioOverview extends React.Component {
     }, 0);
 
     let portfolioData = portfolio.portfolioStats
-    if(this.state.includeDiv) portfolioData = portfolio.portfolioStatsWithDividends;
+    if (this.state.includeDiv) portfolioData = portfolio.portfolioStatsWithDividends;
 
 
     let currentSortName = this.sortKeys.filter((sorter) => {
@@ -141,7 +142,11 @@ class PortfolioOverview extends React.Component {
 
       <div className="portfolio-page">
         <Grid>
-          <C3PortfolioChart data={chartData} />
+          <C3PortfolioChart data={chartData}/>
+          <ul>
+            <li>Click on a label to toggle active state.</li>
+            <li>Alt + Click on a label to disable other tickers.</li>
+          </ul>
           <ListGroup>
             <ListGroupItem bsStyle={profitOrLoss}>
               <span className="prop">Profit/Loss: </span>
@@ -170,13 +175,15 @@ class PortfolioOverview extends React.Component {
             </DropdownButton>
           </div>
           <div className="checkBoxes">
-            <Input type="checkbox" label="Include Dividends in P/L" checked={this.state.includeDiv} onChange={this.onDividendCheckboxClick.bind(this)} />
+            <Input type="checkbox" label="Include Dividends in P/L" checked={this.state.includeDiv}
+                   onChange={this.onDividendCheckboxClick.bind(this)}/>
           </div>
         </Grid>
         <Grid>
           <div className='portfolioOverview'>
             <StockTable rt={this.props.rt} user={this.props.user} sorter={this.state.sorter}
-                        filter={this.state.filter} entries={stockEntries} historical={this.props.historical} includeDiv={this.state.includeDiv}/>
+                        filter={this.state.filter} entries={stockEntries} historical={this.props.historical}
+                        includeDiv={this.state.includeDiv}/>
           </div>
         </Grid>
       </div>

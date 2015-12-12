@@ -65,6 +65,16 @@ class StockEntryCollection {
     return data;
   }
 
+  getAmountAtDate(date){
+    let priceDate = moment(date.Date,'YYYY-MM-DD');
+    return this.entries.reduce((prev,curr) => {
+      if(curr.date.isBefore(priceDate)){
+        prev += curr.amount;
+      }
+      return prev;
+    },0);
+  }
+
   calculateProfitLoss(data){
     this.lastPrice = data.lastTradePriceOnly;
     this.marketValue = (Math.round(100 * parseFloat(this.lastPrice) * parseFloat(this.amount))) / 100;
