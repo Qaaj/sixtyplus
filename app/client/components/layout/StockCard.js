@@ -3,6 +3,8 @@ import { pureRenderDecorator } from '../../../shared/helpers/decorators';
 import {getUniqueColor, getClassBySector, getProfitLossClassname} from '../../../shared/helpers/colors/ColorUtils';
 import {updateArrayOfEntryCollectionsWithRT} from '../../../shared/helpers/stocks';
 import SectorComponent from '../ui/SectorComponent';
+import ModalActionCreators from '../../actions/ModalActionCreators';
+import ModalConstants from '../../constants/ModalConstants';
 
 @pureRenderDecorator
 class StockCard extends React.Component {
@@ -18,7 +20,10 @@ class StockCard extends React.Component {
   }
 
   handleClick(){
-
+    ModalActionCreators.setModal({
+      isVisible: true,
+      type: ModalConstants.PORTFOLIO_DETAIL,
+    });
   }
 
   render() {

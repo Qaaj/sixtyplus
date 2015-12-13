@@ -5,6 +5,7 @@ import routes from './routes/routes';
 import Header from './components/layout/Header';
 import TopMenu from './components/layout/TopMenu';
 import Quickstart from './components/modules/QuickstartModule';
+import Modal from './components/modules/ModalModule';
 
 import UserActionCreators from './actions/UserActionCreators';
 
@@ -85,7 +86,15 @@ class App extends React.Component {
           historical: this.state.historical,
         }
       )}
-
+      <Modal
+        lang={this.state.user.lang}
+        history={history}
+        location={location}
+        urlParams={params}
+        user={this.state.user}
+        rt={ this.state.rt}
+        historical={this.state.historical}
+      />
     </div>);
   }
 }
