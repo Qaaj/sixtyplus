@@ -1,5 +1,5 @@
-import {round} from './formatting'
-
+import {round} from './formatting';
+import d3 from 'd3';
 
 export function getMonthlyChart(portfolio, historical) {
 
@@ -92,9 +92,11 @@ export function getMonthlyChart(portfolio, historical) {
 
   types["Cost Base"] = 'bar';
 
-  console.log(chart);
-
   let groups = [portfolio.flatTickerList,["Cost Base"]];
 
-  return {columns, types, groups};
+  let colors = {
+    "Cost Base": d3.rgb(230, 230, 230),
+  }
+
+  return {columns, types, groups, colors};
 }

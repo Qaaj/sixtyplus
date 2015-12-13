@@ -20,6 +20,14 @@ class C3PortfolioChart extends React.Component {
         columns: data.columns,
         types: data.types,
         groups: data.groups,
+        colors: data.colors,
+      },
+      bar: {
+        width: {
+          ratio: .8 // this makes bar width 50% of length between ticks
+        }
+        // or
+        //width: 100 // this makes bar width 100px
       },
       axis: {
         x: {
