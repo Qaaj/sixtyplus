@@ -27,3 +27,6 @@
 // Write test
 // Integrate "fake" backend service for offline dev
  // Cache the streaming prices and let the users 'fetch' it without making extra call to yahoo finance
+ // Use the same detailpage for stock entries as for your portfolio
+ // Store the analyst ratings over time so we can use the data to see what the trend is
+ // Notification for when analyst rating drops or divdends is cut/late

@@ -2,6 +2,7 @@
  * Created by janjorissen on 11/16/15.
  */
 import c3 from 'c3';
+import {Button, ButtonGroup, ButtonToolbar} from 'react-bootstrap';
 
 
 class C3PortfolioChart extends React.Component {
@@ -34,18 +35,30 @@ class C3PortfolioChart extends React.Component {
     c3.generate(chartData);
   }
 
-  componentDidMount(){
-    if(this.props.data) this.renderChart(this.props.data);
+  componentDidMount() {
+    if (this.props.data) this.renderChart(this.props.data);
   }
 
   componentWillReceiveProps(nextProps) {
-   if(nextProps.data) this.renderChart(nextProps.data);
+    if (nextProps.data) this.renderChart(nextProps.data);
   }
 
   render() {
-    return (<div className="portfolio-chart" id="chart1">
-      <div className='loader' />
-    </div>);
+    return (
+      <div>
+        <div className="protfolio_chart_menu">
+          <ButtonToolbar>
+            <ButtonGroup bsSize="xsmall">
+              <Button>Portfolio Size</Button>
+              <Button>Dividends</Button>
+              <Button>P&L</Button>
+            </ButtonGroup>
+          </ButtonToolbar>
+        </div>
+        <div className="portfolio-chart" id="chart1">
+          <div className='loader'/>
+        </div>
+      </div>);
   }
 }
 
