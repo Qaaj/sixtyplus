@@ -98,7 +98,7 @@ class PortfolioOverview extends React.Component {
     _onDeletePortfolioDataClickHandler() {
         let resultObject = {
             success: () => { console.log("ok, succes triggered in result object") },
-            fail: () => { console.log("nok triggered in result object") },
+            fail: () => { console.log("nok triggered in result object") }
         }
 
         UserActionCreators.deleteUserPortfolioData(resultObject);
@@ -107,18 +107,14 @@ class PortfolioOverview extends React.Component {
     render() {
 
 
-        if (!this.props.user.userData) return (<Grid style={{'textAlign':'center','padding':'20px'}}> There
-            doesn't seem to be anything here! Head over to the <a href={"#/" +this.props.lang +"/Import"}>Importer</a>
-            to
-            change that.</Grid>);
+        if (!this.props.user.userData || !this.props.user.userData.portfolio) return (<Grid style={{'textAlign':'center','padding':'20px'}}> There
+            doesn't seem to be anything here! Head over to the <a href={"#/" +this.props.lang +"/Import"}>Importer</a> to change that.</Grid>);
 
         if (!this.props.rt) return (<Grid style={{'textAlign':'center','padding':'20px'}}>
             <div className="loader"></div>
         </Grid>);
 
-        this.filterItems = this.filters.map(::this.createFilters
-    )
-        ;
+        this.filterItems = this.filters.map(::this.createFilters);
 
         let portfolio = this.props.user.stockPortfolio;
 
@@ -134,7 +130,7 @@ class PortfolioOverview extends React.Component {
             return prev;
         }, 0);
 
-        let portfolioData = portfolio.portfolioStats
+        let portfolioData = portfolio.portfolioStats;
         if (this.state.includeDiv) portfolioData = portfolio.portfolioStatsWithDividends;
 
 
@@ -199,8 +195,7 @@ class PortfolioOverview extends React.Component {
                                     filter={this.state.filter} entries={stockEntries} historical={this.props.historical}
                                     includeDiv={this.state.includeDiv}/>
 
-                        <Button onClick={this._onDeletePortfolioDataClickHandler} bsStyle="primary" bsSize="large">Delete
-                            portfolio data</Button>
+                        <Button onClick={this._onDeletePortfolioDataClickHandler} bsStyle="danger" bsSize="medium">Delete portfolio data</Button>
                     </div>
                 </Grid>
             </div>

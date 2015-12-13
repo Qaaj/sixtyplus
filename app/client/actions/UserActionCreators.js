@@ -66,6 +66,8 @@ var UserActionCreators = {
   deleteUserPortfolioData(resultObject){
     var userData = fromJS(UserStore.getUser().userData);
 
+    userData.portfolio = [];
+
     console.log("> Deleting user data for user " , userData);
 
     AppDispatcher.handleViewAction({

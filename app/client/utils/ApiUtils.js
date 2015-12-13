@@ -186,7 +186,7 @@ export function deleteUserPortfolioData(userData, uid, resultObject){
     post({url, data})
         .then(
         (response) => {
-            console.log("> Trying to reach API");
+            console.log("> API Responded: " , response);
 
             resultObject.success();
 
@@ -196,8 +196,6 @@ export function deleteUserPortfolioData(userData, uid, resultObject){
                 message:"Portfolio has been succesfully cleared.",
                 delay: 1500
             });
-
-            //ServerActionCreators.userUpdated(response.body);
         },
 
         (error) => {
