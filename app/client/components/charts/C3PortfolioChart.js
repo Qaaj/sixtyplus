@@ -43,7 +43,7 @@ class C3PortfolioChart extends React.Component {
   }
 
   render() {
-    return (<div className="row" id="chart1">
+    return (<div className="portfolio-chart" id="chart1">
       <div className='loader' />
     </div>);
   }

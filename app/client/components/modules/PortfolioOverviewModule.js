@@ -8,7 +8,7 @@ import { doImport } from '../../../shared/helpers/importers/IB_importer';
 import NotificationActionCreators from '../../actions/NotificationActionCreators';
 import SingleStock from '../importer/ui/SinglePreviewImportStock';
 import StockTable from '../tables/StockTable';
-import { Input, Grid, DropdownButton, MenuItem, ButtonToolbar, Button, ButtonGroup,ListGroup,ListGroupItem } from 'react-bootstrap';
+import { Input, Grid, DropdownButton, MenuItem, ButtonToolbar, Button, ButtonGroup,ListGroup,ListGroupItem, Popover, OverlayTrigger, Panel } from 'react-bootstrap';
 import {updateArrayOfEntryCollectionsWithRT, updatePortfolioDividends} from '../../../shared/helpers/stocks';
 import {getMonthlyChart} from '../../../shared/helpers/charts';
 import C3PortfolioChart from '../charts/C3PortfolioChart';
@@ -123,9 +123,7 @@ class PortfolioOverview extends React.Component {
       <div className="loader"></div>
     </Grid>);
 
-    this.filterItems = this.filters.map(::this.createFilters
-  )
-    ;
+    this.filterItems = this.filters.map(this.createFilters.bind(this));
 
     let portfolio = this.props.user.stockPortfolio;
 
@@ -136,7 +134,7 @@ class PortfolioOverview extends React.Component {
 
     let stockEntries = portfolio.collectionList;
 
-    if(stockEntries.length === 0) return  (
+    if (stockEntries.length === 0) return (
       <Grid style={{'textAlign':'center','padding':'20px'}}> There
         doesn't seem to be anything here! Head over to the <a href={"#/Import"}>Importer</a> to
         change that.</Grid>);
@@ -181,11 +179,18 @@ class PortfolioOverview extends React.Component {
               <div className="val">{portfolioData.marketValue}</div>
             </ListGroupItem>
           </ListGroup>
-          <C3PortfolioChart data={chartData}/>
-          <ul>
-            <li>Click on a label to toggle active state.</li>
-            <li>Alt + Click on a label to disable other tickers.</li>
-          </ul>
+
+          <Panel header={<span>Portfolio Graph <OverlayTrigger trigger={['hover', 'focus']} placement="top" overlay={<Popover id="popover_interactive_chart" title="Interactive Chart">
+            <p><b>Click</b> on a label to toggle active state.</p>
+            <p><b>Alt + Click</b> on a label to disable other tickers.</p>
+          </Popover>}>
+            <i className="material-icons">help_outline</i>
+          </OverlayTrigger></span>} eventKey="1">
+            <C3PortfolioChart data={chartData}/>
+          </Panel>
+
+          <hr />
+
           <div className="filter">
             <ButtonToolbar>
               <ButtonGroup>

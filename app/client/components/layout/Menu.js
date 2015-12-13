@@ -31,7 +31,6 @@ class Menu extends React.Component {
 
   render() {
     let current = this.props.location.pathname.replace('/','');
-    console.log(current);
 
     let menuButtons = this.menu_options.map(item =>{
       let cx = '';
