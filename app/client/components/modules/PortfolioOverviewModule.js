@@ -180,7 +180,7 @@ class PortfolioOverview extends React.Component {
             </ListGroupItem>
           </ListGroup>
 
-          <Panel header={<span>Portfolio Graph <OverlayTrigger trigger={['hover', 'focus']} placement="top" overlay={<Popover id="popover_interactive_chart" title="Interactive Chart">
+          <Panel collapsible defaultExpanded={true} header={<span>Portfolio Graph <OverlayTrigger trigger={['hover', 'focus']} placement="top" overlay={<Popover id="popover_interactive_chart" title="Interactive Chart">
             <p><b>Click</b> on a label to toggle active state.</p>
             <p><b>Alt + Click</b> on a label to disable other tickers.</p>
           </Popover>}>

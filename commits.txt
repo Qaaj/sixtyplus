@@ -1,135 +1,164 @@
-050bfca - Jan Jorissen, 15 hours ago : release build
-eee7ff0 - Jan Jorissen, 15 hours ago : removed div user
-c5d950a - Jan Jorissen, 16 hours ago : test build
-3c46f58 - Jan Jorissen, 16 hours ago : fixed string formatting
-96239db - Jan Jorissen, 16 hours ago : test build
-6c952d1 - Jan Jorissen, 16 hours ago : added toggle for dividends
-27810f2 - Jan Jorissen, 19 hours ago : added total dividend returns
-4ff475e - Jan Jorissen, 20 hours ago : added information for total dividends collected
-4288f3a - Jan Jorissen, 21 hours ago : added dividend classes
-f54d701 - Jan Jorissen, 22 hours ago : created endpoint for historical dividend and price data
-2aaef09 - Jan Jorissen, 32 hours ago : temp fix for date
-4bd5ed9 - Jan Jorissen, 33 hours ago : new node version and fixed URL for webdevserver
-48f774b - Jan Jorissen, 5 days ago : test build
-b20f87b - Jan Jorissen, 5 days ago : clearing imports after success
-3671d16 - Jan Jorissen, 5 days ago : added spinner
-30bb3d7 - Jan Jorissen, 6 days ago : test build
-dd38fc1 - Jan Jorissen, 6 days ago : added consistent data in the user object
-6d3fba8 - Jan Jorissen, 6 days ago : test build
-cfab022 - Jan Jorissen, 6 days ago : more functions for the portfolio class
-d3c70aa - Jan Jorissen, 7 days ago : shitload of refactoring. created StockPortfolio object
-ba98334 - Jan Jorissen, 7 days ago : test build
-ba063b5 - Jan Jorissen, 7 days ago : more data for portfolio and styling
-e62fa3b - Jan Jorissen, 8 days ago : release build
-041a175 - Jan Jorissen, 8 days ago : added filters
-499b6e1 - Jan Jorissen, 8 days ago : release build
-74cbb4f - Jan Jorissen, 8 days ago : more info in stockcard
-af34bc6 - Jan Jorissen, 8 days ago : added sorter
-3d99021 - Jan Jorissen, 8 days ago : added support for multiple langs'
-418305e - Jan Jorissen, 9 days ago : test build
-3223c29 - Jan Jorissen, 9 days ago : added suppot for test domain
-daa0c87 - Jan Jorissen, 9 days ago : added suppot for test domain
-cb321f8 - Jan Jorissen, 9 days ago : test build
-ccc05fd - Jan Jorissen, 9 days ago : added stockPanels
-4ff3cad - Jan Jorissen, 10 days ago : added stock entry classes
-2f906cc - Jan Jorissen, 11 days ago : test build
-6fefff2 - Jan Jorissen, 11 days ago :  new sector styles
-ade946c - Jan Jorissen, 11 days ago : release build
-afc8dcc - Jan Jorissen, 11 days ago : name fix
-0f73111 - Jan Jorissen, 11 days ago : release build
-6af4dc9 - Jan Jorissen, 11 days ago : minor change
-94975f3 - Jan Jorissen, 11 days ago :  more cleanup and default route import
-121ae77 - Jan Jorissen, 11 days ago : cleanup code
-fe6c963 - Jan Jorissen, 12 days ago : cleanup code
-ce8f614 - Jan Jorissen, 12 days ago : test build
-01f14f0 - Jan Jorissen, 12 days ago : added unique sector colors
-8737793 - Jan Jorissen, 2 weeks ago : test build
-88164ef - Jan Jorissen, 2 weeks ago : release build
-c8d147e - Jan Jorissen, 2 weeks ago : new user error handling
-f1bc882 - Jan Jorissen, 2 weeks ago : merge with portfolio is correct
-047661d - Jan Jorissen, 2 weeks ago : added realtime update for import stocks and added getData
-122ac18 - Jan Jorissen, 2 weeks ago : release build
-ca27a39 - Jan Jorissen, 2 weeks ago : test build
-4e937fa - Jan Jorissen, 2 weeks ago : various improvements to dropdown and importer
-741fa83 - Jan Jorissen, 2 weeks ago : test build
-1c5fda7 - Jan Jorissen, 2 weeks ago :  aww yis
-be48439 - Jan Jorissen, 2 weeks ago : mawfakking datepicker
-3cb36aa - Jan Jorissen, 2 weeks ago : test build
-5d6c16b - Jan Jorissen, 2 weeks ago : added autocomplete
-ab1789d - Jan Jorissen, 2 weeks ago : release build
-5fb07d9 - Jan Jorissen, 2 weeks ago : added manual import. need refactor
-94c055b - Jan Jorissen, 2 weeks ago : release build
-9f91351 - Jan Jorissen, 2 weeks ago : fixed user portfolio object state bug
-2b7fec8 - Jan Jorissen, 2 weeks ago : test build
-84cfabb - Jan Jorissen, 2 weeks ago : realtime store working and portfolio is persistent. refactoring
-6c091da - Jan Jorissen, 2 weeks ago : added git log script
-ebe4882 - Jan Jorissen, 2 weeks ago : release build
-e6fad6e - Jan Jorissen, 2 weeks ago : cleanup
-e4854a6 - Jan Jorissen, 2 weeks ago : added name decorator and autosave decorator
+4787cea - Jan Jorissen, 46 minutes ago : basics of help popover. refactoring the portfolio overview
+58c8fe1 - Jan Jorissen, 70 minutes ago : new menu
+df223d1 - Jan Jorissen, 4 hours ago : merge done
+4b2c6df - Jan Jorissen, 4 hours ago : error removed from chart when portfolio is empty:
+335a455 - Jan Jorissen, 5 hours ago : Merge branch 'master' of https://bitbucket.org/mordhau/60plus
+8352b3c - Jan Jorissen, 5 hours ago : added formatting helper
+fc8e430 - WWWillems, 18 hours ago : Data is being deleted. Needs client refresh.
+9d261c4 - WWWillems, 19 hours ago : Added delete portfolio data button. Date is being deleted but app needs to trigger refresh on portfolio view when response was positive.
+6c28386 - Jaaq Jorissen, 19 hours ago : Merged in fix/dependencies (pull request #1)
+9f26a11 - WWWillems, 20 hours ago : Added npm-debug.log to .gitignore. Added ticker trimming to sanitize input a bit more. Getting my feet wet
+c8d40fa - WWWillems, 21 hours ago : Added c3 & request dependencies to package json. Updated React to 0.14.3, as it was a depency for c3.
+72b1e3d - WWWillems, 21 hours ago : Merge branch 'master' of https://bitbucket.org/mordhau/60plus
+e776a62 - Jan Jorissen, 26 hours ago : release:
+807966e - Jan Jorissen, 26 hours ago : user fix
+cac24d5 - Jan Jorissen, 27 hours ago : test build
+958cbff - Jan Jorissen, 27 hours ago : added beter caching and data fetching after adding stock
+3559e3a - Jan Jorissen, 27 hours ago : catch error for non existing data
+1fd8125 - Jan Jorissen, 28 hours ago : test build
+7259832 - Jan Jorissen, 28 hours ago : total returns stacking + positioning
+31c44fb - Jan Jorissen, 29 hours ago : test build
+04495c5 - Jan Jorissen, 29 hours ago : portfolio prices
+f635987 - Jan Jorissen, 29 hours ago : test build
+403562e - Jan Jorissen, 29 hours ago : added date to chart
+a7998a9 - Jan Jorissen, 30 hours ago : test build
+c389532 - Jan Jorissen, 30 hours ago : added Caching and basic price chart for BX
+fa89984 - Jan Jorissen, 31 hours ago : basic version of chart
+050bfca - Jan Jorissen, 7 days ago : release build
+eee7ff0 - Jan Jorissen, 7 days ago : removed div user
+c5d950a - Jan Jorissen, 7 days ago : test build
+3c46f58 - Jan Jorissen, 7 days ago : fixed string formatting
+96239db - Jan Jorissen, 7 days ago : test build
+6c952d1 - Jan Jorissen, 7 days ago : added toggle for dividends
+87fec47 - WWWillems, 7 days ago : Added .DS_Store to .gitignore
+27810f2 - Jan Jorissen, 7 days ago : added total dividend returns
+4ff475e - Jan Jorissen, 7 days ago : added information for total dividends collected
+4288f3a - Jan Jorissen, 7 days ago : added dividend classes
+f54d701 - Jan Jorissen, 7 days ago : created endpoint for historical dividend and price data
+2aaef09 - Jan Jorissen, 8 days ago : temp fix for date
+4bd5ed9 - Jan Jorissen, 8 days ago : new node version and fixed URL for webdevserver
+48f774b - Jan Jorissen, 12 days ago : test build
+b20f87b - Jan Jorissen, 12 days ago : clearing imports after success
+3671d16 - Jan Jorissen, 12 days ago : added spinner
+30bb3d7 - Jan Jorissen, 12 days ago : test build
+dd38fc1 - Jan Jorissen, 12 days ago : added consistent data in the user object
+6d3fba8 - Jan Jorissen, 13 days ago : test build
+cfab022 - Jan Jorissen, 13 days ago : more functions for the portfolio class
+d3c70aa - Jan Jorissen, 13 days ago : shitload of refactoring. created StockPortfolio object
+ba98334 - Jan Jorissen, 2 weeks ago : test build
+ba063b5 - Jan Jorissen, 2 weeks ago : more data for portfolio and styling
+e62fa3b - Jan Jorissen, 2 weeks ago : release build
+041a175 - Jan Jorissen, 2 weeks ago : added filters
+499b6e1 - Jan Jorissen, 2 weeks ago : release build
+74cbb4f - Jan Jorissen, 2 weeks ago : more info in stockcard
+af34bc6 - Jan Jorissen, 2 weeks ago : added sorter
+3d99021 - Jan Jorissen, 2 weeks ago : added support for multiple langs'
+418305e - Jan Jorissen, 2 weeks ago : test build
+3223c29 - Jan Jorissen, 2 weeks ago : added suppot for test domain
+daa0c87 - Jan Jorissen, 2 weeks ago : added suppot for test domain
+cb321f8 - Jan Jorissen, 2 weeks ago : test build
+ccc05fd - Jan Jorissen, 2 weeks ago : added stockPanels
+4ff3cad - Jan Jorissen, 2 weeks ago : added stock entry classes
+2f906cc - Jan Jorissen, 2 weeks ago : test build
+6fefff2 - Jan Jorissen, 2 weeks ago :  new sector styles
+ade946c - Jan Jorissen, 3 weeks ago : release build
+afc8dcc - Jan Jorissen, 3 weeks ago : name fix
+0f73111 - Jan Jorissen, 3 weeks ago : release build
+6af4dc9 - Jan Jorissen, 3 weeks ago : minor change
+94975f3 - Jan Jorissen, 3 weeks ago :  more cleanup and default route import
+121ae77 - Jan Jorissen, 3 weeks ago : cleanup code
+fe6c963 - Jan Jorissen, 3 weeks ago : cleanup code
+ce8f614 - Jan Jorissen, 3 weeks ago : test build
+01f14f0 - Jan Jorissen, 3 weeks ago : added unique sector colors
+8737793 - Jan Jorissen, 3 weeks ago : test build
+88164ef - Jan Jorissen, 3 weeks ago : release build
+c8d147e - Jan Jorissen, 3 weeks ago : new user error handling
+f1bc882 - Jan Jorissen, 3 weeks ago : merge with portfolio is correct
+047661d - Jan Jorissen, 3 weeks ago : added realtime update for import stocks and added getData
+122ac18 - Jan Jorissen, 3 weeks ago : release build
+ca27a39 - Jan Jorissen, 3 weeks ago : test build
+4e937fa - Jan Jorissen, 3 weeks ago : various improvements to dropdown and importer
+741fa83 - Jan Jorissen, 3 weeks ago : test build
+1c5fda7 - Jan Jorissen, 3 weeks ago :  aww yis
+be48439 - Jan Jorissen, 3 weeks ago : mawfakking datepicker
+3cb36aa - Jan Jorissen, 3 weeks ago : test build
+5d6c16b - Jan Jorissen, 3 weeks ago : added autocomplete
+ab1789d - Jan Jorissen, 3 weeks ago : release build
+5fb07d9 - Jan Jorissen, 3 weeks ago : added manual import. need refactor
+94c055b - Jan Jorissen, 3 weeks ago : release build
+9f91351 - Jan Jorissen, 3 weeks ago : fixed user portfolio object state bug
+2b7fec8 - Jan Jorissen, 3 weeks ago : test build
+84cfabb - Jan Jorissen, 3 weeks ago : realtime store working and portfolio is persistent. refactoring
+6c091da - Jan Jorissen, 3 weeks ago : added git log script
+ebe4882 - Jan Jorissen, 3 weeks ago : release build
+e6fad6e - Jan Jorissen, 3 weeks ago : cleanup
+e4854a6 - Jan Jorissen, 3 weeks ago : added name decorator and autosave decorator
 2123366 - Jan Jorissen, 3 weeks ago : release build
 a8b5e28 - Jan Jorissen, 3 weeks ago : release build
 c0aafeb - Jan Jorissen, 3 weeks ago : refactor modules
-91b6087 - Jan Jorissen, 3 weeks ago : fix error for new users. lots done - promises, realtime store etc
-b47c705 - Jan Jorissen, 3 weeks ago : release build
-0668e6f - Jan Jorissen, 3 weeks ago :  added checks for empty portoflios
-9b09422 - Jan Jorissen, 3 weeks ago : release build
-141539a - Jan Jorissen, 3 weeks ago :  removed import
-2791d89 - Jan Jorissen, 3 weeks ago : saving user import
-0b7e2d9 - Jan Jorissen, 3 weeks ago : added importing of stocks
-865115d - Jan Jorissen, 4 weeks ago : release build
-647c841 - Jan Jorissen, 4 weeks ago : release build
-0005cf0 - Jan Jorissen, 4 weeks ago : release build
-84b9709 - Jan Jorissen, 4 weeks ago : default tab 1
-c89cc53 - Jan Jorissen, 4 weeks ago : added stock data
-ae17e95 - Jan Jorissen, 4 weeks ago : updated json and added data file
-4e7bb78 - Jan Jorissen, 4 weeks ago : release build
-a3938be - Jan Jorissen, 4 weeks ago : added AUTOSAVE HAPPY WEEKEND
-cdd9e0a - Jan Jorissen, 4 weeks ago : release build
-4625957 - Jan Jorissen, 4 weeks ago : styling
-e752fe6 - Jan Jorissen, 4 weeks ago : tabs
-8c17ec0 - Jan Jorissen, 4 weeks ago : removed unused vaR
-73a25fc - Jan Jorissen, 4 weeks ago : release build
-b734d51 - Jan Jorissen, 4 weeks ago : new url
-e0dd43a - Jan Jorissen, 4 weeks ago : redirect
-d09abdd - Jan Jorissen, 4 weeks ago : new
-7c540a8 - Jan Jorissen, 4 weeks ago : reroute font call
-ee01f84 - Jan Jorissen, 4 weeks ago : removed postinstall
-b77b2fd - Jan Jorissen, 4 weeks ago : changes
-a8704b9 - Jan Jorissen, 4 weeks ago :  new webpack
-2839872 - Jan Jorissen, 4 weeks ago : updated webpack config
-03fb44a - Jan Jorissen, 4 weeks ago : test
-17d9032 - Jan Jorissen, 4 weeks ago : another build
-2e3a2ba - Jan Jorissen, 4 weeks ago : rewiring dist directory
-878ff6b - Jan Jorissen, 4 weeks ago :  moved dist folder
-a685337 - Jan Jorissen, 4 weeks ago :  trying new production webpack
-ed50b26 - Jan Jorissen, 4 weeks ago : lets try again
-aec608a - Jan Jorissen, 4 weeks ago : removed modules support for scss
-29c1745 - Jan Jorissen, 4 weeks ago : final bundle test
-227c8a4 - Jan Jorissen, 4 weeks ago : smaller bundle
-f394f34 - Jan Jorissen, 4 weeks ago :  lol 8 mb bundle
-36d0b63 - Jan Jorissen, 4 weeks ago : added bundle for heroku
-f556a2b - Jan Jorissen, 4 weeks ago : changes for heroku
-a52081e - Jan Jorissen, 4 weeks ago : switched server and index
-6cc31ef - Jan Jorissen, 4 weeks ago : pretty time
-6f9745a - Jan Jorissen, 4 weeks ago : minor enhancements
-c2ea3db - Jan Jorissen, 4 weeks ago : new gitignore
-7b1b07b - Jan Jorissen, 4 weeks ago :  using ncie helpers
-9a2acc7 - Jan Jorissen, 4 weeks ago : Merge branch 'master' of https://bitbucket.org/mordhau/60plus
-586165d - Jan Jorissen, 4 weeks ago : updated json package
-e9a91d3 - WWWillems, 4 weeks ago : Added missing npm packages
-204eebe - Jan Jorissen, 4 weeks ago :  moved notifications
-06ca05c - Jan Jorissen, 4 weeks ago :  new message
-ff40538 - Jan Jorissen, 4 weeks ago : ntifications addeD
-fd50dc4 - Jan Jorissen, 4 weeks ago : added working flux and material design icons+fonts
-258231d - Jan Jorissen, 4 weeks ago : added basic flux
-306b074 - Jan Jorissen, 4 weeks ago : API working
-d1526f3 - Jan Jorissen, 4 weeks ago : new dir structure
-3b5b124 - Jan Jorissen, 4 weeks ago : BS
-a900f78 - Jan Jorissen, 4 weeks ago : merge done
-fd27309 - Jan Jorissen, 4 weeks ago : better values
-39a1715 - WWWillems, 4 weeks ago : Updated package.json to include missing npm  packages
-4a4d546 - Jan Jorissen, 4 weeks ago : added input creator
-a91eae4 - Jan Jorissen, 4 weeks ago : added routing and jade
-2a18964 - Jan Jorissen, 4 weeks ago : workspace xml changed
-99753a1 - Jan Jorissen, 4 weeks ago : first commit
-2f3d3d9 - Jan Jorissen, 4 weeks ago : first commit
+91b6087 - Jan Jorissen, 4 weeks ago : fix error for new users. lots done - promises, realtime store etc
+b47c705 - Jan Jorissen, 4 weeks ago : release build
+0668e6f - Jan Jorissen, 4 weeks ago :  added checks for empty portoflios
+9b09422 - Jan Jorissen, 4 weeks ago : release build
+141539a - Jan Jorissen, 4 weeks ago :  removed import
+2791d89 - Jan Jorissen, 4 weeks ago : saving user import
+0b7e2d9 - Jan Jorissen, 4 weeks ago : added importing of stocks
+2d8f264 - WWWillems, 4 weeks ago : merge commit
+5514c2e - WWWillems, 4 weeks ago : Removed .DS_Store file
+865115d - Jan Jorissen, 5 weeks ago : release build
+647c841 - Jan Jorissen, 5 weeks ago : release build
+0005cf0 - Jan Jorissen, 5 weeks ago : release build
+84b9709 - Jan Jorissen, 5 weeks ago : default tab 1
+c89cc53 - Jan Jorissen, 5 weeks ago : added stock data
+ae17e95 - Jan Jorissen, 5 weeks ago : updated json and added data file
+4e7bb78 - Jan Jorissen, 5 weeks ago : release build
+a3938be - Jan Jorissen, 5 weeks ago : added AUTOSAVE HAPPY WEEKEND
+cdd9e0a - Jan Jorissen, 5 weeks ago : release build
+4625957 - Jan Jorissen, 5 weeks ago : styling
+e752fe6 - Jan Jorissen, 5 weeks ago : tabs
+8c17ec0 - Jan Jorissen, 5 weeks ago : removed unused vaR
+73a25fc - Jan Jorissen, 5 weeks ago : release build
+b734d51 - Jan Jorissen, 5 weeks ago : new url
+e0dd43a - Jan Jorissen, 5 weeks ago : redirect
+d09abdd - Jan Jorissen, 5 weeks ago : new
+7c540a8 - Jan Jorissen, 5 weeks ago : reroute font call
+ee01f84 - Jan Jorissen, 5 weeks ago : removed postinstall
+b77b2fd - Jan Jorissen, 5 weeks ago : changes
+a8704b9 - Jan Jorissen, 5 weeks ago :  new webpack
+2839872 - Jan Jorissen, 5 weeks ago : updated webpack config
+03fb44a - Jan Jorissen, 5 weeks ago : test
+17d9032 - Jan Jorissen, 5 weeks ago : another build
+2e3a2ba - Jan Jorissen, 5 weeks ago : rewiring dist directory
+878ff6b - Jan Jorissen, 5 weeks ago :  moved dist folder
+a685337 - Jan Jorissen, 5 weeks ago :  trying new production webpack
+ed50b26 - Jan Jorissen, 5 weeks ago : lets try again
+aec608a - Jan Jorissen, 5 weeks ago : removed modules support for scss
+29c1745 - Jan Jorissen, 5 weeks ago : final bundle test
+227c8a4 - Jan Jorissen, 5 weeks ago : smaller bundle
+f394f34 - Jan Jorissen, 5 weeks ago :  lol 8 mb bundle
+36d0b63 - Jan Jorissen, 5 weeks ago : added bundle for heroku
+f556a2b - Jan Jorissen, 5 weeks ago : changes for heroku
+a52081e - Jan Jorissen, 5 weeks ago : switched server and index
+6cc31ef - Jan Jorissen, 5 weeks ago : pretty time
+6f9745a - Jan Jorissen, 5 weeks ago : minor enhancements
+c2ea3db - Jan Jorissen, 5 weeks ago : new gitignore
+7b1b07b - Jan Jorissen, 5 weeks ago :  using ncie helpers
+9a2acc7 - Jan Jorissen, 5 weeks ago : Merge branch 'master' of https://bitbucket.org/mordhau/60plus
+586165d - Jan Jorissen, 5 weeks ago : updated json package
+e9a91d3 - WWWillems, 5 weeks ago : Added missing npm packages
+204eebe - Jan Jorissen, 5 weeks ago :  moved notifications
+06ca05c - Jan Jorissen, 5 weeks ago :  new message
+ff40538 - Jan Jorissen, 5 weeks ago : ntifications addeD
+fd50dc4 - Jan Jorissen, 5 weeks ago : added working flux and material design icons+fonts
+258231d - Jan Jorissen, 5 weeks ago : added basic flux
+306b074 - Jan Jorissen, 5 weeks ago : API working
+d1526f3 - Jan Jorissen, 5 weeks ago : new dir structure
+3b5b124 - Jan Jorissen, 5 weeks ago : BS
+a900f78 - Jan Jorissen, 5 weeks ago : merge done
+fd27309 - Jan Jorissen, 5 weeks ago : better values
+39a1715 - WWWillems, 5 weeks ago : Updated package.json to include missing npm  packages
+4a4d546 - Jan Jorissen, 5 weeks ago : added input creator
+a91eae4 - Jan Jorissen, 5 weeks ago : added routing and jade
+2a18964 - Jan Jorissen, 5 weeks ago : workspace xml changed
+99753a1 - Jan Jorissen, 5 weeks ago : first commit
+2f3d3d9 - Jan Jorissen, 5 weeks ago : first commit
