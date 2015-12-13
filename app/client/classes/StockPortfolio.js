@@ -10,10 +10,17 @@ class StockPortfolio {
     for (let key in rawUserDataObject) {
       this.entryCollectionList.push(new StockEntryCollection(rawUserDataObject[key]));
     }
+
+    let firstBuy = this.entryCollectionList.reduce((prev,curr) =>{
+      if(curr.firstBuyEntry.date.isBefore(prev)) prev = curr;
+      return prev;
+      }, moment('29991212','YYYYMMDD'));
+
+    let minusOneMonth = firstBuy.firstBuyEntry.date.clone().subtract(3, 'months');
     // Get dividend info for existing portfolio
     this.flatTickerList.forEach(ticker =>{
       HistoricalActions.getHistoricalDividends({ ticker});
-      HistoricalActions.getHistoricalPrices({ ticker, options:'monthly', from:"01-01-2012"});
+      HistoricalActions.getHistoricalPrices({ ticker, options:'monthly', from:minusOneMonth.format("DD-MM-YYYY")});
     });
   }
 

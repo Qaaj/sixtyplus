@@ -42,6 +42,13 @@ class StockEntryCollection {
     return this.entries[0];
   }
 
+  get firstBuyEntry(){
+   return this.entries.reduce((prev,curr) =>{
+      if(curr.date.isBefore(prev)) prev = curr;
+      return prev;
+    },moment('29991212','YYYYMMDD'));
+  }
+
   get data(){
 
     let data = Object.assign({},this);

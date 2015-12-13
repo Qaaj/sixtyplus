@@ -14,20 +14,26 @@ export function getMonthlyChart(portfolio, historical) {
     let obj = {};
 
     //  get all of the data for this ticker
-    let all_ticker_data = monthly.map(month => {
+    monthly.forEach(month => {
       let amount = portfolio.getEntryCollectionByTicker(curr).getAmountAtDate(month);
       let res = amount * parseFloat(month['Adj Close']);
       obj.ticker = curr;
-      obj[month.Date.substring(0,7)] = res;
-      // gather all the dates in an object so we can extract the keys
-      if (!allDates[month.Date]) allDates[month.Date] = 0;
-      allDates[month.Date] += round(portfolio.getEntryCollectionByTicker(curr).getAmountAtDate(month) * portfolio.getEntryCollectionByTicker(curr).averagePrice);
-      res = round(res, 1);
-
-      return res;
+      obj[month.Date.substring(0,7)] = round(res);
+      if(!allDates[month.Date.substring(0,7)]) allDates[month.Date.substring(0,7)] = 0;
+      allDates[month.Date.substring(0,7)] += (portfolio.getEntryCollectionByTicker(curr).getAmountAtDate(month) * portfolio.getEntryCollectionByTicker(curr).averagePrice)
     });
-  console.log(obj);
 
+    let all_ticker_data = Object.keys(obj).map(date =>{
+      if(obj[date] !== obj.ticker){
+        return obj[date];
+      }
+    })
+
+    // filter out the undefined
+    all_ticker_data = all_ticker_data.filter(item => {
+      if(item === undefined) return 0;
+      return 1;
+    })
     all_ticker_data.reverse();
     all_ticker_data.unshift(curr);
 
