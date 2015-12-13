@@ -1,3 +1,4 @@
+import {round} from './formatting'
 
 export function getMonthlyChart(portfolio,historical){
 
@@ -12,7 +13,7 @@ export function getMonthlyChart(portfolio,historical){
     let tickr = monthly.map(month =>{
       let amount = portfolio.getEntryCollectionByTicker(curr).getAmountAtDate(month);
       let res =  amount * parseFloat(month['Adj Close']);
-      res = Math.round((res) * 10) / 10;
+      res = round(res,1);
 
       return res;
     });

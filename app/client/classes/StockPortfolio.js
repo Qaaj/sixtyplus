@@ -1,6 +1,7 @@
 import StockEntryCollection from './StockEntryCollection';
 import HistoricalData from '../stores/HistoricalStore';
 import HistoricalActions from '../actions/HistoricalActionCreators';
+import {round} from '../../shared/helpers/formatting';
 class StockPortfolio {
 
   constructor(rawUserDataObject) {
@@ -11,7 +12,7 @@ class StockPortfolio {
     // Get dividend info for existing portfolio
     this.flatTickerList.forEach(ticker =>{
       HistoricalActions.getHistoricalDividends({ ticker});
-      HistoricalActions.getHistoricalPrices({ ticker, options:'monthly', from:"01-01-2012"});
+      HistoricalActions.getHistoricalPrices({ ticker, options:'monthly', from:"01-01-2015"});
     });
   }
 
@@ -48,11 +49,11 @@ class StockPortfolio {
     portfolio.profitLoss = portfolio.totalReturns - portfolio.costBase;
     portfolio.percent_change = 100 * (portfolio.profitLoss / portfolio.costBase)
 
-    portfolio.costBase = Math.round((portfolio.costBase) * 100) / 100;
-    portfolio.marketValue = Math.round((portfolio.marketValue) * 100) / 100;
-    portfolio.totalReturns = Math.round((portfolio.totalReturns) * 100) / 100;
-    portfolio.profitLoss = Math.round((portfolio.profitLoss) * 100) / 100;
-    portfolio.percent_change = Math.round((portfolio.percent_change) * 100) / 100;
+    portfolio.costBase = round(portfolio.costBase);
+    portfolio.marketValue = round(portfolio.marketValue);
+    portfolio.totalReturns = round(portfolio.totalReturns);
+    portfolio.profitLoss = round(portfolio.profitLoss);
+    portfolio.percent_change = round(portfolio.percent_change);
     portfolio.percent_change_string = portfolio.percent_change + '%';
 
     return portfolio;

@@ -1,4 +1,5 @@
 import StockEntry from './StockEntry';
+import {round} from '../../shared/helpers/formatting';
 
 class StockEntryCollection {
 
@@ -25,9 +26,9 @@ class StockEntryCollection {
       return new StockEntry({ amount, price,ticker,date,name});
     });
 
-    this.costBase = Math.round(this.costBase * 100)/ 100;
+    this.costBase = round(this.costBase);
     this.marketValue = 0;
-    this.averagePrice = (Math.round(100 * parseFloat(this.costBase) / parseFloat(this.amount))) / 100;
+    this.averagePrice = round(this.costBase/this.amount);
 
   }
 
@@ -55,8 +56,8 @@ class StockEntryCollection {
     let data = Object.assign({},this);
     data.first = this.first;
     data.profitLoss = data.marketValue - data.costBase + this.total_dividends;
-    data.profitLoss = Math.round(data.profitLoss * 100)/ 100;
-    data.totalChangePercentage =  100 * Math.round((data.profitLoss/data.costBase) * 10000) / 10000;
+    data.profitLoss = round(data.profitLoss);
+    data.totalChangePercentage =  round(100*data.profitLoss/data.costBase,1)
     data.totalChangePercentageString = data.totalChangePercentage + '%';
     data.style = 'success';
     if(data.profitLoss < 0) data.style = 'danger';
@@ -77,13 +78,12 @@ class StockEntryCollection {
 
   calculateProfitLoss(data){
     this.lastPrice = data.lastTradePriceOnly;
-    this.marketValue = (Math.round(100 * parseFloat(this.lastPrice) * parseFloat(this.amount))) / 100;
-    this.profitLoss = this.marketValue - this.costBase;
-    this.profitLoss = Math.round(this.profitLoss * 100)/ 100;
+    this.marketValue = round(this.lastPrice*this.amount);
+    this.profitLoss = round(this.marketValue - this.costBase);
     this.style = 'success';
     if(this.profitLoss < 0) this.style = 'danger';
     if(this.profitLoss < 0 && Math.abs(this.profitLoss) < 100) this.style = 'warning';
-    this.totalChangePercentage =  100 * Math.round((this.profitLoss/this.costBase) * 10000) / 10000;
+    this.totalChangePercentage =  round(100*this.profitLoss/this.costBase);
   }
 
   calculateDividends(data){
@@ -99,13 +99,9 @@ class StockEntryCollection {
       return prev;
     },0)
 
-    this.total_dividends = Math.round((this.total_dividends) * 10000) / 10000;
+    this.total_dividends = round(this.total_dividends);
     this.profitLoss_div = this.marketValue - this.costBase + this.total_dividends;
-    this.totalChangePercentageWithDividends =  100 * Math.round((this.totalReturns/this.costBase) * 10000) / 10000;
-
-
-
-
+    this.totalChangePercentageWithDividends =  round(100*this.totalReturns/this.costBase);
   }
 
 }

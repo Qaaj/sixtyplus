@@ -12,6 +12,7 @@ import { Input, Grid, DropdownButton, MenuItem, ButtonToolbar, Button, ButtonGro
 import {updateArrayOfEntryCollectionsWithRT, updatePortfolioDividends} from '../../../shared/helpers/stocks';
 import {getMonthlyChart} from '../../../shared/helpers/charts';
 import C3PortfolioChart from '../charts/C3PortfolioChart';
+import {round} from '../../../shared/helpers/formatting';
 
 
 class PortfolioOverview extends React.Component {
@@ -125,6 +126,8 @@ class PortfolioOverview extends React.Component {
       if (curr.total_dividends) prev += curr.total_dividends;
       return prev;
     }, 0);
+
+    dividends = round(dividends);
 
     let portfolioData = portfolio.portfolioStats
     if (this.state.includeDiv) portfolioData = portfolio.portfolioStatsWithDividends;
