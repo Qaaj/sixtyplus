@@ -85,6 +85,7 @@ class App extends React.Component {
           historical: this.state.historical,
         }
       )}
+
     </div>);
   }
 }

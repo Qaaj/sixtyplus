@@ -3,7 +3,7 @@
 import AppDispatcher from '../dispatcher/AppDispatcher.js';
 import UserConstants from '../constants/UserConstants.js';
 
-import { changeUILanguage, loadUser, saveUserData } from '../utils/ApiUtils';
+import { changeUILanguage, loadUser, saveUserData, deleteUserPortfolioData } from '../utils/ApiUtils';
 import { fromJS } from 'immutable';
 import UserStore from '../stores/UserStore.js';
 import defaults from '../config/Defaults';
@@ -63,6 +63,21 @@ var UserActionCreators = {
 
   },
 
+  deleteUserPortfolioData(resultObject){
+    var userData = fromJS(UserStore.getUser().userData);
+
+    userData.portfolio = [];
+
+    console.log("> Deleting user data for user " , userData);
+
+    AppDispatcher.handleViewAction({
+      actionType: UserConstants.USER_DELETE_PORTFOLIO_DATA,
+      data: userData
+    });
+
+    deleteUserPortfolioData(userData, UserStore.getUser().uid, resultObject);
+  },
+
   loadUser() {
 
     let uid;
@@ -78,7 +93,7 @@ var UserActionCreators = {
 
     //uid = '1448488808946-7120';
     //uid = 'DIV';
-    //uid = 'TEST_USER'
+    uid = 'TEST_USER'
 
     loadUser({uid: uid});
   },

@@ -53,7 +53,7 @@ UserStore.dispatchToken = AppDispatcher.register(function (payload) {
 
     case UserConstants.USER_ADD_STOCK_ENTRY_COLLECTION:
 
-      _stockPortfolio.addStockEntryCollection(action.data.entries)
+      _stockPortfolio.addStockEntryCollection(action.data.entries);
       // Save the client-side object
       _userObject = _userObject.set("stockPortfolio", _stockPortfolio);
       // Save the server-side object
@@ -68,6 +68,15 @@ UserStore.dispatchToken = AppDispatcher.register(function (payload) {
       _userData = _userData.merge(fromJS(action.data));
       _userObject = _userObject.set("userData",_userData);
       UserStore.emitChange();
+      break;
+
+    case UserConstants.USER_DELETE_PORTFOLIO_DATA:
+      console.log("> Trying to delete data ");
+
+      _stockPortfolio = new StockPortfolio();
+      _userObject = _userObject.set("stockPortfolio", _stockPortfolio);
+
+        UserStore.emitChange();
       break;
 
     case UserConstants.USER_LOADED:

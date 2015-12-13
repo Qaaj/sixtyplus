@@ -6,6 +6,7 @@ class StockPortfolio {
 
   constructor(rawUserDataObject) {
     this.entryCollectionList = [];
+
     for (let key in rawUserDataObject) {
       this.entryCollectionList.push(new StockEntryCollection(rawUserDataObject[key]));
     }

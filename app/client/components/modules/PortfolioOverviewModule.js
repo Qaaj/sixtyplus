@@ -98,12 +98,26 @@ class PortfolioOverview extends React.Component {
     return <MenuItem eventKey={sorter.prop} key={'sorter_'+i}>{sorter.name}</MenuItem>;
   }
 
+  _onDeletePortfolioDataClickHandler() {
+    let resultObject = {
+      success: () => {
+        console.log("ok, succes triggered in result object")
+      },
+      fail: () => {
+        console.log("nok triggered in result object")
+      }
+    }
+
+    UserActionCreators.deleteUserPortfolioData(resultObject);
+  }
+
   render() {
 
 
-    if (!this.props.user.userData) return (<Grid style={{'textAlign':'center','padding':'20px'}}> There
-      doesn't seem to be anything here! Head over to the <a href={"#/" +this.props.lang +"/Import"}>Importer</a> to
-      change that.</Grid>);
+    if (!this.props.user.userData || !this.props.user.userData.portfolio) return (
+      <Grid style={{'textAlign':'center','padding':'20px'}}> There
+        doesn't seem to be anything here! Head over to the <a href={"#/" +this.props.lang +"/Import"}>Importer</a> to
+        change that.</Grid>);
 
     if (!this.props.rt) return (<Grid style={{'textAlign':'center','padding':'20px'}}>
       <div className="loader"></div>
@@ -118,9 +132,14 @@ class PortfolioOverview extends React.Component {
 
     updateArrayOfEntryCollectionsWithRT(portfolio, this.props.rt);
     updatePortfolioDividends(portfolio, this.props.historical);
-    let chartData = getMonthlyChart(portfolio, this.props.historical);
+
 
     let stockEntries = portfolio.collectionList;
+
+    if(stockEntries.length === 0) return <div></div>;
+
+    let chartData = getMonthlyChart(portfolio, this.props.historical);
+
 
     let dividends = stockEntries.reduce((prev, curr) => {
       if (curr.total_dividends) prev += curr.total_dividends;
@@ -172,7 +191,8 @@ class PortfolioOverview extends React.Component {
             </ButtonToolbar>
           </div>
           <div className="sorter">
-            <DropdownButton onSelect={::this._onSelect} bsStyle={'default'} title={'Sorted by: ' + currentSortName}
+            <DropdownButton onSelect={::this._onSelect} bsStyle={'default'}
+                            title={'Sorted by: ' + currentSortName}
                             id="sorter-dropdown">
               {this.dropdownItems}
             </DropdownButton>
@@ -187,6 +207,9 @@ class PortfolioOverview extends React.Component {
             <StockTable rt={this.props.rt} user={this.props.user} sorter={this.state.sorter}
                         filter={this.state.filter} entries={stockEntries} historical={this.props.historical}
                         includeDiv={this.state.includeDiv}/>
+
+            <Button onClick={this._onDeletePortfolioDataClickHandler} bsStyle="danger" bsSize="medium">Delete portfolio
+              data</Button>
           </div>
         </Grid>
       </div>
