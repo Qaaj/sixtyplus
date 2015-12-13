@@ -73,8 +73,8 @@ UserStore.dispatchToken = AppDispatcher.register(function (payload) {
     case UserConstants.USER_DELETE_PORTFOLIO_DATA:
       console.log("> Trying to delete data ");
 
-      _userData = _userData.merge(fromJS(action.data));
-      _userObject = _userObject.set("userData",_userData);
+      _stockPortfolio = new StockPortfolio();
+      _userObject = _userObject.set("stockPortfolio", _stockPortfolio);
 
         UserStore.emitChange();
       break;
