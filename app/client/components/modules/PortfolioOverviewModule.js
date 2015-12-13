@@ -215,7 +215,7 @@ class PortfolioOverview extends React.Component {
                         filter={this.state.filter} entries={stockEntries} historical={this.props.historical}
                         includeDiv={this.state.includeDiv}/>
 
-            <Button onClick={this._onDeletePortfolioDataClickHandler} bsStyle="danger" bsSize="medium">Delete portfolio
+            <Button disabled onClick={this._onDeletePortfolioDataClickHandler} bsStyle="danger" bsSize="medium">Delete portfolio
               data</Button>
           </div>
         </Grid>

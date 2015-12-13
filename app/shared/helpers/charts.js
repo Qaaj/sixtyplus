@@ -90,7 +90,7 @@ export function getMonthlyChart(portfolio, historical) {
 
   types["Cost Base"] = 'bar';
 
-  let groups = [portfolio.flatTickerList,["Cost Base"]];
+  let groups = [["Cost Base"],portfolio.flatTickerList];
 
   let colors = {
     "Cost Base": d3.rgb(230, 230, 230),

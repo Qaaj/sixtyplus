@@ -1,29 +1,36 @@
-4787cea - Jan Jorissen, 46 minutes ago : basics of help popover. refactoring the portfolio overview
-58c8fe1 - Jan Jorissen, 70 minutes ago : new menu
-df223d1 - Jan Jorissen, 4 hours ago : merge done
-4b2c6df - Jan Jorissen, 4 hours ago : error removed from chart when portfolio is empty:
-335a455 - Jan Jorissen, 5 hours ago : Merge branch 'master' of https://bitbucket.org/mordhau/60plus
-8352b3c - Jan Jorissen, 5 hours ago : added formatting helper
-fc8e430 - WWWillems, 18 hours ago : Data is being deleted. Needs client refresh.
-9d261c4 - WWWillems, 19 hours ago : Added delete portfolio data button. Date is being deleted but app needs to trigger refresh on portfolio view when response was positive.
-6c28386 - Jaaq Jorissen, 19 hours ago : Merged in fix/dependencies (pull request #1)
-9f26a11 - WWWillems, 20 hours ago : Added npm-debug.log to .gitignore. Added ticker trimming to sanitize input a bit more. Getting my feet wet
-c8d40fa - WWWillems, 21 hours ago : Added c3 & request dependencies to package json. Updated React to 0.14.3, as it was a depency for c3.
-72b1e3d - WWWillems, 21 hours ago : Merge branch 'master' of https://bitbucket.org/mordhau/60plus
-e776a62 - Jan Jorissen, 26 hours ago : release:
-807966e - Jan Jorissen, 26 hours ago : user fix
-cac24d5 - Jan Jorissen, 27 hours ago : test build
-958cbff - Jan Jorissen, 27 hours ago : added beter caching and data fetching after adding stock
-3559e3a - Jan Jorissen, 27 hours ago : catch error for non existing data
-1fd8125 - Jan Jorissen, 28 hours ago : test build
-7259832 - Jan Jorissen, 28 hours ago : total returns stacking + positioning
-31c44fb - Jan Jorissen, 29 hours ago : test build
-04495c5 - Jan Jorissen, 29 hours ago : portfolio prices
-f635987 - Jan Jorissen, 29 hours ago : test build
-403562e - Jan Jorissen, 29 hours ago : added date to chart
-a7998a9 - Jan Jorissen, 30 hours ago : test build
-c389532 - Jan Jorissen, 30 hours ago : added Caching and basic price chart for BX
-fa89984 - Jan Jorissen, 31 hours ago : basic version of chart
+932c39d - Jan Jorissen, 66 seconds ago : test build
+147d127 - Jan Jorissen, 3 minutes ago : fixed rounding
+46508e0 - Jan Jorissen, 11 minutes ago : better bars for costbase
+ca1f385 - Jan Jorissen, 28 minutes ago : fix for dates and getting portfolio data from first date
+49041f1 - Jan Jorissen, 67 minutes ago : basic version of costbase
+a94ceca - Jan Jorissen, 3 hours ago : updated language class and new HelpIcon component
+7cfe1f9 - Jan Jorissen, 4 hours ago : test build
+4787cea - Jan Jorissen, 4 hours ago : basics of help popover. refactoring the portfolio overview
+58c8fe1 - Jan Jorissen, 5 hours ago : new menu
+df223d1 - Jan Jorissen, 7 hours ago : merge done
+4b2c6df - Jan Jorissen, 8 hours ago : error removed from chart when portfolio is empty:
+335a455 - Jan Jorissen, 9 hours ago : Merge branch 'master' of https://bitbucket.org/mordhau/60plus
+8352b3c - Jan Jorissen, 9 hours ago : added formatting helper
+fc8e430 - WWWillems, 22 hours ago : Data is being deleted. Needs client refresh.
+9d261c4 - WWWillems, 23 hours ago : Added delete portfolio data button. Date is being deleted but app needs to trigger refresh on portfolio view when response was positive.
+6c28386 - Jaaq Jorissen, 23 hours ago : Merged in fix/dependencies (pull request #1)
+9f26a11 - WWWillems, 24 hours ago : Added npm-debug.log to .gitignore. Added ticker trimming to sanitize input a bit more. Getting my feet wet
+c8d40fa - WWWillems, 25 hours ago : Added c3 & request dependencies to package json. Updated React to 0.14.3, as it was a depency for c3.
+72b1e3d - WWWillems, 25 hours ago : Merge branch 'master' of https://bitbucket.org/mordhau/60plus
+e776a62 - Jan Jorissen, 29 hours ago : release:
+807966e - Jan Jorissen, 29 hours ago : user fix
+cac24d5 - Jan Jorissen, 30 hours ago : test build
+958cbff - Jan Jorissen, 30 hours ago : added beter caching and data fetching after adding stock
+3559e3a - Jan Jorissen, 31 hours ago : catch error for non existing data
+1fd8125 - Jan Jorissen, 31 hours ago : test build
+7259832 - Jan Jorissen, 32 hours ago : total returns stacking + positioning
+31c44fb - Jan Jorissen, 32 hours ago : test build
+04495c5 - Jan Jorissen, 32 hours ago : portfolio prices
+f635987 - Jan Jorissen, 33 hours ago : test build
+403562e - Jan Jorissen, 33 hours ago : added date to chart
+a7998a9 - Jan Jorissen, 33 hours ago : test build
+c389532 - Jan Jorissen, 33 hours ago : added Caching and basic price chart for BX
+fa89984 - Jan Jorissen, 34 hours ago : basic version of chart
 050bfca - Jan Jorissen, 7 days ago : release build
 eee7ff0 - Jan Jorissen, 7 days ago : removed div user
 c5d950a - Jan Jorissen, 7 days ago : test build
