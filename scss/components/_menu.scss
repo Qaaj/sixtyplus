@@ -1,0 +1,32 @@
+
+.menu{
+
+  display: inline-block;
+  background:$colorSmSecondaryGrey;
+  position: fixed;
+  width:100%;
+  height:auto;
+  padding:0px;
+  left: 0px;
+  z-index:5;
+  -webkit-box-shadow: 0 0 10px 1px rgba(0,0,0,.2);
+  box-shadow: 0 0 10px 1px rgba(0,0,0,.2);
+
+  .btn{
+    border-radius: 0px;
+    margin:0px;
+    border:none;
+    background-color: $colorSmSecondaryGrey;
+    &.selected{
+      background-color: $mGrey350;
+    }
+  }
+  .btn:hover{
+    background-color: $mGrey350;
+  }
+}
+
+
+.settings-button{
+  float:right;
+}

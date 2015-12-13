@@ -116,7 +116,7 @@ class PortfolioOverview extends React.Component {
 
     if (!this.props.user.userData || !this.props.user.userData.portfolio) return (
       <Grid style={{'textAlign':'center','padding':'20px'}}> There
-        doesn't seem to be anything here! Head over to the <a href={"#/" +this.props.lang +"/Import"}>Importer</a> to
+        doesn't seem to be anything here! Head over to the <a href={"#/Import"}>Importer</a> to
         change that.</Grid>);
 
     if (!this.props.rt) return (<Grid style={{'textAlign':'center','padding':'20px'}}>
@@ -136,7 +136,10 @@ class PortfolioOverview extends React.Component {
 
     let stockEntries = portfolio.collectionList;
 
-    if(stockEntries.length === 0) return <div></div>;
+    if(stockEntries.length === 0) return  (
+      <Grid style={{'textAlign':'center','padding':'20px'}}> There
+        doesn't seem to be anything here! Head over to the <a href={"#/Import"}>Importer</a> to
+        change that.</Grid>);
 
     let chartData = getMonthlyChart(portfolio, this.props.historical);
 
@@ -164,12 +167,7 @@ class PortfolioOverview extends React.Component {
 
       <div className="portfolio-page">
         <Grid>
-          <C3PortfolioChart data={chartData}/>
-          <ul>
-            <li>Click on a label to toggle active state.</li>
-            <li>Alt + Click on a label to disable other tickers.</li>
-          </ul>
-          <ListGroup>
+          <ListGroup className="portfolio-summary">
             <ListGroupItem bsStyle={profitOrLoss}>
               <span className="prop">Profit/Loss: </span>
               <div className="val">{portfolioData.profitLoss} ({portfolioData.percent_change_string})</div>
@@ -183,6 +181,11 @@ class PortfolioOverview extends React.Component {
               <div className="val">{portfolioData.marketValue}</div>
             </ListGroupItem>
           </ListGroup>
+          <C3PortfolioChart data={chartData}/>
+          <ul>
+            <li>Click on a label to toggle active state.</li>
+            <li>Alt + Click on a label to disable other tickers.</li>
+          </ul>
           <div className="filter">
             <ButtonToolbar>
               <ButtonGroup>
