@@ -47,6 +47,8 @@ class SingleManualImportLine extends React.Component {
     let date = row[3];
 
     ticker = ticker.toUpperCase();
+    ticker = ticker.trim();
+
 
     this.entry = new StockEntry({ticker,amount,price,date});
 

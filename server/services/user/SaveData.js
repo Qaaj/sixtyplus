@@ -16,7 +16,7 @@ export default (req, res) => {
       let portfolio = {};
       for (let key in data.portfolio) {
         let newKey = key.replace(".","_");
-        portfolio[newKey] = data.portfolio[key];
+        portfolio[newKey.trim()] = data.portfolio[key];
       }
       data.portfolio = portfolio;
     }
