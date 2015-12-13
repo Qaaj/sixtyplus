@@ -15,6 +15,7 @@ $icon-font-path: '~bootstrap-sass/assets/fonts/bootstrap/';
 @import './components/menu';
 @import './components/charts';
 @import './vendors/c3/main';
+@import './ui/help_icon';
 body {
   background-color: #EFEFEF;
   font-family: 'robotomedium';

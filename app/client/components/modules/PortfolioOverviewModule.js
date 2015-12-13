@@ -13,6 +13,7 @@ import {updateArrayOfEntryCollectionsWithRT, updatePortfolioDividends} from '../
 import {getMonthlyChart} from '../../../shared/helpers/charts';
 import C3PortfolioChart from '../charts/C3PortfolioChart';
 import {round} from '../../../shared/helpers/formatting';
+import HelpIcon from '../ui/HelpIcon';
 
 
 class PortfolioOverview extends React.Component {
@@ -180,12 +181,10 @@ class PortfolioOverview extends React.Component {
             </ListGroupItem>
           </ListGroup>
 
-          <Panel collapsible defaultExpanded={true} header={<span>Portfolio Graph <OverlayTrigger trigger={['hover', 'focus']} placement="top" overlay={<Popover id="popover_interactive_chart" title="Interactive Chart">
-            <p><b>Click</b> on a label to toggle active state.</p>
-            <p><b>Alt + Click</b> on a label to disable other tickers.</p>
-          </Popover>}>
-            <i className="material-icons">help_outline</i>
-          </OverlayTrigger></span>} eventKey="1">
+          <Panel collapsible defaultExpanded={true} header={
+          <span>
+            Portfolio Graph
+            <HelpIcon className="portfolio_graph_help" title={this.props.lang('portfolio_graph')} icon="help_outline" content={this.props.lang('portfolio_graph_help')} /> </span>} eventKey="1">
             <C3PortfolioChart data={chartData}/>
           </Panel>
 
