@@ -20,20 +20,16 @@ export function getMonthlyChart(portfolio, historical) {
       obj.ticker = curr;
       obj[month.Date.substring(0,7)] = round(res);
       if(!allDates[month.Date.substring(0,7)]) allDates[month.Date.substring(0,7)] = 0;
-      allDates[month.Date.substring(0,7)] += (portfolio.getEntryCollectionByTicker(curr).getAmountAtDate(month) * portfolio.getEntryCollectionByTicker(curr).averagePrice)
+      allDates[month.Date.substring(0,7)] = round(allDates[month.Date.substring(0,7)] + (portfolio.getEntryCollectionByTicker(curr).getAmountAtDate(month) * portfolio.getEntryCollectionByTicker(curr).averagePrice),2);
     });
 
-    let all_ticker_data = Object.keys(obj).map(date =>{
+    let all_ticker_data = [];
+    Object.keys(obj).forEach(date =>{
       if(obj[date] !== obj.ticker){
-        return obj[date];
+        all_ticker_data.push(obj[date]);
       }
-    })
+    });
 
-    // filter out the undefined
-    all_ticker_data = all_ticker_data.filter(item => {
-      if(item === undefined) return 0;
-      return 1;
-    })
     all_ticker_data.reverse();
     all_ticker_data.unshift(curr);
 
@@ -72,6 +68,8 @@ export function getMonthlyChart(portfolio, historical) {
     }
     return month;
   })
+
+  console.log(chart);
 
   let monthly = JSON.parse(historical[tickers[0]].monthly);
 
