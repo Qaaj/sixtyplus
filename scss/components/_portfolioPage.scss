@@ -42,5 +42,23 @@
     margin-left:10px;
     top:-10px;
   }
+
+  .portfolio-summary{
+    display: block;
+   margin-left:25%;
+    margin-right:25%;
+  }
+}
+
+.protfolio_chart_menu{
+
+  text-align: center;
+  .btn-toolbar .btn{
+    font-size:12px;
+  }
+
+  .btn-toolbar{
+    display: inline-block;
+  }
 }
 

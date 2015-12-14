@@ -12,13 +12,22 @@ $icon-font-path: '~bootstrap-sass/assets/fonts/bootstrap/';
 @import './components/dateInput';
 @import './components/dateInput';
 @import './components/portfolioPage';
+@import './components/menu';
+@import './components/charts';
 @import './components/newsModal';
 @import './vendors/c3/main';
+@import './ui/help_icon';
 body {
   background-color: #EFEFEF;
   font-family: 'robotomedium';
 }
 
+.quickstart{
+  margin-top:30px;
+}
+.application{
+  padding-top:60px;
+}
 .profitColor {
   color: $mGreen350;
 }

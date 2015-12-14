@@ -84,7 +84,7 @@ class Quickstart extends React.Component {
     if (state.years != "") timeFrame = (<h3>Projected timeframe: {state.years}</h3>);
     //this.inputFields.push(createRegularFields(['Lander is Hip'],this._handleInput));
 
-    return (<Grid>
+    return (<Grid className="quickstart">
       <Row className="show-grid ">
         <Col md={6}>
           <Panel header={<h3>Basics <small>Enter your basic information</small></h3>}>

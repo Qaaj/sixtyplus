@@ -3,7 +3,7 @@ import styles from '../../scss/main.scss';
 import { Router } from 'react-router';
 import routes from './routes/routes';
 import Header from './components/layout/Header';
-import TopMenu from './components/layout/TopMenu';
+import Menu from './components/layout/Menu';
 import Quickstart from './components/modules/QuickstartModule';
 import Modal from './components/modules/ModalModule';
 
@@ -70,22 +70,23 @@ class App extends React.Component {
 
     return (<div>
 
-      <Header location={location} />
-      <TopMenu history={history} location={location} urlParams={params} lang={this.state.user.lang} />
-
+      <Menu history={history} location={location} urlParams={params} lang={this.state.user.lang}/>
       <Notification />
 
-      {React.cloneElement(
-        this.props.children, {
-          lang:this.state.user.lang,
-          history: history,
-          location: location,
-          urlParams: params,
-          user: this.state.user,
-          rt: this.state.rt,
-          historical: this.state.historical,
-        }
-      )}
+      <div className="application">
+        {React.cloneElement(
+          this.props.children, {
+            lang: this.state.user.lang,
+            history: history,
+            location: location,
+            urlParams: params,
+            user: this.state.user,
+            rt: this.state.rt,
+            historical: this.state.historical,
+          }
+        )}
+      </div>
+
       <Modal
         lang={this.state.user.lang}
         history={history}
@@ -95,6 +96,7 @@ class App extends React.Component {
         rt={ this.state.rt}
         historical={this.state.historical}
       />
+
     </div>);
   }
 }
