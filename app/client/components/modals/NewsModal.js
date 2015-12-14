@@ -8,6 +8,7 @@ class PortfolioDetailModal extends React.Component {
 
   render() {
 
+    console.log(this.props);
     return <Modal dialogClassName="news-modal" show={true} onHide={this.props.onCancel} className=''>
       <Modal.Header closeButton>
         <Modal.Title>
@@ -16,7 +17,7 @@ class PortfolioDetailModal extends React.Component {
       </Modal.Header>
       <Modal.Body>
         <iframe
-          src="http://www.insidertradingreport.org/company-shares-of-solarcity-corporation-nasdaqscty-rally-2-92/6199815/">
+          src={this.props.url}>
         </iframe>
       </Modal.Body>
     </Modal>

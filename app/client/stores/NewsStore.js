@@ -43,7 +43,7 @@ NewsStore.dispatchToken = AppDispatcher.register(function (payload) {
   case "NEWS_UPDATE":
 
     Object.keys(action.data).map(ticker =>{
-      _newsObject = _newsObject.set(ticker,action.data[ticker]);
+      _newsObject = _newsObject.setIn(['items',ticker],action.data[ticker]);
     });
 
     _newsObject = _newsObject.set("hasNews",true);

@@ -35,11 +35,11 @@ class Menu extends React.Component {
   render() {
     let current = this.props.location.pathname.replace('/','');
 
-    let menuButtons = this.menu_options.map(item =>{
+    let menuButtons = this.menu_options.map((item,i) =>{
       let cx = '';
       if(item.url === current) cx =' selected';
 
-      return (<Button bsSize="large" className={item.key+"-button" + cx} onClick={()=>{ this.props.history.replaceState(null, `/${item.url}`); }}>{this.props.lang(item.key)}</Button>);
+      return (<Button key={'menu_' + i} bsSize="large" className={item.key+"-button" + cx} onClick={()=>{ this.props.history.replaceState(null, `/${item.url}`); }}>{this.props.lang(item.key)}</Button>);
     })
 
     let menu = (
