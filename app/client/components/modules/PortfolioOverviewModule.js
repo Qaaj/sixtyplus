@@ -21,15 +21,16 @@ class PortfolioOverview extends React.Component {
   constructor(props) {
     super(props);
 
+    this.sortingKeys = ['profitLoss','marketValue','sector','ticker','total_dividends','amount'];
+
     this.state = {
       sorter : {
-        key: 'profitLoss'
+        key: this.sortingKeys[0]
       },
       filter: 'All',
       includeDiv: true
     }
 
-    this.sortingKeys = ['profitLoss','marketValue','sector','ticker','total_dividends','amount'];
     this.filters = ['All', 'Profit', 'Loss'];
     this.filterItems = this.filters.map(::this.createFilters);
   }

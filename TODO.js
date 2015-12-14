@@ -33,3 +33,4 @@
  // Caching for everything > Next up cron jobs and saving in DB's
  // Make filter and sorting components seperate re-usable components
  // filtering by good / bad news for news
+ // Draw the graph only with filtered data
