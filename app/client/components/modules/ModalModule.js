@@ -2,6 +2,7 @@ import ModalStore from '../../stores/ModalStore';
 import ModalActionCreators from '../../actions/ModalActionCreators';
 import ModalConstants from '../../constants/ModalConstants';
 import PortfolioDetailModal from '../modals/PortfolioDetailModal';
+import NewsModal from '../modals/NewsModal';
 class ModalModule extends React.Component {
 
   constructor(props) {
@@ -50,6 +51,13 @@ class ModalModule extends React.Component {
         case ModalConstants.PORTFOLIO_DETAIL:
           cx += ' modal--portfolioDetail';
           modalNode = <PortfolioDetailModal {...this.props} onConfirm={this._onConfirm.bind(this)}
+                                                            onCancel={this._onCancel.bind(this)}
+                                                            message={this.state.modal.message}/>;
+          break;
+
+        case ModalConstants.NEWS_ITEM:
+          cx += ' modal--newsItem';
+          modalNode = <NewsModal {...this.props} onConfirm={this._onConfirm.bind(this)}
                                                             onCancel={this._onCancel.bind(this)}
                                                             message={this.state.modal.message}/>;
           break;
