@@ -55,7 +55,7 @@ class NewsModule extends React.Component {
 
     let newsitems = allItems.map((news, i) => {
       return (<div key={'newsitem_' + i}>
-        <HelpIcon placement="bottom" title={news.title} icon="remove_red_eye" content={this.props.lang('html:' + news.summary)} />
+        <HelpIcon placement="left" title={news.title} icon="remove_red_eye" content={this.props.lang('html:' + news.summary)} />
         <a style={{'marginLeft':'5px','cursor':'pointer'}} onClick={this._onClick.bind(this,news)}>{news.title}</a>
       </div>);
     })

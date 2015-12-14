@@ -30,3 +30,6 @@
  // Use the same detailpage for stock entries as for your portfolio
  // Store the analyst ratings over time so we can use the data to see what the trend is
  // Notification for when analyst rating drops or divdends is cut/late
+ // Caching for everything > Next up cron jobs and saving in DB's
+ // Make filter and sorting components seperate re-usable components
+ // filtering by good / bad news for news
