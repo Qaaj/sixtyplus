@@ -3,7 +3,6 @@ import ModalActionCreators from '../../actions/ModalActionCreators';
 import ModalConstants from '../../constants/ModalConstants';
 import PortfolioDetailModal from '../modals/PortfolioDetailModal';
 import NewsModal from '../modals/NewsModal';
-import SectorComponent from '../ui/SectorComponent';
 
 class ModalModule extends React.Component {
 

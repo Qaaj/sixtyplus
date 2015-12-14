@@ -16,7 +16,7 @@ class PortfolioDetailModal extends React.Component {
 
   handleSave(){
     ModalActionCreators.destroyModal();
-    throw new ('not Implemented yet');
+    throw 'Not Implemented yet!';
   }
 
   render() {

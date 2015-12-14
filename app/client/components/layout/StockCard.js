@@ -19,14 +19,12 @@ class StockCard extends React.Component {
 
   }
 
-  handleClick(e){
+  handleClick(){
     ModalActionCreators.setModal({
       isVisible: true,
       type: ModalConstants.PORTFOLIO_DETAIL,
       data: this.props.entries.data
     });
-
-
   }
 
   render() {
