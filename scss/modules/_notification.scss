@@ -1,6 +1,7 @@
 $animation-time: .5s;
 
 .notification {
+    pointer-events: none;
     height: 90px;
     z-index: 100;
     position: fixed;

@@ -31,6 +31,7 @@
     "debug": "^2.2.0",
     "express": "^4.13.3",
     "extract-text-webpack-plugin": "^0.8.2",
+    "feedme": "^0.3.0",
     "file-loader": "^0.8.4",
     "firebase": "^2.3.1",
     "fixed-data-table": "^0.5.0",
@@ -54,6 +55,7 @@
     "react-dom": "^0.14.2",
     "react-router": "^1.0.0-rc3",
     "request": "2.67.0",
+    "rsj": "0.0.4",
     "sass-loader": "^3.1.1",
     "stockscraper": "0.0.0",
     "style-loader": "^0.10.2",
@@ -61,6 +63,7 @@
     "url-loader": "^0.5.6",
     "webpack": "^1.12.3",
     "webpack-dev-server": "^1.8.0",
+    "xmltojson": "^1.1.0",
     "yahoo-finance": "^0.2.12"
   },
   "devDependencies": {

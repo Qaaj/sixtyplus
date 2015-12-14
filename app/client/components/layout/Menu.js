@@ -25,6 +25,9 @@ class Menu extends React.Component {
       {
         key: 'settings',
         url: 'Settings'
+      },{
+        key: 'news',
+        url: 'News'
       }
     ];
   }

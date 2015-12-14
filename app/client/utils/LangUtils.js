@@ -10,7 +10,8 @@ let current = {
   "import": "Import",
   "portfolio_graph_help": "html:<p><b>Click</b> on a label to toggle active state.</p><p><b>Alt + Click</b> on a label to disable other tickers.</p>",
   "portfolio_graph": "Portfolio Graph",
-  "settings": "Settings"
+  "settings": "Settings",
+  "news": "News"
 };
 
 function TranslationText(props) {

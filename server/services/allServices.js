@@ -8,6 +8,7 @@ import getStockPrices from './stocks/GetPrices';
 import getStockData from './stocks/GetData';
 import getStockSuggestions from './stocks/GetStockSuggestions';
 import getHistoricalData from './stocks/GetHistoricalData';
+import getStocksNews from './news/GetStockNews';
 
 export default {
     calculateSavingsGoal,
@@ -19,4 +20,5 @@ export default {
     getStockSuggestions,
     getStockData,
     getHistoricalData,
+    getStocksNews,
 };
