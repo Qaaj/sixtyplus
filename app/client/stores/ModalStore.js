@@ -47,6 +47,7 @@ ModalStore.dispatchToken = AppDispatcher.register(function (payload) {
   const action = payload.action;
   switch (action.actionType) {
     case ModalConstants.MODAL_SET:
+        console.log("> action.options = " , action.options);
       _modal = new _modalRecord(action.options);
       ModalStore.emitChange();
       break;

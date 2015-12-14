@@ -19,7 +19,9 @@ class StockCard extends React.Component {
 
   }
 
-  handleClick(){
+  handleClick(e){
+    console.log(this.props);
+
     ModalActionCreators.setModal({
       isVisible: true,
       type: ModalConstants.PORTFOLIO_DETAIL,
