@@ -1,0 +1,17 @@
+.news-modal {
+  position: relative;
+  width: 90%;
+  height: 90vh;
+
+  iframe {
+    width: 100%;
+    height: 100%;
+  }
+  .modal-content {
+    position: relative;
+    height: 100%;
+  }
+  .modal-body {
+    height: 90%;
+  }
+}
