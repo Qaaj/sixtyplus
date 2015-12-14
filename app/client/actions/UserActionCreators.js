@@ -93,7 +93,7 @@ var UserActionCreators = {
 
     //uid = '1448488808946-7120';
     //uid = 'DIV';
-    //uid = 'TEST_USER'
+    uid = 'TEST_USER'
 
     loadUser({uid: uid});
   },
