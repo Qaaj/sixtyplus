@@ -12,7 +12,7 @@ class PortfolioDetailModal extends React.Component {
     return <Modal dialogClassName="news-modal" show={true} onHide={this.props.onCancel} className=''>
       <Modal.Header closeButton>
         <Modal.Title>
-          Hello
+          <a href={this.props.url}>{this.props.url}</a>
         </Modal.Title>
       </Modal.Header>
       <Modal.Body>
