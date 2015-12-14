@@ -79,11 +79,13 @@ export function getTranslation(key, isText = false, templates) {
   }
 
   if (translation.indexOf('html') !== -1) {
+    translation = translation.replace("[","").replace("]","");
     isText = false;
     isHTML = true;
+    return <HTMLTranslation html={translation}/>;
   }
 
-  if (isHTML) return <HTMLTranslation html={translation}/>;
+
 
   // If requested, only return the string. OR
   // If we found the key, also just return the string

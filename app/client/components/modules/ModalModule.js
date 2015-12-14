@@ -60,7 +60,7 @@ class ModalModule extends React.Component {
           modalNode = <NewsModal {...this.props} onConfirm={this._onConfirm.bind(this)}
                                                             onCancel={this._onCancel.bind(this)}
                                                             message={this.state.modal.message}
-                                                            url={this.state.modal.data}/>;
+                                                            news={this.state.modal.data}/>;
           break;
 
         default:

@@ -8,16 +8,16 @@ class PortfolioDetailModal extends React.Component {
 
   render() {
 
-    console.log(this.props);
+    console.log(this.props.news);
     return <Modal dialogClassName="news-modal" show={true} onHide={this.props.onCancel} className=''>
       <Modal.Header closeButton>
         <Modal.Title>
-          <a href={this.props.url}>{this.props.url}</a>
+          <a href={this.props.news.link} target="_blank">{this.props.news.title}</a>
         </Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <iframe
-          src={this.props.url}>
+          src={this.props.news.link}>
         </iframe>
       </Modal.Body>
     </Modal>
