@@ -25,6 +25,26 @@ export function changeUILanguage(data) {
         }
     );
 }
+
+export function getStockNews(tickers){
+  let data = {tickers: tickers};
+
+  let url = `${API_URL}/getStocksNews`;
+
+  post({url, data})
+    .then(
+      (response) => {
+        ServerActionCreators.newsLoaded(response.body)
+      },
+
+      (error) => {
+        console.error('Error: ', error);
+      }
+    );
+}
+
+
+
 export function getStockPrice(ticker){
 
     let data = {ticker: ticker};

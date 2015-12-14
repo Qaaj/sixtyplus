@@ -9,11 +9,11 @@ export default (req, res) => {
   debug("getting stock news: ", list);
 
   var promise = new Promise(function (resolve, reject) {
-    let returnList = [];
+    let returnList = {};
     list.map(tickr => {
       rsj.r2j('http://www.google.com/finance/company_news?q=' + tickr + '&output=rss', function (json) {
-        returnList.push(JSON.parse(json));
-        if (returnList.length == req.body.tickers.length) resolve(returnList);
+        returnList[tickr] = JSON.parse(json);
+        if (Object.keys(returnList).length == req.body.tickers.length) resolve(returnList);
       });
     })
   });

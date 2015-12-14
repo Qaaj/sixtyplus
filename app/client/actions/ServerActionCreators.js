@@ -42,6 +42,13 @@ var ServerActionCreators = {
     });
   },
 
+  newsLoaded(data){
+    AppDispatcher.handleServerAction({
+      actionType: "NEWS_UPDATE",
+      data: data,
+    });
+  },
+
 
 };
 
