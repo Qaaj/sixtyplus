@@ -33,8 +33,8 @@ const DataStore = {
   setData({option,ticker,json}){
     client.set(option+':'+ticker, json);
     // Refresh news every 10 minutes
-    if(option == 'news') client.expire(option+':'+ticker,300);
-    client.save();
+    if (option == 'news') client.expire(option+':'+ticker,300);
+    if (!process.env.REDIS_URL) client.save();
   },
 
   getCachedData({option,ticker}){
