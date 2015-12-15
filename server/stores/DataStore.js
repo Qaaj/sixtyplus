@@ -34,7 +34,8 @@ const DataStore = {
     client.set(option+':'+ticker, JSON.stringify(json));
     // Refresh news every 10 minutes
     if (option == 'news') client.expire(option+':'+ticker,300);
-    if (option == 'stockdata') client.expire(option+':'+ticker,3600);
+    if (option == 'stockdata') client.expire(option+':'+ticker,10);
+    if (option == 'historical:v' || option == 'historical:m') client.expire(option+':'+ticker,86400);
     if (!process.env.REDISCLOUD_URL) client.save();
   },
 
@@ -45,10 +46,9 @@ const DataStore = {
   },
 
 
-  getPartialHistoricalData({cacheID, from})
+  getPartialHistoricalData({json, from})
   {
-    let allData = historicalMap[cacheID];
-    let result = JSON.parse(allData).filter(entry => {
+    let result = json.filter(entry => {
       if (from.isBefore(moment(entry.Date, "YYYY-MM-DD"))) return true;
     });
     return JSON.stringify(result);

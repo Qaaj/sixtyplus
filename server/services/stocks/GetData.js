@@ -19,14 +19,11 @@ export default (req, res) => {
 
         if (json) {
           // Item was found in the cache, return it
-          debug('stock data from cache: ', ticker);
-          returnList[ticker] = json;
+          returnList.push(json);
           if (Object.keys(returnList).length == req.body.tickers.length) resolve(returnList);
 
         } else {
           // Item was not found in the cache, get it and then save it
-          debug('stock data from server: ', ticker);
-
           yahooFinance.snapshot({
             symbol: ticker,
             fields: ['s', 'n', 'd1', 'y', 'r', 'a', 'b', 'b2', 'b3', 'b4', 'c1', 'c6', 'd', 'e', 'e7', 'e8',
@@ -35,7 +32,7 @@ export default (req, res) => {
           }, function (err, json) {
             json = enhanceStock(json);
             DataStore.setCachedData({option: "stockdata", ticker, json});
-            returnList[ticker] = json;
+            returnList.push(json);
             if (Object.keys(returnList).length == req.body.tickers.length) resolve(returnList);
           });
         }
