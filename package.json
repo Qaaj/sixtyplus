@@ -12,7 +12,8 @@
     "deploy": "npm run build && git add . && git commit -m 'release build' && git push heroku master",
     "test-deploy": "npm run build && git add . && git commit -m 'test build' && git push heroku-test master",
     "start": "node server.js",
-    "log": "git log --pretty=format:'%h - %an, %ar : %s' > commits.txt"
+    "log": "git log --pretty=format:'%h - %an, %ar : %s' > commits.txt",
+    "redis": "redis-server --port 6380"
   },
   "author": "Jan Jorissen",
   "license": "MIT",
@@ -54,6 +55,7 @@
     "react-day-picker": "^1.1.5",
     "react-dom": "^0.14.2",
     "react-router": "^1.0.0-rc3",
+    "redis": "^2.4.2",
     "request": "2.67.0",
     "rsj": "0.0.4",
     "sass-loader": "^3.1.1",

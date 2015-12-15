@@ -2,33 +2,67 @@ import { Map, fromJS } from 'immutable';
 const debug = require('debug')('debug:stores/DataStore');
 import fs from 'fs';
 import moment from 'moment';
+import redis from 'redis';
+import bluebird from 'bluebird';
+
+bluebird.promisifyAll(redis.RedisClient.prototype);
+
 
 const CHANGE_EVENT = 'change';
 
 let dataMap = Map();
 let historicalMap = {};
 
+let redis_url = 'redis://localhost:6380';
+
+if (process.env.REDIS_URL) redis_url = process.env.REDIS_URL;
+var client = redis.createClient(redis_url);
+
+client.select(0);
+
+
+
 const DataStore = {
 
-  getData() {
+
+  getData()
+  {
     return dataMap.toJS();
   },
 
+  setData({option,ticker,json}){
+    client.set(option+':'+ticker, json);
+    // Refresh news every 10 minutes
+    if(option == 'news') client.expire(option+':'+ticker,300);
+    client.save();
+  },
 
-  getPartialHistoricalData({cacheID,from}){
+  getCachedData({option,ticker}){
+    return client.getAsync(option+':'+ticker).then(function(res) {
+      return res;
+    });
+  },
+
+
+  getPartialHistoricalData({cacheID, from})
+  {
     let allData = historicalMap[cacheID];
     //console.log(allData);
     let result = JSON.parse(allData).filter(entry => {
-      if(from.isBefore(moment(entry.Date,"YYYY-MM-DD"))) return true;
+      if (from.isBefore(moment(entry.Date, "YYYY-MM-DD"))) return true;
     });
-   return JSON.stringify(result);
-  },
+    return JSON.stringify(result);
+  }
+  ,
 
-  getHistoricalData(){
+  getHistoricalData()
+  {
     return historicalMap;
-  },
+  }
+  ,
 
-  loadData(){
+  loadData()
+  {
     debug("Loading data");
 
     fs.readFile(__dirname + '/../../static/mapped_stocks.json', function (err, data) {
@@ -48,7 +82,6 @@ const DataStore = {
   }
 
 }
-
 
 
 export default DataStore;

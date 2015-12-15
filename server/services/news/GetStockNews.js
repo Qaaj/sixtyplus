@@ -1,5 +1,6 @@
 const debug = require('debug')('debug:news/getStockNews');
 var rsj = require('rsj');
+import DataStore from '../../stores/DataStore'
 
 export default (req, res) => {
 
@@ -10,11 +11,25 @@ export default (req, res) => {
 
   var promise = new Promise(function (resolve, reject) {
     let returnList = {};
-    list.map(tickr => {
-      rsj.r2j('http://www.google.com/finance/company_news?q=' + tickr + '&output=rss', function (json) {
-        returnList[tickr] = JSON.parse(json);
-        if (Object.keys(returnList).length == req.body.tickers.length) resolve(returnList);
+    list.map(ticker => {
+
+      let cache = DataStore.getCachedData({option: "news", ticker});
+      cache.then(function (result) {
+        if (result) {
+          debug('news from cache: ', ticker);
+          returnList[ticker] = JSON.parse(result);
+          if (Object.keys(returnList).length == req.body.tickers.length) resolve(returnList);
+        } else {
+          debug('news from server: ', ticker);
+          rsj.r2j('http://www.google.com/finance/company_news?q=' + ticker + '&output=rss', function (json) {
+            DataStore.setData({option: "news", ticker, json});
+            returnList[ticker] = JSON.parse(json);
+            if (Object.keys(returnList).length == req.body.tickers.length) resolve(returnList);
+          });
+        }
       });
+
+
     })
   });
 
