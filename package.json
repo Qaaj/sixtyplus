@@ -56,6 +56,7 @@
     "react-dom": "^0.14.2",
     "react-router": "^1.0.0-rc3",
     "redis": "^2.4.2",
+    "redis-server": "0.0.1",
     "request": "2.67.0",
     "rsj": "0.0.4",
     "sass-loader": "^3.1.1",
