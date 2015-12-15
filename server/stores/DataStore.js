@@ -15,7 +15,7 @@ let historicalMap = {};
 
 let redis_url = 'redis://localhost:6380';
 
-if (process.env.REDISCLOUD_URL) redis_url = process.env.REDISCLOUD;
+if (process.env.REDISCLOUD_URL) redis_url = process.env.REDISCLOUD_URL;
 var client = redis.createClient(redis_url);
 
 client.select(0);
@@ -34,7 +34,7 @@ const DataStore = {
     client.set(option+':'+ticker, json);
     // Refresh news every 10 minutes
     if (option == 'news') client.expire(option+':'+ticker,300);
-    if (!process.env.REDISCLOUD) client.save();
+    if (!process.env.REDISCLOUD_URL) client.save();
   },
 
   getCachedData({option,ticker}){
