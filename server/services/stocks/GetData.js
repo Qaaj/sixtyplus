@@ -15,12 +15,12 @@ export default (req, res) => {
     list.map(ticker => {
 
       let cache = DataStore.getCachedData({option: "stockdata", ticker});
-      cache.then(function (result) {
+      cache.then(function (json) {
 
-        if (result) {
+        if (json) {
           // Item was found in the cache, return it
           debug('stock data from cache: ', ticker);
-          returnList[ticker] = JSON.parse(result);
+          returnList[ticker] = json;
           if (Object.keys(returnList).length == req.body.tickers.length) resolve(returnList);
 
         } else {
@@ -34,7 +34,7 @@ export default (req, res) => {
               'm7', 'o', 'p', 'p5', 'p6', 'r', 'r5', 'r6', 'r7', 't8', 'y'],
           }, function (err, json) {
             json = enhanceStock(json);
-            DataStore.setCachedData({option: "stockdata", ticker, json:JSON.stringify(json)});
+            DataStore.setCachedData({option: "stockdata", ticker, json});
             returnList[ticker] = json;
             if (Object.keys(returnList).length == req.body.tickers.length) resolve(returnList);
           });

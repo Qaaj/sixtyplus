@@ -15,19 +15,19 @@ export default (req, res) => {
 
       let cache = DataStore.getCachedData({option: "news", ticker});
 
-      cache.then(function (result) {
+      cache.then(function (json) {
 
-        if (result) {
+        if (json) {
           // Item was found in the cache, return it
           debug('news from cache: ', ticker);
-          returnList[ticker] = JSON.parse(result);
+          returnList[ticker] = json;
           if (Object.keys(returnList).length == req.body.tickers.length) resolve(returnList);
 
         } else {
           // Item was not found in the cache, get it and then save it
           debug('news from server: ', ticker);
           rsj.r2j('http://www.google.com/finance/company_news?q=' + ticker + '&output=rss', function (json) {
-            DataStore.setCachedData({option: "news", ticker, json});
+            DataStore.setCachedData({option: "news", ticker, json:JSON.parse(json)});
             returnList[ticker] = JSON.parse(json);
             if (Object.keys(returnList).length == req.body.tickers.length) resolve(returnList);
           });

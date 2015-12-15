@@ -31,7 +31,7 @@ const DataStore = {
   },
 
   setCachedData({option,ticker,json}){
-    client.set(option+':'+ticker, json);
+    client.set(option+':'+ticker, JSON.stringify(json));
     // Refresh news every 10 minutes
     if (option == 'news') client.expire(option+':'+ticker,300);
     if (option == 'stockdata') client.expire(option+':'+ticker,3600);
@@ -39,8 +39,8 @@ const DataStore = {
   },
 
   getCachedData({option,ticker}){
-    return client.getAsync(option+':'+ticker).then(function(res) {
-      return res;
+    return client.getAsync(option+':'+ticker).then(function(raw) {
+      return JSON.parse(raw);
     });
   },
 
@@ -48,7 +48,6 @@ const DataStore = {
   getPartialHistoricalData({cacheID, from})
   {
     let allData = historicalMap[cacheID];
-    //console.log(allData);
     let result = JSON.parse(allData).filter(entry => {
       if (from.isBefore(moment(entry.Date, "YYYY-MM-DD"))) return true;
     });
