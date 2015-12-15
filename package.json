@@ -5,13 +5,13 @@
   "main": "server.js",
   "scripts": {
     "build": "NODE_ENV=production webpack -p --config webpack.production.config.js",
-    "dev": "DEBUG=debug:* NODE_ENV=development node server.js",
+    "dev": "DEBUG=debug:* NODE_ENV=development parallelshell 'redis-server --port 6380' 'nodemon server.js'",
     "postinstall": "node heroku",
     "test": "echo \"Error: no test specified\" && exit 1",
     "local": "NODE_ENV=production npm build && NODE_ENV=production PORT=8080 npm start",
     "deploy": "npm run build && git add . && git commit -m 'release build' && git push heroku master",
     "test-deploy": "npm run build && git add . && git commit -m 'test build' && git push heroku-test master",
-    "start": "node server.js",
+    "start": "npm run dev",
     "log": "git log --pretty=format:'%h - %an, %ar : %s' > commits.txt",
     "redis": "redis-server --port 6380"
   },
@@ -75,7 +75,9 @@
     "debug": "^2.2.0",
     "immutable": "^3.7.5",
     "keymirror": "^0.1.1",
+    "nodemon": "^1.8.1",
     "object-assign": "^4.0.1",
+    "parallelshell": "^2.0.0",
     "react-addons-css-transition-group": "^0.14.2",
     "request": "^2.65.0",
     "superagent": "^1.4.0"
