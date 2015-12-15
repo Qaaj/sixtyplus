@@ -30,10 +30,11 @@ const DataStore = {
     return dataMap.toJS();
   },
 
-  setData({option,ticker,json}){
+  setCachedData({option,ticker,json}){
     client.set(option+':'+ticker, json);
     // Refresh news every 10 minutes
     if (option == 'news') client.expire(option+':'+ticker,300);
+    if (option == 'stockdata') client.expire(option+':'+ticker,3600);
     if (!process.env.REDISCLOUD_URL) client.save();
   },
 
