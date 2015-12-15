@@ -37,7 +37,7 @@
     "firebase": "^2.3.1",
     "fixed-data-table": "^0.5.0",
     "flux": "^2.1.1",
-    "history": "^1.13.0",
+    "history": "1.13.0",
     "http-proxy": "^1.12.0",
     "immutable": "^3.7.5",
     "jade": "^1.11.0",
