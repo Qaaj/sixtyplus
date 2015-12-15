@@ -35,8 +35,12 @@ class PortfolioDetailModal extends React.Component {
     return <Modal show={true} onHide={this.props.onCancel} className=''>
       <Modal.Header closeButton>
         <Modal.Title>
-          {tickerData.ticker} <span className="small">({tickerData.lastPrice})</span><span
-          className="stockName">{tickerData.name} </span>
+          {tickerData.ticker} <span className="small">({tickerData.lastPrice})</span>
+          <span className="stockName">{tickerData.name} </span>
+          <br />
+
+          <SectorComponent cx={sectorClass} sector={sector}/>
+
         </Modal.Title>
       </Modal.Header>
       <Modal.Body>
@@ -51,6 +55,7 @@ class PortfolioDetailModal extends React.Component {
             <th>Amount</th>
             <th>Price</th>
             <th>Date</th>
+            <th>Delete</th>
           </tr>
           </thead>
 
@@ -59,18 +64,25 @@ class PortfolioDetailModal extends React.Component {
             <td>1337.00</td>
             <td>949.22$</td>
             <td>24-12-2015</td>
+            <td>
+              <button type="button" className="btn btn-danger" title="Click to delete this position from your portfolio.">
+                <i className="large material-icons">delete</i>
+              </button>
+            </td>
           </tr>
 
           <tr>
             <td>1337.00</td>
             <td>949.22$</td>
             <td>24-12-2015</td>
+            <td><i className="large material-icons">delete</i></td>
           </tr>
 
           <tr>
             <td>1337.00</td>
             <td>949.22$</td>
             <td>24-12-2015</td>
+            <td><i className="large material-icons">delete</i></td>
           </tr>
           </tbody>
         </table>
@@ -186,11 +198,10 @@ class PortfolioDetailModal extends React.Component {
       </Modal.Body>
       <Modal.Footer>
 
-        <span><SectorComponent cx={sectorClass} sector={sector}/></span>
-
       <span>
         <Button onClick={this.handleCancel}>Cancel</Button>
-        <Button onClick={this.handleSave}>Save</Button></span>
+        <Button onClick={this.handleSave}>Save</Button>
+      </span>
       </Modal.Footer>
     </Modal>
   }
