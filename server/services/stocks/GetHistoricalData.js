@@ -47,39 +47,47 @@ export default (req, res) => {
     , path: query
   }
 
-  let cacheID = req.body.ticker + '_' + options;
+  let cacheID = "historical" + ":" + options;
+  let cache = DataStore.getCachedData({option: cacheID, ticker:req.body.ticker});
 
-  if(!DataStore.getHistoricalData()[cacheID]){
-
-    debug("getting historical " + option_string +" data for " +  req.body.ticker + " from " + from.format('DD-MM-YYYY') + " to " + to.format('DD-MM-YYYY') + 'from SERVER');
-
-    http.get(url, function (rs) {
-      var data = ''
-      rs.on('data', function (chunk) {
-        data += chunk
-      })
-      rs.on('end', function () {
-
-        var result = CSVtoJSON(data);
-
-        // Save the all-time data in the cache
-        DataStore.getHistoricalData()[cacheID] = result;
-        // Retrieve the correct timeframe
-        if(req.body.from) result = DataStore.getPartialHistoricalData( {cacheID, from : moment(req.body.from,"DD-MM-YYYY") } );
-        let returnObject = {result, option:option_string, ticker:req.body.ticker};
-        res.setHeader('Content-Type', 'application/json');
-        res.send(returnObject);
-      })
-    });
-
-  }else{
-    debug("getting historical " + option_string +" data for " +  req.body.ticker + " from " + from.format('DD-MM-YYYY') + " to " + to.format('DD-MM-YYYY') + ' from CACHE (cache_id: ' + cacheID + ")");
-    var result = DataStore.getHistoricalData()[cacheID];
-    if(req.body.from) result = DataStore.getPartialHistoricalData( {cacheID, from : moment(req.body.from,"DD-MM-YYYY") } );
-    let returnObject = {result, option:option_string, ticker:req.body.ticker};
-    res.send(returnObject);
-  }
+  cache.then(function (json) {
+    if(json){
 
 
+
+      if(req.body.from){
+        json = DataStore.getPartialHistoricalData( {json:JSON.parse(json), from : moment(req.body.from,"DD-MMYYYY") } );
+        debug("getting historical " + option_string +" data for " +  req.body.ticker + " from " + req.body.from + ' from CACHE');
+      }
+      let returnObject = {result:json, option:option_string, ticker:req.body.ticker};
+      res.send(returnObject);
+
+    }else{
+
+      debug("getting historical " + option_string +" data for " +  req.body.ticker + " from " + from.format('DD-MM-YYYY') + " to " + to.format('DD-MM-YYYY') + 'from SERVER');
+
+      http.get(url, function (rs) {
+        var data = ''
+        rs.on('data', function (chunk) {
+          data += chunk
+        })
+        rs.on('end', function () {
+
+          var json = CSVtoJSON(data);
+
+          // Save the all-time data in the cache
+          DataStore.setCachedData({option: cacheID,ticker:req.body.ticker, json});
+
+          // Retrieve the correct timeframe
+          if(req.body.from) json = DataStore.getPartialHistoricalData( {json:JSON.parse(json), from : moment(req.body.from,"DD-MMYYYY") } );
+          let returnObject = {result:json, option:option_string, ticker:req.body.ticker};
+          res.setHeader('Content-Type', 'application/json');
+          res.send(returnObject);
+        })
+      });
+
+    }
+  });
 
 };
+

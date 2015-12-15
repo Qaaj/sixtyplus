@@ -6,4 +6,7 @@ var app = require('./stock_csv_parser_es6.js');
 
 
 // Parse all the ticker CSV's
-app.parseTickerCSVs();
+//app.parseTickerCSVs();
+
+// Get all the users and analyse portfolios
+app.getCurrentTickersInApplication();

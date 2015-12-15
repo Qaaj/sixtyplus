@@ -1,7 +1,6 @@
 import fs from 'fs';
 import {CSVtoJSON} from '../server/helpers/json'
 
-
 export function createMappedJSON(){
 
   fs.readFile(__dirname + '/../static/us_stocks.csv', function (err, data) {
@@ -161,4 +160,35 @@ function calculateAverage(month){
 
 }
 
+var Firebase = require("firebase");
+import {Set} from 'immutable';
+
+export function getCurrentTickersInApplication(){
+  var ref = new Firebase('https://crackling-torch-5091.firebaseio.com/users');
+// Attach an asynchronous callback to read the data at our posts reference
+  ref.on("value", function(snapshot) {
+
+    let users = snapshot.val();
+    let tickers = new Set();
+
+    Object.keys(users).forEach(key =>{
+      let user = users[key];
+      if(user.userData && user.userData.portfolio) {
+        Object.keys(user.userData.portfolio).forEach(ticker => {
+          tickers = tickers.add(ticker.toUpperCase());
+          //if(ticker == 'bonds' || ticker == 'savings' || ticker == 'stocks') {
+          //  var ref2 = new Firebase('https://crackling-torch-5091.firebaseio.com/users/' + key);
+          //  console.log('removing: ' + key)
+          //  ref2.remove();
+          //}
+        });
+      }
+    });
+
+    console.log(tickers.toJS());
+
+  }, function (errorObject) {
+    console.log("The read failed: " + errorObject.code);
+  });
+}
 

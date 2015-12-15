@@ -1,18 +1,7 @@
-
 import UserStore from '../stores/UserStore';
 
 let locale = "EN";
 let DEBUG = false;
-
-let current = {
-  "quickstart":"Quickstart",
-  "portfolio": "Portfolio",
-  "import": "Import",
-  "portfolio_graph_help": "html:<p><b>Click</b> on a label to toggle active state.</p><p><b>Alt + Click</b> on a label to disable other tickers.</p>",
-  "portfolio_graph": "Portfolio Graph",
-  "settings": "Settings",
-  "news": "News"
-};
 
 function TranslationText(props) {
 
@@ -27,7 +16,7 @@ function TranslationText(props) {
 
 function HTMLTranslation(props) {
 
-  let content = props.html.replace("html:",'');
+  let content = props.html.replace("html:", '');
   content = content.trim();
   const html = {__html: content};
 
@@ -79,11 +68,12 @@ export function getTranslation(key, isText = false, templates) {
   }
 
   if (translation.indexOf('html') !== -1) {
+    translation = translation.replace("[", "").replace("]", "");
     isText = false;
     isHTML = true;
+    return <HTMLTranslation html={translation}/>;
   }
 
-  if (isHTML) return <HTMLTranslation html={translation}/>;
 
   // If requested, only return the string. OR
   // If we found the key, also just return the string
@@ -92,3 +82,21 @@ export function getTranslation(key, isText = false, templates) {
 
   return <TranslationText text={translation} debug={debugMode}/>;
 }
+
+
+let current = {
+  "quickstart": "Quickstart",
+  "portfolio": "Portfolio",
+  "import": "Import",
+  "portfolio_graph_help": "html:<p><b>Click</b> on a label to toggle active state.</p><p><b>Alt + Click</b> on a label to disable other tickers.</p>",
+  "portfolio_graph": "Portfolio Graph",
+  "settings": "Settings",
+  "news": "News",
+  "sorted_by": "Sorted By",
+  "profitLoss": "P&L",
+  "marketValue": "Market Value",
+  "sector": "Sector",
+  "ticker": "Ticker",
+  "total_dividends": "Total Dividends",
+  "amount": "# Shares",
+};

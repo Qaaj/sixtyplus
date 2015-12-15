@@ -4,6 +4,7 @@ import NewsStore from '../../stores/NewsStore';
 import {getStockNews} from '../../utils/ApiUtils';
 import ModalActionCreators from '../../actions/ModalActionCreators';
 import ModalConstants from '../../constants/ModalConstants';
+import HelpIcon from '../ui/HelpIcon';
 
 class NewsModule extends React.Component {
 
@@ -12,7 +13,7 @@ class NewsModule extends React.Component {
     this.store = NewsStore;
     this.state = this.getStateFromStore();
 
-    getStockNews(["BX","XOM"]);
+    getStockNews(["BX", "XOM"]);
 
     this._onClick = this._onClick.bind(this);
   }
@@ -31,11 +32,11 @@ class NewsModule extends React.Component {
     this.store.addChangeListener(this._onChange.bind(this));
   }
 
-  _onClick(link){
+  _onClick(news) {
     ModalActionCreators.setModal({
       isVisible: true,
       type: ModalConstants.NEWS_ITEM,
-      data: link
+      data: news
     });
   }
 
@@ -48,15 +49,19 @@ class NewsModule extends React.Component {
     let tickers = Object.keys(this.state.news.items);
     let allItems = [];
 
-    tickers.forEach(ticker =>{
-     allItems = allItems.concat(this.state.news.items[ticker]);
+    tickers.forEach(ticker => {
+      allItems = allItems.concat(this.state.news.items[ticker]);
     })
 
-    let newsitems = allItems.map((news,i) => {
-      return <div key={'newsitem_' + i}><Button onClick={this._onClick.bind(this,news.link)}>{news.title}</Button></div>;
+    let newsitems = allItems.map((news, i) => {
+      return (<div key={'newsitem_' + i}>
+        <HelpIcon placement="left" title={news.title} icon="remove_red_eye" content={this.props.lang('html:' + news.summary)} />
+        <a style={{'marginLeft':'5px','cursor':'pointer'}} onClick={this._onClick.bind(this,news)}>{news.title}</a>
+      </div>);
     })
 
-    return (<Grid>{newsitems}</Grid>
+    return (
+      <Grid>{newsitems}</Grid>
 
     );
   }

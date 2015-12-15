@@ -14,73 +14,33 @@ import {getMonthlyChart} from '../../../shared/helpers/charts';
 import C3PortfolioChart from '../charts/C3PortfolioChart';
 import {round} from '../../../shared/helpers/formatting';
 import HelpIcon from '../ui/HelpIcon';
-
+import Sorter from '../ui/Sorter';
 
 class PortfolioOverview extends React.Component {
 
   constructor(props) {
     super(props);
 
+    this.sortingKeys = ['profitLoss','marketValue','sector','ticker','total_dividends','amount'];
+
     this.state = {
-      sorter: {
-        key: 'profitLoss',
-        reverse: true
+      sorter : {
+        key: this.sortingKeys[0]
       },
       filter: 'All',
       includeDiv: true
     }
 
-    this.sortReverse = true;
-
-    this.sortKeys = [
-      {
-        name: 'Profit/Loss',
-        prop: 'profitLoss'
-      },
-      {
-        name: 'Market Value',
-        prop: 'marketValue'
-      },
-      {
-        name: 'Sector',
-        prop: 'sector'
-      },
-      {
-        name: 'Ticker',
-        prop: 'ticker'
-      },
-      {
-        name: 'Dividends',
-        prop: 'total_dividends'
-      },
-      {
-        name: '# Shares',
-        prop: 'amount'
-      },
-
-    ];
-
-
     this.filters = ['All', 'Profit', 'Loss'];
-
-
-    this.filterItems = this.filters.map(::this.createFilters
-  )
-    ;
-    this.dropdownItems = this.sortKeys.map(this.createDropdown);
+    this.filterItems = this.filters.map(::this.createFilters);
   }
 
-  _onSelect(e, key) {
-
-    this.sortReverse = !this.sortReverse;
-
+  _onSelect(key, sortDirection) {
     let sorter = {
       key: key,
-      reverse: this.sortReverse
+      reverse: sortDirection
     }
-
     this.setState({'sorter': sorter});
-
   }
 
   onDividendCheckboxClick() {
@@ -154,11 +114,6 @@ class PortfolioOverview extends React.Component {
     if (this.state.includeDiv) portfolioData = portfolio.portfolioStatsWithDividends;
 
 
-    let currentSortName = this.sortKeys.filter((sorter) => {
-      if (sorter.prop === this.state.sorter.key) return 1;
-    })[0].name;
-
-
     let profitOrLoss = 'success';
     if (portfolioData.profitLoss < 0) profitOrLoss = 'danger';
 
@@ -197,13 +152,8 @@ class PortfolioOverview extends React.Component {
               </ButtonGroup>
             </ButtonToolbar>
           </div>
-          <div className="sorter">
-            <DropdownButton onSelect={::this._onSelect} bsStyle={'default'}
-                            title={'Sorted by: ' + currentSortName}
-                            id="sorter-dropdown">
-              {this.dropdownItems}
-            </DropdownButton>
-          </div>
+          <Sorter onSelect={::this._onSelect} lang={this.props.lang} keys={this.sortingKeys} />
+
           <div className="checkBoxes">
             <Input type="checkbox" label="Include Dividends in P/L" checked={this.state.includeDiv}
                    onChange={this.onDividendCheckboxClick.bind(this)}/>
