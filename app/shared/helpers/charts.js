@@ -69,7 +69,7 @@ export function getMonthlyChart(portfolio, historical) {
     return month;
   })
 
-  console.log(chart);
+  //console.log(chart);
 
   let monthly = JSON.parse(historical[tickers[0]].monthly);
 
