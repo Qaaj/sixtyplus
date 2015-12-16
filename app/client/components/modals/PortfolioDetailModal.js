@@ -22,7 +22,7 @@ class PortfolioDetailModal extends React.Component {
     throw 'Not Implemented yet!';
   }
 
-  handleClick(e){
+  handleClick(e) {
     console.log("> Delete clicked!");
   }
 
@@ -42,14 +42,15 @@ class PortfolioDetailModal extends React.Component {
 
     let sector = tickerData.sector;
 
-    let entries =  tickerData.entries.map((stockEntry, i) => {
+    let entries = tickerData.entries.map((stockEntry, i) => {
 
       return (<tr key={i}>
         <td>{stockEntry.amount}</td>
         <td>{stockEntry.price}</td>
         <td>{moment(stockEntry.date).format('MM/DD/YYYY')}</td>
         <td>
-          <button type="button" onClick={this.handleClick.bind(this)} className="btn btn-danger btn-xs" title="Click to delete this position from your portfolio.">
+          <button type="button" onClick={this.handleClick.bind(this)} className="btn btn-danger btn-xs"
+                  title="Click to delete this position from your portfolio.">
             <i className="tiny material-icons">delete</i>
           </button>
         </td>
@@ -57,9 +58,8 @@ class PortfolioDetailModal extends React.Component {
     });
 
     if (!this.props.user.stockPortfolio) return (
-      <Grid style={{'textAlign':'center','padding':'20px'}}> Whoops! You don't seem to have a portfolio. Head over to <a href={"#/Import"}>Importer</a> to change that.</Grid>);
-
-
+      <Grid style={{'textAlign':'center','padding':'20px'}}> Whoops! You don't seem to have a portfolio. Head over to <a
+        href={"#/Import"}>Importer</a> to change that.</Grid>);
 
     let portfolio = this.props.user.stockPortfolio;
 
@@ -68,24 +68,24 @@ class PortfolioDetailModal extends React.Component {
 
     let chartData = getMonthlyChart(portfolio, this.props.historical);
 
-    console.log("> Showing portfolio " , portfolio);
-    console.log("> Showing chartdata " , chartData);
+    /**console.log("> Showing portfolio " , portfolio);
+     console.log("> Showing chartdata " , chartData);**/
 
     return <Modal show={true} onHide={this.props.onCancel} className=''>
       <Modal.Header closeButton>
         <Modal.Title>
-            {tickerData.ticker} <span className="small">({tickerData.lastPrice})</span>
+          {tickerData.ticker} <span className="small">({tickerData.lastPrice})</span>
 
-            <span className="stockName text-right">{tickerData.name} </span>
+          <span className="stockName text-right">{tickerData.name} </span>
           <br />
 
-          <SectorComponent cx={sectorClass} sector={sector} />
+          <SectorComponent cx={sectorClass} sector={sector}/>
 
         </Modal.Title>
       </Modal.Header>
       <Modal.Body>
 
-          <C3DividendPaymentChart data={chartData}/>
+        <C3DividendPaymentChart data={chartData}/>
 
         <h4>Your positions</h4>
 
