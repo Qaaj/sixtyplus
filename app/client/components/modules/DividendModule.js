@@ -5,22 +5,27 @@ import {Table, Column, Cell} from 'fixed-data-table';
 import { updatePortfolioDividends } from '../../../shared/helpers/stocks';
 import { createDividendTableData } from '../../../shared/helpers/tables';
 
-const DateCell = ({rowIndex, data, col, ...props}) => (
+const DividendCell = ({rowIndex, data, col, ...props}) => (
   <Cell {...props}>
-    {data[rowIndex][col].toLocaleString()}
+   $ {data[rowIndex][col]}
   </Cell>
 );
 
-
-const LinkCell = ({rowIndex, data, col, ...props}) => (
+const AmountCell = ({rowIndex, data, col, ...props}) => (
   <Cell {...props}>
-    <a href="#">{data[rowIndex][col]}</a>
+    {data[rowIndex][col]} x
   </Cell>
 );
 
 const TextCell = ({rowIndex, data, col, ...props}) => (
   <Cell {...props}>
     {data[rowIndex][col]}
+  </Cell>
+);
+
+const DateCell = ({rowIndex, data, col, ...props}) => (
+  <Cell {...props}>
+    {data[rowIndex][col].format()}
   </Cell>
 );
 
@@ -57,36 +62,43 @@ class DividendModule extends React.Component {
 
     let portfolio = this.props.user.stockPortfolio;
     updatePortfolioDividends(portfolio, this.props.historical);
-    createDividendTableData(portfolio, this.props.historical);
+    let divs = createDividendTableData(portfolio, this.props.historical);
 
 
-    var {dataList} = this.state;
     return (
       <Grid>
         <Table
           rowHeight={40}
           headerHeight={40}
-          rowsCount={portfolio.allStockEntries.length}
+          rowsCount={divs.length}
           width={1100}
           maxHeight={500}
           {...this.props}>
           <Column
             header={<Cell>Ticker</Cell>}
-            cell={<LinkCell data={portfolio.allStockEntries} col="ticker" />}
-            fixed={true}
-            width={100}
-          />
-          <Column
-            header={<Cell>Price</Cell>}
-            cell={<TextCell data={portfolio.allStockEntries} col="price" />}
+            cell={<TextCell data={divs} col="ticker" />}
             fixed={true}
             width={100}
           />
           <Column
             header={<Cell>Amount</Cell>}
-            cell={<TextCell data={portfolio.allStockEntries} col="amount" />}
+            cell={<AmountCell data={divs} col="amount" />}
+            fixed={true}
             width={100}
           />
+          <Column
+            header={<Cell>Dividend</Cell>}
+            cell={<DividendCell data={divs} col="price" />}
+            fixed={true}
+            width={100}
+          />
+          <Column
+            header={<Cell>Date</Cell>}
+            cell={<DateCell data={divs} col="date" />}
+            fixed={true}
+            width={300}
+          />
+
 
         </Table>
       </Grid>
