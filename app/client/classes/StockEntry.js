@@ -43,11 +43,12 @@ class StockEntry {
   }
 
   calculateDividends(dividends){
-    let divs = dividends.filter(dividend =>{
+
+    this.receivedDividends = dividends.filter(dividend =>{
         if(dividend.date.isAfter(this.date)) return true;
     });
 
-    this.dividends_per_share = divs.reduce((prev,curr) =>{
+    this.dividends_per_share = this.receivedDividends.reduce((prev,curr) =>{
       prev += parseFloat(curr.price);
       return prev;
     },0)

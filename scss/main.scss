@@ -16,6 +16,7 @@ $icon-font-path: '~bootstrap-sass/assets/fonts/bootstrap/';
 @import './components/charts';
 @import './components/newsModal';
 @import './vendors/c3/main';
+@import './vendors/fixedDataTable';
 @import './ui/help_icon';
 body {
   background-color: #EFEFEF;

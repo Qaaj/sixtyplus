@@ -28,6 +28,9 @@ class Menu extends React.Component {
       },{
         key: 'news',
         url: 'News'
+      },{
+        key: 'dividends',
+        url: 'Dividends'
       }
     ];
   }
