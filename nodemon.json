@@ -1,0 +1,13 @@
+{
+  "restartable": "rs",
+  "ignore": [
+    ".idea/*",
+    ".git",
+    "dump.rdb",
+    "app/client/*",
+    "app/shared/*",
+    "scss/*",
+    "node_modules/**/node_modules"
+  ],
+  "verbose": true
+}

@@ -105,9 +105,13 @@ class StockPortfolio {
     return Object.keys(this.userDataObject);
   }
 
-  get chartData(){
-
-  }
+ get allStockEntries() {
+   let list = [];
+   this.collectionList.forEach(collection => {
+     list = list.concat(collection.entries);
+   })
+   return list;
+ }
 
   get userDataObject() {
 
