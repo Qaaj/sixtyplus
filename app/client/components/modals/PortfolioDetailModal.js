@@ -71,7 +71,7 @@ class PortfolioDetailModal extends React.Component {
     /**console.log("> Showing portfolio " , portfolio);
      console.log("> Showing chartdata " , chartData);**/
 
-    return <Modal show={true} onHide={this.props.onCancel} className=''>
+    return (<Modal show={true} onHide={this.props.onCancel} dialogClassName="portfolio-modal">
       <Modal.Header closeButton>
         <Modal.Title>
           {tickerData.ticker} <span className="small">({tickerData.lastPrice})</span>
@@ -242,7 +242,7 @@ class PortfolioDetailModal extends React.Component {
         <Button onClick={this.handleSave}>Save</Button>
       </span>
       </Modal.Footer>
-    </Modal>
+    </Modal>);
   }
 }
 
