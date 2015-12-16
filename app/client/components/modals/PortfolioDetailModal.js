@@ -8,6 +8,15 @@ class PortfolioDetailModal extends React.Component {
 
   constructor(props) {
     super(props);
+
+    console.log("-----");
+    console.log(props);
+    console.log(props.rt);
+
+    //console.log(" > TICKER " , this.props.data.ticker);
+
+    // TODO: CAN I JUST TAKE THIS FROM THE RT OBJECT? WHAT IF THE RT OBJECT IS REALLY BIG?
+    //console.log(props.rt[this.props.data.ticker]);
   }
 
   handleCancel() {
@@ -19,10 +28,17 @@ class PortfolioDetailModal extends React.Component {
     throw 'Not Implemented yet!';
   }
 
+  handleClick(e){
+    console.log("> Delete clicked!");
+  }
+
   render() {
     let tickerData = this.props.data;
+    let ticker = tickerData.ticker;
 
-    console.log("> Showing ", tickerData);
+    let tickerExtendedInformation = this.props.rt[ticker];
+
+    console.log("> Showing ", tickerExtendedInformation);
 
     let sectorClass = '';
 
@@ -31,6 +47,20 @@ class PortfolioDetailModal extends React.Component {
     }
 
     let sector = tickerData.sector;
+
+    let entries =  tickerData.entries.map((stockEntry, i) => {
+      console.log(stockEntry.amount);
+      return (<tr key={i}>
+        <td>{stockEntry.amount}</td>
+        <td>{stockEntry.price}</td>
+        <td>{moment(stockEntry.date).format('MM/DD/YYYY')}</td>
+        <td>
+          <button type="button" onClick={this.handleClick.bind(this)} className="btn btn-danger btn-xs" title="Click to delete this position from your portfolio.">
+            <i className="tiny material-icons">delete</i>
+          </button>
+        </td>
+      </tr>);
+    });
 
     return <Modal show={true} onHide={this.props.onCancel} className=''>
       <Modal.Header closeButton>
@@ -60,30 +90,7 @@ class PortfolioDetailModal extends React.Component {
           </thead>
 
           <tbody>
-          <tr>
-            <td>1337.00</td>
-            <td>949.22$</td>
-            <td>24-12-2015</td>
-            <td>
-              <button type="button" className="btn btn-danger" title="Click to delete this position from your portfolio.">
-                <i className="large material-icons">delete</i>
-              </button>
-            </td>
-          </tr>
-
-          <tr>
-            <td>1337.00</td>
-            <td>949.22$</td>
-            <td>24-12-2015</td>
-            <td><i className="large material-icons">delete</i></td>
-          </tr>
-
-          <tr>
-            <td>1337.00</td>
-            <td>949.22$</td>
-            <td>24-12-2015</td>
-            <td><i className="large material-icons">delete</i></td>
-          </tr>
+          { entries }
           </tbody>
         </table>
 
@@ -170,7 +177,7 @@ class PortfolioDetailModal extends React.Component {
 
         <div className="row">
         <span className="small">
-          <ul className="list-unstyled col-md-6">
+          <ul className="list-unstyled col-xs-6 col-sm-3">
             <li>P/E</li>
             <li>1 Year Price Target</li>
             <li>Book Value</li>
@@ -182,17 +189,39 @@ class PortfolioDetailModal extends React.Component {
             <li>EPS Next Year (est)</li>
           </ul>
 
-          <ul className="list-unstyled col-md-6">
-            <li>50 Day Moving Avg.<span>12</span></li>
+          <ul className="list-unstyled col-xs-6 col-sm-3">
+            <li>{tickerExtendedInformation.peRatio}</li>
+            <li>{tickerExtendedInformation['1YrTargetPrice']}</li>
+            <li>{tickerExtendedInformation.bookValue}</li>
+            <li>{tickerExtendedInformation['52WkHigh']}</li>
+            <li>{tickerExtendedInformation['52WkLow']}</li>
+            <li>{tickerExtendedInformation.changeFrom52WeekHigh}</li>
+            <li>{tickerExtendedInformation.earningsPerShare}</li>
+            <li>{tickerExtendedInformation.epsEstimateCurrentYear}</li>
+            <li>{tickerExtendedInformation.epsEstimateNextYear}</li>
+          </ul>
+
+          <ul className="list-unstyled col-xs-6 col-sm-3">
+            <li>50 Day Moving Avg.</li>
             <li>200 Day Moving Avg.</li>
-            <li>Book Value</li>
             <br />
             <li>Dividends This Year</li>
             <li>Dividends Last Year</li>
-            <li>Est Dividends next year</li>
+            <li>Est Divs. next year</li>
             <br />
             <li>Dividend Yield</li>
           </ul>
+
+           <ul className="list-unstyled col-xs-6 col-sm-3">
+             <li>{tickerExtendedInformation['50DayMovingAverage']}</li>
+             <li>{tickerExtendedInformation['200DayMovingAverage']}</li>
+             <br />
+             <li>DIV T Y</li>
+             <li>DIV L Y</li>
+             <li>E DIV N Y</li>
+             <br />
+             <li>{tickerExtendedInformation.dividendYield}</li>
+           </ul>
           </span>
         </div>
       </Modal.Body>
