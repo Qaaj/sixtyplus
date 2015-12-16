@@ -98,5 +98,6 @@ let current = {
   "sector": "Sector",
   "ticker": "Ticker",
   "total_dividends": "Total Dividends",
+  "dividends": "Dividends",
   "amount": "# Shares",
 };
