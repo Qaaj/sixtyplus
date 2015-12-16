@@ -3,20 +3,14 @@ import ModalActionCreators from '../../actions/ModalActionCreators';
 import ModalConstants from '../../constants/ModalConstants';
 import {getUniqueColor, getClassBySector} from '../../../shared/helpers/colors/ColorUtils';
 import SectorComponent from '../ui/SectorComponent';
+import {getMonthlyChart} from '../../../shared/helpers/charts';
+import C3DividendPaymentChart from '../charts/C3DividendPaymentChart';
+import {updateArrayOfEntryCollectionsWithRT, updatePortfolioDividends} from '../../../shared/helpers/stocks';
 
 class PortfolioDetailModal extends React.Component {
 
   constructor(props) {
     super(props);
-
-    console.log("-----");
-    console.log(props);
-    console.log(props.rt);
-
-    //console.log(" > TICKER " , this.props.data.ticker);
-
-    // TODO: CAN I JUST TAKE THIS FROM THE RT OBJECT? WHAT IF THE RT OBJECT IS REALLY BIG?
-    //console.log(props.rt[this.props.data.ticker]);
   }
 
   handleCancel() {
@@ -38,7 +32,7 @@ class PortfolioDetailModal extends React.Component {
 
     let tickerExtendedInformation = this.props.rt[ticker];
 
-    console.log("> Showing ", tickerExtendedInformation);
+    console.log("> Showing ", tickerData);
 
     let sectorClass = '';
 
@@ -49,7 +43,7 @@ class PortfolioDetailModal extends React.Component {
     let sector = tickerData.sector;
 
     let entries =  tickerData.entries.map((stockEntry, i) => {
-      console.log(stockEntry.amount);
+
       return (<tr key={i}>
         <td>{stockEntry.amount}</td>
         <td>{stockEntry.price}</td>
@@ -62,21 +56,37 @@ class PortfolioDetailModal extends React.Component {
       </tr>);
     });
 
+    if (!this.props.user.stockPortfolio) return (
+      <Grid style={{'textAlign':'center','padding':'20px'}}> Whoops! You don't seem to have a portfolio. Head over to <a href={"#/Import"}>Importer</a> to change that.</Grid>);
+
+
+
+    let portfolio = this.props.user.stockPortfolio;
+
+    updateArrayOfEntryCollectionsWithRT(portfolio, this.props.rt);
+    updatePortfolioDividends(portfolio, this.props.historical);
+
+    let chartData = getMonthlyChart(portfolio, this.props.historical);
+
+    console.log("> Showing portfolio " , portfolio);
+    console.log("> Showing chartdata " , chartData);
+
     return <Modal show={true} onHide={this.props.onCancel} className=''>
       <Modal.Header closeButton>
         <Modal.Title>
-          {tickerData.ticker} <span className="small">({tickerData.lastPrice})</span>
-          <span className="stockName">{tickerData.name} </span>
+            {tickerData.ticker} <span className="small">({tickerData.lastPrice})</span>
+
+            <span className="stockName text-right">{tickerData.name} </span>
           <br />
 
-          <SectorComponent cx={sectorClass} sector={sector}/>
+          <SectorComponent cx={sectorClass} sector={sector} />
 
         </Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <div>
-          Chart here
-        </div>
+
+          <C3DividendPaymentChart data={chartData}/>
+
         <h4>Your positions</h4>
 
         <table className="table table-striped">
@@ -238,5 +248,9 @@ class PortfolioDetailModal extends React.Component {
 
 PortfolioDetailModal.displayName = 'PortfolioDetailModal';
 
+PortfolioDetailModal.PropTypes = {
+  rt: React.PropTypes.obj,
+  user: React.PropTypes.string,
+};
 
 export default PortfolioDetailModal;
