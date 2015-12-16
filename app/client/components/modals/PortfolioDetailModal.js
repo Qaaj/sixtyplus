@@ -1,4 +1,4 @@
-import { Modal, Button, ListGroup, ListGroupItem } from 'react-bootstrap';
+import { Modal, Button, ListGroup, ListGroupItem, Row, Col } from 'react-bootstrap';
 import ModalActionCreators from '../../actions/ModalActionCreators';
 import ModalConstants from '../../constants/ModalConstants';
 import {getUniqueColor, getClassBySector} from '../../../shared/helpers/colors/ColorUtils';
@@ -71,6 +71,10 @@ class PortfolioDetailModal extends React.Component {
     /**console.log("> Showing portfolio " , portfolio);
      console.log("> Showing chartdata " , chartData);**/
 
+    // Changed Row / Col to react-bootstrap
+    // Span shouldnt contain divs
+    // Added styling of the modal to _portfolioModal.scss
+
     return (<Modal show={true} onHide={this.props.onCancel} dialogClassName="portfolio-modal">
       <Modal.Header closeButton>
         <Modal.Title>
@@ -107,53 +111,56 @@ class PortfolioDetailModal extends React.Component {
         <div className="statsComponent">
 
           <div className="container-fluid">
-            <row>
-              <ListGroup className="col-md-6">
-                <ListGroupItem>
-                  <span className="prop">Cost Base </span>
+            <Row>
+              <Col md={6}>
+                <ListGroup >
+                  <ListGroupItem>
+                    <span className="prop">Cost Base </span>
 
-                  <div className="val">{tickerData.costBase}</div>
-                </ListGroupItem>
-                <ListGroupItem>
-                  <span className="prop">Market Value </span>
+                    <div className="val">{tickerData.costBase}</div>
+                  </ListGroupItem>
+                  <ListGroupItem>
+                    <span className="prop">Market Value </span>
 
-                  <div className="val">{tickerData.marketValue}</div>
-                </ListGroupItem>
-                <ListGroupItem>
-                  <span className="prop">Dividends Collected </span>
+                    <div className="val">{tickerData.marketValue}</div>
+                  </ListGroupItem>
+                  <ListGroupItem>
+                    <span className="prop">Dividends Collected </span>
 
-                  <div className="val">{tickerData.total_dividends}</div>
-                </ListGroupItem>
-                <ListGroupItem bsStyle={tickerData.style}>
-                  <span className="prop">P/L </span>
+                    <div className="val">{tickerData.total_dividends}</div>
+                  </ListGroupItem>
+                  <ListGroupItem bsStyle={tickerData.style}>
+                    <span className="prop">P/L </span>
 
-                  <div className="val">{tickerData.profitLoss} ({tickerData.totalChangePercentageString})</div>
-                </ListGroupItem>
-              </ListGroup>
+                    <div className="val">{tickerData.profitLoss} ({tickerData.totalChangePercentageString})</div>
+                  </ListGroupItem>
+                </ListGroup>
+              </Col>
+              <Col md={6}>
+                <ListGroup>
+                  <ListGroupItem>
+                    <span className="prop">435 Day high</span>
 
-              <ListGroup className="col-md-6">
-                <ListGroupItem>
-                  <span className="prop">435 Day high</span>
+                    <div className="val">{tickerData.averagePrice} (x {tickerData.amount})</div>
+                  </ListGroupItem>
+                  <ListGroupItem>
+                    <span className="prop">435 Day low</span>
 
-                  <div className="val">{tickerData.averagePrice} (x {tickerData.amount})</div>
-                </ListGroupItem>
-                <ListGroupItem>
-                  <span className="prop">435 Day low</span>
+                    <div className="val">{tickerData.costBase}</div>
+                  </ListGroupItem>
+                  <ListGroupItem>
+                    <span className="prop">435 Day avg price</span>
 
-                  <div className="val">{tickerData.costBase}</div>
-                </ListGroupItem>
-                <ListGroupItem>
-                  <span className="prop">435 Day avg price</span>
+                    <div className="val">{tickerData.marketValue}</div>
+                  </ListGroupItem>
+                  <ListGroupItem>
+                    <span className="prop">Your Dividend Yield</span>
 
-                  <div className="val">{tickerData.marketValue}</div>
-                </ListGroupItem>
-                <ListGroupItem>
-                  <span className="prop">Your Dividend Yield</span>
-
-                  <div className="val">{tickerData.total_dividends}</div>
-                </ListGroupItem>
-              </ListGroup>
-            </row>
+                    <div className="val">{tickerData.total_dividends}</div>
+                  </ListGroupItem>
+                </ListGroup>
+              </Col>
+            </Row>
           </div>
         </div>
 
@@ -184,56 +191,58 @@ class PortfolioDetailModal extends React.Component {
         </div>
 
         <h4>About {tickerData.ticker}</h4>
-
-        <div className="row">
-        <span className="small">
-          <ul className="list-unstyled col-xs-6 col-sm-3">
-            <li>P/E</li>
-            <li>1 Year Price Target</li>
-            <li>Book Value</li>
-            <li>52 Wk High</li>
-            <li>52 Wk Low</li>
-            <li>Change from 52Wk High</li>
-            <li>EPS</li>
-            <li>EPS Current Year (est)</li>
-            <li>EPS Next Year (est)</li>
-          </ul>
-
-          <ul className="list-unstyled col-xs-6 col-sm-3">
-            <li>{tickerExtendedInformation.peRatio}</li>
-            <li>{tickerExtendedInformation['1YrTargetPrice']}</li>
-            <li>{tickerExtendedInformation.bookValue}</li>
-            <li>{tickerExtendedInformation['52WkHigh']}</li>
-            <li>{tickerExtendedInformation['52WkLow']}</li>
-            <li>{tickerExtendedInformation.changeFrom52WeekHigh}</li>
-            <li>{tickerExtendedInformation.earningsPerShare}</li>
-            <li>{tickerExtendedInformation.epsEstimateCurrentYear}</li>
-            <li>{tickerExtendedInformation.epsEstimateNextYear}</li>
-          </ul>
-
-          <ul className="list-unstyled col-xs-6 col-sm-3">
-            <li>50 Day Moving Avg.</li>
-            <li>200 Day Moving Avg.</li>
-            <br />
-            <li>Dividends This Year</li>
-            <li>Dividends Last Year</li>
-            <li>Est Divs. next year</li>
-            <br />
-            <li>Dividend Yield</li>
-          </ul>
-
-           <ul className="list-unstyled col-xs-6 col-sm-3">
-             <li>{tickerExtendedInformation['50DayMovingAverage']}</li>
-             <li>{tickerExtendedInformation['200DayMovingAverage']}</li>
-             <br />
-             <li>DIV T Y</li>
-             <li>DIV L Y</li>
-             <li>E DIV N Y</li>
-             <br />
-             <li>{tickerExtendedInformation.dividendYield}</li>
-           </ul>
-          </span>
-        </div>
+        <Row>
+          <Col xs={6} sm={3}>
+            <ul className="list-unstyled small">
+              <li>P/E</li>
+              <li>1 Year Price Target</li>
+              <li>Book Value</li>
+              <li>52 Wk High</li>
+              <li>52 Wk Low</li>
+              <li>Change from 52Wk High</li>
+              <li>EPS</li>
+              <li>EPS Current Year (est)</li>
+              <li>EPS Next Year (est)</li>
+            </ul>
+          </Col>
+          <Col xs={6} sm={3}>
+            <ul className="list-unstyled small">
+              <li>{tickerExtendedInformation.peRatio}</li>
+              <li>{tickerExtendedInformation['1YrTargetPrice']}</li>
+              <li>{tickerExtendedInformation.bookValue}</li>
+              <li>{tickerExtendedInformation['52WkHigh']}</li>
+              <li>{tickerExtendedInformation['52WkLow']}</li>
+              <li>{tickerExtendedInformation.changeFrom52WeekHigh}</li>
+              <li>{tickerExtendedInformation.earningsPerShare}</li>
+              <li>{tickerExtendedInformation.epsEstimateCurrentYear}</li>
+              <li>{tickerExtendedInformation.epsEstimateNextYear}</li>
+            </ul>
+          </Col>
+          <Col xs={6} sm={3}>
+            <ul className="list-unstyled small">
+              <li>50 Day Moving Avg.</li>
+              <li>200 Day Moving Avg.</li>
+              <br />
+              <li>Dividends This Year</li>
+              <li>Dividends Last Year</li>
+              <li>Est Divs. next year</li>
+              <br />
+              <li>Dividend Yield</li>
+            </ul>
+          </Col>
+          <Col xs={6} sm={3}>
+            <ul className="list-unstyled small">
+              <li>{tickerExtendedInformation['50DayMovingAverage']}</li>
+              <li>{tickerExtendedInformation['200DayMovingAverage']}</li>
+              <br />
+              <li>DIV T Y</li>
+              <li>DIV L Y</li>
+              <li>E DIV N Y</li>
+              <br />
+              <li>{tickerExtendedInformation.dividendYield}</li>
+            </ul>
+          </Col>
+        </Row>
       </Modal.Body>
       <Modal.Footer>
 
