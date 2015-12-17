@@ -7,7 +7,8 @@
     "app/client/*",
     "app/shared/*",
     "scss/*",
-    "node_modules/**/node_modules"
+    "node_modules/**/node_modules",
+    "*.rdb"
   ],
   "verbose": true
 }
