@@ -71,9 +71,11 @@ class PortfolioDetailModal extends React.Component {
     /**console.log("> Showing portfolio " , portfolio);
      console.log("> Showing chartdata " , chartData);**/
 
+    // Zalige progress dude, thanks! heb paar dingen aangepast + tips:
     // Changed Row / Col to react-bootstrap
-    // Span shouldnt contain divs
+    // Span shouldnt contain divs (added 'small' to UL instead of span around divs which is not valid)
     // Added styling of the modal to _portfolioModal.scss
+    // Render function should be as small as possible - move some logic to functions or create reactcomponents (maybe 'dumb' react components e.g. like SectorComponent)
 
     return (<Modal show={true} onHide={this.props.onCancel} dialogClassName="portfolio-modal">
       <Modal.Header closeButton>
