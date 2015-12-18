@@ -37,3 +37,4 @@
  // Hover and explanations for the dividend table. Add sorting for the dividend table
  // Run a cron job for getting daily data for all tickers in the database
  // Fix the news module (proper loading of data through actions)
+ // Add node environment vars for making a distinction between different devs/test/debug accounts
