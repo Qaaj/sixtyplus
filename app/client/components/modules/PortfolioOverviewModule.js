@@ -15,6 +15,7 @@ import C3PortfolioChart from '../charts/C3PortfolioChart';
 import {round} from '../../../shared/helpers/formatting';
 import HelpIcon from '../ui/HelpIcon';
 import Sorter from '../ui/Sorter';
+import Filter from '../ui/FilterButtons';
 
 class PortfolioOverview extends React.Component {
 
@@ -22,17 +23,16 @@ class PortfolioOverview extends React.Component {
     super(props);
 
     this.sortingKeys = ['profitLoss','marketValue','sector','ticker','total_dividends','amount'];
+    this.filterKeys = ['all', 'profit', 'loss'];
 
     this.state = {
       sorter : {
         key: this.sortingKeys[0]
       },
-      filter: 'All',
+      filter: 'all',
       includeDiv: true
     }
 
-    this.filters = ['All', 'Profit', 'Loss'];
-    this.filterItems = this.filters.map(::this.createFilters);
   }
 
   _onSelect(key, sortDirection) {
@@ -43,21 +43,16 @@ class PortfolioOverview extends React.Component {
     this.setState({'sorter': sorter});
   }
 
+  _setFilter(filter) {
+    this.setState({filter});
+  }
+
   onDividendCheckboxClick() {
     this.setState({
       includeDiv: !this.state.includeDiv
     })
   }
 
-  createFilters(filter, i) {
-    let selected = (filter === this.state.filter) ? 'primary' : 'default';
-    return <Button bsStyle={selected} onClick={()=> this.setState({'filter': filter})} eventKey={filter}
-                   key={'filter'+i}>{filter}</Button>;
-  }
-
-  createDropdown(sorter, i) {
-    return <MenuItem eventKey={sorter.prop} key={'sorter_'+i}>{sorter.name}</MenuItem>;
-  }
 
   _onDeletePortfolioDataClickHandler() {
     let resultObject = {
@@ -83,8 +78,6 @@ class PortfolioOverview extends React.Component {
     if (!this.props.rt) return (<Grid style={{'textAlign':'center','padding':'20px'}}>
       <div className="loader"></div>
     </Grid>);
-
-    this.filterItems = this.filters.map(this.createFilters.bind(this));
 
     let portfolio = this.props.user.stockPortfolio;
 
@@ -145,13 +138,7 @@ class PortfolioOverview extends React.Component {
 
           <hr />
 
-          <div className="filter">
-            <ButtonToolbar>
-              <ButtonGroup>
-                {this.filterItems}
-              </ButtonGroup>
-            </ButtonToolbar>
-          </div>
+          <Filter onSelect={::this._setFilter} keys={this.filterKeys} lang={this.props.lang} />
           <Sorter onSelect={::this._onSelect} lang={this.props.lang} keys={this.sortingKeys} />
 
           <div className="checkBoxes">
