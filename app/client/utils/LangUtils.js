@@ -100,4 +100,7 @@ let current = {
   "total_dividends": "Total Dividends",
   "dividends": "Dividends",
   "amount": "# Shares",
+  "all":"All",
+  "profit":"Profit",
+  "loss":"Loss"
 };

@@ -1,0 +1,100 @@
+
+.hideCal {
+  display: none !important;
+}
+
+.importer .DayPicker {
+  padding-top: 15px;
+  position: absolute;
+  border-radius: 4px;
+  background-color: rgba(255, 255, 255, .8) !important;
+  z-index: 2;
+  width: 100%;
+}
+
+.calendarPicker {
+  position: relative;
+  width: 100%;
+}
+
+.topMenu {
+  margin-top: 10px;
+  margin-bottom: 20px;
+}
+
+.importer {
+  text-align: right;
+  position: relative;
+  .panel {
+    text-align: left;
+  }
+  textarea {
+    height: 500px;
+    margin-top: 10px;
+  }
+  .tab-pane {
+    padding: 2%;
+  }
+
+  .form-group {
+    margin-bottom: 0px;
+  }
+
+  .IBimport .btn {
+    margin-top: 10px;
+    float: right;
+  }
+
+  .btn {
+    display: inline-block;
+  }
+  padding: 2%;
+
+  .addMoreButton {
+    margin-top: 0px;
+    float: right;
+    margin-bottom: 10px;
+  }
+}
+
+
+
+.singlestock-panel {
+
+  a:hover, a:focus {
+    text-decoration: none;
+  }
+  a:hover {
+    opacity: .75;
+  }
+  position: relative;
+  margin-left: 20px;
+  margin-right: 20px;
+  .panel-title {
+    font-size: 20px;
+  }
+  .stockName {
+    margin-left: 10px;
+    font-size: 16px;
+    color: rgba(0, 0, 0, .5);
+  }
+
+  .profitLoss {
+    margin-top: 1px;
+    float: right;
+    color: #999;
+    opacity: 1;
+    font-size: 18px;
+
+    .label {
+      font-weight: 100;
+
+    }
+  }
+
+  .sector {
+    margin-left: 20px;
+    color: black;
+    opacity: .7;
+  }
+}
