@@ -91,7 +91,7 @@ var UserActionCreators = {
 
     if(window.location.hostname.indexOf("sixtyplus-test") != -1) uid = 'TEST_USER';
 
-    //uid = '1448488808946-7120';
+    uid = '1448488808946-7120';
     //uid = 'DIV';
     //uid = 'TEST_USER'
 

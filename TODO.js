@@ -1,7 +1,6 @@
 
 
  //OK Handle loading of realtime portfolio server side
- // Implement growth and salary stuff
  //OK Make seperate components for Quikstart / Stocks/ Import etc
  //OK Make seperate object for the state in Quickstart > Only save relevant items
  //OK Move loading of portoflio data away from UserStore
@@ -11,15 +10,15 @@
  //OK Load prices of import stocks that arent saved yet
  //OK Check if stock exists
  //OK AUTO SUGGEST
- // How many stocks make up how much of the loss / profit?
- // What is the best performing sector? Sectors?
  // Clean up CSS
  //OK Make portfolio class
  //OK Shortcuts to js folders for packages?
  // Graph with total returns / dividends / costbase
  // Modal for stock entry information
  // Use immutable in the components
- //
+ // How many stocks make up how much of the loss / profit?
+ // What is the best performing sector? Sectors?
+ // Implement growth and salary stuff
  //// good news section:
  //// Historical performance of current portfolio
  //// Time it takes for dividends to earn back loss
