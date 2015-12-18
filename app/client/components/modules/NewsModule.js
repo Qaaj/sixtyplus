@@ -5,6 +5,7 @@ import {getStockNews} from '../../utils/ApiUtils';
 import ModalActionCreators from '../../actions/ModalActionCreators';
 import ModalConstants from '../../constants/ModalConstants';
 import HelpIcon from '../ui/HelpIcon';
+import Filter from '../ui/FilterButtons';
 
 class NewsModule extends React.Component {
 
@@ -13,7 +14,10 @@ class NewsModule extends React.Component {
     this.store = NewsStore;
     this.state = this.getStateFromStore();
 
-    getStockNews(["BX", "XOM"]);
+    this.stocks = ['BX', 'MO'];
+
+    getStockNews(this.stocks);
+
 
     this._onClick = this._onClick.bind(this);
   }
@@ -42,9 +46,14 @@ class NewsModule extends React.Component {
 
   render() {
 
-    if (!this.state.news.hasNews) return (<Grid style={{'textAlign':'center','padding':'20px'}}>
-      <div className="loader"></div>
-    </Grid>);
+
+    if (!this.state.news.hasNews || !this.props.user.stockPortfolio) return (
+      <Grid style={{'textAlign':'center','padding':'20px'}}>
+        <div className="loader"></div>
+      </Grid>);
+
+    let filterItems = ['All'];
+    filterItems = filterItems.concat(this.props.user.stockPortfolio.flatTickerList);
 
     let tickers = Object.keys(this.state.news.items);
     let allItems = [];
@@ -54,14 +63,23 @@ class NewsModule extends React.Component {
     })
 
     let newsitems = allItems.map((news, i) => {
+      let date = moment(news.date);
       return (<div key={'newsitem_' + i}>
-        <HelpIcon placement="left" title={news.title} icon="remove_red_eye" content={this.props.lang('html:' + news.summary)} />
-        <a style={{'marginLeft':'5px','cursor':'pointer'}} onClick={this._onClick.bind(this,news)}>{news.title}</a>
+        <HelpIcon placement="right" title={news.title} icon="remove_red_eye"
+                  content={this.props.lang('html:' + news.summary)}/>
+        <a style={{'marginLeft':'5px','cursor':'pointer'}} onClick={this._onClick.bind(this,news)}>{date.format("HH:MM") + ' - ' + news.title + ' ' + date.format("(dd DD/MM)")}</a>
       </div>);
     })
 
     return (
-      <Grid>{newsitems}</Grid>
+      <div className="news_module">
+      <Grid>
+        <Filter keys={filterItems} lang={this.props.lang} translate={false} vertical={true}/>
+        <div className="news_item_list">
+          {newsitems}
+        </div>
+      </Grid>
+        </div>
 
     );
   }
