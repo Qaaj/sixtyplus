@@ -135,7 +135,7 @@ class PortfolioOverview extends React.Component {
 
           <hr />
 
-          <Filter onSelect={::this._setFilter} keys={this.filterKeys} lang={this.props.lang} />
+          <Filter onSelect={::this._setFilter} keys={this.filterKeys} lang={this.props.lang} translate={true}/>
           <Sorter onSelect={::this._onSelect} lang={this.props.lang} keys={this.sortingKeys} />
 
           <div className="checkBoxes">

@@ -17,9 +17,13 @@ class FilterButtons extends React.Component {
   }
 
   _createButtons(filter, i) {
+    let name = filter;
+    if(this.props.translate) name = this.props.lang(filter);
     let selected = (filter === this.state.filter) ? 'primary' : 'default';
     return <Button bsStyle={selected} onClick={this._onSelect.bind(this,filter)} eventKey={filter}
-                   key={'filter'+i}>{this.props.lang(filter)}</Button>;
+                   key={'filter'+i}>
+      {name}
+    </Button>;
   }
 
   componentDidMount(){
@@ -38,7 +42,7 @@ class FilterButtons extends React.Component {
     return (
       <div className="filter">
         <ButtonToolbar>
-          <ButtonGroup>
+          <ButtonGroup vertical={this.props.vertical}>
             {this.filterItems}
           </ButtonGroup>
         </ButtonToolbar>

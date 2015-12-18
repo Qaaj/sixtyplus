@@ -4,7 +4,6 @@ import { Router } from 'react-router';
 import routes from './routes/routes';
 import Header from './components/layout/Header';
 import Menu from './components/layout/Menu';
-import Quickstart from './components/modules/QuickstartModule';
 import Modal from './components/modules/ModalModule';
 
 import UserActionCreators from './actions/UserActionCreators';
