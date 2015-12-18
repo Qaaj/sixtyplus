@@ -14,7 +14,7 @@ export default (App, uiLanguage) => {
             <Route path='Portfolio' component={PortfolioOverview} />
             <Route path='News' component={News} />
             <Route path='Dividends' component={Dividends} />
-            <Redirect from='/' to={`/Import`} />
+            <Redirect from='/' to={`/Portfolio`} />
         </Route>
     );
 };
