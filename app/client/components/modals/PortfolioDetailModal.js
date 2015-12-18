@@ -6,15 +6,12 @@ import SectorComponent from '../ui/SectorComponent';
 import {getMonthlyChart} from '../../../shared/helpers/charts';
 import C3DividendPaymentChart from '../charts/C3DividendPaymentChart';
 import {updateArrayOfEntryCollectionsWithRT, updatePortfolioDividends} from '../../../shared/helpers/stocks';
+import ListGroupRenderer from '../layout/ListGroupRenderer.js';
 
 class PortfolioDetailModal extends React.Component {
 
   constructor(props) {
     super(props);
-  }
-
-  handleCancel() {
-    ModalActionCreators.destroyModal();
   }
 
   handleSave() {
@@ -72,10 +69,53 @@ class PortfolioDetailModal extends React.Component {
      console.log("> Showing chartdata " , chartData);**/
 
     // Zalige progress dude, thanks! heb paar dingen aangepast + tips:
-    // Changed Row / Col to react-bootstrap
-    // Span shouldnt contain divs (added 'small' to UL instead of span around divs which is not valid)
     // Added styling of the modal to _portfolioModal.scss
     // Render function should be as small as possible - move some logic to functions or create reactcomponents (maybe 'dumb' react components e.g. like SectorComponent)
+
+
+    let listGroupsToRender = [
+      // COLUMN 1
+      [{
+        prop: "Cost Base ",
+        value: tickerData.costBase,
+      },
+
+      {
+        prop: "Market Value",
+        value: tickerData.marketValue,
+      },
+
+      {
+        prop: "Dividends Collected",
+        value: tickerData.total_dividends,
+      },
+
+      {
+        prop: "P/L",
+        value: tickerData.profitLoss,
+      }],
+
+      // COLUMN 2
+      [{
+        prop: "435 Day High",
+        value: tickerData['435DayHigh'],
+        },
+
+        {
+          prop: "435 Day Low",
+          value: tickerData['435DayLow'],
+        },
+
+        {
+          prop: "435 Day avg price",
+          value: tickerData['435DayAvgPrice'],
+        },
+
+        {
+          prop: "Your Dividend Yield",
+          value: tickerData.total_dividends,
+        }]
+    ];
 
     return (<Modal show={true} onHide={this.props.onCancel} dialogClassName="portfolio-modal">
       <Modal.Header closeButton>
@@ -114,56 +154,10 @@ class PortfolioDetailModal extends React.Component {
 
           <div className="container-fluid">
             <Row>
-              <Col md={6}>
-                <ListGroup >
-                  <ListGroupItem>
-                    <span className="prop">Cost Base </span>
-
-                    <div className="val">{tickerData.costBase}</div>
-                  </ListGroupItem>
-                  <ListGroupItem>
-                    <span className="prop">Market Value </span>
-
-                    <div className="val">{tickerData.marketValue}</div>
-                  </ListGroupItem>
-                  <ListGroupItem>
-                    <span className="prop">Dividends Collected </span>
-
-                    <div className="val">{tickerData.total_dividends}</div>
-                  </ListGroupItem>
-                  <ListGroupItem bsStyle={tickerData.style}>
-                    <span className="prop">P/L </span>
-
-                    <div className="val">{tickerData.profitLoss} ({tickerData.totalChangePercentageString})</div>
-                  </ListGroupItem>
-                </ListGroup>
-              </Col>
-              <Col md={6}>
-                <ListGroup>
-                  <ListGroupItem>
-                    <span className="prop">435 Day high</span>
-
-                    <div className="val">{tickerData.averagePrice} (x {tickerData.amount})</div>
-                  </ListGroupItem>
-                  <ListGroupItem>
-                    <span className="prop">435 Day low</span>
-
-                    <div className="val">{tickerData.costBase}</div>
-                  </ListGroupItem>
-                  <ListGroupItem>
-                    <span className="prop">435 Day avg price</span>
-
-                    <div className="val">{tickerData.marketValue}</div>
-                  </ListGroupItem>
-                  <ListGroupItem>
-                    <span className="prop">Your Dividend Yield</span>
-
-                    <div className="val">{tickerData.total_dividends}</div>
-                  </ListGroupItem>
-                </ListGroup>
-              </Col>
+              <ListGroupRenderer data={listGroupsToRender} />
             </Row>
           </div>
+
         </div>
 
         <h4>Analysis</h4>
@@ -249,7 +243,7 @@ class PortfolioDetailModal extends React.Component {
       <Modal.Footer>
 
       <span>
-        <Button onClick={this.handleCancel}>Cancel</Button>
+        <Button onClick={this.props.onCancel}>Cancel</Button>
         <Button onClick={this.handleSave}>Save</Button>
       </span>
       </Modal.Footer>

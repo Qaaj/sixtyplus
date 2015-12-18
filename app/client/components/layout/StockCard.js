@@ -5,6 +5,7 @@ import {updateArrayOfEntryCollectionsWithRT} from '../../../shared/helpers/stock
 import SectorComponent from '../ui/SectorComponent';
 import ModalActionCreators from '../../actions/ModalActionCreators';
 import ModalConstants from '../../constants/ModalConstants';
+import ListGroupRenderer from './ListGroupRenderer';
 
 @pureRenderDecorator
 class StockCard extends React.Component {
@@ -19,7 +20,7 @@ class StockCard extends React.Component {
 
   }
 
-  handleClick(){
+  handleClick() {
     ModalActionCreators.setModal({
       isVisible: true,
       type: ModalConstants.PORTFOLIO_DETAIL,
@@ -33,7 +34,7 @@ class StockCard extends React.Component {
 
     //let entries = this.props.entries;
     let entries = this.props.entries.data;
-    if(this.props.includeDiv) entries = this.props.entries.dataWithDividends;
+    if (this.props.includeDiv) entries = this.props.entries.dataWithDividends;
 
     let sectorClass = '';
     let profitColorClass = getProfitLossClassname(entries.first.isUpToday);
@@ -45,40 +46,46 @@ class StockCard extends React.Component {
     let column = {xs: 6, md: 4};
     let sector = entries.sector;
 
+    let listGroupToRender = [[
+      {
+        prop: 'Average Price',
+        value: entries.averagePrice * entries.amount
+      },
+
+      {
+        prop: 'Cost Base',
+        value: entries.costBase
+      },
+      {
+        prop: 'Market Value',
+        value: entries.marketValue
+      },
+
+      {
+        prop: 'Dividends Collected',
+        value: entries.total_dividends
+      },
+
+      {
+        prop: 'P/L',
+        value: ('' + entries.profitLoss + '(' + entries.totalChangePercentageString + ')')
+      }]];
 
     let body = (
-      <Col onClick={this.handleClick.bind(this)} xs={column.xs} md={column.md} >
+      <Col onClick={this.handleClick.bind(this)} xs={column.xs} md={column.md}>
         <div className={"stockCard"}>
-            <h4>{entries.ticker} <span className="stockName">{entries.name} </span></h4>
+          <h4>{entries.ticker} <span className="stockName">{entries.name} </span></h4>
+
           <div className={"basics"}>
 
-          <div className="cardContent">
+            <div className="cardContent">
               <Well>
                 <span className="lastPrice">{entries.lastPrice}</span> <span
-                className={"tickerUpDown  " + profitColorClass}> {entries.first.changeString} ({entries.first.percentChangeString})</span>
+                className={"tickerUpDown  " + profitColorClass}> {entries.first.changeString}
+                ({entries.first.percentChangeString})</span>
               </Well>
-              <ListGroup>
-                <ListGroupItem>
-                  <span className="prop">Average Price</span>
-                  <div className="val">{entries.averagePrice} (x {entries.amount})</div>
-                </ListGroupItem>
-                <ListGroupItem>
-                  <span className="prop">Cost Base </span>
-                  <div className="val">{entries.costBase}</div>
-                </ListGroupItem>
-                <ListGroupItem>
-                  <span className="prop">Market Value </span>
-                  <div className="val">{entries.marketValue}</div>
-                </ListGroupItem>
-                <ListGroupItem>
-                  <span className="prop">Dividends Collected </span>
-                  <div className="val">{entries.total_dividends}</div>
-                </ListGroupItem>
-                <ListGroupItem bsStyle={entries.style}>
-                  <span className="prop">P/L </span>
-                  <div className="val">{entries.profitLoss} ({entries.totalChangePercentageString})</div>
-                </ListGroupItem>
-              </ListGroup>
+
+              <ListGroupRenderer data={listGroupToRender} />
             </div>
             <SectorComponent cx={sectorClass} sector={sector}/>
           </div>

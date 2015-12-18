@@ -98,8 +98,6 @@ class PortfolioOverview extends React.Component {
         doesn't seem to be anything here! Head over to the <a href={"#/Import"}>Importer</a> to
         change that.</Grid>);
 
-
-
     let chartData = getMonthlyChart(portfolio, this.props.historical);
 
     let dividends = stockEntries.reduce((prev, curr) => {
