@@ -112,6 +112,23 @@ class PortfolioDetailModal extends React.Component {
         }]
     ];
 
+    let analysisData = [
+      {
+        image: 'http://placehold.it/75x75"/',
+        description: 'Boom',
+      },
+
+      {
+        image: 'http://placehold.it/75x75"/',
+        description: 'Chakka',
+      },
+
+      {
+        image: 'http://placehold.it/75x75"/',
+        description: 'Lakka!',
+      },
+    ];
+
     return (<Modal show={true} onHide={this.props.onCancel} dialogClassName="portfolio-modal">
       <Modal.Header closeButton>
         <Modal.Title>
@@ -154,7 +171,7 @@ class PortfolioDetailModal extends React.Component {
 
         </div>
 
-        <AnalysisModule />
+        <AnalysisModule data={analysisData}/>
 
         <h4>About {tickerData.ticker}</h4>
         <Row>

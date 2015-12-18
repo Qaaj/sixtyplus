@@ -6,28 +6,22 @@ class AnalysisModule extends React.Component {
   }
 
   render() {
+    let items = this.props.data;
+
+    let itemsToRender = items.map((item, i) => {
+      return (<div key={i} className="col-xs-4">
+              <span>
+                <img style={{width:75,height:75}} src={item.image}/>
+                <p>{item.description}</p>
+              </span>
+      </div>);
+    });
+
     return (<div className="container-fluid">
       <h4>Analysis</h4>
+
       <div className="row">
-        <div className="col-xs-4">
-              <span>
-                <img src="http://placehold.it/75x75"/>
-
-                <p>Bla bla bla BX is so cool I swear it. This is a paragraph whut. Nobody seems to care.</p>
-              </span>
-        </div>
-
-        <div className="col-xs-4">
-          <img src="http://placehold.it/75x75"/>
-
-          <p>Bla bla bla BX is so cool I swear it. This is a paragraph whut. Nobody seems to care.</p>
-        </div>
-
-        <div className="col-xs-4">
-          <img src="http://placehold.it/75x75"/>
-
-          <p>Bla bla bla BX is so cool I swear it. This is a paragraph whut. Nobody seems to care.</p>
-        </div>
+        { itemsToRender }
       </div>
     </div>);
   }
