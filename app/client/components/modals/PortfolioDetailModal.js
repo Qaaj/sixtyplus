@@ -177,7 +177,7 @@ class PortfolioDetailModal extends React.Component {
         <Row>
           <Col xs={6} sm={3}>
             <ul className="list-unstyled small">
-              <li><span style={{width:200}}>P/E</span><span>{tickerExtendedInformation.peRatio}</span></li>
+              <li>P/E</li>
               <li>1 Year Price Target</li>
               <li>Book Value</li>
               <li>52 Wk High</li>
@@ -190,7 +190,7 @@ class PortfolioDetailModal extends React.Component {
           </Col>
           <Col xs={6} sm={3}>
             <ul className="list-unstyled small">
-              <li>ze</li>
+              <li>{tickerExtendedInformation.peRatio}</li>
               <li>{tickerExtendedInformation['1YrTargetPrice']}</li>
               <li>{tickerExtendedInformation.bookValue}</li>
               <li>{tickerExtendedInformation['52WkHigh']}</li>
