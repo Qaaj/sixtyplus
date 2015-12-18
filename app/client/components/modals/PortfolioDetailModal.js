@@ -66,8 +66,6 @@ class PortfolioDetailModal extends React.Component {
 
     let chartData = getMonthlyChart(portfolio, this.props.historical);
 
-    let profitColorClass = getProfitLossClassname(tickerData.first.isUpToday);
-
     let listGroupsToRender = [
       // COLUMN 1
       [{
