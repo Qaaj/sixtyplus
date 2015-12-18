@@ -3,6 +3,7 @@ var WebpackDevServer = require('webpack-dev-server');
 var webpackConfig = require('./../webpack.config.js');
 var path = require('path');
 var mainPath = path.resolve(__dirname, '..', 'app', 'main.js');
+import notifier from 'node-notifier';
 
 module.exports = function () {
 
@@ -14,6 +15,11 @@ module.exports = function () {
   });
   compiler.plugin('done', function() {
     console.log('Bundled in ' + (Date.now() - bundleStart) + 'ms!');
+    notifier.notify({
+      title: 'Build succeeded!',
+      message: 'Bundled in ' + (Date.now() - bundleStart) + 'ms!'
+    });
+
   });
 
   var bundler = new WebpackDevServer(compiler, {

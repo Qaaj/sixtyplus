@@ -81,10 +81,8 @@ class PortfolioOverview extends React.Component {
 
     let portfolio = this.props.user.stockPortfolio;
 
-
     updateArrayOfEntryCollectionsWithRT(portfolio, this.props.rt);
     updatePortfolioDividends(portfolio, this.props.historical);
-
 
     let stockEntries = portfolio.collectionList;
 
@@ -95,7 +93,6 @@ class PortfolioOverview extends React.Component {
 
     let chartData = getMonthlyChart(portfolio, this.props.historical);
 
-
     let dividends = stockEntries.reduce((prev, curr) => {
       if (curr.total_dividends) prev += curr.total_dividends;
       return prev;
@@ -103,7 +100,7 @@ class PortfolioOverview extends React.Component {
 
     dividends = round(dividends);
 
-    let portfolioData = portfolio.portfolioStats
+    let portfolioData = portfolio.portfolioStats;
     if (this.state.includeDiv) portfolioData = portfolio.portfolioStatsWithDividends;
 
 
