@@ -20,7 +20,8 @@ var client = redis.createClient(redis_url);
 
 client.select(0);
 
-
+const DAY = 86400;
+const HOUR = 3600;
 
 const DataStore = {
 
@@ -30,12 +31,14 @@ const DataStore = {
     return dataMap.toJS();
   },
 
+
+
   setCachedData({option,ticker,json}){
     client.set(option+':'+ticker, JSON.stringify(json));
     // Refresh news every 10 minutes
-    if (option == 'news') client.expire(option+':'+ticker,300);
+    if (option == 'news') client.expire(option+':'+ticker,3 * HOUR);
     if (option == 'stockdata') client.expire(option+':'+ticker,10);
-    if (option == 'historical:v' || option == 'historical:m') client.expire(option+':'+ticker,86400);
+    if (option == 'historical:v' || option == 'historical:m') client.expire(option+':'+ticker,DAY);
     if (!process.env.REDISCLOUD_URL) client.save();
   },
 

@@ -13,9 +13,9 @@
  //OK Clean up CSS
  //OK Make portfolio class
  //OK Shortcuts to js folders for packages?
- // OK Caching for everything
- // OK Cache the streaming prices and let the users 'fetch' it without making extra call to yahoo finance
- // OK Make filter and sorting components seperate re-usable components
+ //OK Caching for everything
+ //OK Cache the streaming prices and let the users 'fetch' it without making extra call to yahoo finance
+ //OK Make filter and sorting components seperate re-usable components
  // Graph with total returns / dividends / costbase
  // Modal for stock entry information
  // Use immutable in the components

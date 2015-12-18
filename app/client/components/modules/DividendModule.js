@@ -1,4 +1,4 @@
-import { Input,Button,Grid } from 'react-bootstrap';
+import { Input,Button,Grid,ListGroup, ListGroupItem} from 'react-bootstrap';
 import HelpIcon from '../ui/HelpIcon';
 import FixedDataTable  from 'fixed-data-table';
 import {Table, Column, Cell} from 'fixed-data-table';
@@ -39,30 +39,9 @@ const DateCell = ({rowIndex, data, col, ...props}) => (
 class DividendModule extends React.Component {
   constructor(props) {
     super(props);
-
-    this.state = {
-      dataList: [{
-        firstName: 'Jan',
-        lastName: 'Jorissen',
-        city: 'Berlin',
-        street: 'Pannierstrasse',
-        zipCode: '3001',
-        email: 'janjorissen@gmail.com',
-        date: new Date(),
-      }, {
-        firstName: 'Jan',
-        lastName: 'Jorissen',
-        city: 'Berlin',
-        street: 'Pannierstrasse',
-        zipCode: '3001',
-        email: 'janjorissen@gmail.com',
-        date: new Date(),
-      }]
-    };
   }
 
   render() {
-
 
 
     if (!this.props.user.userData || !this.props.user.userData.portfolio || !this.props.historical) return (
@@ -85,9 +64,9 @@ class DividendModule extends React.Component {
     let divs = createDividendTableData(portfolio, this.props.historical);
 
     return (
-      <div>
+      <div className="dividend_page">
         <Grid>
-          <Table
+          <Table className="dividend_table"
             rowHeight={40}
             headerHeight={40}
             rowsCount={divs.length}
@@ -125,7 +104,12 @@ class DividendModule extends React.Component {
               width={100}
             />
           </Table>
-          <p>Total Dividends Collected: {dividends}</p>
+          <ListGroup className="dividend_summary">
+            <ListGroupItem>
+              <span className="prop">Total Dividends Collected: </span>
+              <div className="val">{dividends}</div>
+            </ListGroupItem>
+          </ListGroup>
         </Grid>
       </div>
     );
