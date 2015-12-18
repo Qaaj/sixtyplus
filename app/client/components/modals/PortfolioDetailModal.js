@@ -8,6 +8,7 @@ import C3DividendPaymentChart from '../charts/C3DividendPaymentChart';
 import {updateArrayOfEntryCollectionsWithRT, updatePortfolioDividends} from '../../../shared/helpers/stocks';
 import ListGroupRenderer from '../layout/ListGroupRenderer.js';
 import {getProfitLossClassname} from '../../../shared/helpers/colors/ColorUtils';
+import AnalysisModule from '../modules/AnalysisModule';
 
 class PortfolioDetailModal extends React.Component {
 
@@ -73,27 +74,27 @@ class PortfolioDetailModal extends React.Component {
         value: tickerData.costBase,
       },
 
-      {
-        prop: "Market Value",
-        value: tickerData.marketValue,
-      },
+        {
+          prop: "Market Value",
+          value: tickerData.marketValue,
+        },
 
-      {
-        prop: "Dividends Collected",
-        value: tickerData.total_dividends,
-      },
+        {
+          prop: "Dividends Collected",
+          value: tickerData.total_dividends,
+        },
 
-      {
-        prop: "P/L",
-        value: ('' + tickerData.profitLoss + '(' + tickerData.totalChangePercentageString + ')'),
-        listGroupItemStyle: tickerData.style,
-      }],
+        {
+          prop: "P/L",
+          value: ('' + tickerData.profitLoss + '(' + tickerData.totalChangePercentageString + ')'),
+          listGroupItemStyle: tickerData.style,
+        }],
 
       // COLUMN 2
       [{
         prop: "435 Day High",
         value: tickerData['435DayHigh'],
-        },
+      },
 
         {
           prop: "435 Day Low",
@@ -147,43 +148,19 @@ class PortfolioDetailModal extends React.Component {
         <div className="statsComponent">
           <div className="container-fluid">
             <Row>
-              <ListGroupRenderer data={listGroupsToRender} md={6} />
+              <ListGroupRenderer data={listGroupsToRender} md={6}/>
             </Row>
           </div>
 
         </div>
 
-        <h4>Analysis</h4>
-
-        <div className="container-fluid">
-          <div className="row">
-            <div className="col-xs-4">
-              <span>
-                <img src="http://placehold.it/75x75"/>
-
-                <p>Bla bla bla BX is so cool I swear it. This is a paragraph whut. Nobody seems to care.</p>
-              </span>
-            </div>
-
-            <div className="col-xs-4">
-              <img src="http://placehold.it/75x75"/>
-
-              <p>Bla bla bla BX is so cool I swear it. This is a paragraph whut. Nobody seems to care.</p>
-            </div>
-
-            <div className="col-xs-4">
-              <img src="http://placehold.it/75x75"/>
-
-              <p>Bla bla bla BX is so cool I swear it. This is a paragraph whut. Nobody seems to care.</p>
-            </div>
-          </div>
-        </div>
+        <AnalysisModule />
 
         <h4>About {tickerData.ticker}</h4>
         <Row>
           <Col xs={6} sm={3}>
             <ul className="list-unstyled small">
-              <li>P/E</li>
+              <li><span style={{width:200}}>P/E</span><span>{tickerExtendedInformation.peRatio}</span></li>
               <li>1 Year Price Target</li>
               <li>Book Value</li>
               <li>52 Wk High</li>
@@ -196,7 +173,7 @@ class PortfolioDetailModal extends React.Component {
           </Col>
           <Col xs={6} sm={3}>
             <ul className="list-unstyled small">
-              <li>{tickerExtendedInformation.peRatio}</li>
+              <li>ze</li>
               <li>{tickerExtendedInformation['1YrTargetPrice']}</li>
               <li>{tickerExtendedInformation.bookValue}</li>
               <li>{tickerExtendedInformation['52WkHigh']}</li>
