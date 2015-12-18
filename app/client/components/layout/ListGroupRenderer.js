@@ -6,9 +6,10 @@ class ListGroupRenderer extends React.Component {
   }
 
   _renderColumnItem(item, i) {
-    return (<ListGroupItem key={i}>
+    return (<ListGroupItem key={i} bsStyle={item.listGroupItemStyle}>
       <span className="prop">{ item.prop }</span>
-      <div className="val">{ item.value }</div>
+
+      <div className="val">{ item.value ? item.value: '-' }</div>
     </ListGroupItem>);
   }
 
@@ -19,9 +20,11 @@ class ListGroupRenderer extends React.Component {
   }
 
   _renderColumns(columnsToRender) {
-    return  columnsToRender.map((column, i) => {
-      return (<Col key={i}>
-        <ListGroup>
+    return columnsToRender.map((column, i) => {
+      return (
+
+        <Col {...this.props} key={i}>
+          <ListGroup>
           { this._renderColumnItems(column) }
         </ListGroup>
       </Col>);

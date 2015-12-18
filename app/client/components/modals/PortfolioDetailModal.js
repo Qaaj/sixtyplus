@@ -7,6 +7,7 @@ import {getMonthlyChart} from '../../../shared/helpers/charts';
 import C3DividendPaymentChart from '../charts/C3DividendPaymentChart';
 import {updateArrayOfEntryCollectionsWithRT, updatePortfolioDividends} from '../../../shared/helpers/stocks';
 import ListGroupRenderer from '../layout/ListGroupRenderer.js';
+import {getProfitLossClassname} from '../../../shared/helpers/colors/ColorUtils';
 
 class PortfolioDetailModal extends React.Component {
 
@@ -65,13 +66,7 @@ class PortfolioDetailModal extends React.Component {
 
     let chartData = getMonthlyChart(portfolio, this.props.historical);
 
-    /**console.log("> Showing portfolio " , portfolio);
-     console.log("> Showing chartdata " , chartData);**/
-
-    // Zalige progress dude, thanks! heb paar dingen aangepast + tips:
-    // Added styling of the modal to _portfolioModal.scss
-    // Render function should be as small as possible - move some logic to functions or create reactcomponents (maybe 'dumb' react components e.g. like SectorComponent)
-
+    let profitColorClass = getProfitLossClassname(tickerData.first.isUpToday);
 
     let listGroupsToRender = [
       // COLUMN 1
@@ -92,7 +87,8 @@ class PortfolioDetailModal extends React.Component {
 
       {
         prop: "P/L",
-        value: tickerData.profitLoss,
+        value: ('' + tickerData.profitLoss + '(' + tickerData.totalChangePercentageString + ')'),
+        listGroupItemStyle: tickerData.style,
       }],
 
       // COLUMN 2
@@ -151,10 +147,9 @@ class PortfolioDetailModal extends React.Component {
         </table>
 
         <div className="statsComponent">
-
           <div className="container-fluid">
             <Row>
-              <ListGroupRenderer data={listGroupsToRender} />
+              <ListGroupRenderer data={listGroupsToRender} md={6} />
             </Row>
           </div>
 
