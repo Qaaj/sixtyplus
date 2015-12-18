@@ -6,44 +6,37 @@ class ListGroupRenderer extends React.Component {
   }
 
   _renderColumnItem(item, i) {
-    console.log('item ' , item.prop);
-    return (
-      <ListGroupItem key={i}>
-        <span className="prop">{ item.prop }</span>
-
-        <div className="val">{ item.value }</div>
-      </ListGroupItem>);
+    return (<ListGroupItem key={i}>
+      <span className="prop">{ item.prop }</span>
+      <div className="val">{ item.value }</div>
+    </ListGroupItem>);
   }
 
   _renderColumnItems(column) {
-    console.log("Items");
-    let group = column.map((item, i) => {
-      this._renderColumnItem(item, i)
+    return column.map((item, i) => {
+      return this._renderColumnItem(item, i)
     });
-
-    return (<ListGroup>
-      { group }
-    </ListGroup>);
   }
 
-  _renderColumns() {
-    console.log("Column");
-    let columnsToRender = this.props.data;
-
-    let columns = columnsToRender.map((column, i) => {
-      return (<Col md={6} key={i}>
-        { this._renderColumnItems(column) }
+  _renderColumns(columnsToRender) {
+    return  columnsToRender.map((column, i) => {
+      return (<Col key={i}>
+        <ListGroup>
+          { this._renderColumnItems(column) }
+        </ListGroup>
       </Col>);
     });
-
-    return columns;
   }
 
   render() {
-    let columns = this._renderColumns();
-    console.log(columns);
-    return columns;
+    let columnsToRender = this._renderColumns(this.props.data);
+
+    return (<div>
+      { columnsToRender }
+    </div>);
   }
 }
+
+ListGroupRenderer.displayName = 'ListGroupRenderer';
 
 export default ListGroupRenderer;

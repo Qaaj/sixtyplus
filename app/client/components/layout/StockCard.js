@@ -46,7 +46,7 @@ class StockCard extends React.Component {
     let column = {xs: 6, md: 4};
     let sector = entries.sector;
 
-    let listGroupToRender = [[
+    var listGroupToRender = [[
       {
         prop: 'Average Price',
         value: entries.averagePrice * entries.amount
@@ -69,7 +69,8 @@ class StockCard extends React.Component {
       {
         prop: 'P/L',
         value: ('' + entries.profitLoss + '(' + entries.totalChangePercentageString + ')')
-      }]];
+      }]
+    ];
 
     let body = (
       <Col onClick={this.handleClick.bind(this)} xs={column.xs} md={column.md}>
@@ -86,6 +87,7 @@ class StockCard extends React.Component {
               </Well>
 
               <ListGroupRenderer data={listGroupToRender} />
+
             </div>
             <SectorComponent cx={sectorClass} sector={sector}/>
           </div>
