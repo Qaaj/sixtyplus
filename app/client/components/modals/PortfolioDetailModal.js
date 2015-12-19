@@ -9,6 +9,7 @@ import {updateArrayOfEntryCollectionsWithRT, updatePortfolioDividends} from '../
 import ListGroupRenderer from '../layout/ListGroupRenderer.js';
 import {getProfitLossClassname} from '../../../shared/helpers/colors/ColorUtils';
 import AnalysisModule from '../modules/AnalysisModule';
+import AboutComponent from '../layout/ColumnRenderer';
 
 class PortfolioDetailModal extends React.Component {
 
@@ -129,6 +130,44 @@ class PortfolioDetailModal extends React.Component {
       },
     ];
 
+    let arr = Object.keys(tickerExtendedInformation);
+
+    let amountInFirstColumn = (arr.length / 2);
+
+    let column1 = arr.slice(0, amountInFirstColumn);
+    let column2 = arr.slice(amountInFirstColumn+1, arr.length);
+
+    let aboutDataColumn1 = column1.map((key, i) => {
+      return {
+        prop: this.props.lang(key),
+      }
+    });
+
+    let aboutDataColumn2 = column1.map((key, i) => {
+      return {
+        value: tickerExtendedInformation['' + key],
+      }
+    });
+
+    let aboutDataColumn3 = column2.map((key, i) => {
+      return {
+        prop: this.props.lang(key),
+      }
+    });
+
+    let aboutDataColumn4 = column2.map((key, i) => {
+      return {
+        value: tickerExtendedInformation['' + key],
+      }
+    });
+
+    let aboutData = [
+      aboutDataColumn1,
+      aboutDataColumn2,
+      aboutDataColumn3,
+      aboutDataColumn4,
+    ];
+
     return (<Modal show={true} onHide={this.props.onCancel} dialogClassName="portfolio-modal">
       <Modal.Header closeButton>
         <Modal.Title>
@@ -173,59 +212,7 @@ class PortfolioDetailModal extends React.Component {
 
         <AnalysisModule data={analysisData}/>
 
-        <h4>About {tickerData.ticker}</h4>
-        <Row>
-          <Col xs={6} sm={3}>
-            <ul className="list-unstyled small">
-              <li>P/E</li>
-              <li>1 Year Price Target</li>
-              <li>Book Value</li>
-              <li>52 Wk High</li>
-              <li>52 Wk Low</li>
-              <li>Change from 52Wk High</li>
-              <li>EPS</li>
-              <li>EPS Current Year (est)</li>
-              <li>EPS Next Year (est)</li>
-            </ul>
-          </Col>
-          <Col xs={6} sm={3}>
-            <ul className="list-unstyled small">
-              <li>{tickerExtendedInformation.peRatio}</li>
-              <li>{tickerExtendedInformation['1YrTargetPrice']}</li>
-              <li>{tickerExtendedInformation.bookValue}</li>
-              <li>{tickerExtendedInformation['52WkHigh']}</li>
-              <li>{tickerExtendedInformation['52WkLow']}</li>
-              <li>{tickerExtendedInformation.changeFrom52WeekHigh}</li>
-              <li>{tickerExtendedInformation.earningsPerShare}</li>
-              <li>{tickerExtendedInformation.epsEstimateCurrentYear}</li>
-              <li>{tickerExtendedInformation.epsEstimateNextYear}</li>
-            </ul>
-          </Col>
-          <Col xs={6} sm={3}>
-            <ul className="list-unstyled small">
-              <li>50 Day Moving Avg.</li>
-              <li>200 Day Moving Avg.</li>
-              <br />
-              <li>Dividends This Year</li>
-              <li>Dividends Last Year</li>
-              <li>Est Divs. next year</li>
-              <br />
-              <li>Dividend Yield</li>
-            </ul>
-          </Col>
-          <Col xs={6} sm={3}>
-            <ul className="list-unstyled small">
-              <li>{tickerExtendedInformation['50DayMovingAverage']}</li>
-              <li>{tickerExtendedInformation['200DayMovingAverage']}</li>
-              <br />
-              <li>DIV T Y</li>
-              <li>DIV L Y</li>
-              <li>E DIV N Y</li>
-              <br />
-              <li>{tickerExtendedInformation.dividendYield}</li>
-            </ul>
-          </Col>
-        </Row>
+        <AboutComponent title={tickerData.ticker} data={aboutData} xs={6} sm={3}/>
       </Modal.Body>
       <Modal.Footer>
 
