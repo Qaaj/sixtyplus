@@ -3,7 +3,7 @@ import ModalActionCreators from '../../actions/ModalActionCreators';
 import ModalConstants from '../../constants/ModalConstants';
 import {getUniqueColor, getClassBySector} from '../../../shared/helpers/colors/ColorUtils';
 import SectorComponent from '../ui/SectorComponent';
-import {getMonthlyChart} from '../../../shared/helpers/charts';
+import {getMonthlyChart} from '../../../shared/helpers/charts/getMonthlyChart';
 import C3DividendPaymentChart from '../charts/C3DividendPaymentChart';
 import {updateArrayOfEntryCollectionsWithRT, updatePortfolioDividends} from '../../../shared/helpers/stocks';
 import ListGroupRenderer from '../layout/ListGroupRenderer.js';

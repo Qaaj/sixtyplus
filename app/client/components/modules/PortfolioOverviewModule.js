@@ -10,7 +10,8 @@ import SingleStock from '../importer/ui/SinglePreviewImportStock';
 import StockTable from '../tables/StockTable';
 import { Input, Grid, DropdownButton, MenuItem, ButtonToolbar, Button, ButtonGroup,ListGroup,ListGroupItem, Popover, OverlayTrigger, Panel } from 'react-bootstrap';
 import {updateArrayOfEntryCollectionsWithRT, updatePortfolioDividends} from '../../../shared/helpers/stocks';
-import {getMonthlyChart} from '../../../shared/helpers/charts';
+import {getPortfolioChart} from '../../../shared/helpers/charts/getPortfolioChart';
+import {getProfitLossChart} from '../../../shared/helpers/charts/getProfitLossChart';
 import C3PortfolioChart from '../charts/C3PortfolioChart';
 import {round} from '../../../shared/helpers/formatting';
 import HelpIcon from '../ui/HelpIcon';
@@ -91,7 +92,7 @@ class PortfolioOverview extends React.Component {
         doesn't seem to be anything here! Head over to the <a href={"#/Import"}>Importer</a> to
         change that.</Grid>);
 
-    let chartData = getMonthlyChart(portfolio, this.props.historical);
+    let chartData = getProfitLossChart(portfolio, this.props.historical);
 
     let dividends = stockEntries.reduce((prev, curr) => {
       if (curr.total_dividends) prev += curr.total_dividends;

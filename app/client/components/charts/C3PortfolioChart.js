@@ -12,7 +12,26 @@ class C3PortfolioChart extends React.Component {
   }
 
   render() {
-    //portfolio-chart
+
+    let chartData = this.props.data;
+
+    // Customise the look and feel of the chart
+
+    // Set the styles for all the tickers except the Cost Base
+    chartData.types = chartData.tickers.reduce((prev, curr) => {
+      prev[curr] = 'area-spline';
+      return prev;
+    }, {});
+    chartData.types["Cost Base"] = 'bar';
+
+    // Group the tickers together
+    chartData.groups = [["Cost Base"], chartData.portfolio.flatTickerList];
+
+    // Set the colour for the Cost Base
+    chartData.colors = {
+      "Cost Base": d3.rgb(230, 230, 230),
+    }
+    
     return (
       <div>
         <div className="protfolio_chart_menu">
