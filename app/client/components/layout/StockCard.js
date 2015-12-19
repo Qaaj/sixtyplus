@@ -48,26 +48,26 @@ class StockCard extends React.Component {
 
     var listGroupToRender = [[
       {
-        prop: 'Average Price',
+        prop: this.props.lang('averagePrice'),
         value: entries.averagePrice * entries.amount,
       },
 
       {
-        prop: 'Cost Base',
+        prop: this.props.lang('costBase'),
         value: entries.costBase,
       },
       {
-        prop: 'Market Value',
+        prop: this.props.lang('marketValue'),
         value: entries.marketValue,
       },
 
       {
-        prop: 'Dividends Collected',
+        prop: this.props.lang('dividendsCollected'),
         value: entries.total_dividends,
       },
 
       {
-        prop: 'P/L',
+        prop: this.props.lang('profitLoss'),
         value: ('' + entries.profitLoss + '(' + entries.totalChangePercentageString + ')'),
         listGroupItemStyle: entries.style,
       }]
