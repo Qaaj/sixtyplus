@@ -18,6 +18,8 @@ class C3Chart extends React.Component {
         types: data.types,
         groups: data.groups,
         colors: data.colors,
+        labels: data.labels,
+        color: data.color,
       },
       bar: {
         width: {
@@ -26,15 +28,10 @@ class C3Chart extends React.Component {
         // or
         //width: 100 // this makes bar width 100px
       },
-      axis: {
-        x: {
-          type: 'timeseries',
-          tick: {
-            format: '%Y-%m'
-          }
-        }
-      }
+      axis: data.axis
     }
+
+    console.log(chartData);
 
     c3.generate(chartData);
 

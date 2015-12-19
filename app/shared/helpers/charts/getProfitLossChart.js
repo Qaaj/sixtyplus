@@ -1,6 +1,5 @@
 import {round} from '../formatting';
 import {sortByKey} from '../sorting';
-import d3 from 'd3';
 
 export function getProfitLossChart(portfolio, historical) {
 
@@ -28,7 +27,8 @@ export function getProfitLossChart(portfolio, historical) {
       if (!info_for_this_date) info_for_this_date = {};
       if (!info_for_this_date['Cost Base']) info_for_this_date['Cost Base'] = 0;
       info_for_this_date['Cost Base'] += round(portfolio.getEntryCollectionByTicker(ticker).getAmountAtDate(month) * portfolio.getEntryCollectionByTicker(ticker).averagePrice, 2);
-      info_for_this_date[ticker] = round(res);
+      if(!info_for_this_date['P&L']) info_for_this_date['P&L'] = 0;
+      info_for_this_date['P&L'] += round(res);
       info_per_date[date] = info_for_this_date;
     });
 
@@ -36,16 +36,20 @@ export function getProfitLossChart(portfolio, historical) {
 
   // Change the info per date object to a iterable array
   let array_of_dates = Object.keys(info_per_date).map(date => {
-    return ( {date, data: info_per_date[date]});
+    let thisdate = info_per_date[date];
+    let costBase = thisdate['Cost Base'];
+    let PL = thisdate['P&L'];
+    let percent = round( 100 * (PL - costBase) / costBase)
+    return ( {date, percent});
   })
 
   // Add cost base as a 'ticker' so we can parse it with the rest
-  tickers.push("Cost Base");
+  tickers = ['P&L']
 
   const chart = tickers.map(ticker => {
     let ticker_array = [];
     array_of_dates.forEach(date => {
-      let value = date.data[ticker];
+      let value = date.percent;
       if (!value) value = 0;
       ticker_array.push(value);
     })
@@ -54,6 +58,7 @@ export function getProfitLossChart(portfolio, historical) {
     return ticker_array;
   });
 
+
   // Set up the labels for the x-axis
   let month_labels = Object.keys(info_per_date);
   month_labels.reverse();
@@ -61,6 +66,55 @@ export function getProfitLossChart(portfolio, historical) {
   let columns = [month_labels];
   columns = columns.concat(chart);
 
-  return {columns, tickers, portfolio};
+  let styling = getStyling(tickers,portfolio);
 
+  return {columns, ...styling};
+
+}
+
+function getStyling(tickers,portfolio){
+
+  // Set the styles for all the tickers except the Cost Base
+
+  let types = tickers.reduce((prev, curr) => {
+    prev[curr] = 'line';
+    return prev;
+  }, {});
+
+
+  // Group the tickers together
+  let groups = [portfolio.flatTickerList];
+
+  let color = function (color,object) {
+    if(object.value < 0) return '#DD332A';
+    if(object.value > 0) return '#77ad1a';
+    return d3.rgb(200, 200, 200);
+  };
+
+  // Set the colour for the Cost Base
+  let colors = {
+    "P&L": '#0277BD',
+  }
+
+  let labels = {
+    format: {
+      'P&L': (v) => v+'%'
+      }
+  }
+
+  let axis = {
+    x: {
+      type: 'timeseries',
+      tick: {
+        format: '%Y-%m'
+      }
+    },
+    y : {
+      tick: {
+        format: function (d) { return d + " %"; }
+      }
+    }
+  }
+
+  return {groups,types,colors, axis, color};
 }

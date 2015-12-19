@@ -10,8 +10,6 @@ import SingleStock from '../importer/ui/SinglePreviewImportStock';
 import StockTable from '../tables/StockTable';
 import { Input, Grid, DropdownButton, MenuItem, ButtonToolbar, Button, ButtonGroup,ListGroup,ListGroupItem, Popover, OverlayTrigger, Panel } from 'react-bootstrap';
 import {updateArrayOfEntryCollectionsWithRT, updatePortfolioDividends} from '../../../shared/helpers/stocks';
-import {getPortfolioChart} from '../../../shared/helpers/charts/getPortfolioChart';
-import {getProfitLossChart} from '../../../shared/helpers/charts/getProfitLossChart';
 import C3PortfolioChart from '../charts/C3PortfolioChart';
 import {round} from '../../../shared/helpers/formatting';
 import HelpIcon from '../ui/HelpIcon';
@@ -92,7 +90,6 @@ class PortfolioOverview extends React.Component {
         doesn't seem to be anything here! Head over to the <a href={"#/Import"}>Importer</a> to
         change that.</Grid>);
 
-    let chartData = getProfitLossChart(portfolio, this.props.historical);
 
     let dividends = stockEntries.reduce((prev, curr) => {
       if (curr.total_dividends) prev += curr.total_dividends;
@@ -131,7 +128,7 @@ class PortfolioOverview extends React.Component {
           <span>
             Portfolio Graph
             <HelpIcon className="portfolio_graph_help" title={this.props.lang('portfolio_graph')} icon="help_outline" content={this.props.lang('portfolio_graph_help')} /> </span>} eventKey="1">
-            <C3PortfolioChart data={chartData}/>
+            <C3PortfolioChart portfolio={portfolio} historical={this.props.historical} />
           </Panel>
 
           <hr />

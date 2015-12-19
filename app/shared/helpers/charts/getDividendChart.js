@@ -1,8 +1,7 @@
 import {round} from '../formatting';
 import {sortByKey} from '../sorting';
-import d3 from 'd3';
 
-export function getPortfolioChart(portfolio, historical) {
+export function getDividendChart(portfolio, historical) {
 
   let tickers = portfolio.flatTickerList;
   let info_per_date = {};
@@ -28,7 +27,8 @@ export function getPortfolioChart(portfolio, historical) {
       if (!info_for_this_date) info_for_this_date = {};
       if (!info_for_this_date['Cost Base']) info_for_this_date['Cost Base'] = 0;
       info_for_this_date['Cost Base'] += round(portfolio.getEntryCollectionByTicker(ticker).getAmountAtDate(month) * portfolio.getEntryCollectionByTicker(ticker).averagePrice, 2);
-      info_for_this_date[ticker] = round(res);
+      if(!info_for_this_date['Market Value']) info_for_this_date['Market Value'] = 0;
+      info_for_this_date['Market Value'] += round(res);
       info_per_date[date] = info_for_this_date;
     });
 
@@ -40,6 +40,7 @@ export function getPortfolioChart(portfolio, historical) {
   })
 
   // Add cost base as a 'ticker' so we can parse it with the rest
+  tickers = ['Market Value']
   tickers.push("Cost Base");
 
   const chart = tickers.map(ticker => {
@@ -61,7 +62,6 @@ export function getPortfolioChart(portfolio, historical) {
   let columns = [month_labels];
   columns = columns.concat(chart);
 
-  // Styling
   let styling = getStyling(tickers,portfolio);
 
   return {columns, ...styling};

@@ -3,47 +3,37 @@
  */
 import C3Chart from './C3Chart';
 import {Button, ButtonGroup, ButtonToolbar} from 'react-bootstrap';
-
+import {getPortfolioChart} from '../../../shared/helpers/charts/getPortfolioChart';
+import {getProfitLossChart} from '../../../shared/helpers/charts/getProfitLossChart';
+import {getDividendChart} from '../../../shared/helpers/charts/getDividendChart';
 
 class C3PortfolioChart extends React.Component {
 
   constructor(props) {
     super(props);
+    this.state = {currentChart: getPortfolioChart};
   }
 
   render() {
 
-    let chartData = this.props.data;
+    let chartData = this.state.currentChart(this.props.portfolio, this.props.historical);
 
-    // Customise the look and feel of the chart
+    //// Customise the look and feel of the chart
 
-    // Set the styles for all the tickers except the Cost Base
-    chartData.types = chartData.tickers.reduce((prev, curr) => {
-      prev[curr] = 'area-spline';
-      return prev;
-    }, {});
-    chartData.types["Cost Base"] = 'bar';
 
-    // Group the tickers together
-    chartData.groups = [["Cost Base"], chartData.portfolio.flatTickerList];
-
-    // Set the colour for the Cost Base
-    chartData.colors = {
-      "Cost Base": d3.rgb(230, 230, 230),
-    }
 
     return (
       <div>
         <div className="protfolio_chart_menu">
           <ButtonToolbar>
             <ButtonGroup bsSize="xsmall">
-              <Button>Portfolio Size</Button>
-              <Button>Dividends</Button>
-              <Button>P&L</Button>
+              <Button onClick={() => {this.setState({currentChart:getPortfolioChart})}}>Portfolio Size</Button>
+              <Button onClick={() => {this.setState({currentChart:getDividendChart})}}>Dividends</Button>
+              <Button onClick={() => {this.setState({currentChart:getProfitLossChart})}}>P&L</Button>
             </ButtonGroup>
           </ButtonToolbar>
         </div>
-        <C3Chart data={this.props.data} className="portfolio-chart">
+        <C3Chart data={chartData} className="portfolio-chart">
           <div className='loader'/>
         </C3Chart>
       </div>);

@@ -16,7 +16,7 @@ class StockPortfolio {
       return prev;
       }, moment('29991212','YYYYMMDD'));
 
-    let minusOneMonth = firstBuy.firstBuyEntry.date.clone().subtract(3, 'months');
+    let minusOneMonth = firstBuy.firstBuyEntry.date.clone().subtract(0, 'months');
     // Get dividend info for existing portfolio
     this.flatTickerList.forEach(ticker =>{
       HistoricalActions.getHistoricalDividends({ ticker});
