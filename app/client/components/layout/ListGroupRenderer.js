@@ -1,4 +1,4 @@
-import { ListGroup, ListGroupItem, Row, Col } from 'react-bootstrap';
+import { ListGroup, ListGroupItem, Col } from 'react-bootstrap';
 
 class ListGroupRenderer extends React.Component {
   constructor(props) {
