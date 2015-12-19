@@ -8,12 +8,121 @@ import C3DividendPaymentChart from '../charts/C3DividendPaymentChart';
 import {updateArrayOfEntryCollectionsWithRT, updatePortfolioDividends} from '../../../shared/helpers/stocks';
 import ListGroupRenderer from '../layout/ListGroupRenderer.js';
 import {getProfitLossClassname} from '../../../shared/helpers/colors/ColorUtils';
-import AnalysisModule from '../modules/AnalysisModule';
+import TickerDetailsAnalysisComponent from '../layout/TickerDetailsAnalysisComponent';
+import TickerDetailsAboutComponent from '../layout/TickerDetailsAboutComponent';
 
 class PortfolioDetailModal extends React.Component {
 
   constructor(props) {
     super(props);
+
+    let tickerData = this.props.data;
+    let tickerExtendedInformation = this.props.rt[tickerData.ticker];
+
+    const listGroupsToRender = [
+      // COLUMN 1
+      [{
+        prop: this.props.lang('costBase'),
+        value: tickerData.costBase,
+      },
+
+        {
+          prop: this.props.lang('marketValue'),
+          value: tickerData.marketValue,
+        },
+
+        {
+          prop: this.props.lang('dividendsCollected'),
+          value: tickerData.total_dividends,
+        },
+
+        {
+          prop: this.props.lang('profitLoss'),
+          value: ('' + tickerData.profitLoss + '(' + tickerData.totalChangePercentageString + ')'),
+          listGroupItemStyle: tickerData.style,
+        }],
+
+      // COLUMN 2
+      [{
+        prop: this.props.lang('435DayHigh'),
+        value: tickerData['435DayHigh'],
+      },
+
+        {
+          prop: this.props.lang('435DayLow'),
+          value: tickerData['435DayLow'],
+        },
+
+        {
+          prop: this.props.lang('435DayAveragePrice'),
+          value: tickerData['435DayAveragePrice'],
+        },
+
+        {
+          prop: this.props.lang('dividendYield'),
+          value: tickerData.dividendYield,
+        }]
+    ];
+
+    const analysisData = [
+      {
+        image: 'http://placehold.it/75x75"/',
+        description: 'Boom',
+      },
+
+      {
+        image: 'http://placehold.it/75x75"/',
+        description: 'Chakka',
+      },
+
+      {
+        image: 'http://placehold.it/75x75"/',
+        description: 'Lakka!',
+      },
+    ];
+
+    const arr = Object.keys(tickerExtendedInformation);
+    const amountInFirstColumn = (arr.length / 2);
+
+    const column1 = arr.slice(0, amountInFirstColumn);
+    const column2 = arr.slice(amountInFirstColumn + 1, arr.length);
+
+    const aboutDataColumn1 = column1.map((key, i) => {
+      return {
+        prop: this.props.lang(key),
+      }
+    });
+
+    const aboutDataColumn2 = column1.map((key, i) => {
+      return {
+        value: tickerExtendedInformation['' + key],
+      }
+    });
+
+    const aboutDataColumn3 = column2.map((key, i) => {
+      return {
+        prop: this.props.lang(key),
+      }
+    });
+
+    const aboutDataColumn4 = column2.map((key, i) => {
+      return {
+        value: tickerExtendedInformation['' + key],
+      }
+    });
+
+    const aboutDetailsData = [
+      aboutDataColumn1,
+      aboutDataColumn2,
+      aboutDataColumn3,
+      aboutDataColumn4,
+    ];
+
+    this.state = {
+      analysisData: analysisData,
+      listGroupsToRender: listGroupsToRender,
+      aboutDetailsData: aboutDetailsData,
+    }
   }
 
   handleSave() {
@@ -27,20 +136,14 @@ class PortfolioDetailModal extends React.Component {
 
   render() {
     let tickerData = this.props.data;
-    let ticker = tickerData.ticker;
-
-    let tickerExtendedInformation = this.props.rt[ticker];
-
     console.log("> Showing ", tickerData);
 
     let sectorClass = '';
-
     if (tickerData.sector) {
       sectorClass = getClassBySector(tickerData.sector)
     }
 
     let sector = tickerData.sector;
-
     let entries = tickerData.entries.map((stockEntry, i) => {
 
       return (<tr key={i}>
@@ -66,68 +169,6 @@ class PortfolioDetailModal extends React.Component {
     updatePortfolioDividends(portfolio, this.props.historical);
 
     let chartData = getMonthlyChart(portfolio, this.props.historical);
-
-    let listGroupsToRender = [
-      // COLUMN 1
-      [{
-        prop: "Cost Base ",
-        value: tickerData.costBase,
-      },
-
-        {
-          prop: "Market Value",
-          value: tickerData.marketValue,
-        },
-
-        {
-          prop: "Dividends Collected",
-          value: tickerData.total_dividends,
-        },
-
-        {
-          prop: "P/L",
-          value: ('' + tickerData.profitLoss + '(' + tickerData.totalChangePercentageString + ')'),
-          listGroupItemStyle: tickerData.style,
-        }],
-
-      // COLUMN 2
-      [{
-        prop: "435 Day High",
-        value: tickerData['435DayHigh'],
-      },
-
-        {
-          prop: "435 Day Low",
-          value: tickerData['435DayLow'],
-        },
-
-        {
-          prop: "435 Day avg price",
-          value: tickerData['435DayAvgPrice'],
-        },
-
-        {
-          prop: "Your Dividend Yield",
-          value: tickerData.total_dividends,
-        }]
-    ];
-
-    let analysisData = [
-      {
-        image: 'http://placehold.it/75x75"/',
-        description: 'Boom',
-      },
-
-      {
-        image: 'http://placehold.it/75x75"/',
-        description: 'Chakka',
-      },
-
-      {
-        image: 'http://placehold.it/75x75"/',
-        description: 'Lakka!',
-      },
-    ];
 
     return (<Modal show={true} onHide={this.props.onCancel} dialogClassName="portfolio-modal">
       <Modal.Header closeButton>
@@ -165,67 +206,15 @@ class PortfolioDetailModal extends React.Component {
         <div className="statsComponent">
           <div className="container-fluid">
             <Row>
-              <ListGroupRenderer data={listGroupsToRender} md={6}/>
+              <ListGroupRenderer data={this.state.listGroupsToRender} md={6}/>
             </Row>
           </div>
 
         </div>
 
-        <AnalysisModule data={analysisData}/>
+        <TickerDetailsAnalysisComponent data={this.state.analysisData}/>
 
-        <h4>About {tickerData.ticker}</h4>
-        <Row>
-          <Col xs={6} sm={3}>
-            <ul className="list-unstyled small">
-              <li>P/E</li>
-              <li>1 Year Price Target</li>
-              <li>Book Value</li>
-              <li>52 Wk High</li>
-              <li>52 Wk Low</li>
-              <li>Change from 52Wk High</li>
-              <li>EPS</li>
-              <li>EPS Current Year (est)</li>
-              <li>EPS Next Year (est)</li>
-            </ul>
-          </Col>
-          <Col xs={6} sm={3}>
-            <ul className="list-unstyled small">
-              <li>{tickerExtendedInformation.peRatio}</li>
-              <li>{tickerExtendedInformation['1YrTargetPrice']}</li>
-              <li>{tickerExtendedInformation.bookValue}</li>
-              <li>{tickerExtendedInformation['52WkHigh']}</li>
-              <li>{tickerExtendedInformation['52WkLow']}</li>
-              <li>{tickerExtendedInformation.changeFrom52WeekHigh}</li>
-              <li>{tickerExtendedInformation.earningsPerShare}</li>
-              <li>{tickerExtendedInformation.epsEstimateCurrentYear}</li>
-              <li>{tickerExtendedInformation.epsEstimateNextYear}</li>
-            </ul>
-          </Col>
-          <Col xs={6} sm={3}>
-            <ul className="list-unstyled small">
-              <li>50 Day Moving Avg.</li>
-              <li>200 Day Moving Avg.</li>
-              <br />
-              <li>Dividends This Year</li>
-              <li>Dividends Last Year</li>
-              <li>Est Divs. next year</li>
-              <br />
-              <li>Dividend Yield</li>
-            </ul>
-          </Col>
-          <Col xs={6} sm={3}>
-            <ul className="list-unstyled small">
-              <li>{tickerExtendedInformation['50DayMovingAverage']}</li>
-              <li>{tickerExtendedInformation['200DayMovingAverage']}</li>
-              <br />
-              <li>DIV T Y</li>
-              <li>DIV L Y</li>
-              <li>E DIV N Y</li>
-              <br />
-              <li>{tickerExtendedInformation.dividendYield}</li>
-            </ul>
-          </Col>
-        </Row>
+        <TickerDetailsAboutComponent data={this.state.aboutDetailsData} title={tickerData.ticker}/>
       </Modal.Body>
       <Modal.Footer>
 

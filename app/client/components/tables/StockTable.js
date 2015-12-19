@@ -13,8 +13,6 @@ class StockTable extends React.Component {
     super(props);
   }
 
-
-
   render() {
 
     let stockEntries = this.props.entries;
@@ -22,15 +20,17 @@ class StockTable extends React.Component {
     stockEntries = filterStockEntries(stockEntries, this.props.filter)
     stockEntries = sortByKey(stockEntries, this.props.sorter.key, this.props.sorter.reverse);
 
-    let fields = stockEntries.map((entries,i) =>{
-      return (<StockCard key={'singlestock_' + i  + entries.ticker} rt={this.props.rt} historical={this.props.historical} entries={entries} includeDiv={this.props.includeDiv} />);
+    let fields = stockEntries.map((entries, i) => {
+      return (
+        <StockCard key={'singlestock_' + i  + entries.ticker} rt={this.props.rt} historical={this.props.historical}
+                   entries={entries} includeDiv={this.props.includeDiv} lang={this.props.lang}/>);
     });
 
     let table = (
       <Grid>
 
         <Row className="show-grid">
-         {fields}
+          {fields}
         </Row>
 
       </Grid>
