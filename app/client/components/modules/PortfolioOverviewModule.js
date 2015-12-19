@@ -147,7 +147,7 @@ class PortfolioOverview extends React.Component {
           <div className='portfolioOverview'>
             <StockTable rt={this.props.rt} user={this.props.user} sorter={this.state.sorter}
                         filter={this.state.filter} entries={stockEntries} historical={this.props.historical}
-                        includeDiv={this.state.includeDiv}/>
+                        includeDiv={this.state.includeDiv} lang={this.props.lang} />
 
             <Button disabled onClick={this._onDeletePortfolioDataClickHandler} bsStyle="danger" bsSize="medium">Delete portfolio
               data</Button>

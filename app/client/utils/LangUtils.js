@@ -148,5 +148,10 @@ let current = {
   "estDivsNextYear": "Est Divs. next year",
   "lastTradePriceOnly": "Last Trade Price Only",
   "industry": "Industry",
-
+  "averagePrice": "Average Price",
+  "costBase": "Cost Base",
+  "dividendsCollected": "Dividends Collected",
+  "435DayHigh": "435 Day High",
+  "435DayLow": "435 Day Low",
+  "435DayAveragePrice": "435 Day Average Price",
 };
