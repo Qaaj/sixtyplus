@@ -31,7 +31,7 @@ class C3PortfolioChart extends React.Component {
     chartData.colors = {
       "Cost Base": d3.rgb(230, 230, 230),
     }
-    
+
     return (
       <div>
         <div className="protfolio_chart_menu">

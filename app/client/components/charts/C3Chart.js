@@ -5,12 +5,13 @@ class C3Chart extends React.Component {
 
   constructor(props) {
     super(props);
+    this.uniqueID = 'Chart_' + Math.floor(Math.random()*10000);
   }
 
   renderChart(data) {
 
     let chartData = {
-      bindto: '#chart1',
+      bindto: '#' +  this.uniqueID,
       data: {
         x: 'x',
         columns: data.columns,
@@ -50,7 +51,7 @@ class C3Chart extends React.Component {
   render() {
 
     return (
-        <div className={"c3chart "+this.props.className} id="chart1">
+        <div className={"c3chart "+this.props.className} id={this.uniqueID}>
           <div className='loader'/>
         </div>);
   }
