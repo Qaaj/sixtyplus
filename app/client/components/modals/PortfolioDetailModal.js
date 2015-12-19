@@ -8,8 +8,8 @@ import C3DividendPaymentChart from '../charts/C3DividendPaymentChart';
 import {updateArrayOfEntryCollectionsWithRT, updatePortfolioDividends} from '../../../shared/helpers/stocks';
 import ListGroupRenderer from '../layout/ListGroupRenderer.js';
 import {getProfitLossClassname} from '../../../shared/helpers/colors/ColorUtils';
-import AnalysisModule from '../modules/AnalysisModule';
-import AboutComponent from '../layout/ColumnRenderer';
+import TickerDetailsAnalysisComponent from '../layout/TickerDetailsAnalysisComponent';
+import TickerDetailsAboutComponent from '../layout/TickerDetailsAboutComponent';
 
 class PortfolioDetailModal extends React.Component {
 
@@ -131,7 +131,6 @@ class PortfolioDetailModal extends React.Component {
     ];
 
     let arr = Object.keys(tickerExtendedInformation);
-
     let amountInFirstColumn = (arr.length / 2);
 
     let column1 = arr.slice(0, amountInFirstColumn);
@@ -161,7 +160,7 @@ class PortfolioDetailModal extends React.Component {
       }
     });
 
-    let aboutData = [
+    let aboutDetailsData = [
       aboutDataColumn1,
       aboutDataColumn2,
       aboutDataColumn3,
@@ -210,9 +209,9 @@ class PortfolioDetailModal extends React.Component {
 
         </div>
 
-        <AnalysisModule data={analysisData}/>
+        <TickerDetailsAnalysisComponent data={analysisData}/>
 
-        <AboutComponent title={tickerData.ticker} data={aboutData} xs={6} sm={3}/>
+        <TickerDetailsAboutComponent data={aboutDetailsData} title={tickerData.ticker} />
       </Modal.Body>
       <Modal.Footer>
 
