@@ -1,38 +1,34 @@
 import {round} from '../formatting';
 import {sortByKey} from '../sorting';
 
-export function getDividendChart(portfolio, historical) {
+export function getDividendChart(portfolio, historical, add = false) {
 
-  let tickers = portfolio.flatTickerList;
   let info_per_date = {};
 
-  // Go over all the tickers and collect their value per month
-  tickers.forEach(ticker => {
+  let div_tickers = {};
 
-    // get the current monthly prices of this ticke. curr = ticker
-    let monthly = JSON.parse(historical[ticker].monthly);
+  portfolio.allStockEntries.forEach(entry =>{
+    if(entry.receivedDividends.length > 0){
+      // Use object as a collection so use they keys as unique values
+      div_tickers[entry.ticker] = 0;
+      entry.receivedDividends.forEach(orig_div =>{
+        let div = Object.assign({},orig_div);
+        div.date = normaliseDivDate(div.date);
+        div.ticker = entry.ticker;
+        div.amount = entry.amount;
+        let info_for_this_date = info_per_date[div.date];
+        if (!info_for_this_date) info_for_this_date = {};
+        // Div per ticker
+        if (!info_for_this_date[entry.ticker]) info_for_this_date[entry.ticker] = 0;
+        info_for_this_date[entry.ticker] += round(div.amount * div.price, 2);
+        info_per_date[div.date] = info_for_this_date;
 
-    //  get all of the data for this ticker
-    monthly.forEach(month => {
-
-      // Normalised Date (Some dates are on a different day of the month)
-      let date = month.Date.substring(0, 7) + '-01';
-      // Amount of stock at that date
-      let amount = portfolio.getEntryCollectionByTicker(ticker).getAmountAtDate(month);
-      // Price of the stock at that date
-      let res = amount * parseFloat(month['Adj Close']);
-
-      // Save this information for this stock in an object holding data for all the stocks on that date
-      let info_for_this_date = info_per_date[date];
-      if (!info_for_this_date) info_for_this_date = {};
-      if (!info_for_this_date['Cost Base']) info_for_this_date['Cost Base'] = 0;
-      info_for_this_date['Cost Base'] += round(portfolio.getEntryCollectionByTicker(ticker).getAmountAtDate(month) * portfolio.getEntryCollectionByTicker(ticker).averagePrice, 2);
-      if(!info_for_this_date['Market Value']) info_for_this_date['Market Value'] = 0;
-      info_for_this_date['Market Value'] += round(res);
-      info_per_date[date] = info_for_this_date;
-    });
-
+      })
+    }
   });
+
+  // Use object as a collection so use they keys as unique values
+  div_tickers = Object.keys(div_tickers);
 
   // Change the info per date object to a iterable array
   let array_of_dates = Object.keys(info_per_date).map(date => {
@@ -40,13 +36,12 @@ export function getDividendChart(portfolio, historical) {
   })
 
   // Add cost base as a 'ticker' so we can parse it with the rest
-  tickers = ['Market Value']
-  tickers.push("Cost Base");
+  let tickers = div_tickers;
 
-  const chart = tickers.map(ticker => {
+  let chart = tickers.map(ticker => {
     let ticker_array = [];
     array_of_dates.forEach(date => {
-      let value = date.data[ticker];
+      let value = round(date.data[ticker]);
       if (!value) value = 0;
       ticker_array.push(value);
     })
@@ -54,6 +49,27 @@ export function getDividendChart(portfolio, historical) {
     ticker_array.unshift(ticker)
     return ticker_array;
   });
+
+
+  //THIS CONVERTS TO ACCUMULATIVE DIVIDENDS
+  if(add){
+    chart = chart.map(arr => {
+      let ticker = arr[0];
+
+      let new_arr = arr.reduce((prev,curr) => {
+        if(prev.length > 0){
+          let previous = prev[prev.length -1];
+          if(previous === ticker) previous = 0;
+          prev.push(round(curr + previous));
+        }else{
+          prev.push(ticker);
+        }
+        return prev;
+      },[]);
+      return new_arr;
+    });
+  }
+
 
   // Set up the labels for the x-axis
   let month_labels = Object.keys(info_per_date);
@@ -68,19 +84,29 @@ export function getDividendChart(portfolio, historical) {
 
 }
 
+function normaliseDivDate(date){
+  // Group per Q
+  if(date.month() < 3) return date.format('YYYY' + '-03-01');
+  if(date.month() < 6) return date.format('YYYY' + '-06-01');
+  if(date.month() < 9) return date.format('YYYY' + '-09-01');
+  if(date.month() < 12) return date.format('YYYY' + '-12-01');
+  // Group per year
+  return date.format('YYYY' + '-01-01');
+}
+
 function getStyling(tickers,portfolio){
 
   // Set the styles for all the tickers except the Cost Base
 
   let types = tickers.reduce((prev, curr) => {
-    prev[curr] = 'area-spline';
+    prev[curr] = 'bar';
     return prev;
   }, {});
 
   types["Cost Base"] = 'bar';
 
   // Group the tickers together
-  let groups = [["Cost Base"], portfolio.flatTickerList];
+  let groups = [tickers];
 
   let color = {};
   // Set the colour for the Cost Base

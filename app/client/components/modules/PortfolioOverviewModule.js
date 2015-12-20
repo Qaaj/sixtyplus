@@ -128,7 +128,7 @@ class PortfolioOverview extends React.Component {
           <span>
             Portfolio Graph
             <HelpIcon className="portfolio_graph_help" title={this.props.lang('portfolio_graph')} icon="help_outline" content={this.props.lang('portfolio_graph_help')} /> </span>} eventKey="1">
-            <C3PortfolioChart portfolio={portfolio} historical={this.props.historical} />
+            <C3PortfolioChart portfolio={portfolio} historical={this.props.historical} lang={this.props.lang} />
           </Panel>
 
           <hr />

@@ -2,36 +2,53 @@
  * Created by janjorissen on 11/16/15.
  */
 import C3Chart from './C3Chart';
-import {Button, ButtonGroup, ButtonToolbar} from 'react-bootstrap';
+import {Input} from 'react-bootstrap';
 import {getPortfolioChart} from '../../../shared/helpers/charts/getPortfolioChart';
 import {getProfitLossChart} from '../../../shared/helpers/charts/getProfitLossChart';
 import {getDividendChart} from '../../../shared/helpers/charts/getDividendChart';
+import Filter from '../ui/FilterButtons';
 
 class C3PortfolioChart extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = {currentChart: getPortfolioChart};
+    this.state = {
+      currentChart: getPortfolioChart,
+      compound_div: true,
+    };
+
+    this.options = ['portfolio_size', 'dividends', 'profit_and_loss'];
+
+    this.filters = {
+      'portfolio_size': getPortfolioChart,
+      'dividends': getDividendChart,
+      'profit_and_loss': getProfitLossChart,
+    }
+  }
+
+  _setFilter(filter) {
+    this.setState({currentChart: this.filters[filter]});
+  }
+
+  onDividendCheckboxClick(){
+    this.setState({
+      compound_div: !this.state.compound_div,
+    })
   }
 
   render() {
 
-    let chartData = this.state.currentChart(this.props.portfolio, this.props.historical);
+    let chartData = this.state.currentChart(this.props.portfolio, this.props.historical, this.state.compound_div);
 
-    //// Customise the look and feel of the chart
-
-
+    let compounding_divs = null;
+    if(this.state.currentChart == getDividendChart) compounding_divs = <Input type="checkbox" label="Compound Dividends" checked={this.state.compound_div}
+           onChange={this.onDividendCheckboxClick.bind(this)}/>;
 
     return (
       <div>
         <div className="protfolio_chart_menu">
-          <ButtonToolbar>
-            <ButtonGroup bsSize="xsmall">
-              <Button onClick={() => {this.setState({currentChart:getPortfolioChart})}}>Portfolio Size</Button>
-              <Button onClick={() => {this.setState({currentChart:getDividendChart})}}>Dividends</Button>
-              <Button onClick={() => {this.setState({currentChart:getProfitLossChart})}}>P&L</Button>
-            </ButtonGroup>
-          </ButtonToolbar>
+          <Filter onSelect={::this._setFilter} keys={this.options} lang={this.props.lang} translate={true}/>
+          {compounding_divs}
         </div>
         <C3Chart data={chartData} className="portfolio-chart">
           <div className='loader'/>

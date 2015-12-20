@@ -96,6 +96,8 @@ let current = {
   "sorted_by": "Sorted By",
   "profitLoss": "P&L",
   "marketValue": "Market Value",
+  "portfolio_size":"Portfolio Size",
+  "profit_and_loss":"P&L",
 
 
 

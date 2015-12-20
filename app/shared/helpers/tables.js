@@ -4,7 +4,6 @@ import {sortByKey} from './sorting';
 export function createDividendTableData(portfolio, historical){
 
   let divvies = {};
-  let total = 0;
 
   portfolio.allStockEntries.forEach(entry =>{
     if(entry.receivedDividends){
@@ -12,7 +11,6 @@ export function createDividendTableData(portfolio, historical){
         let div = Object.assign({},orig_div);
         div.ticker = entry.ticker;
         div.amount = entry.amount;
-        total += (entry.amount * orig_div.price);
         if(!divvies[orig_div.date.format()]) {
           divvies[orig_div.date.format()] = div;
         }else{
@@ -23,6 +21,7 @@ export function createDividendTableData(portfolio, historical){
   });
 
   let divs = Object.keys(divvies).map(key => divvies[key]);
+  console.log(divs);
   return sortByKey(divs,'date');
 
 }
