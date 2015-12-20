@@ -4,7 +4,7 @@ import ModalConstants from '../../constants/ModalConstants';
 import {getUniqueColor, getClassBySector} from '../../../shared/helpers/colors/ColorUtils';
 import SectorComponent from '../ui/SectorComponent';
 import {getMonthlyChart} from '../../../shared/helpers/charts/getMonthlyChart';
-import C3DividendPaymentChart from '../charts/C3DividendPaymentChart';
+import C3PortfolioChart from '../charts/C3PortfolioChart';
 import {updateArrayOfEntryCollectionsWithRT, updatePortfolioDividends} from '../../../shared/helpers/stocks';
 import ListGroupRenderer from '../layout/ListGroupRenderer.js';
 import {getProfitLossClassname} from '../../../shared/helpers/colors/ColorUtils';
@@ -164,11 +164,23 @@ class PortfolioDetailModal extends React.Component {
         href={"#/Import"}>Importer</a> to change that.</Grid>);
 
     let portfolio = this.props.user.stockPortfolio;
-
+    console.log("----" , portfolio);
     updateArrayOfEntryCollectionsWithRT(portfolio, this.props.rt);
     updatePortfolioDividends(portfolio, this.props.historical);
 
     let chartData = getMonthlyChart(portfolio, this.props.historical);
+
+
+    console.log('' + tickerData.ticker + ':' + 'filter  ', portfolio.entryCollectionList.filter(function (stockEntryCollection) {
+      return stockEntryCollection.ticker == tickerData.ticker
+    }));
+
+    let chartDetailData = [portfolio.entryCollectionList.filter(function (stockEntryCollection) {
+      return stockEntryCollection.ticker == tickerData.ticker
+    })];
+
+    console.log('portfolio ', portfolio.flatTickerList);
+    //portfolio.flatTickerList = chartDetailData;
 
     return (<Modal show={true} onHide={this.props.onCancel} dialogClassName="portfolio-modal">
       <Modal.Header closeButton>
@@ -184,7 +196,7 @@ class PortfolioDetailModal extends React.Component {
       </Modal.Header>
       <Modal.Body>
 
-        <C3DividendPaymentChart data={chartData}/>
+        <C3PortfolioChart portfolio={portfolio} historical={this.props.historical} lang={this.props.lang} filterByTicker={tickerData.ticker} />
 
         <h4>Your positions</h4>
 

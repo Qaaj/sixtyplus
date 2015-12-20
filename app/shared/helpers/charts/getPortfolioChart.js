@@ -2,9 +2,22 @@ import {round} from '../formatting';
 import {sortByKey} from '../sorting';
 import d3 from 'd3';
 
-export function getPortfolioChart(portfolio, historical) {
+/**
+ * @portfolio {StockPortfolio} somebody Somebody's name.
+ * @historical {Array} Historical data.
+ * @compound_divs {Boolean} Compound divs?.
+ * @filterdataByTicker {String} Tickername to filter chart results by.
+ */
+export function getPortfolioChart(portfolio, historical, compound_divs, filterdataByTicker = null) {
+  let tickers;
+  if ( filterdataByTicker ){
+    tickers = portfolio.flatTickerList.filter(function (ticker) {
+      return ticker == filterdataByTicker
+    });
+  }else{
+    tickers = portfolio.flatTickerList;
+  }
 
-  let tickers = portfolio.flatTickerList;
   let info_per_date = {};
 
   // Go over all the tickers and collect their value per month
