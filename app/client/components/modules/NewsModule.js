@@ -39,7 +39,6 @@ class NewsModule extends React.Component {
   }
 
   onClickFilter(filter){
-    console.log(filter);
     this.setState({
       filter:filter
     });
@@ -49,7 +48,7 @@ class NewsModule extends React.Component {
   shouldComponentUpdate(nextProps,nextState){
     if(this.props.user.stockPortfolio){
       if(nextProps.user.stockPortfolio.flatTickerList.length === this.props.user.stockPortfolio.flatTickerList.length){
-        if(nextState.news !== this.state.news) return true;
+        if(nextState.news !== this.state.news || nextState.filter !== this.state.filter) return true;
         return false;
       } else{
         return true;
