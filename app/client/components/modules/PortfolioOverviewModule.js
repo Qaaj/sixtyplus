@@ -15,6 +15,8 @@ import {round} from '../../../shared/helpers/formatting';
 import HelpIcon from '../ui/HelpIcon';
 import Sorter from '../ui/Sorter';
 import Filter from '../ui/FilterButtons';
+import numeral from 'numeral';
+
 
 class PortfolioOverview extends React.Component {
 
@@ -112,15 +114,15 @@ class PortfolioOverview extends React.Component {
           <ListGroup className="portfolio-summary">
             <ListGroupItem bsStyle={profitOrLoss}>
               <span className="prop">Profit/Loss: </span>
-              <div className="val">{portfolioData.profitLoss} ({portfolioData.percent_change_string})</div>
+              <div className="val">{numeral(portfolioData.profitLoss).format('$ 0,0.00')} ({portfolioData.percent_change_string})</div>
             </ListGroupItem>
             <ListGroupItem>
               <span className="prop">Dividends Collected: </span>
-              <div className="val">{dividends}</div>
+              <div className="val">{numeral(dividends).format('$ 0,0.00')}</div>
             </ListGroupItem>
             <ListGroupItem>
               <span className="prop">Portfolio Market Value: </span>
-              <div className="val">{portfolioData.marketValue}</div>
+              <div className="val">{numeral(portfolioData.marketValue).format('$ 0,0.00')}</div>
             </ListGroupItem>
           </ListGroup>
 

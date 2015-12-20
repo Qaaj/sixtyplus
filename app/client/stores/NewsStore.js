@@ -1,8 +1,6 @@
 'use strict';
 
 import AppDispatcher from '../dispatcher/AppDispatcher';
-//import RealTimeConstants from '../constants/RealTimeConstants';
-//import RealTimeActionCreators from '../actions/RealTimeActionCreators';
 import assign from 'object-assign';
 import { EventEmitter } from 'events';
 import { Map, fromJS } from 'immutable';

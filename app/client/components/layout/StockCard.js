@@ -6,6 +6,7 @@ import SectorComponent from '../ui/SectorComponent';
 import ModalActionCreators from '../../actions/ModalActionCreators';
 import ModalConstants from '../../constants/ModalConstants';
 import ListGroupRenderer from './ListGroupRenderer';
+import numeral from 'numeral';
 
 @pureRenderDecorator
 class StockCard extends React.Component {
@@ -49,16 +50,16 @@ class StockCard extends React.Component {
     var listGroupToRender = [[
       {
         prop: this.props.lang('averagePrice'),
-        value: entries.averagePrice * entries.amount,
+        value: numeral(entries.averagePrice * entries.amount).format('$0,0.00'),
       },
 
       {
         prop: this.props.lang('costBase'),
-        value: entries.costBase,
+        value: numeral(entries.costBase).format('$0,0.00'),
       },
       {
         prop: this.props.lang('marketValue'),
-        value: entries.marketValue,
+        value: numeral(entries.marketValue).format('$0,0.00'),
       },
 
       {
@@ -68,7 +69,7 @@ class StockCard extends React.Component {
 
       {
         prop: this.props.lang('profitLoss'),
-        value: ('' + entries.profitLoss + '(' + entries.totalChangePercentageString + ')'),
+        value: ('' + numeral(entries.profitLoss).format('0,0.00') + ' (' + entries.totalChangePercentageString + ')'),
         listGroupItemStyle: entries.style,
       }]
     ];

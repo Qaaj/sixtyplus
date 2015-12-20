@@ -1,27 +1,31 @@
 
 import {sortByKey} from './sorting';
+import {round} from './formatting';
 
 export function createDividendTableData(portfolio, historical){
 
   let divvies = {};
 
+
   portfolio.allStockEntries.forEach(entry =>{
-    if(entry.receivedDividends){
+    if(entry.receivedDividends && entry.receivedDividends.length > 0){
+
       entry.receivedDividends.forEach(orig_div =>{
         let div = Object.assign({},orig_div);
+        let date = entry.ticker + orig_div.date.format("YYYY-MM-DD");
         div.ticker = entry.ticker;
-        div.amount = entry.amount;
-        if(!divvies[orig_div.date.format()]) {
-          divvies[orig_div.date.format()] = div;
+        div.amount = round(entry.amount);
+        if(!divvies[date]) {
+          divvies[date] = div;
         }else{
-          divvies[orig_div.date.format()].amount += entry.amount;
+          divvies[date].amount += entry.amount;
         }
       })
     }
+
   });
 
   let divs = Object.keys(divvies).map(key => divvies[key]);
-  console.log(divs);
   return sortByKey(divs,'date');
 
 }

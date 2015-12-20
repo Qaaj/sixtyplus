@@ -1,6 +1,8 @@
 import {round} from '../formatting';
 import {sortByKey} from '../sorting';
 import d3 from 'd3';
+import numeral from 'numeral';
+
 
 export function getPortfolioChart(portfolio, historical) {
 
@@ -97,7 +99,7 @@ function getStyling(tickers,portfolio){
     },
     y : {
       tick: {
-        format: function (d) { return "$ " + d; }
+        format: function (d) { return numeral(d).format('$ 0,0.00'); }
       }
     }
   }

@@ -5,10 +5,11 @@ import {Table, Column, Cell} from 'fixed-data-table';
 import { updatePortfolioDividends } from '../../../shared/helpers/stocks';
 import { createDividendTableData } from '../../../shared/helpers/tables';
 import {round} from '../../../shared/helpers/formatting';
+import numeral from 'numeral';
 
 const DividendCell = ({rowIndex, data, col, ...props}) => (
   <Cell {...props}>
-    $ {data[rowIndex][col]}
+    $ {round(data[rowIndex][col],3)}
   </Cell>
 );
 
@@ -32,7 +33,7 @@ const TextCell = ({rowIndex, data, col, ...props}) => (
 
 const DateCell = ({rowIndex, data, col, ...props}) => (
   <Cell {...props}>
-    {data[rowIndex][col].format()}
+    {data[rowIndex][col].format("MMMM Do YYYY (MM-DD-YYYY)")}
   </Cell>
 );
 
@@ -41,9 +42,18 @@ class DividendModule extends React.Component {
     super(props);
   }
 
+  // Enhance the rendering time
+  shouldComponentUpdate(nextProps,nextState){
+    let shouldUpdate = false;
+    if(!this.props.historical) shouldUpdate = true;
+    if(this.props.historical && Object.keys(nextProps.historical).length !== Object.keys(this.props.historical).length) shouldUpdate = true;
+    if(this.props.user.stockPortfolio && nextProps.user.stockPortfolio.flatTickerList.length !== this.props.user.stockPortfolio.flatTickerList.length) shouldUpdate = true;
+    return shouldUpdate;
+  }
+
   render() {
 
-
+    console.log('render');
     if (!this.props.user.userData || !this.props.user.userData.portfolio || !this.props.historical) return (
       <Grid style={{'textAlign':'center','padding':'20px'}}>
         <div className="loader"></div>
@@ -107,7 +117,7 @@ class DividendModule extends React.Component {
           <ListGroup className="dividend_summary">
             <ListGroupItem>
               <span className="prop">Total Dividends Collected: </span>
-              <div className="val">{dividends}</div>
+              <div className="val">{numeral(dividends).format('$0,0.00')}</div>
             </ListGroupItem>
           </ListGroup>
         </Grid>
