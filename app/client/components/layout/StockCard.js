@@ -50,7 +50,7 @@ class StockCard extends React.Component {
     var listGroupToRender = [[
       {
         prop: this.props.lang('averagePrice'),
-        value: numeral(entries.averagePrice * entries.amount).format('$0,0.00'),
+        value: numeral(entries.averagePrice).format('$0,0.00') + ' x ' + entries.amount,
       },
 
       {
