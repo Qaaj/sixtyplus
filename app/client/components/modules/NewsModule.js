@@ -82,8 +82,8 @@ class NewsModule extends React.Component {
 
         <Filter keys={filterItems} onSelect={this.onClickFilter.bind(this)} lang={this.props.lang} translate={false} vertical={true}/>
         <div className="news_item_list">
-          <h1>News <HelpIcon placement="right" title={'Hello'} icon="help_outline"
-                             content={'Sup'}/></h1>
+          <h1>News <HelpIcon placement="right" title={this.props.lang('news')} icon="help_outline"
+                             content={this.props.lang('news_info')}/></h1>
           {newsitems}
         </div>
       </Grid>

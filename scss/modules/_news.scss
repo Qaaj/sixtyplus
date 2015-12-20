@@ -9,8 +9,17 @@
     margin-left: 105px;
   }
 
+  .news_item:nth-child(odd) { background: #f0f0f0; }
+
   .news_item{
-    margin-bottom:2px;
+    border-radius: 3px;
+    a{
+      cursor: pointer;
+    }
+    transition: height .1s ease 0s;
+
+    overflow: hidden;
+    height: 25px;
     width:auto;
     padding: 3px;
     background-color: white;
@@ -31,12 +40,19 @@
       display: inline-block;
       float:right;
     }
+    .bottom{
+      padding:15px;
+    }
 
 
   }
 
   .news_item:hover{
-    height:30px;
+    transition: height .1s ease 0s;
+    margin-top:2px;
+    margin-bottom:2px;
+    background-color: white;
+    height:120px;
   }
 
 }

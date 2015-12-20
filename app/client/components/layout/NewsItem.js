@@ -9,7 +9,7 @@ class NewsItem extends React.Component {
   constructor(props) {
 
     super(props);
-    this.key = "news_item_" + Math.floor(Math.random()*10000);
+    this.key = "news_item_" + Math.floor(Math.random() * 10000);
 
   }
 
@@ -27,16 +27,21 @@ class NewsItem extends React.Component {
     let date = moment(this.props.news.date);
 
     let printDate = date.format("MMMM Do");
-    if(now.diff(date,'days') < 7)  printDate = date.format("dddd");
-    if(now.diff(date,'days') === 0)  printDate = date.format("HH:MM");;
+    if (now.diff(date, 'days') < 7)  printDate = date.format("dddd");
+    if (now.diff(date, 'days') === 0)  printDate = date.format("HH:MM");
 
+    let content = this.props.news.summary.trim();
+    var lines = content.split('\n');
+    lines.splice(0,2);
+    lines.splice(2,lines.length);
+    let newcontent = lines.join('\n');
+    newcontent = newcontent.replace("<br>","");
+    const html = {__html: newcontent};
 
 
     let body = (
       <div key={this.key} className="news_item">
-        <span className="icon">
-          <HelpIcon placement="right" title={this.props.news.title} icon="remove_red_eye" content={this.props.lang('html:' + this.props.news.summary)}/>
-        </span>
+        <div className="top">
         <span className="stockName">
           {this.props.news.ticker}
         </span>
@@ -46,6 +51,9 @@ class NewsItem extends React.Component {
          <span className="date">
           {printDate}
         </span>
+        </div>
+        <div dangerouslySetInnerHTML={html} className="bottom">
+        </div>
       </div>
     );
 
