@@ -1,6 +1,7 @@
 
 import {sortByKey} from './sorting';
 import {round} from './formatting';
+import assign from 'object-assign';
 
 export function createDividendTableData(portfolio, historical){
 
@@ -11,7 +12,7 @@ export function createDividendTableData(portfolio, historical){
     if(entry.receivedDividends && entry.receivedDividends.length > 0){
 
       entry.receivedDividends.forEach(orig_div =>{
-        let div = Object.assign({},orig_div);
+        let div = assign({},orig_div);
         let date = entry.ticker + orig_div.date.format("YYYY-MM-DD");
         div.ticker = entry.ticker;
         div.amount = round(entry.amount);

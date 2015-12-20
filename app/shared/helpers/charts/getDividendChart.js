@@ -1,5 +1,6 @@
 import {round} from '../formatting';
 import {sortByKey} from '../sorting';
+import assign from 'object-assign';
 
 export function getDividendChart(portfolio, historical, add = false) {
 
@@ -12,7 +13,7 @@ export function getDividendChart(portfolio, historical, add = false) {
       // Use object as a collection so use they keys as unique values
       div_tickers[entry.ticker] = 0;
       entry.receivedDividends.forEach(orig_div =>{
-        let div = Object.assign({},orig_div);
+        let div = assign({},orig_div);
         div.date = normaliseDivDate(div.date);
         div.ticker = entry.ticker;
         div.amount = entry.amount;

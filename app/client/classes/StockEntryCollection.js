@@ -1,5 +1,6 @@
 import StockEntry from './StockEntry';
 import {round} from '../../shared/helpers/formatting';
+import assign from 'object-assign';
 
 class StockEntryCollection {
 
@@ -51,7 +52,7 @@ class StockEntryCollection {
 
   get data(){
 
-    let data = Object.assign({},this);
+    let data = assign({},this);
     data.first = this.first;
     data.totalChangePercentageString = this.totalChangePercentage + '%';
     if(data.totalChangePercentage >= 0) data.totalChangePercentageString = '+' + this.totalChangePercentage + '%';
@@ -60,7 +61,7 @@ class StockEntryCollection {
   }
 
   get dataWithDividends(){
-    let data = Object.assign({},this);
+    let data = assign({},this);
     data.first = this.first;
     data.profitLoss = data.marketValue - data.costBase + this.total_dividends;
     data.profitLoss = round(data.profitLoss);
