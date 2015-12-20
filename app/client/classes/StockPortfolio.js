@@ -2,6 +2,8 @@ import StockEntryCollection from './StockEntryCollection';
 import HistoricalData from '../stores/HistoricalStore';
 import HistoricalActions from '../actions/HistoricalActionCreators';
 import {round} from '../../shared/helpers/formatting';
+import {getStockNews} from '../utils/ApiUtils';
+
 class StockPortfolio {
 
   constructor(rawUserDataObject) {
@@ -17,7 +19,11 @@ class StockPortfolio {
       }, moment('29991212','YYYYMMDD'));
 
     let minusOneMonth = firstBuy.firstBuyEntry.date.clone().subtract(0, 'months');
+
+    // TODO: Move this logic out of here
     // Get dividend info for existing portfolio
+    getStockNews(this.flatTickerList);
+
     this.flatTickerList.forEach(ticker =>{
       HistoricalActions.getHistoricalDividends({ ticker});
       HistoricalActions.getHistoricalPrices({ ticker, options:'monthly', from:minusOneMonth.format("DD-MM-YYYY")});

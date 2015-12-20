@@ -8,15 +8,15 @@ import { EventEmitter } from 'events';
 import { Map, fromJS } from 'immutable';
 const CHANGE_EVENT = 'change';
 import defaults from '../config/Defaults';
+import News from '../classes/News';
 
-let _newsObject = Map();
-_newsObject = _newsObject.set("hasNews",false);
+let _newsObject = null;
 
 
 const NewsStore = assign({}, EventEmitter.prototype, {
 
   getNews() {
-    return _newsObject.toJS();
+    return _newsObject;
   },
 
   emitChange() {
@@ -42,11 +42,7 @@ NewsStore.dispatchToken = AppDispatcher.register(function (payload) {
 
   case "NEWS_UPDATE":
 
-    Object.keys(action.data).map(ticker =>{
-      _newsObject = _newsObject.setIn(['items',ticker],action.data[ticker]);
-    });
-
-    _newsObject = _newsObject.set("hasNews",true);
+    _newsObject = new News(action.data);
 
     NewsStore.emitChange();
 

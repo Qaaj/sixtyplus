@@ -30,7 +30,7 @@ class C3Chart extends React.Component {
       },
       axis: data.axis
     }
-    
+
     c3.generate(chartData);
 
   }
