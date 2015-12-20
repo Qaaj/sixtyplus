@@ -164,23 +164,9 @@ class PortfolioDetailModal extends React.Component {
         href={"#/Import"}>Importer</a> to change that.</Grid>);
 
     let portfolio = this.props.user.stockPortfolio;
-    console.log("----" , portfolio);
+
     updateArrayOfEntryCollectionsWithRT(portfolio, this.props.rt);
     updatePortfolioDividends(portfolio, this.props.historical);
-
-    let chartData = getMonthlyChart(portfolio, this.props.historical);
-
-
-    console.log('' + tickerData.ticker + ':' + 'filter  ', portfolio.entryCollectionList.filter(function (stockEntryCollection) {
-      return stockEntryCollection.ticker == tickerData.ticker
-    }));
-
-    let chartDetailData = [portfolio.entryCollectionList.filter(function (stockEntryCollection) {
-      return stockEntryCollection.ticker == tickerData.ticker
-    })];
-
-    console.log('portfolio ', portfolio.flatTickerList);
-    //portfolio.flatTickerList = chartDetailData;
 
     return (<Modal show={true} onHide={this.props.onCancel} dialogClassName="portfolio-modal">
       <Modal.Header closeButton>
@@ -196,7 +182,7 @@ class PortfolioDetailModal extends React.Component {
       </Modal.Header>
       <Modal.Body>
 
-        <C3PortfolioChart portfolio={portfolio} historical={this.props.historical} lang={this.props.lang} filterByTicker={tickerData.ticker} />
+        <C3PortfolioChart portfolio={portfolio} historical={this.props.historical} lang={this.props.lang} filterByTickersArray={tickerData.ticker} />
 
         <h4>Your positions</h4>
 

@@ -6,13 +6,13 @@ import d3 from 'd3';
  * @portfolio {StockPortfolio} somebody Somebody's name.
  * @historical {Array} Historical data.
  * @compound_divs {Boolean} Compound divs?.
- * @filterdataByTicker {String} Tickername to filter chart results by.
+ * @filterdataByTicker {Array} Tickername to filter chart results by.
  */
-export function getPortfolioChart(portfolio, historical, compound_divs, filterdataByTicker = null) {
+export function getPortfolioChart(portfolio, historical, compound_divs, filterByTickersArray = null) {
   let tickers;
-  if ( filterdataByTicker ){
+  if ( filterByTickersArray ){
     tickers = portfolio.flatTickerList.filter(function (ticker) {
-      return ticker == filterdataByTicker
+      return filterByTickersArray.indexOf(ticker) > -1;
     });
   }else{
     tickers = portfolio.flatTickerList;
