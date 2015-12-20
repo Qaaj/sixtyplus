@@ -53,7 +53,6 @@ class DividendModule extends React.Component {
 
   render() {
 
-    console.log('render');
     if (!this.props.user.userData || !this.props.user.userData.portfolio || !this.props.historical) return (
       <Grid style={{'textAlign':'center','padding':'20px'}}>
         <div className="loader"></div>

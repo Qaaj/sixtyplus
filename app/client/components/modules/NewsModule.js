@@ -1,8 +1,7 @@
 import { Input,Button,Grid } from 'react-bootstrap';
 import RealTimeActionCreators from '../../actions/RealTimeActionCreators';
 import NewsStore from '../../stores/NewsStore';
-import ModalActionCreators from '../../actions/ModalActionCreators';
-import ModalConstants from '../../constants/ModalConstants';
+import NewsItem from '../layout/NewsItem';
 import HelpIcon from '../ui/HelpIcon';
 import Filter from '../ui/FilterButtons';
 import {sortByKey} from '../../../shared/helpers/sorting';
@@ -13,7 +12,6 @@ class NewsModule extends React.Component {
     super(props);
     this.store = NewsStore;
     this.state = this.getStateFromStore();
-    this._onClick = this._onClick.bind(this);
   }
 
   getStateFromStore() {
@@ -28,14 +26,6 @@ class NewsModule extends React.Component {
 
   componentDidMount() {
     this.store.addChangeListener(this._onChange.bind(this));
-  }
-
-  _onClick(news) {
-    ModalActionCreators.setModal({
-      isVisible: true,
-      type: ModalConstants.NEWS_ITEM,
-      data: news
-    });
   }
 
   onClickFilter(filter){
@@ -80,13 +70,8 @@ class NewsModule extends React.Component {
 
     allItems = sortByKey(allItems,'date', true);
 
-    let newsitems = allItems.map((news, i) => {
-      let date = moment(news.date);
-      return (<div key={'newsitem_' + i}>
-        <HelpIcon placement="right" title={news.title} icon="remove_red_eye"
-                  content={this.props.lang('html:' + news.summary)}/>
-        <a style={{'marginLeft':'5px','cursor':'pointer'}} onClick={this._onClick.bind(this,news)}>{'[' + news.ticker + '] ' + date.format("HH:MM") + ' - ' + news.title + ' ' + date.format("(dd DD/MM)")}</a>
-      </div>);
+    let newsitems = allItems.map((news) => {
+      return (<NewsItem lang={this.props.lang} news={news} />);
     })
 
 

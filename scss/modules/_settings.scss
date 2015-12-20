@@ -1,0 +1,24 @@
+
+.settings_page{
+  margin-top:25px;
+
+  .list-group-item{
+    clear:left;
+
+    .prop{
+      font-size:15px;
+      opacity: .75;
+    }
+
+    &.higher{
+      height:55px;
+    }
+
+    .val{
+      position: relative;
+      display: inline-block;
+    }
+  }
+
+}
+

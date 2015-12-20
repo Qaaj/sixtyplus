@@ -7,8 +7,6 @@ class PortfolioDetailModal extends React.Component {
   }
 
   render() {
-
-    console.log(this.props.news);
     return <Modal dialogClassName="news-modal" show={true} onHide={this.props.onCancel} className=''>
       <Modal.Header closeButton>
         <Modal.Title>

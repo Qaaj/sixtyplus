@@ -9,4 +9,34 @@
     margin-left: 105px;
   }
 
+  .news_item{
+    margin-bottom:2px;
+    width:auto;
+    padding: 3px;
+    background-color: white;
+
+    .stockName {
+      display: inline-block;
+      margin-left: 10px;
+      width:40px;
+      font-size: 14px;
+      color: rgba(0, 0, 0, .5);
+    }
+
+    .title{
+      margin-left: 10px
+    }
+
+    .date{
+      display: inline-block;
+      float:right;
+    }
+
+
+  }
+
+  .news_item:hover{
+    height:30px;
+  }
+
 }
