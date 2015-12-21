@@ -26,7 +26,15 @@ export default (req, res) => {
         } else {
           // Item was not found in the cache, get it and then save it
           debug('news from server: ', ticker);
-          rsj.r2j('http://www.google.com/finance/company_news?q=' + ticker + '&output=rss', function (json) {
+          // Hack for Google Finance vs Yahoo Finance
+          let tickerURL = ticker;
+          if(tickerURL.indexOf(".AS") !== -1){
+            tickerURL = 'AMS:' + tickerURL.split('.')[0];
+          }else{
+            tickerURL = 'NYSE:' + tickerURL;
+          }
+          let url = 'http://www.google.com/finance/company_news?q=' + tickerURL + '&output=rss'
+          rsj.r2j(url, function (json) {
             DataStore.setCachedData({option: "news", ticker, json:JSON.parse(json)});
             returnList[ticker] = JSON.parse(json);
             if (Object.keys(returnList).length == req.body.tickers.length) resolve(returnList);
