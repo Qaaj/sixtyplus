@@ -3,7 +3,7 @@
  */
 import C3Chart from './C3Chart';
 import {Input} from 'react-bootstrap';
-import {getPortfolioChart} from '../../../shared/helpers/charts/getPortfolioChart';
+import {getPortfolioChart, getTickerDetailChart} from '../../../shared/helpers/charts/getPortfolioChart';
 import {getProfitLossChart} from '../../../shared/helpers/charts/getProfitLossChart';
 import {getDividendChart} from '../../../shared/helpers/charts/getDividendChart';
 import Filter from '../ui/FilterButtons';
@@ -23,6 +23,7 @@ class C3PortfolioChart extends React.Component {
       'portfolio_size': getPortfolioChart,
       'dividends': getDividendChart,
       'profit_and_loss': getProfitLossChart,
+
     }
   }
 
@@ -37,8 +38,7 @@ class C3PortfolioChart extends React.Component {
   }
 
   render() {
-
-    let chartData = this.state.currentChart(this.props.portfolio, this.props.historical, this.state.compound_div);
+    let chartData = this.state.currentChart(this.props.portfolio, this.props.historical, this.state.compound_div, this.props.filterByTickersArray);
 
     let compounding_divs = null;
     if(this.state.currentChart == getDividendChart) compounding_divs = <Input type="checkbox" label="Compound Dividends" checked={this.state.compound_div}
