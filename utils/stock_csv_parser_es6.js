@@ -1,7 +1,7 @@
 import fs from 'fs';
 import {CSVtoJSON} from '../server/helpers/json'
 
-export function createMappedJSON(){
+export function createMappedJSON() {
 
   fs.readFile(__dirname + '/../static/us_stocks.csv', function (err, data) {
     if (err) {
@@ -28,8 +28,8 @@ export function createMappedJSON(){
       mappedStocks[singleStock.Symbol] = singleStock;
     });
 
-    fs.writeFile(__dirname + '/../static/mapped_stocks.json', JSON.stringify(mappedStocks), function(err) {
-      if(err) {
+    fs.writeFile(__dirname + '/../static/mapped_stocks.json', JSON.stringify(mappedStocks), function (err) {
+      if (err) {
         return console.log(err);
       }
 
@@ -41,12 +41,11 @@ export function createMappedJSON(){
 }
 
 
-
 let counter = 0;
 let tickers = [];
 
 
-export function parseTickerCSVs(){
+export function parseTickerCSVs() {
   fs.readFile(__dirname + '/../static/all_tickers.json', function (err, data) {
     if (err) {
       throw err;
@@ -54,8 +53,8 @@ export function parseTickerCSVs(){
 
     data = JSON.parse(data);
     tickers = data.tickers;
-    tickers = tickers.filter(ticker =>{
-      if(ticker.indexOf("^") == -1) return ticker;
+    tickers = tickers.filter(ticker => {
+      if (ticker.indexOf("^") == -1) return ticker;
     })
 
 
@@ -69,16 +68,16 @@ export function parseTickerCSVs(){
 }
 
 
-function doTicker(ticker){
+function doTicker(ticker) {
 
   console.log('doing ticker', ticker);
-  fs.readFile(__dirname + '/../static/data/' + ticker + '.csv',"utf-8", function (err, data) {
+  fs.readFile(__dirname + '/../static/data/' + ticker + '.csv', "utf-8", function (err, data) {
     if (err) {
       console.log(err);
       counter++;
       doTicker(tickers[counter]);
     }
-    if(data.indexOf('html') === -1) {
+    if (data.indexOf('html') === -1) {
       let entries = JSON.parse(CSVtoJSON(data));
 
 
@@ -107,33 +106,35 @@ function doTicker(ticker){
 
       fs.writeFile(__dirname + '/analysed/' + ticker + '.csv', string, function (err) {
         if (err) {
-           console.log(err);
+          console.log(err);
           counter++;
           doTicker(tickers[counter]);
         }
         console.log(ticker + ' saved. (' + counter + '/' + tickers.length + ')');
         counter++;
-        setTimeout(()=>{doTicker(tickers[counter])},200);
+        setTimeout(()=> {
+          doTicker(tickers[counter])
+        }, 200);
       });
 
-    }else{
+    } else {
       counter++;
       doTicker(tickers[counter]);
     }
   });
 }
 
-function calculateAverage(month){
+function calculateAverage(month) {
 
   let min = 1000000000;
   let max = 0;
   let total = 0;
-  let adj_total =0;
+  let adj_total = 0;
   let realMin = 0;
   let realMax = 0;
 
   let length = month.length;
-  month.map(day =>{
+  month.map(day => {
     let adj_close = parseFloat(day['Adj Close']);
     let adj_close_perc = adj_close / day.Close;
 
@@ -143,18 +144,18 @@ function calculateAverage(month){
     adj_total += parseFloat(adj_close);
     total += parseFloat(day['Close']);
 
-    if(adj_max > max) {
+    if (adj_max > max) {
       max = adj_max;
       realMax = day.High;
     }
-    if(adj_min < min) {
+    if (adj_min < min) {
       min = adj_min;
       realMin = day.Low;
     }
   })
 
-  total = total/length;
-  adj_total = adj_total/length;
+  total = total / length;
+  adj_total = adj_total / length;
 
   return {total, adj_total, max, min, realMax, realMin};
 
@@ -163,18 +164,19 @@ function calculateAverage(month){
 var Firebase = require("firebase");
 import {Set} from 'immutable';
 
-export function getCurrentTickersInApplication(){
+export function getCurrentTickersInApplication() {
   var ref = new Firebase('https://crackling-torch-5091.firebaseio.com/users');
 // Attach an asynchronous callback to read the data at our posts reference
-  ref.on("value", function(snapshot) {
+  ref.on("value", function (snapshot) {
 
     let users = snapshot.val();
     let tickers = new Set();
 
-    Object.keys(users).forEach(key =>{
+    Object.keys(users).forEach(key => {
       let user = users[key];
-      if(user.userData && user.userData.portfolio) {
+      if (user.userData && user.userData.portfolio) {
         Object.keys(user.userData.portfolio).forEach(ticker => {
+          console.log(ticker);
           tickers = tickers.add(ticker.toUpperCase());
           //if(ticker == 'bonds' || ticker == 'savings' || ticker == 'stocks') {
           //  var ref2 = new Firebase('https://crackling-torch-5091.firebaseio.com/users/' + key);
@@ -186,9 +188,117 @@ export function getCurrentTickersInApplication(){
     });
 
     console.log(tickers.toJS());
+    return tickers.toJS();
 
   }, function (errorObject) {
     console.log("The read failed: " + errorObject.code);
   });
 }
 
+var yahooFinance = require('yahoo-finance');
+
+
+export function updateRatings() {
+
+  var promise = new Promise(function (resolve, reject) {
+    var ref = new Firebase('https://crackling-torch-5091.firebaseio.com/users');
+    // Attach an asynchronous callback to read the data at our posts reference
+    ref.on("value", function (snapshot) {
+
+      let users = snapshot.val();
+      let tickers = new Set();
+
+      Object.keys(users).forEach(key => {
+        let user = users[key];
+        if (user.userData && user.userData.portfolio) {
+          Object.keys(user.userData.portfolio).forEach(ticker => {
+            tickers = tickers.add(ticker.toUpperCase());
+          });
+        }
+      });
+
+      resolve(tickers.toJS());
+
+    }, function (errorObject) {
+      console.log("The read failed: " + errorObject.code);
+    });
+  });
+
+  promise.then(function (result) {
+    getAnalystRatings(result);
+  }, function (err) {
+    console.log(err); // Error: "It broke"
+  });
+
+}
+
+
+function getAnalystRatings(list) {
+  var promise = new Promise(function (resolve, reject) {
+    let returnList = [];
+    list.map(ticker => {
+      yahooFinance.snapshot({
+        symbol: ticker,
+        fields: ['t8', 'e8', 'e9'],
+        // '1YrTargetPrice': 40.61,
+        // epsEstimateNextYear: 3.36,
+        // epsEstimateNextQuarter: 0.82
+      }, function (err, json) {
+        returnList.push(json);
+        if (returnList.length == list.length) resolve(returnList);
+      });
+    })
+  });
+
+  promise.then(function (result) {
+
+    saveAnalystRating(result);
+  }, function (err) {
+    debug(err); // Error: "It broke"
+  });
+}
+
+import moment from 'moment';
+let today = new moment().format('YYYY-MM-DD');
+
+function saveAnalystRating(items) {
+
+  let countr = 0;
+  var promise = new Promise(function (resolve, reject) {
+    items.map(item => {
+      let symbol = item.symbol;
+      let saveObject = {};
+
+      saveObject[today] = {
+        one_year_target: item['1YrTargetPrice'],
+        eps_next_year: item['epsEstimateNextYear'],
+        eps_next_quarter: item['epsEstimateNextQuarter'],
+      }
+
+      var ratings = new Firebase('https://crackling-torch-5091.firebaseio.com/ratings/' + symbol);
+      var ref = new Firebase("https://crackling-torch-5091.firebaseio.com/");
+      var ratingsRef = ref.child("ratings");
+
+      ratings.once('value', function (snapshot) {
+        if (snapshot.val()) {
+          ratingsRef.child(symbol).update(saveObject);
+          console.log("Data updated for: " + symbol)
+        } else {
+          ratingsRef.child(symbol).set(saveObject);
+          console.log("Data created for: " + symbol)
+        }
+        countr++;
+        if(countr === items.length) resolve("YAY");
+      });
+    });
+  });
+
+  promise.then(function (result) {
+    console.log("Done");
+    process.exit(0);
+  }, function (err) {
+    debug(err); // Error: "It broke"
+  });
+
+
+}
