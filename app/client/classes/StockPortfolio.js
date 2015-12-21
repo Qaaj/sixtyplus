@@ -14,11 +14,11 @@ class StockPortfolio {
     }
 
     let firstBuy = this.entryCollectionList.reduce((prev,curr) =>{
-      if(curr.firstBuyEntry.date.isBefore(prev)) prev = curr;
+      if(curr.firstBuyEntry.isBefore(prev)) prev = curr.firstBuyEntry;
       return prev;
       }, moment('29991212','YYYYMMDD'));
 
-    let minusOneMonth = firstBuy.firstBuyEntry.date.clone().subtract(0, 'months');
+    let minusOneMonth = firstBuy.clone().subtract(1, 'months');
 
     // TODO: Move this logic out of here
     // Get dividend info for existing portfolio
