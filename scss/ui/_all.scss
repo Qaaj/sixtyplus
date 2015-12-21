@@ -1,2 +1,14 @@
 @import './help_icon';
 @import './notification';
+
+.list-group-item{
+  .prop{
+    font-size:15px;
+    opacity: .75;
+  }
+
+  .val{
+    float:right;
+    display: inline-block;
+  }
+}

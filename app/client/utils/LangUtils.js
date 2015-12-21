@@ -98,6 +98,7 @@ let current = {
   "marketValue": "Market Value",
   "portfolio_size":"Portfolio Size",
   "profit_and_loss":"P&L",
+  "news_info": "Clicking a link will open a live, embedded view of the article.",
 
 
 

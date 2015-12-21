@@ -45,7 +45,7 @@ class StockEntryCollection {
 
   get firstBuyEntry(){
    return this.entries.reduce((prev,curr) =>{
-      if(curr.date.isBefore(prev)) prev = curr;
+      if(curr.date.isBefore(prev)) prev = curr.date;
       return prev;
     },moment('29991212','YYYYMMDD'));
   }
