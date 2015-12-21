@@ -4,9 +4,22 @@ import d3 from 'd3';
 import numeral from 'numeral';
 
 
-export function getPortfolioChart(portfolio, historical) {
+/**
+ * @portfolio {StockPortfolio} somebody Somebody's name.
+ * @historical {Array} Historical data.
+ * @compound_divs {Boolean} Compound divs?.
+ * @filterdataByTicker {Array} Tickername to filter chart results by.
+ */
+export function getPortfolioChart(portfolio, historical, compound_divs, filterByTickersArray = null) {
+  let tickers;
+  if ( filterByTickersArray ){
+    tickers = portfolio.flatTickerList.filter(function (ticker) {
+      return filterByTickersArray.indexOf(ticker) > -1;
+    });
+  }else{
+    tickers = portfolio.flatTickerList;
+  }
 
-  let tickers = portfolio.flatTickerList;
   let info_per_date = {};
 
   // Go over all the tickers and collect their value per month
