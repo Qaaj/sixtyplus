@@ -47,7 +47,7 @@ class C3PortfolioChart extends React.Component {
     return (
       <div>
         <div className="protfolio_chart_menu">
-          <Filter onSelect={::this._setFilter} keys={this.options} lang={this.props.lang} translate={true}/>
+          <Filter toggle={false} onSelect={::this._setFilter} keys={this.options} lang={this.props.lang} translate={true}/>
           {compounding_divs}
         </div>
         <C3Chart data={chartData} className="portfolio-chart">
