@@ -23,6 +23,7 @@ class StockPortfolio {
     // TODO: Move this logic out of here
     // Get dividend info for existing portfolio
     getStockNews(this.flatTickerList);
+    HistoricalActions.getHistoricalPrices({ ticker:'VTI', options:'monthly'});
 
     this.flatTickerList.forEach(ticker =>{
       HistoricalActions.getHistoricalDividends({ ticker});
