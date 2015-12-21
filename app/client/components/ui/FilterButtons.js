@@ -13,7 +13,7 @@ class FilterButtons extends React.Component {
 
   _onSelect(key) {
     if (this.props.toggle) {
-      let filter = this.state.filter;
+      let filter = [].concat(this.state.filter);
       if (filter.indexOf(key) !== -1) {
         filter.splice(filter.indexOf(key), 1);
       }else{
@@ -37,7 +37,7 @@ class FilterButtons extends React.Component {
         if (filter.indexOf(item) !== -1) selected = 'primary';
       });
     }
-    
+
     return <Button bsStyle={selected} onClick={this._onSelect.bind(this,filter)} eventKey={filter}
                    key={'filter'+i}>
       {name}
@@ -45,7 +45,13 @@ class FilterButtons extends React.Component {
   }
 
   componentDidMount() {
-    if (!this.state.filter) this.setState({filter: [this.props.keys[0]]});
+    if (!this.state.filter){
+      if(this.props.toggle){
+        this.setState({filter: []});
+      }else{
+        this.setState({filter: [this.props.keys[0]]});
+      }
+    }
   }
 
   render() {

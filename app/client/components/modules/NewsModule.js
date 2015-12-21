@@ -12,6 +12,7 @@ class NewsModule extends React.Component {
     super(props);
     this.store = NewsStore;
     this.state = this.getStateFromStore();
+    this.state.filter = [];
   }
 
   getStateFromStore() {
@@ -36,16 +37,11 @@ class NewsModule extends React.Component {
 
   // Enhance the rendering time
   shouldComponentUpdate(nextProps,nextState){
-    if(this.props.user.stockPortfolio){
-      if(nextProps.user.stockPortfolio.flatTickerList.length === this.props.user.stockPortfolio.flatTickerList.length){
-        if(nextState.news !== this.state.news || nextState.filter !== this.state.filter) return true;
-        return false;
-      } else{
-        return true;
-      }
-    }else{
-      return true;
-    }
+    if(nextState.filter.length !== this.state.filter.length) return true;
+    if(!this.props.user.stockPortfolio) return true;
+    if(nextProps.user.stockPortfolio.flatTickerList.length !== this.props.user.stockPortfolio.flatTickerList.length) return true;
+    if(nextState.news !== this.state.news) return true;
+    return false;
   }
 
   render() {
@@ -55,12 +51,11 @@ class NewsModule extends React.Component {
         <div className="loader"></div>
       </Grid>);
 
-    let filterItems = ['All'];
-    filterItems = filterItems.concat(this.props.user.stockPortfolio.flatTickerList);
+    let filterItems = this.props.user.stockPortfolio.flatTickerList;
 
     let news = this.state.news;
-    let tickers = [this.state.filter];
-    if(!this.state.filter || this.state.filter == "All") tickers = news.tickers;
+    let tickers = this.state.filter;
+    if(!tickers || tickers.length == 0) tickers = news.tickers;
 
     let allItems = [];
 
@@ -80,7 +75,7 @@ class NewsModule extends React.Component {
       <div className="news_module">
       <Grid>
 
-        <Filter keys={filterItems} onSelect={this.onClickFilter.bind(this)} lang={this.props.lang} translate={false} vertical={true}/>
+        <Filter toggle={true} keys={filterItems} onSelect={this.onClickFilter.bind(this)} lang={this.props.lang} translate={false} vertical={true}/>
         <div className="news_item_list">
           <h1>News <HelpIcon placement="right" title={this.props.lang('news')} icon="help_outline"
                              content={this.props.lang('news_info')}/></h1>

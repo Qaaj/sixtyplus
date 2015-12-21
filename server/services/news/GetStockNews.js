@@ -31,7 +31,7 @@ export default (req, res) => {
           if(tickerURL.indexOf(".AS") !== -1){
             tickerURL = 'AMS:' + tickerURL.split('.')[0];
           }else{
-            tickerURL = 'NYSE:' + tickerURL;
+            //tickerURL = 'NYSE:' + tickerURL;
           }
           let url = 'http://www.google.com/finance/company_news?q=' + tickerURL + '&output=rss'
           rsj.r2j(url, function (json) {
