@@ -4,6 +4,7 @@ import http from 'http';
 import {CSVtoJSON} from '../../helpers/json';
 import moment from 'moment';
 import DataStore from '../../stores/DataStore'
+import OfflineStore from '../../stores/OfflineStore'
 
 
 export default (req, res) => {
@@ -58,6 +59,8 @@ export default (req, res) => {
         debug("getting historical " + option_string + " data for " + req.body.ticker + " from " + req.body.from + ' from CACHE');
       }
       let returnObject = {result: json, option: option_string, ticker: req.body.ticker};
+      if(process.env.NODE_ENV == 'provision') OfflineStore.saveData(req,returnObject);
+
       res.send(returnObject);
 
     } else {
@@ -83,6 +86,7 @@ export default (req, res) => {
           });
           let returnObject = {result: json, option: option_string, ticker: req.body.ticker};
           res.setHeader('Content-Type', 'application/json');
+          if(process.env.NODE_ENV == 'provision') OfflineStore.saveData(req,returnObject);
           res.send(returnObject);
         })
       });

@@ -4,7 +4,7 @@ import fileSystem from 'fs';
 import path from 'path';
 import services from '../services/allServices';
 const debug = require('debug')('debug:routes/index');
-
+import OfflineStore from '../stores/OfflineStore';
 var httpProxy = require('http-proxy');
 var http = require('http');
 
@@ -80,7 +80,11 @@ function routingWrapper(isProduction,app) {
 
     function apiRouteHandler(req, res) {
         if (typeof services[req.params.serviceId] === 'function') {
-            services[req.params.serviceId](req, res);
+            if(process.env.NODE_ENV !== 'offline'){
+                services[req.params.serviceId](req, res);
+            }else{
+                OfflineStore.getData(req,res);
+            }
         } else {
             res.send('This endpoint does not exist');
         }

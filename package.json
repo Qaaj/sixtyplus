@@ -4,6 +4,8 @@
   "description": "webpack/express boilerplate",
   "main": "server.js",
   "scripts": {
+    "offline":  "DEBUG=debug:* NODE_ENV=offline parallelshell 'redis-server --port 6380' 'nodemon server.js'",
+    "provision":  "DEBUG=debug:* NODE_ENV=provision parallelshell 'redis-server --port 6380' 'nodemon server.js'",
     "build": "NODE_ENV=production webpack -p --config webpack.production.config.js",
     "dev": "DEBUG=debug:* NODE_ENV=development parallelshell 'redis-server --port 6380' 'nodemon server.js'",
     "postinstall": "node heroku",

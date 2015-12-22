@@ -1,6 +1,8 @@
 const debug = require('debug')('debug:user/LoadUser');
 var Firebase = require("firebase");
 import moment from 'moment';
+import OfflineStore from '../../stores/OfflineStore'
+
 
 var ref = new Firebase("https://crackling-torch-5091.firebaseio.com/");
 var usersRef = ref.child("users");
@@ -33,7 +35,7 @@ export default (req, res) => {
         }
         userObject.userData.portfolio = portfolio;
       }
-
+      if(process.env.NODE_ENV == 'provision') OfflineStore.saveData(req,userObject);
       res.send(userObject);
 
     } else {

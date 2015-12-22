@@ -1,6 +1,7 @@
 const debug = require('debug')('debug:news/getStockNews');
 var rsj = require('rsj');
 import DataStore from '../../stores/DataStore'
+import OfflineStore from '../../stores/OfflineStore'
 
 export default (req, res) => {
 
@@ -48,6 +49,7 @@ export default (req, res) => {
   });
 
   promise.then(function (result) {
+    if(process.env.NODE_ENV == 'provision') OfflineStore.saveData(req,result);
     res.send(result);
   }, function (err) {
     debug(err); // Error: "It broke"
