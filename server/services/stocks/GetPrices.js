@@ -1,7 +1,7 @@
 const debug = require('debug')('debug:stocks/getPrices');
 var yahooFinance = require('yahoo-finance');
 import { enhanceStock } from '../../helpers/EnhanceStockResult';
-export default (req, res) => {
+export default (req, res, next) => {
 
   debug("getting stock prices");
 
@@ -22,7 +22,8 @@ export default (req, res) => {
   });
 
   promise.then(function (result) {
-    res.send(result);
+    req.app.set('response', result);
+    next();
   }, function (err) {
     debug(err); // Error: "It broke"
   });

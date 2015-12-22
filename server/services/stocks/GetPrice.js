@@ -3,7 +3,7 @@ var yahooFinance = require('yahoo-finance');
 import { enhanceStock } from '../../helpers/EnhanceStockResult';
 
 
-export default (req, res) => {
+export default (req, res, next) => {
 
     debug("getting stock price for ",req.body.ticker);
 
@@ -12,6 +12,7 @@ export default (req, res) => {
         fields: ['s', 'n', 'l1'],
     }, function (err, snapshot) {
         snapshot = enhanceStock(snapshot);
-        res.send(snapshot)
+        req.app.set('response', result);
+        next();
     });
 };

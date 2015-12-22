@@ -58,7 +58,7 @@ export default (req, res, next) => {
         json = DataStore.getPartialHistoricalData({json: JSON.parse(json), from: moment(req.body.from, "DD-MMYYYY")});
         debug("getting historical " + option_string + " data for " + req.body.ticker + " from " + req.body.from + ' from CACHE');
       }
-      
+
       let returnObject = {result: json, option: option_string, ticker: req.body.ticker};
       req.app.set('response',returnObject);
       next();
