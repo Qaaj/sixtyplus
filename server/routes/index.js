@@ -7,90 +7,101 @@ const debug = require('debug')('debug:routes/index');
 import OfflineStore from '../stores/OfflineStore';
 var httpProxy = require('http-proxy');
 var http = require('http');
-
+import stack from '../../app/shared/utils/stack';
 
 
 const router = express.Router();
 
 
-function routingWrapper(isProduction,app) {
+function routingWrapper(isProduction, app) {
 
-    var userLang = "EN";
-    var port = isProduction ? process.env.PORT : 3000;
+  var userLang = "EN";
+  var port = isProduction ? process.env.PORT : 3000;
 
-    var proxy = httpProxy.createProxyServer({
-        changeOrigin: true,
-        ws: true
+  var proxy = httpProxy.createProxyServer({
+    changeOrigin: true,
+    ws: true
+  });
+
+
+  if (!isProduction) {
+
+    var bundle = require('../../server/bundle.js');
+    bundle();
+    app.all('/build/*', function (req, res) {
+      proxy.web(req, res, {
+        target: 'http://127.0.0.1:3001'
+      });
+    });
+    app.all('/socket.io*', function (req, res) {
+      proxy.web(req, res, {
+        target: 'http://127.0.0.1:3001'
+      });
     });
 
+    app.get('/', function (req, res) {
+      res.render('index', {userLang: userLang});
+    });
 
-    if (!isProduction) {
+    proxy.on('error', function (e) {
+      // Just catch it
+    });
 
-        var bundle = require('../../server/bundle.js');
-        bundle();
-        app.all('/build/*', function (req, res) {
-            proxy.web(req, res, {
-                target: 'http://127.0.0.1:3001'
-            });
-        });
-        app.all('/socket.io*', function (req, res) {
-            proxy.web(req, res, {
-                target: 'http://127.0.0.1:3001'
-            });
-        });
+    // We need to use basic HTTP service to proxy
+    // websocket requests from webpack
+    var server = http.createServer(app);
 
-        app.get('/', function (req, res) {
-            res.render('index', { userLang: userLang});
-        });
+    server.on('upgrade', function (req, socket, head) {
+      proxy.ws(req, socket, head);
+    });
 
-        proxy.on('error', function(e) {
-            // Just catch it
-        });
+    server.listen(port, function () {
+      console.log('Server running on port ' + port);
+    });
 
-        // We need to use basic HTTP service to proxy
-        // websocket requests from webpack
-        var server = http.createServer(app);
+  } else {
 
-        server.on('upgrade', function (req, socket, head) {
-            proxy.ws(req, socket, head);
-        });
+    // And run the server
+    app.listen(port, function () {
+      console.log('Server running on port ' + port);
+    });
+    console.log('prod');
+    app.get('/', function (req, res) {
+      res.render('index_production', {userLang: userLang});
+    });
+  }
 
-        server.listen(port, function () {
-            console.log('Server running on port ' + port);
-        });
+  debug('Listening for API calls');
 
+  router.route('/api/:serviceId').all(
+    isOffline,
+    apiRouteHandler,
+    finaliseResponse
+  );
+
+  function isOffline(req, res, next) {
+    if (process.env.NODE_ENV === 'offline') {
+      OfflineStore.getData(req, res, next);
     } else {
-
-        // And run the server
-        app.listen(port, function () {
-            console.log('Server running on port ' + port);
-        });
-        console.log('prod');
-        app.get('/', function (req, res) {
-            res.render('index_production', { userLang: userLang});
-        });
+      next();
     }
+  }
 
-    debug('Listening for API calls');
-
-    router.route('/api/:serviceId').all(
-        apiRouteHandler
-    );
-
-
-    function apiRouteHandler(req, res) {
-        if (typeof services[req.params.serviceId] === 'function') {
-            if(process.env.NODE_ENV !== 'offline'){
-                services[req.params.serviceId](req, res);
-            }else{
-                OfflineStore.getData(req,res);
-            }
-        } else {
-            res.send('This endpoint does not exist');
-        }
+  function apiRouteHandler(req, res, next) {
+    if (typeof services[req.params.serviceId] === 'function') {
+      services[req.params.serviceId](req, res, next);
+    } else {
+      res.send('This endpoint does not exist');
     }
+  }
 
-    return router;
+  function finaliseResponse(req, res, next) {
+    let response = req.app.get('response');
+    if(process.env.NODE_ENV == 'provision') OfflineStore.saveData(req,response);
+    res.send(response);
+  }
+
+  return router;
 }
 
 export default routingWrapper;

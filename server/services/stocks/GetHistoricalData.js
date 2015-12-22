@@ -7,7 +7,7 @@ import DataStore from '../../stores/DataStore'
 import OfflineStore from '../../stores/OfflineStore'
 
 
-export default (req, res) => {
+export default (req, res, next) => {
 
   let from = moment("01-01-1970", "DD-MM-YYYY");
   let to = moment("31-12-2020", "DD-MM-YYYY");
@@ -58,10 +58,10 @@ export default (req, res) => {
         json = DataStore.getPartialHistoricalData({json: JSON.parse(json), from: moment(req.body.from, "DD-MMYYYY")});
         debug("getting historical " + option_string + " data for " + req.body.ticker + " from " + req.body.from + ' from CACHE');
       }
+      
       let returnObject = {result: json, option: option_string, ticker: req.body.ticker};
-      if(process.env.NODE_ENV == 'provision') OfflineStore.saveData(req,returnObject);
-
-      res.send(returnObject);
+      req.app.set('response',returnObject);
+      next();
 
     } else {
 
@@ -85,9 +85,9 @@ export default (req, res) => {
             from: moment(req.body.from, "DD-MMYYYY")
           });
           let returnObject = {result: json, option: option_string, ticker: req.body.ticker};
-          res.setHeader('Content-Type', 'application/json');
-          if(process.env.NODE_ENV == 'provision') OfflineStore.saveData(req,returnObject);
-          res.send(returnObject);
+
+          req.app.set('response',returnObject);
+          next();
         })
       });
 

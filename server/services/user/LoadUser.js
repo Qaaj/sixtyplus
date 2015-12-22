@@ -7,7 +7,7 @@ import OfflineStore from '../../stores/OfflineStore'
 var ref = new Firebase("https://crackling-torch-5091.firebaseio.com/");
 var usersRef = ref.child("users");
 
-export default (req, res) => {
+export default (req, res, next) => {
 
   debug("loading user with uid: ", req.body.uid);
 
@@ -36,7 +36,9 @@ export default (req, res) => {
         userObject.userData.portfolio = portfolio;
       }
       if(process.env.NODE_ENV == 'provision') OfflineStore.saveData(req,userObject);
-      res.send(userObject);
+      req.app.set('response',userObject);
+
+      next();
 
     } else {
 
@@ -48,7 +50,9 @@ export default (req, res) => {
       usersRef.child(req.body.uid + "").set(userObject);
 
       userObject.last_login = null;
-      res.send(userObject);
+      req.app.set('response',userObject);
+
+      next();
     }
   });
 
