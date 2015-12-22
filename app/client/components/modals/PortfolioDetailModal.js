@@ -136,6 +136,7 @@ class PortfolioDetailModal extends React.Component {
 
   render() {
     let tickerData = this.props.data;
+    console.log(tickerData);
     console.log("> Showing ", tickerData);
 
     let sectorClass = '';
@@ -182,7 +183,7 @@ class PortfolioDetailModal extends React.Component {
       </Modal.Header>
       <Modal.Body>
 
-        <C3PortfolioChart portfolio={portfolio} historical={this.props.historical} lang={this.props.lang} filterByTickersArray={tickerData.ticker} />
+        <C3PortfolioChart portfolio={portfolio} historical={this.props.historical} lang={this.props.lang} filterByTickersArray={[tickerData.ticker]} />
 
         <h4>Your positions</h4>
 

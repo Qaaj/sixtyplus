@@ -16,6 +16,7 @@ import HelpIcon from '../ui/HelpIcon';
 import Sorter from '../ui/Sorter';
 import Filter from '../ui/FilterButtons';
 import numeral from 'numeral';
+import {filterStockEntries} from '../../../shared/helpers/filtering';
 
 
 class PortfolioOverview extends React.Component {
@@ -93,6 +94,8 @@ class PortfolioOverview extends React.Component {
         change that.</Grid>);
 
 
+    stockEntries = filterStockEntries(stockEntries, this.state.filter)
+
     let dividends = stockEntries.reduce((prev, curr) => {
       if (curr.total_dividends) prev += curr.total_dividends;
       return prev;
@@ -130,7 +133,7 @@ class PortfolioOverview extends React.Component {
           <span>
             Portfolio Graph
             <HelpIcon className="portfolio_graph_help" title={this.props.lang('portfolio_graph')} icon="help_outline" content={this.props.lang('portfolio_graph_help')} /> </span>} eventKey="1">
-            <C3PortfolioChart portfolio={portfolio} historical={this.props.historical} lang={this.props.lang} />
+            <C3PortfolioChart entries={stockEntries} portfolio={portfolio} historical={this.props.historical} lang={this.props.lang} />
           </Panel>
 
           <hr />

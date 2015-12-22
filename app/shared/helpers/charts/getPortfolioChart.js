@@ -2,6 +2,7 @@ import {round} from '../formatting';
 import {sortByKey} from '../sorting';
 import d3 from 'd3';
 import numeral from 'numeral';
+import stack from '../../utils/stack';
 
 
 /**
@@ -13,6 +14,7 @@ import numeral from 'numeral';
 export function getPortfolioChart(portfolio, historical, compound_divs, filterByTickersArray = null) {
 
   let tickers;
+  console.log(filterByTickersArray);
   if ( filterByTickersArray ){
     tickers = portfolio.flatTickerList.filter(function (ticker) {
       return filterByTickersArray.indexOf(ticker) > -1;
