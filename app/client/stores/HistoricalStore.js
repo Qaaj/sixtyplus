@@ -1,5 +1,3 @@
-'use strict';
-
 import AppDispatcher from '../dispatcher/AppDispatcher';
 import HistoricalConstants from '../constants/HistoricalConstants';
 import HistoricalActions from '../actions/HistoricalActionCreators';

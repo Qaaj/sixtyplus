@@ -11,6 +11,7 @@ import numeral from 'numeral';
  * @filterdataByTicker {Array} Tickername to filter chart results by.
  */
 export function getPortfolioChart(portfolio, historical, compound_divs, filterByTickersArray = null) {
+
   let tickers;
   if ( filterByTickersArray ){
     tickers = portfolio.flatTickerList.filter(function (ticker) {
@@ -86,7 +87,6 @@ export function getPortfolioChart(portfolio, historical, compound_divs, filterBy
 function getStyling(tickers,portfolio){
 
   // Set the styles for all the tickers except the Cost Base
-
   let types = tickers.reduce((prev, curr) => {
     prev[curr] = 'area-spline';
     return prev;

@@ -1,5 +1,3 @@
-'use strict';
-
 import AppDispatcher from '../dispatcher/AppDispatcher.js';
 import UserConstants from '../constants/UserConstants.js';
 import RealTimeConstants from '../constants/RealTimeConstants.js';

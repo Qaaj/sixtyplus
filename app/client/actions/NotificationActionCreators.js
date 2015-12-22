@@ -1,5 +1,3 @@
-'use strict';
-
 import AppDispatcher from '../dispatcher/AppDispatcher.js';
 import NotificationConstants from '../constants/NotificationConstants';
 import asap from 'asap';

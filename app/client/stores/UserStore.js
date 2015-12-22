@@ -1,5 +1,3 @@
-'use strict';
-
 import AppDispatcher from '../dispatcher/AppDispatcher';
 import UserConstants from '../constants/UserConstants';
 import assign from 'object-assign';

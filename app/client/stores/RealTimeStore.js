@@ -1,5 +1,3 @@
-'use strict';
-
 import AppDispatcher from '../dispatcher/AppDispatcher';
 import RealTimeConstants from '../constants/RealTimeConstants';
 import RealTimeActionCreators from '../actions/RealTimeActionCreators';

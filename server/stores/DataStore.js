@@ -4,6 +4,7 @@ import fs from 'fs';
 import moment from 'moment';
 import redis from 'redis';
 import bluebird from 'bluebird';
+import noSpam from '../../app/shared/utils/noSpam';
 
 bluebird.promisifyAll(redis.RedisClient.prototype);
 
@@ -39,7 +40,12 @@ const DataStore = {
     if (option == 'news') client.expire(option+':'+ticker,3 * HOUR);
     if (option == 'stockdata') client.expire(option+':'+ticker,10);
     if (option == 'historical:v' || option == 'historical:m') client.expire(option+':'+ticker,DAY);
-    if (!process.env.REDISCLOUD_URL) client.save();
+    //save the data in our localhost redis. gets saved automatically online;
+    if (process.env.NODE_ENV !== 'production') noSpam(this.saveClient,1000);
+  },
+
+  saveClient(){
+    client.save();
   },
 
   getCachedData({option,ticker}){

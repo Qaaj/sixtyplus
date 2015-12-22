@@ -7,6 +7,8 @@ import {getPortfolioChart, getTickerDetailChart} from '../../../shared/helpers/c
 import {getProfitLossChart} from '../../../shared/helpers/charts/getProfitLossChart';
 import {getDividendChart} from '../../../shared/helpers/charts/getDividendChart';
 import Filter from '../ui/FilterButtons';
+import stack from '../../../shared/utils/stack';
+
 
 class C3PortfolioChart extends React.Component {
 
