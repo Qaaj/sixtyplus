@@ -1,6 +1,7 @@
 
 import AppDispatcher from '../dispatcher/AppDispatcher.js';
 import UserConstants from '../constants/UserConstants.js';
+import PortfolioConstants from '../constants/PortfolioConstants.js';
 
 import { changeUILanguage, loadUser, saveUserData, deleteUserPortfolioData } from '../utils/ApiUtils';
 import { fromJS } from 'immutable';
@@ -27,12 +28,15 @@ var UserActionCreators = {
 
     // optimistically update local portfolio object
 
-    AppDispatcher.handleViewAction({
-      actionType: UserConstants.USER_ADD_STOCK_ENTRY_COLLECTION,
-      data: { entries:stockEntryCollection, resultObject}
-    });
+    //AppDispatcher.handleViewAction({
+    //  actionType: UserConstants.USER_ADD_STOCK_ENTRY_COLLECTION,
+    //  data: { entries:stockEntryCollection, resultObject}
+    //});
+
+
 
     let listOfTickers = stockEntryCollection.map(entries => {
+      console.log(entries);
       return entries.ticker;
     });
 
@@ -79,22 +83,14 @@ var UserActionCreators = {
 
   loadUser() {
 
-    let uid;
+    let uid = "";
 
-    if (localStorage.getItem('uid') == null || localStorage.getItem('uid') == "") {
-      uid = new Date().getTime() + "-" + Math.round(Math.random() * 10000);
-      localStorage.setItem('uid', uid);
-    } else {
+    if (localStorage.getItem('uid') !== null || localStorage.getItem('uid') !== "") {
       uid = localStorage.getItem('uid');
     }
 
-    if(window.location.hostname.indexOf("sixtyplus-test") != -1) uid = 'TEST_USER';
+    loadUser({uid});
 
-    //uid = '1448488808946-7120';
-    //uid = 'DIV';
-    uid = 'TEST_USER'
-
-    loadUser({uid: uid});
   },
 };
 

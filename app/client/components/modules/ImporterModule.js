@@ -1,5 +1,6 @@
 import { Input,Button } from 'react-bootstrap';
 import UserActionCreators from '../../actions/UserActionCreators';
+import PortfolioAction from '../../actions/PortfolioActionCreators';
 import { doImport } from '../../../shared/helpers/importers/IB_importer';
 import { mapByTicker, updateArrayOfEntryCollectionsWithRT} from '../../../shared/helpers/stocks';
 import NotificationActionCreators from '../../actions/NotificationActionCreators';
@@ -57,7 +58,8 @@ class Importer extends React.Component {
       tryingImport: true
     })
 
-    UserActionCreators.addStockEntryCollectionToPortfolio(this.state.stockEntryCollections,resultObject);
+    //UserActionCreators.addStockEntryCollectionToPortfolio(this.state.stockEntryCollections,resultObject);
+    PortfolioAction.addStockEntryCollections(this.state.stockEntryCollections,resultObject);
 
   }
 

@@ -79,15 +79,13 @@ UserStore.dispatchToken = AppDispatcher.register(function (payload) {
 
     case UserConstants.USER_LOADED:
 
-      if (action.data.currency == "EURO") action.data.currency = "€";
-      if (action.data.currency == "DOLLAR") action.data.currency = "$";
-      if (action.data.currency == "POUND") action.data.currency = "£";
+      localStorage.setItem('uid', action.data.objectId);
 
       _userObject = fromJS(action.data);
 
-      // Create the stockportfolio object using the data from the server
-      _stockPortfolio = new StockPortfolio(_userObject.toJS().userData.portfolio);
-      _userObject = _userObject.set("stockPortfolio", _stockPortfolio);
+      // Now we the portfolio store should start loading the users portfolio. NOT HERE
+      //_stockPortfolio = new StockPortfolio(_userObject.toJS().userData.portfolio);
+      //_userObject = _userObject.set("stockPortfolio", _stockPortfolio);
 
       // Translation stuff
       let newLangInstance = (...args)=>{return getTranslation(...args)};

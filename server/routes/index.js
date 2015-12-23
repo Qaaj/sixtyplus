@@ -5,8 +5,9 @@ import path from 'path';
 import services from '../services/allServices';
 const debug = require('debug')('debug:routes/index');
 import OfflineStore from '../stores/OfflineStore';
-var httpProxy = require('http-proxy');
-var http = require('http');
+import Parse from 'parse/node';
+import httpProxy from 'http-proxy';
+import http from 'http';
 import stack from '../../app/shared/utils/stack';
 
 
@@ -15,13 +16,14 @@ const router = express.Router();
 
 function routingWrapper(isProduction, app) {
 
-  var userLang = "EN";
   var port = isProduction ? process.env.PORT : 3000;
 
   var proxy = httpProxy.createProxyServer({
     changeOrigin: true,
     ws: true
   });
+
+  Parse.initialize("qwOuW1DQbNN8N7kokZ1zpEUZplKjxt0eGQAc8NF0", "zbl6d3UFZxB93t0zi7JIdaWaNxNsw2cg4rzfYt6g");
 
 
   if (!isProduction) {
@@ -40,7 +42,7 @@ function routingWrapper(isProduction, app) {
     });
 
     app.get('/', function (req, res) {
-      res.render('index', {userLang: userLang});
+      res.render('index');
     });
 
     proxy.on('error', function (e) {
@@ -67,7 +69,7 @@ function routingWrapper(isProduction, app) {
     });
     console.log('prod');
     app.get('/', function (req, res) {
-      res.render('index_production', {userLang: userLang});
+      res.render('index_production');
     });
   }
 
