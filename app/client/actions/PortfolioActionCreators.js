@@ -2,7 +2,7 @@ import AppDispatcher from '../dispatcher/AppDispatcher.js';
 import RealTimeActionCreators from '../actions/RealTimeActionCreators';
 import HistoricalActions from '../actions/HistoricalActionCreators';
 import UserStore from '../stores/UserStore.js';
-import { addEntry } from '../utils/api/PortfolioAPI';
+import { addEntry } from '../api/PortfolioAPI';
 
 
 var PortfolioActionCreators = {

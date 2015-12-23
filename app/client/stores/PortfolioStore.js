@@ -9,7 +9,7 @@ const CHANGE_EVENT = 'change';
 import UserStore from './UserStore';
 import defaults from '../config/Defaults';
 import StockPortfolio from '../classes/StockPortfolio';
-import { loadUserPortfolioData } from '../utils/api/PortfolioAPI';
+import { loadUserPortfolioData } from '../api/PortfolioAPI';
 
 
 let _portfolio = null;

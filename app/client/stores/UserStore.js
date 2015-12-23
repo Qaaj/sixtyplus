@@ -41,18 +41,10 @@ UserStore.dispatchToken = AppDispatcher.register(function (payload) {
   switch (action.actionType) {
 
     case UserConstants.USER_CHANGE_LANGUAGE:
-
-      UserStore.emitChange();
       break;
-
 
     case UserConstants.USER_SAVE_DATA:
-
-      _userData = _userData.merge(fromJS(action.data));
-      _userObject = _userObject.set("userData",_userData);
-      UserStore.emitChange();
       break;
-
 
     case UserConstants.USER_LOADED:
 

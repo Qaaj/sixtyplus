@@ -2,7 +2,7 @@
 import AppDispatcher from '../dispatcher/AppDispatcher.js';
 import UserConstants from '../constants/UserConstants.js';
 import PortfolioConstants from '../constants/PortfolioConstants.js';
-import { loadUser, saveUserSettings } from '../utils/api/UserAPI';
+import { loadUser, saveUserSettings } from '../api/UserAPI';
 import { fromJS } from 'immutable';
 import UserStore from '../stores/UserStore.js';
 import defaults from '../config/Defaults';
@@ -16,11 +16,7 @@ var UserActionCreators = {
 
   saveUserSettings(mergeUserData){
 
-
     let uid = UserStore.getUser().uid
-
-    console.log(UserStore.getUser());
-
     //saveUserSettings(mergedUserData);
 
   },

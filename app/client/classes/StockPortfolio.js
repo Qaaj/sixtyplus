@@ -3,7 +3,7 @@ import StockEntry from './StockEntry';
 import HistoricalData from '../stores/HistoricalStore';
 import HistoricalActions from '../actions/HistoricalActionCreators';
 import {round} from '../../shared/helpers/formatting';
-import {getStockNews} from '../utils/ApiUtils';
+import {getStockNews} from '../api/StockAPI';
 
 class StockPortfolio {
 

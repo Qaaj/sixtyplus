@@ -1,6 +1,6 @@
-import { get, post, put, del } from '../RequestUtil';
-import ServerActionCreators from '../../actions/ServerActionCreators';
-import NotificationActions from '../../actions/NotificationActionCreators';
+import { get, post, put, del } from '../utils/RequestUtil';
+import ServerActionCreators from '../actions/ServerActionCreators';
+import NotificationActions from '../actions/NotificationActionCreators';
 
 let currentProtocol = window.location.protocol;
 let baseUrl = window.location.host;

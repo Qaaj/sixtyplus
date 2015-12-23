@@ -1,6 +1,6 @@
 import AppDispatcher from '../dispatcher/AppDispatcher.js';
 import UserConstants from '../constants/UserConstants.js';
-import { getHistoricalDividends, getHistoricalPrices } from '../utils/ApiUtils';
+import { getHistoricalDividends, getHistoricalPrices } from '../api/StockAPI';
 import defaults from '../config/Defaults';
 
 let already_fetched = [];
@@ -9,7 +9,6 @@ var HistoricalActionCreators = {
 
   getHistoricalDividends(data){
     if(already_fetched.indexOf(data.symbol) !== -1){
-      //console.log("Already got dividend data for " + data.symbol);
       return;
     }
     data.options = 'dividends';
