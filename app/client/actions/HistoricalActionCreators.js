@@ -8,13 +8,13 @@ let already_fetched = [];
 var HistoricalActionCreators = {
 
   getHistoricalDividends(data){
-    if(already_fetched.indexOf(data.ticker) !== -1){
-      //console.log("Already got dividend data for " + data.ticker);
+    if(already_fetched.indexOf(data.symbol) !== -1){
+      //console.log("Already got dividend data for " + data.symbol);
       return;
     }
     data.options = 'dividends';
     getHistoricalDividends(data);
-    already_fetched.push(data.ticker);
+    already_fetched.push(data.symbol);
   },
   getHistoricalPrices(data){
     getHistoricalPrices(data);

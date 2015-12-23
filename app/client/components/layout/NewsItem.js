@@ -43,7 +43,7 @@ class NewsItem extends React.Component {
       <div key={this.key} className="news_item">
         <div className="top">
         <span className="stockName">
-          {this.props.news.ticker}
+          {this.props.news.symbol}
         </span>
         <span className="title">
           <a onClick={this.handleClick.bind(this)}>{this.props.news.title}</a>

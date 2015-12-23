@@ -1,6 +1,6 @@
 import ColumnRenderer from './ColumnRenderer';
 
-class TickerDetailsAboutComponent extends React.Component {
+class symbolDetailsAboutComponent extends React.Component {
   constructor(props) {
     super(props);
   }
@@ -10,11 +10,11 @@ class TickerDetailsAboutComponent extends React.Component {
   }
 }
 
-TickerDetailsAboutComponent.displayName = 'TickerDetailsAboutComponent';
+symbolDetailsAboutComponent.displayName = 'symbolDetailsAboutComponent';
 
-TickerDetailsAboutComponent.PropTypes = {
+symbolDetailsAboutComponent.PropTypes = {
   title: React.PropTypes.string,
   data: React.PropTypes.array,
 };
 
-export default TickerDetailsAboutComponent;
+export default symbolDetailsAboutComponent;

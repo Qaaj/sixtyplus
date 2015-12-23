@@ -3,22 +3,22 @@ import {sortByKey} from '../sorting';
 
 export function getProfitLossChart(portfolio, historical) {
 
-  let tickers = portfolio.flatTickerList;
+  let symbols = portfolio.flatsymbolList;
   let info_per_date = {};
 
-  // Go over all the tickers and collect their value per month
-  tickers.forEach(ticker => {
+  // Go over all the symbols and collect their value per month
+  symbols.forEach(symbol => {
 
-    // get the current monthly prices of this ticke. curr = ticker
-    let monthly = JSON.parse(historical[ticker].monthly);
+    // get the current monthly prices of this ticke. curr = symbol
+    let monthly = JSON.parse(historical[symbol].monthly);
 
-    //  get all of the data for this ticker
+    //  get all of the data for this symbol
     monthly.forEach(month => {
 
       // Normalised Date (Some dates are on a different day of the month)
       let date = month.Date.substring(0, 7) + '-01';
       // Amount of stock at that date
-      let amount = portfolio.getEntryCollectionByTicker(ticker).getAmountAtDate(month);
+      let amount = portfolio.getEntryCollectionBysymbol(symbol).getAmountAtDate(month);
       // Price of the stock at that date
       let res = amount * parseFloat(month['Adj Close']);
 
@@ -26,7 +26,7 @@ export function getProfitLossChart(portfolio, historical) {
       let info_for_this_date = info_per_date[date];
       if (!info_for_this_date) info_for_this_date = {};
       if (!info_for_this_date['Cost Base']) info_for_this_date['Cost Base'] = 0;
-      info_for_this_date['Cost Base'] += round(portfolio.getEntryCollectionByTicker(ticker).getAmountAtDate(month) * portfolio.getEntryCollectionByTicker(ticker).averagePrice, 2);
+      info_for_this_date['Cost Base'] += round(portfolio.getEntryCollectionBysymbol(symbol).getAmountAtDate(month) * portfolio.getEntryCollectionBysymbol(symbol).averagePrice, 2);
       if(!info_for_this_date['P&L']) info_for_this_date['P&L'] = 0;
       info_for_this_date['P&L'] += round(res);
       info_per_date[date] = info_for_this_date;
@@ -43,19 +43,19 @@ export function getProfitLossChart(portfolio, historical) {
     return ( {date, percent});
   })
 
-  // Add cost base as a 'ticker' so we can parse it with the rest
-  tickers = ['P&L']
+  // Add cost base as a 'symbol' so we can parse it with the rest
+  symbols = ['P&L']
 
-  const chart = tickers.map(ticker => {
-    let ticker_array = [];
+  const chart = symbols.map(symbol => {
+    let symbol_array = [];
     array_of_dates.forEach(date => {
       let value = date.percent;
       if (!value) value = 0;
-      ticker_array.push(value);
+      symbol_array.push(value);
     })
-    ticker_array.reverse();
-    ticker_array.unshift(ticker)
-    return ticker_array;
+    symbol_array.reverse();
+    symbol_array.unshift(symbol)
+    return symbol_array;
   });
 
 
@@ -66,24 +66,24 @@ export function getProfitLossChart(portfolio, historical) {
   let columns = [month_labels];
   columns = columns.concat(chart);
 
-  let styling = getStyling(tickers,portfolio);
+  let styling = getStyling(symbols,portfolio);
 
   return {columns, ...styling};
 
 }
 
-function getStyling(tickers,portfolio){
+function getStyling(symbols,portfolio){
 
-  // Set the styles for all the tickers except the Cost Base
+  // Set the styles for all the symbols except the Cost Base
 
-  let types = tickers.reduce((prev, curr) => {
+  let types = symbols.reduce((prev, curr) => {
     prev[curr] = 'line';
     return prev;
   }, {});
 
 
-  // Group the tickers together
-  let groups = [portfolio.flatTickerList];
+  // Group the symbols together
+  let groups = [portfolio.flatsymbolList];
 
   let color = function (color,object) {
     if(object.value < 0) return '#DD332A';

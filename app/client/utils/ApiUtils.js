@@ -26,8 +26,8 @@ export function changeUILanguage(data) {
     );
 }
 
-export function getStockNews(tickers){
-  let data = {tickers: tickers};
+export function getStockNews(symbols){
+  let data = {symbols: symbols};
 
   let url = `${API_URL}/getStocksNews`;
 
@@ -45,16 +45,16 @@ export function getStockNews(tickers){
 
 
 
-export function getStockPrice(ticker){
+export function getStockPrice(symbol){
 
-    let data = {ticker: ticker};
+    let data = {symbol: symbol};
 
     let url = `${API_URL}/getStockPrice`;
 
     post({url, data})
       .then(
         (response) => {
-            ServerActionCreators.tickerLoaded( { ticker: response.body })
+            ServerActionCreators.symbolLoaded( { symbol: response.body })
         },
 
         (error) => {
@@ -82,16 +82,16 @@ export function getStockSuggestions(input,callback){
 
 }
 
-export function getStockPrices(tickers){
+export function getStockPrices(symbols){
 
-  let data = {tickers: tickers};
+  let data = {symbols: symbols};
 
     let url = `${API_URL}/getStockPrices`;
 
     post({url, data})
       .then(
         (response) => {
-            ServerActionCreators.tickersLoaded(  response.body)
+            ServerActionCreators.symbolsLoaded(  response.body)
         },
 
         (error) => {
@@ -100,15 +100,15 @@ export function getStockPrices(tickers){
       );
 }
 
-export function getStockData(tickers){
-    let data = {tickers: tickers};
+export function getStockData(symbols){
+    let data = {symbols: symbols};
 
     let url = `${API_URL}/getStockData`;
 
     post({url, data})
       .then(
         (response) => {
-            ServerActionCreators.tickersLoaded(  response.body)
+            ServerActionCreators.symbolsLoaded(  response.body)
         },
 
         (error) => {

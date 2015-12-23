@@ -16,7 +16,7 @@
  //OK Make filter and sorting components seperate re-usable components
  //OK Graph with total returns / dividends / costbase
  //OK Modal for stock entry information
- //OK Run a cron job for getting daily data for all tickers in the database
+ //OK Run a cron job for getting daily data for all symbols in the database
  //OK Fix the news module (proper loading of data through actions)
  //OK Add node environment vars for making a distinction between different devs/test/debug accounts
  //OK Integrate "fake" backend service for offline dev

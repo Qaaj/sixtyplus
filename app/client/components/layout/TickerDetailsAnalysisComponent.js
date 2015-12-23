@@ -1,4 +1,4 @@
-class TickerDetailsAnalysisComponent extends React.Component {
+class symbolDetailsAnalysisComponent extends React.Component {
   constructor(props) {
     super(props);
   }
@@ -25,4 +25,4 @@ class TickerDetailsAnalysisComponent extends React.Component {
   }
 }
 
-export default TickerDetailsAnalysisComponent;
+export default symbolDetailsAnalysisComponent;

@@ -8,7 +8,7 @@ class StockEntry {
     this.date = moment(date,'YYYYMMDD');
     if(date.indexOf('/') !== -1) this.date = moment(date,'MM/YY/YYYY');
     this.price = price;
-    this.ticker = symbol;
+    this.symbol = symbol;
     this.name = "NO NAME";
     this.sector = "NO SECTOR";
   }
@@ -32,7 +32,7 @@ class StockEntry {
 
   updateWithRealtimeData(rt){
 
-    let data = rt[this.ticker];
+    let data = rt[this.symbol];
 
     if(data){
       this.change = data.change;

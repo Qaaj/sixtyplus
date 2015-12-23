@@ -8,17 +8,17 @@ class News {
 
   parseNews(news){
 
-    this.tickers = Object.keys(news);
+    this.symbols = Object.keys(news);
 
-    this.news = this.tickers.map(ticker => {
-      return new NewsItemCollection(news[ticker],ticker);
+    this.news = this.symbols.map(symbol => {
+      return new NewsItemCollection(news[symbol],symbol);
     })
 
   }
 
-  getNewsByTicker(ticker){
+  getNewsBysymbol(symbol){
     return this.news.filter(newsItem =>{
-      if(newsItem.ticker === ticker) return true;
+      if(newsItem.symbol === symbol) return true;
     })[0];
   }
 

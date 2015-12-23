@@ -5,40 +5,40 @@ import OfflineStore from '../../stores/OfflineStore'
 
 export default (req, res, next) => {
 
-  let list = req.body.tickers;
+  let list = req.body.symbols;
 
   if (!Array.isArray(list)) list = [list];
   debug("getting stock news: ", list);
 
   var promise = new Promise(function (resolve, reject) {
     let returnList = {};
-    list.map(ticker => {
+    list.map(symbol => {
 
-      let cache = DataStore.getCachedData({option: "news", ticker});
+      let cache = DataStore.getCachedData({option: "news", symbol});
 
       cache.then(function (json) {
 
         if (json) {
           // Item was found in the cache, return it
-          debug('news from cache: ', ticker);
-          returnList[ticker] = json;
-          if (Object.keys(returnList).length == req.body.tickers.length) resolve(returnList);
+          debug('news from cache: ', symbol);
+          returnList[symbol] = json;
+          if (Object.keys(returnList).length == req.body.symbols.length) resolve(returnList);
 
         } else {
           // Item was not found in the cache, get it and then save it
-          debug('news from server: ', ticker);
+          debug('news from server: ', symbol);
           // Hack for Google Finance vs Yahoo Finance
-          let tickerURL = ticker;
-          if(tickerURL.indexOf(".AS") !== -1){
-            tickerURL = 'AMS:' + tickerURL.split('.')[0];
+          let symbolURL = symbol;
+          if(symbolURL.indexOf(".AS") !== -1){
+            symbolURL = 'AMS:' + symbolURL.split('.')[0];
           }else{
-            //tickerURL = 'NYSE:' + tickerURL;
+            //symbolURL = 'NYSE:' + symbolURL;
           }
-          let url = 'http://www.google.com/finance/company_news?q=' + tickerURL + '&output=rss'
+          let url = 'http://www.google.com/finance/company_news?q=' + symbolURL + '&output=rss'
           rsj.r2j(url, function (json) {
-            DataStore.setCachedData({option: "news", ticker, json:JSON.parse(json)});
-            returnList[ticker] = JSON.parse(json);
-            if (Object.keys(returnList).length == req.body.tickers.length) resolve(returnList);
+            DataStore.setCachedData({option: "news", symbol, json:JSON.parse(json)});
+            returnList[symbol] = JSON.parse(json);
+            if (Object.keys(returnList).length == req.body.symbols.length) resolve(returnList);
           });
 
         }

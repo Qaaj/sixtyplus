@@ -7,7 +7,7 @@ export default (req, res, next) => {
 
   var promise = new Promise(function (resolve, reject) {
     let returnList = [];
-    let list = req.body.tickers.map(tickr => {
+    let list = req.body.symbols.map(tickr => {
 
       yahooFinance.snapshot({
         symbol: tickr,
@@ -16,7 +16,7 @@ export default (req, res, next) => {
         snapshot = enhanceStock(snapshot);
 
         returnList.push(snapshot);
-        if(returnList.length == req.body.tickers.length) resolve(returnList);
+        if(returnList.length == req.body.symbols.length) resolve(returnList);
       });
     })
   });

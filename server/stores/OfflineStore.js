@@ -7,7 +7,7 @@ const OfflineStore = {
   getData(req, res){
 
     let options = "";
-    if(req.body.ticker) options = "_" + req.body.ticker;
+    if(req.body.symbol) options = "_" + req.body.symbol;
     if(req.body.options) options += "_" + req.body.options;
     if(req.body.from) options += "_" + req.body.from;
     let id = req.params.serviceId;
@@ -28,7 +28,7 @@ const OfflineStore = {
   saveData(req,data){
 
     let options = "";
-    if(req.body.ticker) options = "_" + req.body.ticker;
+    if(req.body.symbol) options = "_" + req.body.symbol;
     if(req.body.options) options += "_" + req.body.options;
     if(req.body.from) options += "_" + req.body.from;
     let id = req.params.serviceId;

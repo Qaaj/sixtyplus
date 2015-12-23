@@ -23,18 +23,18 @@ function updateRatings(res) {
     ref.on("value", function (snapshot) {
 
       let users = snapshot.val();
-      let tickers = new Set();
+      let symbols = new Set();
 
       Object.keys(users).forEach(key => {
         let user = users[key];
         if (user.userData && user.userData.portfolio) {
-          Object.keys(user.userData.portfolio).forEach(ticker => {
-            tickers = tickers.add(ticker.toUpperCase());
+          Object.keys(user.userData.portfolio).forEach(symbol => {
+            symbols = symbols.add(symbol.toUpperCase());
           });
         }
       });
 
-      resolve(tickers.toJS());
+      resolve(symbols.toJS());
 
     }, function (errorObject) {
       console.log("The read failed: " + errorObject.code);
@@ -52,9 +52,9 @@ function updateRatings(res) {
 function getAnalystRatings(list,res) {
   var promise = new Promise(function (resolve, reject) {
     let returnList = [];
-    list.map(ticker => {
+    list.map(symbol => {
       yahooFinance.snapshot({
-        symbol: ticker,
+        symbol: symbol,
         fields: ['t8', 'e8', 'e9'],
         // '1YrTargetPrice': 40.61,
         // epsEstimateNextYear: 3.36,

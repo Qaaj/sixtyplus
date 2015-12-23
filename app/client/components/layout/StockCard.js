@@ -77,7 +77,7 @@ class StockCard extends React.Component {
     let body = (
       <Col onClick={this.handleClick.bind(this)} xs={column.xs} md={column.md}>
         <div className={"stockCard"}>
-          <h4>{entries.ticker} <span className="stockName">{entries.name} </span></h4>
+          <h4>{entries.symbol} <span className="stockName">{entries.name} </span></h4>
 
           <div className={"basics"}>
 
@@ -85,7 +85,7 @@ class StockCard extends React.Component {
             <div className="cardContent">
               <Well>
                 <span className="lastPrice">{entries.lastPrice}</span> <span
-                className={"tickerUpDown  " + profitColorClass}> {entries.first.changeString}
+                className={"symbolUpDown  " + profitColorClass}> {entries.first.changeString}
                 ({entries.first.percentChangeString})</span>
               </Well>
 

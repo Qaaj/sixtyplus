@@ -46,7 +46,7 @@ function startTimer() {
 
 function refreshPortfolio(data) {
   let portfolio = new StockPortfolio(data)
-  RealTimeActionCreators.getStockData(portfolio.flatTickerList);
+  RealTimeActionCreators.getStockData(portfolio.flatsymbolList);
 }
 
 
@@ -65,8 +65,8 @@ RealTimeStore.dispatchToken = AppDispatcher.register(function (payload) {
 
   case RealTimeConstants.REAL_TIME_STOCKS_UPDATE:
 
-  action.data.map(ticker => {
-    if(ticker) _realTimeObject = _realTimeObject.set(ticker.symbol, ticker)
+  action.data.map(symbol => {
+    if(symbol) _realTimeObject = _realTimeObject.set(symbol.symbol, symbol)
   });
 
   RealTimeStore.emitChange();
@@ -75,8 +75,8 @@ RealTimeStore.dispatchToken = AppDispatcher.register(function (payload) {
 
   case RealTimeConstants.REAL_TIME_STOCK_UPDATE:
 
-  if(action.data.ticker && action.data.ticker.symbol){
-    _realTimeObject = _realTimeObject.set(action.data.ticker.symbol, action.data.ticker);
+  if(action.data.symbol && action.data.symbol.symbol){
+    _realTimeObject = _realTimeObject.set(action.data.symbol.symbol, action.data.symbol);
     RealTimeStore.emitChange();
   }
 

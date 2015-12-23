@@ -67,7 +67,7 @@ class SingleManualImportLine extends React.Component {
     this.stockRow[3] = date;
 
     const inputAttributes = {
-      className: 'ticker',
+      className: 'symbol',
       placeholder: name,
       onChange: this._handleInput.bind(this,line,0),
       alt:0

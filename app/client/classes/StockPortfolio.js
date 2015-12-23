@@ -32,18 +32,18 @@ class StockPortfolio {
 
     // TODO: Move this logic out of here
     // Get dividend info for existing portfolio
-    getStockNews(this.flatTickerList);
-    HistoricalActions.getHistoricalPrices({ ticker:'VTI', options:'monthly'});
+    getStockNews(this.flatsymbolList);
+    HistoricalActions.getHistoricalPrices({ symbol:'VTI', options:'monthly'});
 
-    this.flatTickerList.forEach(ticker =>{
-      HistoricalActions.getHistoricalDividends({ ticker});
-      HistoricalActions.getHistoricalPrices({ ticker, options:'monthly', from:minusOneMonth.format("DD-MM-YYYY")});
+    this.flatsymbolList.forEach(symbol =>{
+      HistoricalActions.getHistoricalDividends({ symbol});
+      HistoricalActions.getHistoricalPrices({ symbol, options:'monthly', from:minusOneMonth.format("DD-MM-YYYY")});
     });
   }
 
   checkIfCollectionExists(newEntryCollection){
     let existingCollection = this.entryCollectionList.filter(currentEntryCollection =>{
-      if(currentEntryCollection.ticker === newEntryCollection.ticker) {
+      if(currentEntryCollection.symbol === newEntryCollection.symbol) {
         currentEntryCollection.addEntries(newEntryCollection.entries);
         return 1;
       }
@@ -54,9 +54,9 @@ class StockPortfolio {
 
   }
 
-  getEntryCollectionByTicker(ticker){
+  getEntryCollectionBysymbol(symbol){
     return this.entryCollectionList.filter(entries =>{
-      if(entries.ticker === ticker) return true;
+      if(entries.symbol === symbol) return true;
     })[0];
   }
 
@@ -118,7 +118,7 @@ class StockPortfolio {
     return portfolio;
   }
 
-  get flatTickerList(){
+  get flatsymbolList(){
     return Object.keys(this.userDataObject);
   }
 
@@ -135,9 +135,9 @@ class StockPortfolio {
     // THIS IS THE DATA THAT WILL BE SAVED TO THE BACKEND
     let portfolio = {};
     this.entryCollectionList.map((entryCollection) => {
-      portfolio[entryCollection.ticker] = entryCollection.entries.map(entry => {
+      portfolio[entryCollection.symbol] = entryCollection.entries.map(entry => {
         let final = {};
-        final.ticker = entry.ticker;
+        final.symbol = entry.symbol;
         final.price = entry.price;
         final.amount = entry.amount;
         final.date = entry.date.format();

@@ -27,8 +27,8 @@ class ColumnRenderer extends React.Component {
   }
 
   render() {
-    let tickerData = this.props.data;
-    let columns = this._renderColumns(tickerData);
+    let symbolData = this.props.data;
+    let columns = this._renderColumns(symbolData);
 
     return (<div className="container-fluid">
       <h4>About {this.props.title}</h4>

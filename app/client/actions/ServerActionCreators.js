@@ -6,14 +6,14 @@ import PortfolioConstants from '../constants/PortfolioConstants.js';
 
 var ServerActionCreators = {
 
-  tickersLoaded(data){
+  symbolsLoaded(data){
     AppDispatcher.handleServerAction({
       actionType: RealTimeConstants.REAL_TIME_STOCKS_UPDATE,
       data: data,
     });
   },
 
-  tickerLoaded(data){
+  symbolLoaded(data){
     AppDispatcher.handleServerAction({
       actionType: RealTimeConstants.REAL_TIME_STOCK_UPDATE,
       data: data,

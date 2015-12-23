@@ -8,59 +8,59 @@ import C3PortfolioChart from '../charts/C3PortfolioChart';
 import {updateArrayOfEntryCollectionsWithRT, updatePortfolioDividends} from '../../../shared/helpers/stocks';
 import ListGroupRenderer from '../layout/ListGroupRenderer.js';
 import {getProfitLossClassname} from '../../../shared/helpers/colors/ColorUtils';
-import TickerDetailsAnalysisComponent from '../layout/TickerDetailsAnalysisComponent';
-import TickerDetailsAboutComponent from '../layout/TickerDetailsAboutComponent';
+import symbolDetailsAnalysisComponent from '../layout/tickerDetailsAnalysisComponent';
+import symbolDetailsAboutComponent from '../layout/tickerDetailsAboutComponent';
 
 class PortfolioDetailModal extends React.Component {
 
   constructor(props) {
     super(props);
 
-    let tickerData = this.props.data;
-    let tickerExtendedInformation = this.props.rt[tickerData.ticker];
+    let symbolData = this.props.data;
+    let symbolExtendedInformation = this.props.rt[symbolData.symbol];
 
     const listGroupsToRender = [
       // COLUMN 1
       [{
         prop: this.props.lang('costBase'),
-        value: tickerData.costBase,
+        value: symbolData.costBase,
       },
 
         {
           prop: this.props.lang('marketValue'),
-          value: tickerData.marketValue,
+          value: symbolData.marketValue,
         },
 
         {
           prop: this.props.lang('dividendsCollected'),
-          value: tickerData.total_dividends,
+          value: symbolData.total_dividends,
         },
 
         {
           prop: this.props.lang('profitLoss'),
-          value: ('' + tickerData.profitLoss + '(' + tickerData.totalChangePercentageString + ')'),
-          listGroupItemStyle: tickerData.style,
+          value: ('' + symbolData.profitLoss + '(' + symbolData.totalChangePercentageString + ')'),
+          listGroupItemStyle: symbolData.style,
         }],
 
       // COLUMN 2
       [{
         prop: this.props.lang('435DayHigh'),
-        value: tickerData['435DayHigh'],
+        value: symbolData['435DayHigh'],
       },
 
         {
           prop: this.props.lang('435DayLow'),
-          value: tickerData['435DayLow'],
+          value: symbolData['435DayLow'],
         },
 
         {
           prop: this.props.lang('435DayAveragePrice'),
-          value: tickerData['435DayAveragePrice'],
+          value: symbolData['435DayAveragePrice'],
         },
 
         {
           prop: this.props.lang('dividendYield'),
-          value: tickerData.dividendYield,
+          value: symbolData.dividendYield,
         }]
     ];
 
@@ -81,7 +81,7 @@ class PortfolioDetailModal extends React.Component {
       },
     ];
 
-    const arr = Object.keys(tickerExtendedInformation);
+    const arr = Object.keys(symbolExtendedInformation);
     const amountInFirstColumn = (arr.length / 2);
 
     const column1 = arr.slice(0, amountInFirstColumn);
@@ -95,7 +95,7 @@ class PortfolioDetailModal extends React.Component {
 
     const aboutDataColumn2 = column1.map((key, i) => {
       return {
-        value: tickerExtendedInformation['' + key],
+        value: symbolExtendedInformation['' + key],
       }
     });
 
@@ -107,7 +107,7 @@ class PortfolioDetailModal extends React.Component {
 
     const aboutDataColumn4 = column2.map((key, i) => {
       return {
-        value: tickerExtendedInformation['' + key],
+        value: symbolExtendedInformation['' + key],
       }
     });
 
@@ -135,17 +135,17 @@ class PortfolioDetailModal extends React.Component {
   }
 
   render() {
-    let tickerData = this.props.data;
-    console.log(tickerData);
-    console.log("> Showing ", tickerData);
+    let symbolData = this.props.data;
+    console.log(symbolData);
+    console.log("> Showing ", symbolData);
 
     let sectorClass = '';
-    if (tickerData.sector) {
-      sectorClass = getClassBySector(tickerData.sector)
+    if (symbolData.sector) {
+      sectorClass = getClassBySector(symbolData.sector)
     }
 
-    let sector = tickerData.sector;
-    let entries = tickerData.entries.map((stockEntry, i) => {
+    let sector = symbolData.sector;
+    let entries = symbolData.entries.map((stockEntry, i) => {
 
       return (<tr key={i}>
         <td>{stockEntry.amount}</td>
@@ -172,9 +172,9 @@ class PortfolioDetailModal extends React.Component {
     return (<Modal show={true} onHide={this.props.onCancel} dialogClassName="portfolio-modal">
       <Modal.Header closeButton>
         <Modal.Title>
-          {tickerData.ticker} <span className="small">({tickerData.lastPrice})</span>
+          {symbolData.symbol} <span className="small">({symbolData.lastPrice})</span>
 
-          <span className="stockName text-right">{tickerData.name} </span>
+          <span className="stockName text-right">{symbolData.name} </span>
           <br />
 
           <SectorComponent cx={sectorClass} sector={sector}/>
@@ -183,7 +183,7 @@ class PortfolioDetailModal extends React.Component {
       </Modal.Header>
       <Modal.Body>
 
-        <C3PortfolioChart portfolio={portfolio} historical={this.props.historical} lang={this.props.lang} filterByTickersArray={[tickerData.ticker]} />
+        <C3PortfolioChart portfolio={portfolio} historical={this.props.historical} lang={this.props.lang} filterBysymbolsArray={[symbolData.symbol]} />
 
         <h4>Your positions</h4>
 
@@ -211,9 +211,9 @@ class PortfolioDetailModal extends React.Component {
 
         </div>
 
-        <TickerDetailsAnalysisComponent data={this.state.analysisData}/>
+        <symbolDetailsAnalysisComponent data={this.state.analysisData}/>
 
-        <TickerDetailsAboutComponent data={this.state.aboutDetailsData} title={tickerData.ticker}/>
+        <symbolDetailsAboutComponent data={this.state.aboutDetailsData} title={symbolData.symbol}/>
       </Modal.Body>
       <Modal.Footer>
 

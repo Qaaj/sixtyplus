@@ -47,7 +47,7 @@ class DividendModule extends React.Component {
     let shouldUpdate = false;
     if(!this.props.historical) shouldUpdate = true;
     if(this.props.historical && Object.keys(nextProps.historical).length !== Object.keys(this.props.historical).length) shouldUpdate = true;
-    if(this.props.portfolio && nextProps.portfolio.flatTickerList.length !== this.props.portfolio.flatTickerList.length) shouldUpdate = true;
+    if(this.props.portfolio && nextProps.portfolio.flatsymbolList.length !== this.props.portfolio.flatsymbolList.length) shouldUpdate = true;
     return shouldUpdate;
   }
 
@@ -83,8 +83,8 @@ class DividendModule extends React.Component {
             maxHeight={500}
             {...this.props}>
             <Column
-              header={<Cell>Ticker</Cell>}
-              cell={<TextCell data={divs} col="ticker" />}
+              header={<Cell>symbol</Cell>}
+              cell={<TextCell data={divs} col="symbol" />}
               fixed={true}
               width={100}
             />

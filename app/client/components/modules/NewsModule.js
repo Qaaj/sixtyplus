@@ -39,7 +39,7 @@ class NewsModule extends React.Component {
   shouldComponentUpdate(nextProps,nextState){
     if(nextState.filter.length !== this.state.filter.length) return true;
     if(!this.props.portfolio) return true;
-    if(nextProps.portfolio.flatTickerList.length !== this.props.portfolio.flatTickerList.length) return true;
+    if(nextProps.portfolio.flatsymbolList.length !== this.props.portfolio.flatsymbolList.length) return true;
     if(nextState.news !== this.state.news) return true;
     return false;
   }
@@ -51,16 +51,16 @@ class NewsModule extends React.Component {
         <div className="loader"></div>
       </Grid>);
 
-    let filterItems = this.props.portfolio.flatTickerList;
+    let filterItems = this.props.portfolio.flatsymbolList;
 
     let news = this.state.news;
-    let tickers = this.state.filter;
-    if(!tickers || tickers.length == 0) tickers = news.tickers;
+    let symbols = this.state.filter;
+    if(!symbols || symbols.length == 0) symbols = news.symbols;
 
     let allItems = [];
 
-    tickers.forEach(ticker => {
-      allItems = allItems.concat(news.getNewsByTicker(ticker).items);
+    symbols.forEach(symbol => {
+      allItems = allItems.concat(news.getNewsBysymbol(symbol).items);
     })
 
     allItems = sortByKey(allItems,'date', true);

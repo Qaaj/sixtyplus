@@ -11,24 +11,24 @@ var PortfolioActionCreators = {
 
     if( !Array.isArray(entry_collections) ) entrycollection = [entry_collections];
 
-    let listOfTickers = entry_collections.map(entryCollection =>{
+    let listOfsymbols = entry_collections.map(entryCollection =>{
       entryCollection.entries.forEach(entry => {
         this.addStockEntry({
-          symbol: entry.ticker,
+          symbol: entry.symbol,
           amount: entry.amount,
           price: entry.price,
           date: entry.date.format('YYYY-MM-DD'),
         },resultObject);
       })
-      return entryCollection.ticker;
+      return entryCollection.symbol;
     });
 
      //Get extensive stock data
-    RealTimeActionCreators.getStockData(listOfTickers);
-    
-    listOfTickers.forEach(ticker =>{
-      HistoricalActions.getHistoricalDividends({ticker});
-      HistoricalActions.getHistoricalPrices({ ticker, options:'monthly', from:"01-01-2012"});
+    RealTimeActionCreators.getStockData(listOfsymbols);
+
+    listOfsymbols.forEach(symbol =>{
+      HistoricalActions.getHistoricalDividends({symbol});
+      HistoricalActions.getHistoricalPrices({ symbol, options:'monthly', from:"01-01-2012"});
     });
 
   },

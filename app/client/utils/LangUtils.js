@@ -89,7 +89,7 @@ let current = {
   "planner": "Planner",
   "portfolio": "Portfolio",
   "import": "Import",
-  "portfolio_graph_help": "html:<p><b>Click</b> on a label to toggle active state.</p><p><b>Alt + Click</b> on a label to disable other tickers.</p>",
+  "portfolio_graph_help": "html:<p><b>Click</b> on a label to toggle active state.</p><p><b>Alt + Click</b> on a label to disable other symbols.</p>",
   "portfolio_graph": "Portfolio Graph",
   "settings": "Settings",
   "news": "News",
@@ -104,7 +104,7 @@ let current = {
 
   /**  PortfolioDetailModal ABOUT **/
   "sector": "Sector",
-  "ticker": "Ticker",
+  "symbol": "symbol",
   "total_dividends": "Total Dividends",
   "dividends": "Dividends",
   "amount": "# Shares",

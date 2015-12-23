@@ -34,7 +34,7 @@ f8e457d - Jan Jorissen, 25 hours ago : fixed re-render bug
 bf9a25a - Jan Jorissen, 2 days ago : new chart logic
 81a8c59 - Jaaq Jorissen, 2 days ago : Merged in feature/langkeys (pull request #6)
 7be8e7d - WWWillems, 2 days ago : Added some keys to LangUtils. Refactored copy from StockCard to LangUtils. Added lang property to StockTable.
-14e8646 - WWWillems, 2 days ago : Added TickerDetailsAboutComponent. Refactored AnalysisModule to component.
+14e8646 - WWWillems, 2 days ago : Added symbolDetailsAboutComponent. Refactored AnalysisModule to component.
 9c7158e - WWWillems, 2 days ago : Added lots of keys to LangUtils. Need to find a way to pass dates.
 e0f0eab - WWWillems, 2 days ago : Added some translation keys to LangUtils
 d3dc4c1 - WWWillems, 2 days ago : Cleaned import
@@ -150,7 +150,7 @@ df223d1 - Jan Jorissen, 8 days ago : merge done
 fc8e430 - WWWillems, 9 days ago : Data is being deleted. Needs client refresh.
 9d261c4 - WWWillems, 9 days ago : Added delete portfolio data button. Date is being deleted but app needs to trigger refresh on portfolio view when response was positive.
 6c28386 - Jaaq Jorissen, 9 days ago : Merged in fix/dependencies (pull request #1)
-9f26a11 - WWWillems, 9 days ago : Added npm-debug.log to .gitignore. Added ticker trimming to sanitize input a bit more. Getting my feet wet
+9f26a11 - WWWillems, 9 days ago : Added npm-debug.log to .gitignore. Added symbol trimming to sanitize input a bit more. Getting my feet wet
 c8d40fa - WWWillems, 9 days ago : Added c3 & request dependencies to package json. Updated React to 0.14.3, as it was a depency for c3.
 72b1e3d - WWWillems, 9 days ago : Merge branch 'master' of https://bitbucket.org/mordhau/60plus
 e776a62 - Jan Jorissen, 9 days ago : release:

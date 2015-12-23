@@ -17,12 +17,12 @@ var RealTimeActionCreators = {
     getStockPrices(list);
   },
 
-  getStockPrice(ticker){
-      getStockPrice(ticker);
+  getStockPrice(symbol){
+      getStockPrice(symbol);
   },
 
-  getStockData(ticker){
-    getStockData(ticker);
+  getStockData(symbol){
+    getStockData(symbol);
   },
 
 };
