@@ -3,7 +3,7 @@ import Parse from 'parse/node';
 var UserFinancialProfile = Parse.Object.extend("UserFinancialProfile");
 
 export default (req, res,next) => {
-  
+
   var profile = new UserFinancialProfile();
 
   profile.save(req.body, {

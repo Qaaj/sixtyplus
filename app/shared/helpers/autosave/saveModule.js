@@ -11,10 +11,18 @@ export function getModuleSaveData(data) {
 
     case "Quickstart":
 
-      return data.saveObject.reduce((prev, prop)=> {
-        if (data.state[prop]) prev[prop] = data.state[prop];
-        return prev;
-      }, {});
+      let arr =  data.saveObject.map(prop => {
+        if (data.state[prop.save_prop]) {
+          return {
+            location: [prop.save_location,prop.save_prop],
+            value: data.state[prop.save_prop],
+            root: prop.save_location,
+          };
+        }
+      });
+
+      arr = arr.filter( item => item);
+      return arr;
 
       break;
 

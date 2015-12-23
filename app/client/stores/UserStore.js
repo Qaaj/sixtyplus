@@ -43,13 +43,25 @@ UserStore.dispatchToken = AppDispatcher.register(function (payload) {
       break;
 
     case UserConstants.USER_SAVE_DATA:
+
+      let saveObjects = action.data;
+      let dataChanged = {};
+
+      saveObjects.forEach(save =>{
+        dataChanged[save.root] = "CHANGED";
+        _userObject = _userObject.setIn(save.location,save.value);
+      });
+
+      Object.keys(dataChanged).forEach(changed =>{
+        if(changed === 'financial_profile') saveUserFinancialProfile(_userObject.get('financial_profile'));
+      })
+
+      UserStore.emitChange();
+
       break;
 
     case UserConstants.USER_FINANCIAL_PROFILE_LOADED:
       _userObject = _userObject.set('financial_profile',fromJS(action.data));
-      action.data.risk = 10;
-      saveUserFinancialProfile(action.data);
-
       UserStore.emitChange();
       break;
 

@@ -14,11 +14,11 @@ import HistoricalActions from './HistoricalActionCreators';
 
 var UserActionCreators = {
 
-  saveUserSettings(mergeUserData){
-
-    let uid = UserStore.getUser().uid
-    //saveUserSettings(mergedUserData);
-
+  saveData(saveData){
+    AppDispatcher.handleViewAction({
+      actionType: UserConstants.USER_SAVE_DATA,
+      data: saveData,
+    });
   },
 
   loadUser() {
