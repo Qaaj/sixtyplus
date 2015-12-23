@@ -1,4 +1,6 @@
 import AppDispatcher from '../dispatcher/AppDispatcher.js';
+import RealTimeActionCreators from '../actions/RealTimeActionCreators';
+import HistoricalActions from '../actions/HistoricalActionCreators';
 import UserStore from '../stores/UserStore.js';
 import { addEntry } from '../utils/api/PortfolioAPI';
 
@@ -9,7 +11,7 @@ var PortfolioActionCreators = {
 
     if( !Array.isArray(entry_collections) ) entrycollection = [entry_collections];
 
-    entry_collections.forEach(entryCollection =>{
+    let listOfTickers = entry_collections.map(entryCollection =>{
       entryCollection.entries.forEach(entry => {
         this.addStockEntry({
           symbol: entry.ticker,
@@ -18,7 +20,16 @@ var PortfolioActionCreators = {
           date: entry.date.format('YYYY-MM-DD'),
         },resultObject);
       })
-    })
+      return entryCollection.ticker;
+    });
+
+     //Get extensive stock data
+    RealTimeActionCreators.getStockData(listOfTickers);
+    
+    listOfTickers.forEach(ticker =>{
+      HistoricalActions.getHistoricalDividends({ticker});
+      HistoricalActions.getHistoricalPrices({ ticker, options:'monthly', from:"01-01-2012"});
+    });
 
   },
 

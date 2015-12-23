@@ -83,7 +83,8 @@ export function getStockSuggestions(input,callback){
 }
 
 export function getStockPrices(tickers){
-    let data = {tickers: tickers};
+
+  let data = {tickers: tickers};
 
     let url = `${API_URL}/getStockPrices`;
 

@@ -16,40 +16,6 @@ let userDataToSave = {};
 
 var UserActionCreators = {
 
-  changeUILanguage(language) {
-    //AppDispatcher.handleViewAction({
-    //    actionType: UserConstants.USER_CHANGE_LANGUAGE,
-    //    language: language,
-    //});
-  },
-
-
-  addStockEntryCollectionToPortfolio(stockEntryCollection,resultObject){
-
-    // optimistically update local portfolio object
-
-    //AppDispatcher.handleViewAction({
-    //  actionType: UserConstants.USER_ADD_STOCK_ENTRY_COLLECTION,
-    //  data: { entries:stockEntryCollection, resultObject}
-    //});
-
-
-
-    let listOfTickers = stockEntryCollection.map(entries => {
-      console.log(entries);
-      return entries.ticker;
-    });
-
-    // Get extensive stock data
-    RealTimeActionCreators.getStockData(listOfTickers);
-
-    listOfTickers.forEach(ticker =>{
-      HistoricalActions.getHistoricalDividends({ticker});
-      HistoricalActions.getHistoricalPrices({ ticker, options:'monthly', from:"01-01-2012"});
-    });
-
-  },
-
   saveUserData(mergeUserData){
 
 
@@ -64,21 +30,6 @@ var UserActionCreators = {
 
     saveUserData(mergedUserData, UserStore.getUser().uid);
 
-  },
-
-  deleteUserPortfolioData(resultObject){
-    var userData = fromJS(UserStore.getUser().userData);
-
-    userData.portfolio = [];
-
-    console.log("> Deleting user data for user " , userData);
-
-    AppDispatcher.handleViewAction({
-      actionType: UserConstants.USER_DELETE_PORTFOLIO_DATA,
-      data: userData
-    });
-
-    deleteUserPortfolioData(userData, UserStore.getUser().uid, resultObject);
   },
 
   loadUser() {

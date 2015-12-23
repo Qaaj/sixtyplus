@@ -83,7 +83,6 @@ class Importer extends React.Component {
   }
 
   _onManualImportPreview(data, line) {
-
     this.previewStocks[line] = data;
     let sortedStocks = mapByTicker(this.previewStocks);
     RealTimeActionCreators.getStockPrices(Object.keys(sortedStocks));
