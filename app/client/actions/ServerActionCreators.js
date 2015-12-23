@@ -2,6 +2,7 @@ import AppDispatcher from '../dispatcher/AppDispatcher.js';
 import UserConstants from '../constants/UserConstants.js';
 import RealTimeConstants from '../constants/RealTimeConstants.js';
 import HistoricalConstants from '../constants/HistoricalConstants.js';
+import PortfolioConstants from '../constants/PortfolioConstants.js';
 
 var ServerActionCreators = {
 
@@ -46,6 +47,13 @@ var ServerActionCreators = {
       data: data,
     });
   },
+
+  portfolioLoaded(data){
+    AppDispatcher.handleServerAction({
+      actionType: PortfolioConstants.PORTFOLIO_LOADED,
+      data:data,
+    })
+  }
 
 
 };

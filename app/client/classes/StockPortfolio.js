@@ -1,4 +1,5 @@
 import StockEntryCollection from './StockEntryCollection';
+import StockEntry from './StockEntry';
 import HistoricalData from '../stores/HistoricalStore';
 import HistoricalActions from '../actions/HistoricalActionCreators';
 import {round} from '../../shared/helpers/formatting';
@@ -7,10 +8,19 @@ import {getStockNews} from '../utils/ApiUtils';
 class StockPortfolio {
 
   constructor(rawUserDataObject) {
+
     this.entryCollectionList = [];
 
-    for (let key in rawUserDataObject) {
-      this.entryCollectionList.push(new StockEntryCollection(rawUserDataObject[key]));
+    let entriesPerSymbol = {};
+
+    rawUserDataObject.map(entry =>{
+      let stockEntry = new StockEntry(entry);
+      if(!entriesPerSymbol[entry.symbol]) entriesPerSymbol[entry.symbol] = []
+      entriesPerSymbol[entry.symbol].push(stockEntry);
+    })
+
+    for (let key in entriesPerSymbol) {
+      this.entryCollectionList.push(new StockEntryCollection(entriesPerSymbol[key]));
     }
 
     let firstBuy = this.entryCollectionList.reduce((prev,curr) =>{

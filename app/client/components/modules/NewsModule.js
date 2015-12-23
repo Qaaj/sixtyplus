@@ -38,20 +38,20 @@ class NewsModule extends React.Component {
   // Enhance the rendering time
   shouldComponentUpdate(nextProps,nextState){
     if(nextState.filter.length !== this.state.filter.length) return true;
-    if(!this.props.user.stockPortfolio) return true;
-    if(nextProps.user.stockPortfolio.flatTickerList.length !== this.props.user.stockPortfolio.flatTickerList.length) return true;
+    if(!this.props.portfolio) return true;
+    if(nextProps.portfolio.flatTickerList.length !== this.props.portfolio.flatTickerList.length) return true;
     if(nextState.news !== this.state.news) return true;
     return false;
   }
 
   render() {
 
-    if (!this.state.news || !this.props.user.stockPortfolio) return (
+    if (!this.state.news || !this.props.portfolio) return (
       <Grid style={{'textAlign':'center','padding':'20px'}}>
         <div className="loader"></div>
       </Grid>);
 
-    let filterItems = this.props.user.stockPortfolio.flatTickerList;
+    let filterItems = this.props.portfolio.flatTickerList;
 
     let news = this.state.news;
     let tickers = this.state.filter;

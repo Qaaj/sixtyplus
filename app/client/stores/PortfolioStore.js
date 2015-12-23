@@ -8,6 +8,7 @@ import { Map, fromJS } from 'immutable';
 const CHANGE_EVENT = 'change';
 import UserStore from './UserStore';
 import defaults from '../config/Defaults';
+import StockPortfolio from '../classes/StockPortfolio';
 import { loadUserPortfolioData } from '../utils/api/PortfolioAPI';
 
 
@@ -41,14 +42,16 @@ PortfolioStore.dispatchToken = AppDispatcher.register(function (payload) {
 
   switch (action.actionType) {
 
-    case UserConstants.USER_LOADED:
-
-      // Load the users portfolio
+    case UserConstants.USER_LOADED:  // Load the users portfolio
       let uid = action.data.objectId;
       loadUserPortfolioData(uid);
-
       break;
 
+    case PortfolioConstants.PORTFOLIO_LOADED:
+      let portfolio = new StockPortfolio(action.data)
+      _portfolioMap = _portfolioMap = fromJS(portfolio);
+      PortfolioStore.emitChange();
+      break;
 
     default:
       return true;

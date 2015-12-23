@@ -1,7 +1,8 @@
 import AppDispatcher from '../dispatcher/AppDispatcher';
 import RealTimeConstants from '../constants/RealTimeConstants';
 import RealTimeActionCreators from '../actions/RealTimeActionCreators';
-import UserConstants from '../constants/UserConstants';
+import PortfolioConstants from '../constants/PortfolioConstants';
+import StockPortfolio from '../classes/StockPortfolio';
 import assign from 'object-assign';
 import { EventEmitter } from 'events';
 import { Map, fromJS } from 'immutable';
@@ -43,11 +44,9 @@ function startTimer() {
   }
 }
 
-function refreshPortfolio() {
-  let _userObject = UserStore.getUser();
-  if (_userObject.stockPortfolio) {
-    RealTimeActionCreators.getStockData(_userObject.stockPortfolio.flatTickerList);
-  }
+function refreshPortfolio(data) {
+  let portfolio = new StockPortfolio(data)
+  RealTimeActionCreators.getStockData(portfolio.flatTickerList);
 }
 
 
@@ -57,9 +56,9 @@ RealTimeStore.dispatchToken = AppDispatcher.register(function (payload) {
 
   switch (action.actionType) {
 
-    case UserConstants.USER_LOADED:
+    case PortfolioConstants.PORTFOLIO_LOADED:
 
-      refreshPortfolio();
+      refreshPortfolio(action.data);
       startTimer();
 
   break;

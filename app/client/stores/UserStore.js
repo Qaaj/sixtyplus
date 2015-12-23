@@ -5,9 +5,6 @@ import { EventEmitter } from 'events';
 import { Map, fromJS } from 'immutable';
 import asap from 'asap';
 import StockEntry from '../classes/StockEntry';
-import StockPortfolio from '../classes/StockPortfolio';
-import { createEntriesFromUserObjectPortfolio } from '../../shared/helpers/stocks'
-import RealTimeActionCreators from '../actions/RealTimeActionCreators';
 import NotificationActionCreators from '../actions/NotificationActionCreators';
 import {getTranslation, setLanguageMap } from '../utils/LangUtils';
 import { saveUserData,saveUserPortfolioData } from '../utils/ApiUtils';
@@ -16,7 +13,6 @@ const CHANGE_EVENT = 'change';
 
 let _userObject = Map();
 let _userData = Map();
-let _stockPortfolio = null;
 
 let newLangInstance = (...args)=>{return getTranslation(...args)};
 _userObject = _userObject.set('lang', newLangInstance);
@@ -49,44 +45,19 @@ UserStore.dispatchToken = AppDispatcher.register(function (payload) {
       UserStore.emitChange();
       break;
 
-    case UserConstants.USER_ADD_STOCK_ENTRY_COLLECTION:
-
-      _stockPortfolio.addStockEntryCollection(action.data.entries);
-      // Save the client-side object
-      _userObject = _userObject.set("stockPortfolio", _stockPortfolio);
-      // Save the server-side object
-      _userObject = _userObject.setIn(['userData','portfolio'],_stockPortfolio.userDataObject);
-
-      saveUserPortfolioData(_userObject.get('userData'),_userObject.get('uid'),action.data.resultObject);
-
-      UserStore.emitChange();
-      break;
 
     case UserConstants.USER_SAVE_DATA:
+
       _userData = _userData.merge(fromJS(action.data));
       _userObject = _userObject.set("userData",_userData);
       UserStore.emitChange();
       break;
 
-    case UserConstants.USER_DELETE_PORTFOLIO_DATA:
-      console.log("> Trying to delete data ");
-
-      _stockPortfolio = new StockPortfolio();
-      _userObject = _userObject.set("stockPortfolio", _stockPortfolio);
-
-        UserStore.emitChange();
-      break;
 
     case UserConstants.USER_LOADED:
 
       localStorage.setItem('uid', action.data.objectId);
-
       _userObject = fromJS(action.data);
-
-      // Now we the portfolio store should start loading the users portfolio. NOT HERE
-      //_stockPortfolio = new StockPortfolio(_userObject.toJS().userData.portfolio);
-      //_userObject = _userObject.set("stockPortfolio", _stockPortfolio);
-
       // Translation stuff
       let newLangInstance = (...args)=>{return getTranslation(...args)};
       _userObject = _userObject.set('lang',newLangInstance);

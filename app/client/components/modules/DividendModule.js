@@ -47,18 +47,18 @@ class DividendModule extends React.Component {
     let shouldUpdate = false;
     if(!this.props.historical) shouldUpdate = true;
     if(this.props.historical && Object.keys(nextProps.historical).length !== Object.keys(this.props.historical).length) shouldUpdate = true;
-    if(this.props.user.stockPortfolio && nextProps.user.stockPortfolio.flatTickerList.length !== this.props.user.stockPortfolio.flatTickerList.length) shouldUpdate = true;
+    if(this.props.portfolio && nextProps.portfolio.flatTickerList.length !== this.props.portfolio.flatTickerList.length) shouldUpdate = true;
     return shouldUpdate;
   }
 
   render() {
 
-    if (!this.props.user.userData || !this.props.user.userData.portfolio || !this.props.historical) return (
+    if (!this.props.user || !this.props.portfolio || !this.props.historical) return (
       <Grid style={{'textAlign':'center','padding':'20px'}}>
         <div className="loader"></div>
       </Grid>);
 
-    let portfolio = this.props.user.stockPortfolio;
+    let portfolio = this.props.portfolio;
 
     let stockEntries = portfolio.collectionList;
 

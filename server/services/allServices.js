@@ -1,8 +1,8 @@
 import loadUser from './user/LoadUser';
 import addPortfolioEntry from './portfolio/AddEntry';
+import loadPortfolio from './portfolio/LoadPortfolio';
 
 import saveUserData from './user/SaveData';
-import deleteUserPortfolioData from './user/DeleteUserPortfolioData';
 import getStockPrice from './stocks/GetPrice';
 import getStockPrices from './stocks/GetPrices';
 import getStockData from './stocks/GetData';
@@ -14,9 +14,9 @@ import saveAnalystRatings from './maintenance/SaveAnalystRatings';
 export default {
   loadUser,
   addPortfolioEntry,
+  loadPortfolio,
 
   saveUserData,
-  deleteUserPortfolioData,
   getStockPrice,
   getStockPrices,
   getStockSuggestions,

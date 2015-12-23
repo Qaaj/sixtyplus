@@ -45,6 +45,7 @@ class App extends React.Component {
 
   _handlePortfolioStoreChange() {
     let portfolio = PortfolioStore.getPortfolioMap();
+    console.log("lol", portfolio);
     this.setState({ portfolio });
   }
 
@@ -66,6 +67,7 @@ class App extends React.Component {
     UserStore.addChangeListener(this._handleUserStoreChange);
     RealTimeStore.addChangeListener(this._handleRealTimeStoreChange);
     HistoricalStore.addChangeListener(this._handleHistoricalStoreChange);
+    PortfolioStore.addChangeListener(this._handlePortfolioStoreChange);
   }
 
   render() {
@@ -89,6 +91,7 @@ class App extends React.Component {
             user: this.state.user,
             rt: this.state.rt,
             historical: this.state.historical,
+            portfolio: this.state.portfolio,
           }
         )}
       </div>
@@ -101,6 +104,7 @@ class App extends React.Component {
         user={this.state.user}
         rt={ this.state.rt}
         historical={this.state.historical}
+        portfolio={this.state.portfolio}
       />
 
     </div>);

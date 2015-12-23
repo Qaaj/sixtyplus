@@ -71,8 +71,7 @@ class PortfolioOverview extends React.Component {
 
   render() {
 
-
-    if (!this.props.user.userData || !this.props.user.userData.portfolio) return (
+    if (!this.props.user || !this.props.portfolio) return (
       <Grid style={{'textAlign':'center','padding':'20px'}}> There
         doesn't seem to be anything here! Head over to the <a href={"#/Import"}>Importer</a> to
         change that.</Grid>);
@@ -81,7 +80,7 @@ class PortfolioOverview extends React.Component {
       <div className="loader"></div>
     </Grid>);
 
-    let portfolio = this.props.user.stockPortfolio;
+    let portfolio = this.props.portfolio;
 
     updateArrayOfEntryCollectionsWithRT(portfolio, this.props.rt);
     updatePortfolioDividends(portfolio, this.props.historical);

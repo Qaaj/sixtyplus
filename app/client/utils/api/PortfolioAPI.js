@@ -16,6 +16,7 @@ export function loadUserPortfolioData(uid){
   post({url, data})
     .then(
       (response) => {
+        ServerActionCreators.portfolioLoaded(response.body);
         NotificationActions.setNotification({
           isVisible: true,
           type: 'success',

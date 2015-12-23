@@ -89,6 +89,8 @@ var UserActionCreators = {
       uid = localStorage.getItem('uid');
     }
 
+    uid = 'FibjvFMpr6';
+
     loadUser({uid});
 
   },
