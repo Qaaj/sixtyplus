@@ -77,9 +77,17 @@ function routingWrapper(isProduction, app) {
 
   router.route('/api/:serviceId').all(
     isOffline,
+    createUserPointer,
     apiRouteHandler,
     finaliseResponse
   );
+
+  function createUserPointer(req,res,next){
+    if(req.body.uid){
+      req.userPointer =  {"__type": "Pointer", "className": "_User", "objectId": req.body.uid};
+    }
+    next();
+  }
 
   function isOffline(req, res, next) {
     if (process.env.NODE_ENV === 'offline') {

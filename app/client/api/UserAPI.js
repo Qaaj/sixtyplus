@@ -42,3 +42,21 @@ export function loadUser(data){
       }
     );
 }
+
+export function loadUserFinancialProfile(data){
+
+  let url = `${API_URL}/loadUserFinancialProfile`;
+
+  post({url, data})
+    .then(
+      (response) => {
+
+        ServerActionCreators.userFinancialProfileLoaded(response.body);
+      },
+
+      (error) => {
+
+        console.error('Error: ', error);
+      }
+    );
+}

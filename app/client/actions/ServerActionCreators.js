@@ -27,6 +27,13 @@ var ServerActionCreators = {
     });
   },
 
+  userFinancialProfileLoaded(data) {
+    AppDispatcher.handleServerAction({
+      actionType: UserConstants.USER_FINANCIAL_PROFILE_LOADED,
+      data: data,
+    });
+  },
+
   historicalPricesLoaded(data) {
     AppDispatcher.handleServerAction({
       actionType: HistoricalConstants.HISTORICAL_PRICES_UPDATE,

@@ -7,7 +7,7 @@ import assign from 'object-assign';
 import { EventEmitter } from 'events';
 import { Map, fromJS } from 'immutable';
 const CHANGE_EVENT = 'change';
-import UserStore from './UserStore';
+import PortfolioStore from './PortfolioStore';
 import defaults from '../config/Defaults';
 
 let timer = null;
@@ -44,9 +44,8 @@ function startTimer() {
   }
 }
 
-function refreshPortfolio(data) {
-  let portfolio = new StockPortfolio(data)
-  RealTimeActionCreators.getStockData(portfolio.flatsymbolList);
+function refreshPortfolio() {
+  RealTimeActionCreators.getStockData(PortfolioStore.getPortfolio().flatsymbolList);
 }
 
 

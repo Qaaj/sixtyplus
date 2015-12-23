@@ -1,4 +1,4 @@
-const debug = require('debug')('debug:portfolio/AddEntry');
+const debug = require('debug')('debug:portfolio/LoadPortfolio');
 import moment from 'moment';
 import Parse from 'parse/node';
 
@@ -6,7 +6,7 @@ var PortfolioEntry = Parse.Object.extend("PortfolioEntry");
 
 export default (req, res, next) => {
 
-  let userPointer = {"__type":"Pointer","className":"_User","objectId":req.body.uid};
+  let userPointer = req.userPointer;
 
   var query = new Parse.Query(PortfolioEntry);
   query.equalTo("userPointer", userPointer);

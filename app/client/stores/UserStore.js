@@ -7,12 +7,11 @@ import asap from 'asap';
 import StockEntry from '../classes/StockEntry';
 import NotificationActionCreators from '../actions/NotificationActionCreators';
 import {getTranslation, setLanguageMap } from '../utils/LangUtils';
-import { saveUserData,saveUserPortfolioData } from '../utils/ApiUtils';
+import { loadUserFinancialProfile } from '../api/UserAPI';
 
 const CHANGE_EVENT = 'change';
 
 let _userObject = Map();
-let _userData = Map();
 
 let newLangInstance = (...args)=>{return getTranslation(...args)};
 _userObject = _userObject.set('lang', newLangInstance);
@@ -46,10 +45,19 @@ UserStore.dispatchToken = AppDispatcher.register(function (payload) {
     case UserConstants.USER_SAVE_DATA:
       break;
 
+    case UserConstants.USER_FINANCIAL_PROFILE_LOADED:
+      _userObject = _userObject.set('financial_profile',fromJS(action.data));
+      UserStore.emitChange();
+      break;
+
     case UserConstants.USER_LOADED:
+
+      // Load the User's financial profile if it's available (from the Planner page)
+      loadUserFinancialProfile({ uid:action.data.objectId});
 
       localStorage.setItem('uid', action.data.objectId);
       _userObject = fromJS(action.data);
+
       // Translation stuff
       let newLangInstance = (...args)=>{return getTranslation(...args)};
       _userObject = _userObject.set('lang',newLangInstance);
