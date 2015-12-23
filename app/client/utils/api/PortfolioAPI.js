@@ -17,12 +17,6 @@ export function loadUserPortfolioData(uid){
     .then(
       (response) => {
         ServerActionCreators.portfolioLoaded(response.body);
-        NotificationActions.setNotification({
-          isVisible: true,
-          type: 'success',
-          message:"Portfolio has been succesfully loaded.",
-          delay: 1500
-        });
       },
 
       (error) => {

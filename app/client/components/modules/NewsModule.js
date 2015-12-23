@@ -65,8 +65,8 @@ class NewsModule extends React.Component {
 
     allItems = sortByKey(allItems,'date', true);
 
-    let newsitems = allItems.map((news) => {
-      return (<NewsItem lang={this.props.lang} news={news} />);
+    let newsitems = allItems.map((news,i) => {
+      return (<NewsItem key={"newsitem_"+i} lang={this.props.lang} news={news} />);
     })
 
 

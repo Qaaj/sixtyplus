@@ -34,6 +34,8 @@ var PortfolioActionCreators = {
   },
 
   addStockEntry({ symbol, amount, price, date, currency = 'USD', isBuy = true}, resultObject){
+
+    // TODO: Add it to the PortfolioStore
     let data = {
       "symbol": symbol,
       "amount": amount,

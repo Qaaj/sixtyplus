@@ -30,7 +30,10 @@ const AutoSaveStore = assign({}, EventEmitter.prototype, {
 
     noSpam(()=> {
       let saveData = getModuleSaveData(module);
-      UserActionCreators.saveUserData(saveData);
+
+      // TODO: Save this data in a new class serverside. FinancialDetails or so?
+      //UserActionCreators.saveUserData(saveData);
+
     },defaults.saveTimeout)
 
   },

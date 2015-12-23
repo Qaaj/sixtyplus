@@ -2,8 +2,7 @@
 import AppDispatcher from '../dispatcher/AppDispatcher.js';
 import UserConstants from '../constants/UserConstants.js';
 import PortfolioConstants from '../constants/PortfolioConstants.js';
-
-import { changeUILanguage, loadUser, saveUserData, deleteUserPortfolioData } from '../utils/ApiUtils';
+import { loadUser, saveUserSettings } from '../utils/api/UserAPI';
 import { fromJS } from 'immutable';
 import UserStore from '../stores/UserStore.js';
 import defaults from '../config/Defaults';
@@ -12,23 +11,17 @@ import {collectionsToPortfolioMap} from '../../shared/helpers/stocks';
 import RealTimeActionCreators from './RealTimeActionCreators';
 import HistoricalActions from './HistoricalActionCreators';
 
-let userDataToSave = {};
 
 var UserActionCreators = {
 
-  saveUserData(mergeUserData){
+  saveUserSettings(mergeUserData){
 
 
-    var userData = fromJS(UserStore.getUser().userData);
-    let mergedUserData = userData;
-    if (userData) mergedUserData = userData.mergeDeep(mergeUserData).toJS();
+    let uid = UserStore.getUser().uid
 
-    AppDispatcher.handleViewAction({
-      actionType: UserConstants.USER_SAVE_DATA,
-      data: mergedUserData,
-    });
+    console.log(UserStore.getUser());
 
-    saveUserData(mergedUserData, UserStore.getUser().uid);
+    //saveUserSettings(mergedUserData);
 
   },
 
