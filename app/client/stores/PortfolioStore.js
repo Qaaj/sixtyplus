@@ -12,13 +12,13 @@ import StockPortfolio from '../classes/StockPortfolio';
 import { loadUserPortfolioData } from '../utils/api/PortfolioAPI';
 
 
-let _portfolioMap = Map();
+let _portfolio = null;
 
 
 const PortfolioStore = assign({}, EventEmitter.prototype, {
 
-  getPortfolioMap() {
-    return _portfolioMap;
+  getPortfolio() {
+    return _portfolio;
   },
 
   emitChange() {
@@ -48,8 +48,7 @@ PortfolioStore.dispatchToken = AppDispatcher.register(function (payload) {
       break;
 
     case PortfolioConstants.PORTFOLIO_LOADED:
-      let portfolio = new StockPortfolio(action.data)
-      _portfolioMap = _portfolioMap = fromJS(portfolio);
+      _portfolio = new StockPortfolio(action.data)
       PortfolioStore.emitChange();
       break;
 

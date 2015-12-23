@@ -44,8 +44,7 @@ class App extends React.Component {
   }
 
   _handlePortfolioStoreChange() {
-    let portfolio = PortfolioStore.getPortfolioMap();
-    console.log("lol", portfolio);
+    let portfolio = PortfolioStore.getPortfolio();
     this.setState({ portfolio });
   }
 
