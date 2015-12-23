@@ -7,7 +7,7 @@ import asap from 'asap';
 import StockEntry from '../classes/StockEntry';
 import NotificationActionCreators from '../actions/NotificationActionCreators';
 import {getTranslation, setLanguageMap } from '../utils/LangUtils';
-import { loadUserFinancialProfile } from '../api/UserAPI';
+import { loadUserFinancialProfile,saveUserFinancialProfile } from '../api/UserAPI';
 
 const CHANGE_EVENT = 'change';
 
@@ -47,6 +47,9 @@ UserStore.dispatchToken = AppDispatcher.register(function (payload) {
 
     case UserConstants.USER_FINANCIAL_PROFILE_LOADED:
       _userObject = _userObject.set('financial_profile',fromJS(action.data));
+      action.data.risk = 10;
+      saveUserFinancialProfile(action.data);
+
       UserStore.emitChange();
       break;
 

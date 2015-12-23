@@ -1,6 +1,4 @@
 const debug = require('debug')('debug:user/LoadUser');
-var Rnd = require('random-word-generator');
-
 import Parse from 'parse/node';
 
 var UserFinancialProfile = Parse.Object.extend("UserFinancialProfile");
@@ -37,7 +35,7 @@ export default (req, res, next) => {
 
     },
     error: function (error) {
-      console.log("OOPS", error)
+      console.log("Something went wrong loading the financial profile: ", error)
       req.app.set('response', "Error: " + error.code + " " + error.message);
       next();
     }

@@ -60,3 +60,21 @@ export function loadUserFinancialProfile(data){
       }
     );
 }
+
+export function saveUserFinancialProfile(data){
+
+  let url = `${API_URL}/saveUserFinancialProfile`;
+
+  post({url, data})
+    .then(
+      (response) => {
+
+       console.log(response.body);
+      },
+
+      (error) => {
+
+        console.error('Error: ', error);
+      }
+    );
+}

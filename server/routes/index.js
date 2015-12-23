@@ -77,15 +77,13 @@ function routingWrapper(isProduction, app) {
 
   router.route('/api/:serviceId').all(
     isOffline,
-    createUserPointer,
+    createPointers,
     apiRouteHandler,
     finaliseResponse
   );
 
-  function createUserPointer(req,res,next){
-    if(req.body.uid){
-      req.userPointer =  {"__type": "Pointer", "className": "_User", "objectId": req.body.uid};
-    }
+  function createPointers(req,res,next){
+    if(req.body.uid) req.userPointer =  {"__type": "Pointer", "className": "_User", "objectId": req.body.uid};
     next();
   }
 
