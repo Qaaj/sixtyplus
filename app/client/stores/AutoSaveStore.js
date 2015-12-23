@@ -31,8 +31,6 @@ const AutoSaveStore = assign({}, EventEmitter.prototype, {
     noSpam(()=> {
 
       let saveData = getModuleSaveData(module);
-
-      console.log(saveData);
       UserActionCreators.saveData(saveData);
 
     },defaults.saveTimeout)

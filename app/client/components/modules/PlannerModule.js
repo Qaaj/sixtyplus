@@ -70,8 +70,8 @@ class Quickstart extends React.Component {
     if (!newProps) newProps = this.props;
     var state = {};
 
-    if (newProps.user.userData) {
-      state = newProps.user.userData;
+    if (newProps.user.financial_profile) {
+      state = newProps.user.financial_profile;
     }
     this.setState(state);
   }
