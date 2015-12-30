@@ -38,17 +38,13 @@ class QuickstartModule extends React.Component {
           <Col md={6} className="screenie">
             <div className="title">Track your investments</div>
             <img className="inline-block image" src="/portfolio.png"/>
-            <div className="inline-block explanation">Head over the the <a href="/#/Planner">Planner</a> section where
-              you can enter the details about your
-              financial situation and plan your goals.
+            <div className="inline-block explanation">After importing your investments, you can track the performance of your portfolio in the  <a href="/#/Portfolio">Portfolio</a> section.
             </div>
           </Col>
           <Col md={6} className="screenie">
-            <div className="title">Follow news & dividends</div>
+            <div className="title">Follow news & dividend payouts</div>
             <img className="inline-block image" src="/news.png"/>
-            <div className="inline-block explanation">In the <a href="/#/Import">Import</a> section you can import or
-              manually enter any investments you
-              currently have.
+            <div className="inline-block explanation">Keep track of <a href="/#/News">news</a> and  <a href="/#/Dividends">dividend payments</a> for all the stocks in your portfolio.
             </div>
           </Col>
         </Grid>
