@@ -82,6 +82,8 @@ function routingWrapper(isProduction, app) {
     finaliseResponse
   );
 
+  app.use(express.static('static'));
+
   function createPointers(req,res,next){
     if(req.body.uid) req.userPointer =  {"__type": "Pointer", "className": "_User", "objectId": req.body.uid};
     next();

@@ -1,4 +1,4 @@
-import { Modal, Button, ListGroup, ListGroupItem, Row, Col } from 'react-bootstrap';
+import { Modal, Button, ListGroup, ListGroupItem, Row, Col, Grid } from 'react-bootstrap';
 import ModalActionCreators from '../../actions/ModalActionCreators';
 import ModalConstants from '../../constants/ModalConstants';
 import {getUniqueColor, getClassBySector} from '../../../shared/helpers/colors/ColorUtils';
