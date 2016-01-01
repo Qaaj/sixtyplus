@@ -2,7 +2,7 @@ import {round} from '../formatting';
 import {sortByKey} from '../sorting';
 import assign from 'object-assign';
 
-export function getDividendChart(portfolio, historical, add = false) {
+export function getDividendChart(portfolio, add = false) {
 
   let info_per_date = {};
 

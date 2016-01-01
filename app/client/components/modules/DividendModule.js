@@ -6,6 +6,7 @@ import { updatePortfolioDividends } from '../../../shared/helpers/stocks';
 import { createDividendTableData } from '../../../shared/helpers/tables';
 import {round} from '../../../shared/helpers/formatting';
 import numeral from 'numeral';
+import { pureRenderDecorator } from '../../../shared/helpers/decorators';
 
 const DividendCell = ({rowIndex, data, col, ...props}) => (
   <Cell {...props}>
@@ -37,30 +38,41 @@ const DateCell = ({rowIndex, data, col, ...props}) => (
   </Cell>
 );
 
+// Implement pure render decorator
 class DividendModule extends React.Component {
   constructor(props) {
     super(props);
   }
 
-  // Enhance the rendering time
-  shouldComponentUpdate(nextProps,nextState){
-    let shouldUpdate = false;
-    if(!this.props.historical) shouldUpdate = true;
-    if(this.props.historical && Object.keys(nextProps.historical).length !== Object.keys(this.props.historical).length) shouldUpdate = true;
-    if(this.props.portfolio && nextProps.portfolio.flatsymbolList.length !== this.props.portfolio.flatsymbolList.length) shouldUpdate = true;
-    return shouldUpdate;
-  }
+  shouldILoad(){
+    if (!this.props.user || !this.props.portfolio) return (
+      <Grid style={{'textAlign':'center','padding':'20px'}}> There
+        doesn't seem to be anything here! Head over to the <a href={"#/Import"}>Importer</a> to
+        change that.</Grid>);
 
-  render() {
+    let nok = false;
 
-    if (!this.props.user || !this.props.portfolio || !this.props.historical) return (
+    this.props.portfolio.symbolsArray.forEach(symbol =>{
+      if(!symbol.dividends) nok = true;
+    });
+
+    if (nok) return (
       <Grid style={{'textAlign':'center','padding':'20px'}}>
         <div className="loader"></div>
       </Grid>);
 
+    return false;
+  }
+
+
+
+  render() {
+
+    if(this.shouldILoad()) return this.shouldILoad();
+
     let portfolio = this.props.portfolio;
 
-    let stockEntries = portfolio.collectionList;
+    let stockEntries = portfolio.allStockEntries;
 
     let dividends = stockEntries.reduce((prev, curr) => {
       if (curr.total_dividends) prev += curr.total_dividends;
@@ -69,8 +81,7 @@ class DividendModule extends React.Component {
 
     dividends = round(dividends);
 
-    updatePortfolioDividends(portfolio, this.props.historical);
-    let divs = createDividendTableData(portfolio, this.props.historical);
+    let divs = createDividendTableData(portfolio);
 
     return (
       <div className="dividend_page">

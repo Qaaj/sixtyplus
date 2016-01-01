@@ -29,7 +29,7 @@ const AppDispatcher = assign(new Dispatcher(), {
      */
         handleViewAction(action) {
         if (devEnv) {
-         console.info('dispatcher view', action.actionType, action);
+         //console.info('dispatcher view', action.actionType, action);
          }
 
         this.dispatch({
@@ -40,7 +40,7 @@ const AppDispatcher = assign(new Dispatcher(), {
 
     handleServerAction(action) {
         if (devEnv) {
-         console.info('dispatcher server', action);
+         //console.info('dispatcher server', action);
         }
         this.dispatch({
             source: 'SERVER_ACTION',

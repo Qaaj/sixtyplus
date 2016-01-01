@@ -1,97 +1,117 @@
 import StockEntryCollection from './StockEntryCollection';
+import StockSymbol from './StockSymbol';
 import StockEntry from './StockEntry';
 import HistoricalData from '../stores/HistoricalStore';
 import HistoricalActions from '../actions/HistoricalActionCreators';
 import {round} from '../../shared/helpers/formatting';
 import {getStockNews} from '../api/StockAPI';
+import { Map, fromJS } from 'immutable';
+let _symbolMap = new Map();
+
 
 class StockPortfolio {
 
   constructor(rawUserDataObject) {
 
-    this.entryCollectionList = [];
+    this.mapEntriesBySymbol(rawUserDataObject);
 
-    let entriesPerSymbol = {};
 
-    rawUserDataObject.map(entry =>{
-      let stockEntry = new StockEntry(entry);
-      if(!entriesPerSymbol[entry.symbol]) entriesPerSymbol[entry.symbol] = []
-      entriesPerSymbol[entry.symbol].push(stockEntry);
-    })
-
-    for (let key in entriesPerSymbol) {
-      this.entryCollectionList.push(new StockEntryCollection(entriesPerSymbol[key]));
-    }
-
-    let firstBuy = this.entryCollectionList.reduce((prev,curr) =>{
-      if(curr.firstBuyEntry.isBefore(prev)) prev = curr.firstBuyEntry;
+    let firstBuy = this.symbolsArray.reduce((prev, curr) => {
+      if (curr.firstBuyEntry.isBefore(prev)) prev = curr.firstBuyEntry;
       return prev;
-      }, moment('29991212','YYYYMMDD'));
+    }, moment('29991212', 'YYYYMMDD'));
 
     let minusOneMonth = firstBuy.clone().subtract(1, 'months');
 
     // TODO: Move this logic out of here
     // Get dividend info for existing portfolio
     getStockNews(this.flatsymbolList);
-    HistoricalActions.getHistoricalPrices({ symbol:'VTI', options:'monthly'});
 
-    this.flatsymbolList.forEach(symbol =>{
-      HistoricalActions.getHistoricalDividends({ symbol});
-      HistoricalActions.getHistoricalPrices({ symbol, options:'monthly', from:minusOneMonth.format("DD-MM-YYYY")});
+    this.flatsymbolList.forEach(symbol => {
+      HistoricalActions.getHistoricalDividends({symbol});
+      HistoricalActions.getHistoricalPrices({symbol, options: 'monthly', from: minusOneMonth.format("DD-MM-YYYY")});
     });
   }
 
-  checkIfCollectionExists(newEntryCollection){
-    let existingCollection = this.entryCollectionList.filter(currentEntryCollection =>{
-      if(currentEntryCollection.symbol === newEntryCollection.symbol) {
-        currentEntryCollection.addEntries(newEntryCollection.entries);
-        return 1;
+  updateHistoricalPrices({symbol,option,result}) {
+    let stockSymbol = _symbolMap.get(symbol);
+    if (stockSymbol) {
+      stockSymbol[option] = JSON.parse(result);
+      _symbolMap = _symbolMap.set(symbol, stockSymbol);
+    }
+    _symbolMap = fromJS(_symbolMap.toJS()); // More information came in so force an immutable redraw
+  }
+
+  updatePortfolioWithRTData(data) {
+    let stockSymbol = _symbolMap.get(data.symbol);
+    if (stockSymbol) {
+      stockSymbol.updateEntriesWithRTData(data);
+      _symbolMap = _symbolMap.set(data.symbol, stockSymbol);
+    }
+    _symbolMap = fromJS(_symbolMap.toJS());
+  }
+
+  updatePortfolioWithDividends(symbol, dividends) {
+    let stockSymbol = _symbolMap.get(symbol);
+    if (stockSymbol) {
+      stockSymbol.calculateDividends({dividends});
+      _symbolMap = _symbolMap.set(symbol, stockSymbol);
+    }
+    _symbolMap = fromJS(_symbolMap.toJS());
+  }
+
+  mapEntriesBySymbol(data) {
+    data.map(entry => {
+      let stockEntry = new StockEntry(entry);
+      if (!_symbolMap.get(entry.symbol)) {
+        _symbolMap = _symbolMap.set(entry.symbol, new StockSymbol(entry.symbol));
       }
+      _symbolMap.get(entry.symbol).addEntry(stockEntry);
+    });
+  }
+
+  get allStockEntries() {
+    let list = [];
+    _symbolMap.forEach(symbol => {
+      list = list.concat(symbol.entries.toJS());
     })
-
-    if(existingCollection.length > 0) return true;
-    return false;
-
+    return list;
   }
 
-  getEntryCollectionBysymbol(symbol){
-    return this.entryCollectionList.filter(entries =>{
-      if(entries.symbol === symbol) return true;
-    })[0];
+  get symbols() {
+    return _symbolMap;
   }
 
-  addStockEntryCollection(stockEntryCollection){
-
-    let newEntryCollection = stockEntryCollection.filter(newEntries =>{
-      if(!this.checkIfCollectionExists(newEntries)) return newEntries;
-    })
-
-    if(newEntryCollection.length > 0) this.entryCollectionList = this.entryCollectionList.concat(newEntryCollection);
+  get symbolsArray() {
+    return _symbolMap.toArray();
   }
 
-  finishStatCalculations(portfolio){
+  getSymbol(symbol) {
+    return _symbolMap.get(symbol);
+  }
 
-    portfolio.profitLoss = portfolio.totalReturns - portfolio.costBase;
-    portfolio.percent_change = 100 * (portfolio.profitLoss / portfolio.costBase)
+  get flatsymbolList() {
+    return Object.keys(_symbolMap.toJS());
+  }
+
+
+  finishStatCalculations(portfolio) {
+
+    portfolio.profitLoss = round(portfolio.totalReturns - portfolio.costBase);
+    portfolio.percent_change = round(100 * (portfolio.profitLoss / portfolio.costBase));
 
     portfolio.costBase = round(portfolio.costBase);
     portfolio.marketValue = round(portfolio.marketValue);
     portfolio.totalReturns = round(portfolio.totalReturns);
-    portfolio.profitLoss = round(portfolio.profitLoss);
-    portfolio.percent_change = round(portfolio.percent_change);
     portfolio.percent_change_string = portfolio.percent_change + '%';
 
     return portfolio;
   }
 
-  get collectionList() {
-    return this.entryCollectionList;
-  }
-
 
   get portfolioStats() {
 
-    let portfolio = this.entryCollectionList.reduce((prev, curr) => {
+    let portfolio = this.symbols.reduce((prev, curr) => {
       prev.costBase += curr.costBase;
       prev.marketValue += curr.marketValue;
       prev.totalReturns += curr.marketValue;
@@ -103,13 +123,13 @@ class StockPortfolio {
     return portfolio;
   }
 
-  get portfolioStatsWithDividends(){
+  get portfolioStatsWithDividends() {
 
-    let portfolio = this.entryCollectionList.reduce((prev, curr) => {
+    let portfolio = this.symbols.reduce((prev, curr) => {
       prev.costBase += curr.costBase;
       prev.marketValue += curr.marketValue;
       prev.totalReturns += curr.marketValue;
-      if(curr.total_dividends) prev.totalReturns +=  curr.total_dividends;
+      if (curr.total_dividends) prev.totalReturns += curr.total_dividends;
       return prev;
     }, {costBase: 0, marketValue: 0, totalReturns: 0});
 
@@ -118,35 +138,7 @@ class StockPortfolio {
     return portfolio;
   }
 
-  get flatsymbolList(){
-    return Object.keys(this.userDataObject);
-  }
 
- get allStockEntries() {
-   let list = [];
-   this.collectionList.forEach(collection => {
-     list = list.concat(collection.entries);
-   })
-   return list;
- }
-
-  get userDataObject() {
-
-    // THIS IS THE DATA THAT WILL BE SAVED TO THE BACKEND
-    let portfolio = {};
-    this.entryCollectionList.map((entryCollection) => {
-      portfolio[entryCollection.symbol] = entryCollection.entries.map(entry => {
-        let final = {};
-        final.symbol = entry.symbol;
-        final.price = entry.price;
-        final.amount = entry.amount;
-        final.date = entry.date.format();
-        return final;
-      })
-    });
-
-    return portfolio;
-  }
 }
 
 export default StockPortfolio;

@@ -25,17 +25,14 @@ class StockCard extends React.Component {
     ModalActionCreators.setModal({
       isVisible: true,
       type: ModalConstants.PORTFOLIO_DETAIL,
-      data: this.props.entries.data
+      data: this.props.symbol.data
     });
   }
 
   render() {
 
-    if (!this.props.entries || this.props.entries.length == 0) return null;
-
-    //let entries = this.props.entries;
-    let entries = this.props.entries.data;
-    if (this.props.includeDiv) entries = this.props.entries.dataWithDividends;
+    let entries = this.props.symbol.data;
+    if (this.props.includeDiv) entries = this.props.symbol.dataWithDividends;
 
     let sectorClass = '';
     let profitColorClass = getProfitLossClassname(entries.first.isUpToday);
@@ -46,6 +43,8 @@ class StockCard extends React.Component {
 
     let column = {xs: 6, md: 4};
     let sector = entries.sector;
+
+    if(!entries.profitLoss) return (<div></div>)
 
     var listGroupToRender = [[
       {

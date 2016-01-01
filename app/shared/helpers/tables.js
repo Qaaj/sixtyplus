@@ -3,7 +3,7 @@ import {sortByKey} from './sorting';
 import {round} from './formatting';
 import assign from 'object-assign';
 
-export function createDividendTableData(portfolio, historical){
+export function createDividendTableData(portfolio){
 
   let divvies = {};
 

@@ -11,7 +11,7 @@ import stack from '../../utils/stack';
  * @compound_divs {Boolean} Compound divs?.
  * @filterdataBysymbol {Array} symbolname to filter chart results by.
  */
-export function getPortfolioChart(portfolio, historical, compound_divs, filterBysymbolsArray = null) {
+export function getPortfolioChart(portfolio, compound_divs, filterBysymbolsArray = null) {
 
   let symbols;
   if ( filterBysymbolsArray ){
@@ -28,15 +28,18 @@ export function getPortfolioChart(portfolio, historical, compound_divs, filterBy
   symbols.forEach(symbol => {
 
     // get the current monthly prices of this ticke. curr = symbol
-    let monthly = JSON.parse(historical[symbol].monthly);
+    let monthly = portfolio.getSymbol(symbol).monthly;
+    if(!monthly) monthly = [];
 
     //  get all of the data for this symbol
     monthly.forEach(month => {
 
+      let symbolClass = portfolio.getSymbol(symbol);
+
       // Normalised Date (Some dates are on a different day of the month)
       let date = month.Date.substring(0, 7) + '-01';
       // Amount of stock at that date
-      let amount = portfolio.getEntryCollectionBysymbol(symbol).getAmountAtDate(month);
+      let amount = symbolClass.getAmountAtDate(month);
       // Price of the stock at that date
       let res = amount * parseFloat(month['Adj Close']);
 
@@ -44,7 +47,7 @@ export function getPortfolioChart(portfolio, historical, compound_divs, filterBy
       let info_for_this_date = info_per_date[date];
       if (!info_for_this_date) info_for_this_date = {};
       if (!info_for_this_date['Cost Base']) info_for_this_date['Cost Base'] = 0;
-      info_for_this_date['Cost Base'] += round(portfolio.getEntryCollectionBysymbol(symbol).getAmountAtDate(month) * portfolio.getEntryCollectionBysymbol(symbol).averagePrice, 2);
+      info_for_this_date['Cost Base'] += round(symbolClass.getAmountAtDate(month) * symbolClass.averagePrice, 2);
       info_for_this_date[symbol] = round(res);
       info_per_date[date] = info_for_this_date;
     });

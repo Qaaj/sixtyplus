@@ -25,7 +25,8 @@ class App extends React.Component {
     super(props);
 
     this.state = {
-      user: UserStore.getUser()
+      user: UserStore.getUser(),
+      portfolio: PortfolioStore.getPortfolio()
     };
 
     this._handleUserStoreChange = this._handleUserStoreChange.bind(this);
@@ -88,8 +89,6 @@ class App extends React.Component {
             location: location,
             urlParams: params,
             user: this.state.user,
-            rt: this.state.rt,
-            historical: this.state.historical,
             portfolio: this.state.portfolio,
           }
         )}
@@ -101,8 +100,6 @@ class App extends React.Component {
         location={location}
         urlParams={params}
         user={this.state.user}
-        rt={ this.state.rt}
-        historical={this.state.historical}
         portfolio={this.state.portfolio}
       />
 

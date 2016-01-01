@@ -13,13 +13,15 @@ let timer = null;
 
 let _historicalData = Map();
 
-
 const HistoricalStore = assign({}, EventEmitter.prototype, {
 
   getHistoricalData() {
     return _historicalData.toJS();
   },
 
+  getHistoricalDataMap() {
+    return _historicalData;
+  },
   emitChange() {
     this.emit(CHANGE_EVENT);
   },
@@ -43,6 +45,7 @@ HistoricalStore.dispatchToken = AppDispatcher.register(function (payload) {
     case HistoricalConstants.HISTORICAL_PRICES_UPDATE:
 
       _historicalData = _historicalData.setIn([action.data.symbol, action.data.option], action.data.result);
+      if(_historicalData)
 
       HistoricalStore.emitChange();
 

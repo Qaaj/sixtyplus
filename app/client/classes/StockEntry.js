@@ -33,6 +33,7 @@ class StockEntry {
   updateWithRealtimeData(rt){
 
     let data = rt[this.symbol];
+    if(!data) data = rt;
 
     if(data){
       this.change = data.change;
@@ -43,7 +44,6 @@ class StockEntry {
   }
 
   calculateDividends(dividends){
-
     this.receivedDividends = dividends.filter(dividend =>{
         if(dividend.date.isAfter(this.date)) return true;
     });

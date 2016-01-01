@@ -4,7 +4,7 @@ import SingleStockPreview from '../importer/ui/SinglePreviewImportStock';
 import StockCard from '../layout/StockCard';
 import { pureRenderDecorator } from '../../../shared/helpers/decorators';
 import {sortByKey} from '../../../shared/helpers/sorting';
-import {filterStockEntries} from '../../../shared/helpers/filtering';
+import {filterSymbols} from '../../../shared/helpers/filtering';
 
 @pureRenderDecorator
 class StockTable extends React.Component {
@@ -13,17 +13,18 @@ class StockTable extends React.Component {
     super(props);
   }
 
+
   render() {
 
-    let stockEntries = this.props.entries;
+    let symbols = this.props.symbols.toArray();
 
-    stockEntries = filterStockEntries(stockEntries, this.props.filter)
-    stockEntries = sortByKey(stockEntries, this.props.sorter.key, this.props.sorter.reverse);
+    symbols = filterSymbols(symbols, this.props.filter)
+    symbols = sortByKey(symbols, this.props.sorter.key, this.props.sorter.reverse);
 
-    let fields = stockEntries.map((entries, i) => {
+    let fields = symbols.map((symbol, i) => {
       return (
-        <StockCard key={'singlestock_' + i  + entries.symbol} rt={this.props.rt} historical={this.props.historical}
-                   entries={entries} includeDiv={this.props.includeDiv} lang={this.props.lang}/>);
+        <StockCard key={'singlestock_' + i  + symbol.symbol}
+                   symbol={symbol} includeDiv={this.props.includeDiv} lang={this.props.lang} force_redwraw_entries={symbol.entries} />);
     });
 
     let table = (
