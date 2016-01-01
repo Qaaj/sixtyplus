@@ -41,7 +41,6 @@ class C3PortfolioChart extends React.Component {
 
   render() {
 
-    console.log(this.props.entries);
     let symbolArray = this.props.filterBysymbolsArray;
     if(this.props.entries) {
       symbolArray = this.props.entries.map(entry =>{

@@ -56,18 +56,6 @@ class PortfolioOverview extends React.Component {
   }
 
 
-  _onDeletePortfolioDataClickHandler() {
-    let resultObject = {
-      success: () => {
-        console.log("ok, succes triggered in result object")
-      },
-      fail: () => {
-        console.log("nok triggered in result object")
-      }
-    }
-
-    UserActionCreators.deleteUserPortfolioData(resultObject);
-  }
 
   render() {
 
@@ -150,9 +138,6 @@ class PortfolioOverview extends React.Component {
             <StockTable rt={this.props.rt} user={this.props.user} sorter={this.state.sorter}
                         filter={this.state.filter} entries={stockEntries} historical={this.props.historical}
                         includeDiv={this.state.includeDiv} lang={this.props.lang} />
-
-            <Button disabled onClick={this._onDeletePortfolioDataClickHandler} bsStyle="danger" bsSize="medium">Delete portfolio
-              data</Button>
           </div>
         </Grid>
       </div>

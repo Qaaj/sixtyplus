@@ -14,13 +14,14 @@ class SettingsModule extends React.Component {
 
   render() {
 
+    console.log(this.props.user);
     return (
       <div className="settings_page">
         <Grid>
           <ListGroup className="settings_group">
             <ListGroupItem>
-              <span className="prop">UserID: </span>
-              <div className="val">{this.props.user.uid}</div>
+              <span className="prop">Username: </span>
+              <div className="val">{this.props.user.username}</div>
             </ListGroupItem>
             <ListGroupItem className="higher">
               <span className="prop">Currency: </span>

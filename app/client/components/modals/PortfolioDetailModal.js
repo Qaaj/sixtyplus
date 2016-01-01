@@ -136,7 +136,7 @@ class PortfolioDetailModal extends React.Component {
 
   render() {
     let symbolData = this.props.data;
-    console.log(symbolData);
+
     console.log("> Showing ", symbolData);
 
     let sectorClass = '';

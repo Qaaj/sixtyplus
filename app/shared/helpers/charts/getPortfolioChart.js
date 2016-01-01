@@ -14,7 +14,6 @@ import stack from '../../utils/stack';
 export function getPortfolioChart(portfolio, historical, compound_divs, filterBysymbolsArray = null) {
 
   let symbols;
-  console.log(filterBysymbolsArray);
   if ( filterBysymbolsArray ){
     symbols = portfolio.flatsymbolList.filter(function (symbol) {
       return filterBysymbolsArray.indexOf(symbol) > -1;
