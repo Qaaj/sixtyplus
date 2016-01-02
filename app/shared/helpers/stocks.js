@@ -22,7 +22,7 @@ export function mapBysymbol(array) {
 
 }
 
-export function createPerformanceObjectFromEntries({entries,rt,dividends, symbol}) {
+export function createPerformanceObjectFromEntries({entries,rt,dividends, symbol, doDiv}) {
 
   let performance = {};
   performance.costBase = 0;
@@ -47,9 +47,10 @@ export function createPerformanceObjectFromEntries({entries,rt,dividends, symbol
     performance.marketValue = round(rt.lastTradePriceOnly * performance.amount);
     performance.profitLoss = round(performance.marketValue - performance.costBase);
 
-    if(dividends){
+    if(doDiv){
       performance.profitLoss += dividends;
     }
+
 
     performance.style = 'success';
     if (performance.profitLoss < 0) performance.style = 'danger';

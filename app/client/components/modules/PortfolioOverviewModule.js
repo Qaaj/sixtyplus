@@ -28,7 +28,8 @@ class PortfolioOverview extends React.Component {
 
     this.state = {
       sorter: {
-        key: this.sortingKeys[0]
+        key: this.sortingKeys[0],
+        reverse: true
       },
       filter: 'all',
       includeDiv: true

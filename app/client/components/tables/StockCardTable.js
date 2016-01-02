@@ -19,7 +19,7 @@ class StockCardTable extends React.Component {
     let symbols = this.props.symbols.toArray();
 
     symbols = filterSymbols(symbols, this.props.filter)
-    symbols = sortByKey(symbols, this.props.sorter.key, this.props.sorter.reverse);
+    symbols = sortByKey({array:symbols, key:this.props.sorter.key, reverse:this.props.sorter.reverse, subProp:'performance'});
 
     let fields = symbols.map((symbol, i) => {
       return (

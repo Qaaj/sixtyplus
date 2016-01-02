@@ -36,10 +36,10 @@ class StockSymbol {
   }
 
   get performance() {
-    return createPerformanceObjectFromEntries({entries: this.entries, rt: this.latestRT, symbol:this});
+    return createPerformanceObjectFromEntries({entries: this.entries, rt: this.latestRT, dividends:this.total_dividends, symbol:this, doDiv:false});
   }
   get performanceWithDividends() {
-    return createPerformanceObjectFromEntries({entries: this.entries, rt: this.latestRT, dividends:this.total_dividends, symbol:this});
+    return createPerformanceObjectFromEntries({entries: this.entries, rt: this.latestRT, dividends:this.total_dividends, symbol:this, doDiv:true});
   }
 
   getAmountAtDate(date) {

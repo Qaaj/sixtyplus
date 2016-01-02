@@ -1,15 +1,19 @@
 
 
-export function sortByKey(array,key,reverse){
+export function sortByKey({array,key,reverse,subProp}){
 
   let srtr = 1;
   if(reverse) srtr = -1;
 
   array = array.sort((a,b)=> {
-    if (a.performanceWithDividends[key] > b.performanceWithDividends[key]) {
+    if(subProp){
+      a = a[subProp];
+      b = b[subProp];
+    }
+    if (a[key] > b[key]) {
       return srtr;
     }
-    if (a.performanceWithDividends[key] < b.performanceWithDividends[key]) {
+    if (a[key] < b[key]) {
       return -srtr;
     }
 

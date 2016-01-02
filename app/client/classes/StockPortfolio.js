@@ -92,8 +92,7 @@ class StockPortfolio {
     let portfolio = this.symbols.reduce((prev, curr) => {
       prev.costBase += curr[performance].costBase;
       prev.marketValue += curr[performance].marketValue;
-      prev.totalReturns += curr[performance].marketValue;
-      prev.totalReturns += curr[performance].total_dividends;
+      prev.totalReturns += curr[performance].costBase + curr[performance].profitLoss;
       return prev;
     }, {costBase: 0, marketValue: 0, totalReturns: 0});
 

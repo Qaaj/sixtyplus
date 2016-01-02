@@ -63,7 +63,7 @@ class NewsModule extends React.Component {
       allItems = allItems.concat(news.getNewsBysymbol(symbol).items);
     })
 
-    allItems = sortByKey(allItems,'date', true);
+    allItems = sortByKey({array:allItems,key:'date', reverse:true});
 
     let newsitems = allItems.map((news,i) => {
       return (<NewsItem key={"newsitem_"+i} lang={this.props.lang} news={news} />);
