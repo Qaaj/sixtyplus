@@ -23,7 +23,7 @@ export function mapBysymbol(array) {
 }
 
 export function createPerformanceObjectFromEntries({entries,rt,dividends, symbol, doDiv}) {
-
+  
   let performance = {};
   performance.costBase = 0;
   performance.amount = 0;

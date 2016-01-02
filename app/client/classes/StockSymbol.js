@@ -8,12 +8,15 @@ class StockSymbol {
 
   constructor(symbol) {
     this.symbol = symbol;
+    this._performance = {};
+    this._performanceWithDividends = {};
     this.latestRT = null;
     this.entries = new List();
   }
 
   addEntry(stockEntry) {
     this.entries = this.entries.push(stockEntry);
+    this.updatePerformanceObjects();
   }
 
   get sector() {
@@ -22,6 +25,7 @@ class StockSymbol {
 
   updateEntriesWithRTData(data) {
     this.latestRT = data;
+    this.updatePerformanceObjects();
   }
 
   get first() {
@@ -36,10 +40,10 @@ class StockSymbol {
   }
 
   get performance() {
-    return createPerformanceObjectFromEntries({entries: this.entries, rt: this.latestRT, dividends:this.total_dividends, symbol:this, doDiv:false});
+    return this._performance;
   }
   get performanceWithDividends() {
-    return createPerformanceObjectFromEntries({entries: this.entries, rt: this.latestRT, dividends:this.total_dividends, symbol:this, doDiv:true});
+    return this._performanceWithDividends;
   }
 
   getAmountAtDate(date) {
@@ -84,6 +88,13 @@ class StockSymbol {
     }, 0)
 
     this.total_dividends = round(this.total_dividends);
+
+    this.updatePerformanceObjects();
+  }
+
+  updatePerformanceObjects(){
+    this._performance = createPerformanceObjectFromEntries({entries: this.entries, rt: this.latestRT, dividends:this.total_dividends, symbol:this, doDiv:false});
+    this._performanceWithDividends = createPerformanceObjectFromEntries({entries: this.entries, rt: this.latestRT, dividends:this.total_dividends, symbol:this, doDiv:true});
   }
 
 
