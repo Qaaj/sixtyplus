@@ -97,6 +97,22 @@ class StockSymbol {
     }, 0);
   }
 
+  getAveragePriceAtDate(date){
+    let priceDate = moment(date.Date, 'YYYY-MM-DD');
+    let result = this.entries.reduce((prev, curr) => {
+      if (curr.date.isBefore(priceDate)) {
+        prev.amount += curr.amount;
+        prev.costBase += curr.price * curr.amount;
+      }
+      return prev;
+    }, {amount:0,costBase:0});
+
+    let averagePrice =  round(result.costBase/result.amount);
+    if(result.amount === 0) averagePrice = 0;
+
+    return averagePrice;
+  }
+
   calculateProfitLoss(data) {
     this.lastPrice = data.lastTradePriceOnly;
     this.marketValue = round(this.lastPrice * this.amount);

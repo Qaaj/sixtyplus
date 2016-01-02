@@ -28,7 +28,7 @@ export function getProfitLossChart(portfolio) {
       let info_for_this_date = info_per_date[date];
       if (!info_for_this_date) info_for_this_date = {};
       if (!info_for_this_date['Cost Base']) info_for_this_date['Cost Base'] = 0;
-      info_for_this_date['Cost Base'] += round(symbolClass.getAmountAtDate(month) * symbolClass.averagePrice, 2);
+      info_for_this_date['Cost Base'] += round(symbolClass.getAmountAtDate(month) * symbolClass.getAveragePriceAtDate(month), 2);
       if(!info_for_this_date['P&L']) info_for_this_date['P&L'] = 0;
       info_for_this_date['P&L'] += round(res);
       info_per_date[date] = info_for_this_date;

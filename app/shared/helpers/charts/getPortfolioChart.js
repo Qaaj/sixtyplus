@@ -47,7 +47,7 @@ export function getPortfolioChart(portfolio, compound_divs, filterBysymbolsArray
       let info_for_this_date = info_per_date[date];
       if (!info_for_this_date) info_for_this_date = {};
       if (!info_for_this_date['Cost Base']) info_for_this_date['Cost Base'] = 0;
-      info_for_this_date['Cost Base'] += round(symbolClass.getAmountAtDate(month) * symbolClass.averagePrice, 2);
+      info_for_this_date['Cost Base'] += round(symbolClass.getAmountAtDate(month) * symbolClass.getAveragePriceAtDate(month), 2);
       info_for_this_date[symbol] = round(res);
       info_per_date[date] = info_for_this_date;
     });
