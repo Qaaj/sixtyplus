@@ -3,7 +3,6 @@ import ModalActionCreators from '../../actions/ModalActionCreators';
 import ModalConstants from '../../constants/ModalConstants';
 import {getUniqueColor, getClassBySector} from '../../../shared/helpers/colors/ColorUtils';
 import SectorComponent from '../ui/SectorComponent';
-import {getMonthlyChart} from '../../../shared/helpers/charts/getMonthlyChart';
 import C3PortfolioChart from '../charts/C3PortfolioChart';
 import {updateArrayOfEntryCollectionsWithRT, updatePortfolioDividends} from '../../../shared/helpers/stocks';
 import ListGroupRenderer from '../layout/ListGroupRenderer.js';
@@ -16,7 +15,7 @@ class PortfolioDetailModal extends React.Component {
   constructor(props) {
     super(props);
 
-    let symbolData = this.props.data;
+    let symbolData = this.props.data.performance;
     //let symbolExtendedInformation = this.props.rt[symbolData.symbol];
 
     const listGroupsToRender = [
@@ -145,7 +144,7 @@ class PortfolioDetailModal extends React.Component {
     }
 
     let sector = symbolData.sector;
-    let entries = symbolData.entries.map((stockEntry, i) => {
+    let entries = this.props.data.entries.map((stockEntry, i) => {
 
       return (<tr key={i}>
         <td>{stockEntry.amount}</td>
