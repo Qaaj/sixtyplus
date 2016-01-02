@@ -9,39 +9,7 @@ let _symbolMap = new Map();
 class StockPortfolio {
 
   constructor(rawUserDataObject) {
-
-    this.mapEntriesBySymbol(rawUserDataObject);
-  }
-
-  updateHistoricalPrices({symbol,option,result}) {
-    let stockSymbol = _symbolMap.get(symbol);
-    if (stockSymbol) {
-      let newSS = StockSymbol.copy(stockSymbol);  // Create a copy of the symbol class for the immutability
-      newSS[option] = JSON.parse(result);
-      _symbolMap = _symbolMap.set(symbol, newSS);
-    }
-  }
-
-  updatePortfolioWithRTData(data) {
-    let stockSymbol = _symbolMap.get(data.symbol);
-    if (stockSymbol) {
-      let newSS = StockSymbol.copy(stockSymbol);  // Create a copy of the symbol class for the immutability
-      newSS.updateEntriesWithRTData(data);
-      _symbolMap = _symbolMap.set(data.symbol, newSS);
-    }
-  }
-
-  updatePortfolioWithDividends(symbol, dividends) {
-    let stockSymbol = _symbolMap.get(symbol);
-    if (stockSymbol) {
-      let newSS = StockSymbol.copy(stockSymbol);  // Create a copy of the symbol class for the immutability
-      newSS.calculateDividends({dividends});
-      _symbolMap = _symbolMap.set(symbol, newSS);
-    }
-  }
-
-  mapEntriesBySymbol(data) {
-    data.map(entry => {
+    rawUserDataObject.map(entry => {
       let stockEntry = new StockEntry(entry);
       if (!_symbolMap.get(entry.symbol)) {
         _symbolMap = _symbolMap.set(entry.symbol, new StockSymbol(entry.symbol));
@@ -49,6 +17,8 @@ class StockPortfolio {
       _symbolMap.get(entry.symbol).addEntry(stockEntry);
     });
   }
+
+  //////// Getters
 
   get allStockEntries() {
     let list = [];
@@ -74,7 +44,7 @@ class StockPortfolio {
     return Object.keys(_symbolMap.toJS());
   }
 
-  get firstBuyDate(){
+  get firstBuyDate() {
     let firstBuy = this.symbolsArray.reduce((prev, curr) => {
       if (curr.firstBuyEntry.isBefore(prev)) prev = curr.firstBuyEntry;
       return prev;
@@ -84,10 +54,13 @@ class StockPortfolio {
     return minusOneMonth;
   }
 
+
+  // Get statistics for the portfolio
+
   portfolioStats(withDiv = false) {
 
     let performance = 'performance';
-    if(withDiv) performance = 'performanceWithDividends'
+    if (withDiv) performance = 'performanceWithDividends'
 
     let portfolio = this.symbols.reduce((prev, curr) => {
       prev.costBase += curr[performance].costBase;
@@ -105,6 +78,38 @@ class StockPortfolio {
     portfolio.percent_change_string = portfolio.percent_change + '%';
 
     return portfolio;
+  }
+
+  /////// Functions that are called from the Portfolio Store
+
+  // Update the stocksymbols with their historical information (monthly/yearly etc)
+  updateHistoricalPrices({symbol,option,result}) {
+    let stockSymbol = _symbolMap.get(symbol);
+    if (stockSymbol) {
+      let newSS = StockSymbol.copy(stockSymbol);  // Create a copy of the symbol class for the immutability
+      newSS[option] = JSON.parse(result);
+      _symbolMap = _symbolMap.set(symbol, newSS);
+    }
+  }
+
+  // Update the stocksymbols with their realtime information
+  updatePortfolioWithRTData(data) {
+    let stockSymbol = _symbolMap.get(data.symbol);
+    if (stockSymbol) {
+      let newSS = StockSymbol.copy(stockSymbol);  // Create a copy of the symbol class for the immutability
+      newSS.updateEntriesWithRTData(data);
+      _symbolMap = _symbolMap.set(data.symbol, newSS);
+    }
+  }
+
+  // Update the stocksymbols with their dividend information
+  updatePortfolioWithDividends(symbol, dividends) {
+    let stockSymbol = _symbolMap.get(symbol);
+    if (stockSymbol) {
+      let newSS = StockSymbol.copy(stockSymbol);  // Create a copy of the symbol class for the immutability
+      newSS.calculateDividends({dividends});
+      _symbolMap = _symbolMap.set(symbol, newSS);
+    }
   }
 
 }

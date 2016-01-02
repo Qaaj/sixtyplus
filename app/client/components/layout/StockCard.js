@@ -30,7 +30,6 @@ class StockCard extends React.Component {
   }
 
   render() {
-
     let symbol = this.props.symbol;
 
     let performance = {};

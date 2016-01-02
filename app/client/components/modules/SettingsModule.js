@@ -1,7 +1,7 @@
 import { Input,Button,Grid,ListGroup, ListGroupItem,  DropdownButton, MenuItem} from 'react-bootstrap';import {} from 'react-bootstrap';
 
 import HelpIcon from '../ui/HelpIcon';
-
+import User from '../../classes/User'
 
 class SettingsModule extends React.Component {
   constructor(props) {
@@ -14,7 +14,11 @@ class SettingsModule extends React.Component {
 
   render() {
 
-    console.log(this.props.user);
+    let user = this.props.user.get('class').init(this.props.user);
+
+    console.log(user);
+
+
     return (
       <div className="settings_page">
         <Grid>

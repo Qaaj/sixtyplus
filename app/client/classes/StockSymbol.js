@@ -93,8 +93,10 @@ class StockSymbol {
   }
 
   updatePerformanceObjects(){
-    this._performance = createPerformanceObjectFromEntries({entries: this.entries, rt: this.latestRT, dividends:this.total_dividends, symbol:this, doDiv:false});
-    this._performanceWithDividends = createPerformanceObjectFromEntries({entries: this.entries, rt: this.latestRT, dividends:this.total_dividends, symbol:this, doDiv:true});
+    this._performance = createPerformanceObjectFromEntries({entries: this.entries, rt: this.latestRT,
+      dividends:this.total_dividends, symbol:this, doDiv:false});
+    this._performanceWithDividends = createPerformanceObjectFromEntries({entries: this.entries, rt: this.latestRT,
+      dividends:this.total_dividends, symbol:this, doDiv:true});
   }
 
 

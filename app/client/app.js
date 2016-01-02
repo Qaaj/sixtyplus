@@ -76,15 +76,16 @@ class App extends React.Component {
     const location = this.props.location;
     const params = this.props.params;
 
+
     return (<div>
 
-      <Menu history={history} location={location} urlParams={params} lang={this.state.user.lang}/>
+      <Menu history={history} location={location} urlParams={params} lang={this.state.user.get('lang')}/>
       <Notification />
 
       <div className="application">
         {React.cloneElement(
           this.props.children, {
-            lang: this.state.user.lang,
+            lang: this.state.user.get('lang'),
             history: history,
             location: location,
             urlParams: params,
@@ -95,7 +96,7 @@ class App extends React.Component {
       </div>
 
       <Modal
-        lang={this.state.user.lang}
+        lang={this.state.user.get('lang')}
         history={history}
         location={location}
         urlParams={params}

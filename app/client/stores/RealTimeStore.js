@@ -57,7 +57,7 @@ RealTimeStore.dispatchToken = AppDispatcher.register(function (payload) {
 
     case PortfolioConstants.PORTFOLIO_LOADED:
 
-      refreshPortfolio(action.data);
+      refreshPortfolio();
       startTimer();
 
   break;

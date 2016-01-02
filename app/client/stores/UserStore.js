@@ -4,7 +4,7 @@ import assign from 'object-assign';
 import { EventEmitter } from 'events';
 import { Map, fromJS } from 'immutable';
 import asap from 'asap';
-import StockEntry from '../classes/StockEntry';
+import User from '../classes/User';
 import NotificationActionCreators from '../actions/NotificationActionCreators';
 import {getTranslation, setLanguageMap } from '../utils/LangUtils';
 import { loadUserFinancialProfile,saveUserFinancialProfile } from '../api/UserAPI';
@@ -14,11 +14,14 @@ const CHANGE_EVENT = 'change';
 let _userObject = Map();
 
 let newLangInstance = (...args)=>{return getTranslation(...args)};
+
 _userObject = _userObject.set('lang', newLangInstance);
+_userObject = _userObject.set("class",new User());
+
 
 const UserStore = assign({}, EventEmitter.prototype, {
   getUser() {
-    return _userObject.toJS();
+    return _userObject;
   },
 
   emitChange() {
@@ -72,12 +75,14 @@ UserStore.dispatchToken = AppDispatcher.register(function (payload) {
 
       localStorage.setItem('uid', action.data.objectId);
       _userObject = fromJS(action.data);
+      _userObject = _userObject.set("class",new User());
 
       // Translation stuff
       let newLangInstance = (...args)=>{return getTranslation(...args)};
       _userObject = _userObject.set('lang',newLangInstance);
 
-      NotificationActionCreators.userLoggedIn(_userObject.toJS());
+      NotificationActionCreators.userLoggedIn(_userObject);
+
       UserStore.emitChange();
 
       break;

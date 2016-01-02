@@ -16,6 +16,7 @@ import StockEntry from '../classes/StockEntry';
 import StockSymbol from '../classes/StockSymbol';
 import { loadUserPortfolioData } from '../api/PortfolioAPI';
 import HistoricalActions from '../actions/HistoricalActionCreators';
+import noSpam from '../../shared/utils/noSpam'
 
 
 
@@ -51,15 +52,13 @@ PortfolioStore.dispatchToken = AppDispatcher.register(function (payload) {
     case HistoricalConstants.HISTORICAL_DIVIDENDS_UPDATE:
       let dividends = new DividendCollection(action.data.result);
       _portfolio.updatePortfolioWithDividends(action.data.symbol, dividends.dividends);
-      PortfolioStore.emitChange();
-
+      noSpam(emitTheChange, 500);
       break;
 
+    // Update the portfolio with historical prices
     case HistoricalConstants.HISTORICAL_PRICES_UPDATE:
-
       _portfolio.updateHistoricalPrices(action.data);
-      PortfolioStore.emitChange();
-
+      noSpam(emitTheChange, 500);
       break;
 
     // Update the portfolio with real-time information
@@ -67,23 +66,22 @@ PortfolioStore.dispatchToken = AppDispatcher.register(function (payload) {
       action.data.map(symbol => {
         if (symbol) _portfolio.updatePortfolioWithRTData(symbol);
       });
-      PortfolioStore.emitChange();
+      noSpam(emitTheChange, 500);
       break;
 
     case UserConstants.USER_LOADED:  // Load the users portfolio
       let uid = action.data.objectId;
       loadUserPortfolioData(uid);
+      PortfolioStore.emitChange();
       break;
 
     case PortfolioConstants.PORTFOLIO_LOADED:
 
       _portfolio = new StockPortfolio(action.data)
-
       _portfolio.flatsymbolList.forEach(symbol => {
         HistoricalActions.getHistoricalDividends({symbol});
         HistoricalActions.getHistoricalPrices({symbol, options: 'monthly', from: _portfolio.firstBuyDate.format("DD-MM-YYYY")});
       });
-
       PortfolioStore.emitChange();
       break;
 
@@ -94,6 +92,10 @@ PortfolioStore.dispatchToken = AppDispatcher.register(function (payload) {
   return true;
 
 });
+
+function emitTheChange(){
+  PortfolioStore.emitChange();
+}
 
 
 export default PortfolioStore;
