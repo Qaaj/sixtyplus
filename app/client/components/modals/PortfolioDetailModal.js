@@ -134,7 +134,7 @@ class PortfolioDetailModal extends React.Component {
   }
 
   render() {
-    let symbolData = this.props.data;
+    let symbolData = this.props.data.performance;
 
     console.log("> Showing ", symbolData);
 
