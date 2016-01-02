@@ -7,7 +7,7 @@ import UserActionCreators from '../../actions/UserActionCreators';
 import { doImport } from '../../../shared/helpers/importers/IB_importer';
 import NotificationActionCreators from '../../actions/NotificationActionCreators';
 import SingleStock from '../importer/ui/SinglePreviewImportStock';
-import StockTable from '../tables/StockTable';
+import StockTable from '../tables/StockCardTable';
 import { Input, Grid, DropdownButton, MenuItem, ButtonToolbar, Button, ButtonGroup,ListGroup,ListGroupItem, Popover, OverlayTrigger, Panel } from 'react-bootstrap';
 import C3PortfolioChart from '../charts/C3PortfolioChart';
 import {round} from '../../../shared/helpers/formatting';

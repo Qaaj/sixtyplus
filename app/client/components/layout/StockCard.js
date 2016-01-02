@@ -31,6 +31,7 @@ class StockCard extends React.Component {
 
   render() {
 
+    console.log("REnder");
     let entries = this.props.symbol.data;
     if (this.props.includeDiv) entries = this.props.symbol.dataWithDividends;
 

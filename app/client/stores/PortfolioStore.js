@@ -15,6 +15,8 @@ import DividendCollection from '../classes/DividendCollection';
 import StockEntry from '../classes/StockEntry';
 import StockSymbol from '../classes/StockSymbol';
 import { loadUserPortfolioData } from '../api/PortfolioAPI';
+import HistoricalActions from '../actions/HistoricalActionCreators';
+
 
 
 let _portfolio = null;
@@ -76,6 +78,12 @@ PortfolioStore.dispatchToken = AppDispatcher.register(function (payload) {
     case PortfolioConstants.PORTFOLIO_LOADED:
 
       _portfolio = new StockPortfolio(action.data)
+
+      _portfolio.flatsymbolList.forEach(symbol => {
+        HistoricalActions.getHistoricalDividends({symbol});
+        HistoricalActions.getHistoricalPrices({symbol, options: 'monthly', from: _portfolio.firstBuyDate.format("DD-MM-YYYY")});
+      });
+
       PortfolioStore.emitChange();
       break;
 

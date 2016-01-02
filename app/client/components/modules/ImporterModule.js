@@ -8,9 +8,8 @@ import RealTimeActionCreators from '../../actions/RealTimeActionCreators';
 import SingleStock from '../importer/ui/SinglePreviewImportStock';
 import { Grid, Panel, ListGroup,Accordion, Table } from 'react-bootstrap';
 import { createRegularFields, createCurrencyFields, createPercentageFields, createRegularFieldsNoLabel } from '../../helpers/InputFactory';
-import {collectionsToPortfolioMap} from '../../../shared/helpers/stocks';
 import ManualStockImporter from '../../components/importer/ManualStockImporter'
-import StockEntryCollection from '../../classes/StockEntryCollection';
+import StockSymbol from '../../classes/StockSymbol';
 
 
 class Importer extends React.Component {
@@ -93,7 +92,7 @@ class Importer extends React.Component {
     let stockEntryCollections = [];
 
     for (let key in sortedStocks) {
-      stockEntryCollections.push(new StockEntryCollection(sortedStocks[key]));
+      stockEntryCollections.push(new StockSymbol(sortedStocks[key]));
     }
 
     this.setState({

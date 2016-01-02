@@ -2,7 +2,6 @@ import { Input,Button,Grid,ListGroup, ListGroupItem} from 'react-bootstrap';
 import HelpIcon from '../ui/HelpIcon';
 import FixedDataTable  from 'fixed-data-table';
 import {Table, Column, Cell} from 'fixed-data-table';
-import { updatePortfolioDividends } from '../../../shared/helpers/stocks';
 import { createDividendTableData } from '../../../shared/helpers/tables';
 import {round} from '../../../shared/helpers/formatting';
 import numeral from 'numeral';

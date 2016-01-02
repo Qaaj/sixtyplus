@@ -7,7 +7,7 @@ import {sortByKey} from '../../../shared/helpers/sorting';
 import {filterSymbols} from '../../../shared/helpers/filtering';
 
 @pureRenderDecorator
-class StockTable extends React.Component {
+class StockCardTable extends React.Component {
 
   constructor(props) {
     super(props);
@@ -24,7 +24,7 @@ class StockTable extends React.Component {
     let fields = symbols.map((symbol, i) => {
       return (
         <StockCard key={'singlestock_' + i  + symbol.symbol}
-                   symbol={symbol} includeDiv={this.props.includeDiv} lang={this.props.lang} force_redwraw_entries={symbol.entries} />);
+                   symbol={symbol} includeDiv={this.props.includeDiv} lang={this.props.lang}  />);
     });
 
     let table = (
@@ -41,6 +41,6 @@ class StockTable extends React.Component {
   }
 }
 
-StockTable.displayName = 'StockTable';
+StockCardTable.displayName = 'StockCardTable';
 
-export default StockTable;
+export default StockCardTable;

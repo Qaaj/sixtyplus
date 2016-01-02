@@ -1,10 +1,7 @@
-import StockEntryCollection from './StockEntryCollection';
 import StockSymbol from './StockSymbol';
 import StockEntry from './StockEntry';
 import HistoricalData from '../stores/HistoricalStore';
-import HistoricalActions from '../actions/HistoricalActionCreators';
 import {round} from '../../shared/helpers/formatting';
-import {getStockNews} from '../api/StockAPI';
 import { Map, fromJS } from 'immutable';
 let _symbolMap = new Map();
 
@@ -14,50 +11,33 @@ class StockPortfolio {
   constructor(rawUserDataObject) {
 
     this.mapEntriesBySymbol(rawUserDataObject);
-
-
-    let firstBuy = this.symbolsArray.reduce((prev, curr) => {
-      if (curr.firstBuyEntry.isBefore(prev)) prev = curr.firstBuyEntry;
-      return prev;
-    }, moment('29991212', 'YYYYMMDD'));
-
-    let minusOneMonth = firstBuy.clone().subtract(1, 'months');
-
-    // TODO: Move this logic out of here
-    // Get dividend info for existing portfolio
-    getStockNews(this.flatsymbolList);
-
-    this.flatsymbolList.forEach(symbol => {
-      HistoricalActions.getHistoricalDividends({symbol});
-      HistoricalActions.getHistoricalPrices({symbol, options: 'monthly', from: minusOneMonth.format("DD-MM-YYYY")});
-    });
   }
 
   updateHistoricalPrices({symbol,option,result}) {
     let stockSymbol = _symbolMap.get(symbol);
     if (stockSymbol) {
-      stockSymbol[option] = JSON.parse(result);
-      _symbolMap = _symbolMap.set(symbol, stockSymbol);
+      let newSS = StockSymbol.create(stockSymbol);  // Create a copy of the symbol class for the immutability
+      newSS[option] = JSON.parse(result);
+      _symbolMap = _symbolMap.set(symbol, newSS);
     }
-    _symbolMap = fromJS(_symbolMap.toJS()); // More information came in so force an immutable redraw
   }
 
   updatePortfolioWithRTData(data) {
     let stockSymbol = _symbolMap.get(data.symbol);
     if (stockSymbol) {
-      stockSymbol.updateEntriesWithRTData(data);
-      _symbolMap = _symbolMap.set(data.symbol, stockSymbol);
+      let newSS = StockSymbol.create(stockSymbol);  // Create a copy of the symbol class for the immutability
+      newSS.updateEntriesWithRTData(data);
+      _symbolMap = _symbolMap.set(data.symbol, newSS);
     }
-    _symbolMap = fromJS(_symbolMap.toJS());
   }
 
   updatePortfolioWithDividends(symbol, dividends) {
     let stockSymbol = _symbolMap.get(symbol);
     if (stockSymbol) {
-      stockSymbol.calculateDividends({dividends});
-      _symbolMap = _symbolMap.set(symbol, stockSymbol);
+      let newSS = StockSymbol.create(stockSymbol);  // Create a copy of the symbol class for the immutability
+      newSS.calculateDividends({dividends});
+      _symbolMap = _symbolMap.set(symbol, newSS);
     }
-    _symbolMap = fromJS(_symbolMap.toJS());
   }
 
   mapEntriesBySymbol(data) {
@@ -92,6 +72,16 @@ class StockPortfolio {
 
   get flatsymbolList() {
     return Object.keys(_symbolMap.toJS());
+  }
+
+  get firstBuyDate(){
+    let firstBuy = this.symbolsArray.reduce((prev, curr) => {
+      if (curr.firstBuyEntry.isBefore(prev)) prev = curr.firstBuyEntry;
+      return prev;
+    }, moment('29991212', 'YYYYMMDD'));
+
+    let minusOneMonth = firstBuy.clone().subtract(1, 'months');
+    return minusOneMonth;
   }
 
 

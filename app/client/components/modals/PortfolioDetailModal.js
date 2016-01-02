@@ -17,7 +17,7 @@ class PortfolioDetailModal extends React.Component {
     super(props);
 
     let symbolData = this.props.data;
-    let symbolExtendedInformation = this.props.rt[symbolData.symbol];
+    //let symbolExtendedInformation = this.props.rt[symbolData.symbol];
 
     const listGroupsToRender = [
       // COLUMN 1
@@ -81,7 +81,7 @@ class PortfolioDetailModal extends React.Component {
       },
     ];
 
-    const arr = Object.keys(symbolExtendedInformation);
+    const arr = [];//Object.keys(symbolExtendedInformation);
     const amountInFirstColumn = (arr.length / 2);
 
     const column1 = arr.slice(0, amountInFirstColumn);
@@ -160,14 +160,9 @@ class PortfolioDetailModal extends React.Component {
       </tr>);
     });
 
-    if (!this.props.user.stockPortfolio) return (
-      <Grid style={{'textAlign':'center','padding':'20px'}}> Whoops! You don't seem to have a portfolio. Head over to <a
-        href={"#/Import"}>Importer</a> to change that.</Grid>);
 
-    let portfolio = this.props.user.stockPortfolio;
+    let portfolio = this.props.portfolio;
 
-    updateArrayOfEntryCollectionsWithRT(portfolio, this.props.rt);
-    updatePortfolioDividends(portfolio, this.props.historical);
 
     return (<Modal show={true} onHide={this.props.onCancel} dialogClassName="portfolio-modal">
       <Modal.Header closeButton>
@@ -227,10 +222,5 @@ class PortfolioDetailModal extends React.Component {
 }
 
 PortfolioDetailModal.displayName = 'PortfolioDetailModal';
-
-PortfolioDetailModal.PropTypes = {
-  rt: React.PropTypes.obj,
-  user: React.PropTypes.string,
-};
 
 export default PortfolioDetailModal;
