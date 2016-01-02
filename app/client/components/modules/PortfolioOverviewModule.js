@@ -7,7 +7,7 @@ import UserActionCreators from '../../actions/UserActionCreators';
 import { doImport } from '../../../shared/helpers/importers/IB_importer';
 import NotificationActionCreators from '../../actions/NotificationActionCreators';
 import SingleStock from '../importer/ui/SinglePreviewImportStock';
-import StockTable from '../tables/StockCardTable';
+import StockCardTable from '../tables/StockCardTable';
 import { Input, Grid, DropdownButton, MenuItem, ButtonToolbar, Button, ButtonGroup,ListGroup,ListGroupItem, Popover, OverlayTrigger, Panel } from 'react-bootstrap';
 import C3PortfolioChart from '../charts/C3PortfolioChart';
 import {round} from '../../../shared/helpers/formatting';
@@ -54,7 +54,7 @@ class PortfolioOverview extends React.Component {
     })
   }
 
-  shouldILoad(){
+  shouldILoad() {
     if (!this.props.user || !this.props.portfolio) return (
       <Grid style={{'textAlign':'center','padding':'20px'}}> There
         doesn't seem to be anything here! Head over to the <a href={"#/Import"}>Importer</a> to
@@ -62,8 +62,8 @@ class PortfolioOverview extends React.Component {
 
     let nok = false;
 
-    this.props.portfolio.symbolsArray.forEach(symbol =>{
-      if(!symbol.monthly) nok = true;
+    this.props.portfolio.symbolsArray.forEach(symbol => {
+      if (!symbol.monthly) nok = true;
     });
 
     if (nok) return (
@@ -76,7 +76,7 @@ class PortfolioOverview extends React.Component {
 
   render() {
 
-   if(this.shouldILoad()) return this.shouldILoad();
+    if (this.shouldILoad()) return this.shouldILoad();
 
     let portfolio = this.props.portfolio;
 
@@ -97,9 +97,7 @@ class PortfolioOverview extends React.Component {
 
     dividends = round(dividends);
 
-    let portfolioData = portfolio.portfolioStats;
-    if (this.state.includeDiv) portfolioData = portfolio.portfolioStatsWithDividends;
-
+    let portfolioData = portfolio.portfolioStats(this.state.includeDiv);
 
     let profitOrLoss = 'success';
     if (portfolioData.profitLoss < 0) profitOrLoss = 'danger';
@@ -144,11 +142,13 @@ class PortfolioOverview extends React.Component {
                    onChange={this.onDividendCheckboxClick.bind(this)}/>
           </div>
         </Grid>
+
         <Grid>
           <div className='portfolioOverview'>
-            <StockTable user={this.props.user} sorter={this.state.sorter}
-                        filter={this.state.filter}
-                        includeDiv={this.state.includeDiv} lang={this.props.lang} symbols={this.props.portfolio.symbols} />
+            <StockCardTable user={this.props.user} sorter={this.state.sorter}
+                            filter={this.state.filter}
+                            includeDiv={this.state.includeDiv} lang={this.props.lang}
+                            symbols={this.props.portfolio.symbols}/>
           </div>
         </Grid>
       </div>

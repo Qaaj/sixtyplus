@@ -16,7 +16,7 @@ class StockPortfolio {
   updateHistoricalPrices({symbol,option,result}) {
     let stockSymbol = _symbolMap.get(symbol);
     if (stockSymbol) {
-      let newSS = StockSymbol.create(stockSymbol);  // Create a copy of the symbol class for the immutability
+      let newSS = StockSymbol.copy(stockSymbol);  // Create a copy of the symbol class for the immutability
       newSS[option] = JSON.parse(result);
       _symbolMap = _symbolMap.set(symbol, newSS);
     }
@@ -25,7 +25,7 @@ class StockPortfolio {
   updatePortfolioWithRTData(data) {
     let stockSymbol = _symbolMap.get(data.symbol);
     if (stockSymbol) {
-      let newSS = StockSymbol.create(stockSymbol);  // Create a copy of the symbol class for the immutability
+      let newSS = StockSymbol.copy(stockSymbol);  // Create a copy of the symbol class for the immutability
       newSS.updateEntriesWithRTData(data);
       _symbolMap = _symbolMap.set(data.symbol, newSS);
     }
@@ -34,7 +34,7 @@ class StockPortfolio {
   updatePortfolioWithDividends(symbol, dividends) {
     let stockSymbol = _symbolMap.get(symbol);
     if (stockSymbol) {
-      let newSS = StockSymbol.create(stockSymbol);  // Create a copy of the symbol class for the immutability
+      let newSS = StockSymbol.copy(stockSymbol);  // Create a copy of the symbol class for the immutability
       newSS.calculateDividends({dividends});
       _symbolMap = _symbolMap.set(symbol, newSS);
     }
@@ -84,8 +84,18 @@ class StockPortfolio {
     return minusOneMonth;
   }
 
+  portfolioStats(withDiv = false) {
 
-  finishStatCalculations(portfolio) {
+    let performance = 'performance';
+    if(withDiv) performance = 'performanceWithDividends'
+
+    let portfolio = this.symbols.reduce((prev, curr) => {
+      prev.costBase += curr[performance].costBase;
+      prev.marketValue += curr[performance].marketValue;
+      prev.totalReturns += curr[performance].marketValue;
+      prev.totalReturns += curr[performance].total_dividends;
+      return prev;
+    }, {costBase: 0, marketValue: 0, totalReturns: 0});
 
     portfolio.profitLoss = round(portfolio.totalReturns - portfolio.costBase);
     portfolio.percent_change = round(100 * (portfolio.profitLoss / portfolio.costBase));
@@ -97,37 +107,6 @@ class StockPortfolio {
 
     return portfolio;
   }
-
-
-  get portfolioStats() {
-
-    let portfolio = this.symbols.reduce((prev, curr) => {
-      prev.costBase += curr.costBase;
-      prev.marketValue += curr.marketValue;
-      prev.totalReturns += curr.marketValue;
-      return prev;
-    }, {costBase: 0, marketValue: 0, totalReturns: 0});
-
-    portfolio = this.finishStatCalculations(portfolio)
-
-    return portfolio;
-  }
-
-  get portfolioStatsWithDividends() {
-
-    let portfolio = this.symbols.reduce((prev, curr) => {
-      prev.costBase += curr.costBase;
-      prev.marketValue += curr.marketValue;
-      prev.totalReturns += curr.marketValue;
-      if (curr.total_dividends) prev.totalReturns += curr.total_dividends;
-      return prev;
-    }, {costBase: 0, marketValue: 0, totalReturns: 0});
-
-    portfolio = this.finishStatCalculations(portfolio)
-
-    return portfolio;
-  }
-
 
 }
 

@@ -2,54 +2,27 @@ import StockEntry from './StockEntry';
 import {round} from '../../shared/helpers/formatting';
 import assign from 'object-assign';
 import { List } from 'immutable';
+import {createPerformanceObjectFromEntries} from '../../shared/helpers/stocks'
 
 class StockSymbol {
 
   constructor(symbol) {
     this.symbol = symbol;
+    this.latestRT = null;
     this.entries = new List();
   }
 
-  static create(symbolclass) {
-    let sc = new StockSymbol(symbolclass.symbol);
-    assign(sc, symbolclass);
-    return sc;
-  }
-
   addEntry(stockEntry) {
-    stockEntry.symbolClass = this;
     this.entries = this.entries.push(stockEntry);
-    this.refreshEntries()
   }
 
-  refreshEntries() {
-
-    this.costBase = 0;
-    this.amount = 0;
-
-    this.entries = this.entries.map(entry => {
-      this.sector = entry.sector;
-      this.symbol = entry.symbol;
-      this.amount += entry.amount;
-      this.costBase += entry.price * entry.amount;
-      return entry;
-    });
-
-    this.costBase = round(this.costBase);
-    this.marketValue = 0;
-    this.averagePrice = round(this.costBase / this.amount);
-
+  get sector() {
+    return this.first.sector;
   }
-
 
   updateEntriesWithRTData(data) {
-    this.calculateProfitLoss(data);
-    this.entries = this.entries.map(entry => {
-      entry.updateWithRealtimeData(data);
-      return entry;
-    })
+    this.latestRT = data;
   }
-
 
   get first() {
     return this.entries.get(0);
@@ -62,30 +35,12 @@ class StockSymbol {
     }, moment('29991212', 'YYYYMMDD'));
   }
 
-  get data() {
-
-    let data = assign({}, this);
-    data.first = this.first;
-    data.totalChangePercentageString = this.totalChangePercentage + '%';
-    if (data.totalChangePercentage >= 0) data.totalChangePercentageString = '+' + this.totalChangePercentage + '%';
-
-    return data;
+  get performance() {
+    return createPerformanceObjectFromEntries({entries: this.entries, rt: this.latestRT, symbol:this});
   }
-
-  get dataWithDividends() {
-    let data = assign({}, this);
-    data.first = this.first;
-    data.profitLoss = data.marketValue - data.costBase + this.total_dividends;
-    data.profitLoss = round(data.profitLoss);
-    data.totalChangePercentage = round(100 * data.profitLoss / data.costBase, 1)
-    data.totalChangePercentageString = data.totalChangePercentage + '%';
-    data.style = 'success';
-    if (data.profitLoss < 0) data.style = 'danger';
-    if (data.profitLoss < 0 && Math.abs(data.profitLoss) < 100) data.style = 'warning';
-    if (data.totalChangePercentage >= 0) data.totalChangePercentageString = '+' + data.totalChangePercentage + '%';
-    return data;
+  get performanceWithDividends() {
+    return createPerformanceObjectFromEntries({entries: this.entries, rt: this.latestRT, dividends:this.total_dividends, symbol:this});
   }
-
 
   getAmountAtDate(date) {
     let priceDate = moment(date.Date, 'YYYY-MM-DD');
@@ -97,7 +52,7 @@ class StockSymbol {
     }, 0);
   }
 
-  getAveragePriceAtDate(date){
+  getAveragePriceAtDate(date) {
     let priceDate = moment(date.Date, 'YYYY-MM-DD');
     let result = this.entries.reduce((prev, curr) => {
       if (curr.date.isBefore(priceDate)) {
@@ -105,31 +60,21 @@ class StockSymbol {
         prev.costBase += curr.price * curr.amount;
       }
       return prev;
-    }, {amount:0,costBase:0});
+    }, {amount: 0, costBase: 0});
 
-    let averagePrice =  round(result.costBase/result.amount);
-    if(result.amount === 0) averagePrice = 0;
+    let averagePrice = round(result.costBase / result.amount);
+    if (result.amount === 0) averagePrice = 0;
 
     return averagePrice;
-  }
-
-  calculateProfitLoss(data) {
-    this.lastPrice = data.lastTradePriceOnly;
-    this.marketValue = round(this.lastPrice * this.amount);
-    this.profitLoss = round(this.marketValue - this.costBase);
-    this.style = 'success';
-    if (this.profitLoss < 0) this.style = 'danger';
-    if (this.profitLoss < 0 && Math.abs(this.profitLoss) < 100) this.style = 'warning';
-    this.totalChangePercentage = round(100 * this.profitLoss / this.costBase);
   }
 
   calculateDividends(data) {
 
     this.dividends = data.dividends;
-
     if (data.dividends) {
-      this.entries.map(entry => {
+      this.entries = this.entries.map(entry => {
         entry.calculateDividends(data.dividends);
+        return entry;
       })
     }
 
@@ -140,6 +85,14 @@ class StockSymbol {
 
     this.total_dividends = round(this.total_dividends);
   }
+
+
+  static copy(symbolclass) {
+    let sc = new StockSymbol(symbolclass.symbol);
+    assign(sc, symbolclass);
+    return sc;
+  }
+
 
 }
 

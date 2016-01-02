@@ -6,10 +6,10 @@ export function sortByKey(array,key,reverse){
   if(reverse) srtr = -1;
 
   array = array.sort((a,b)=> {
-    if (a[key] > b[key]) {
+    if (a.performanceWithDividends[key] > b.performanceWithDividends[key]) {
       return srtr;
     }
-    if (a[key] < b[key]) {
+    if (a.performanceWithDividends[key] < b.performanceWithDividends[key]) {
       return -srtr;
     }
 

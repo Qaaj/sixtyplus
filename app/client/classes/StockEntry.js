@@ -13,36 +13,6 @@ class StockEntry {
     this.sector = "NO SECTOR";
   }
 
-  get dateString() {
-    return this.date.format("LL");
-  }
-
-  get isUpToday(){
-    if(this.change >= 0) return true;
-    return false;
-  }
-
-  get percentChangeString(){
-    return this.percent_change + '%';
-  }
-  get changeString(){
-    if(this.percent_change >= 0) return  '+' + this.percent_change ;
-    return this.percent_change;
-  }
-
-  updateWithRealtimeData(rt){
-
-    let data = rt[this.symbol];
-    if(!data) data = rt;
-
-    if(data){
-      this.change = data.change;
-      this.industry = data.industry;
-      this.previousClose = data.previousClose;
-      this.percent_change =   round(100*(data.change/data.previousClose),2);
-    }
-  }
-
   calculateDividends(dividends){
     this.receivedDividends = dividends.filter(dividend =>{
         if(dividend.date.isAfter(this.date)) return true;
