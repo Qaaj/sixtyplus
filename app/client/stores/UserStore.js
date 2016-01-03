@@ -8,10 +8,12 @@ import User from '../classes/User';
 import NotificationActionCreators from '../actions/NotificationActionCreators';
 import {getTranslation, setLanguageMap } from '../utils/LangUtils';
 import { loadUserFinancialProfile,saveUserFinancialProfile } from '../api/UserAPI';
+import noSpam from '../../shared/utils/noSpam'
 
 const CHANGE_EVENT = 'change';
 
 let _userObject = Map();
+const spammer = new noSpam();
 
 let newLangInstance = (...args)=>{return getTranslation(...args)};
 
@@ -65,7 +67,8 @@ UserStore.dispatchToken = AppDispatcher.register(function (payload) {
 
     case UserConstants.USER_FINANCIAL_PROFILE_LOADED:
       _userObject = _userObject.set('financial_profile',fromJS(action.data));
-      UserStore.emitChange();
+      spammer.go(emitTheChange, 1000);
+
       break;
 
     case UserConstants.USER_LOADED:
@@ -82,8 +85,7 @@ UserStore.dispatchToken = AppDispatcher.register(function (payload) {
       _userObject = _userObject.set('lang',newLangInstance);
 
       NotificationActionCreators.userLoggedIn(_userObject);
-
-      UserStore.emitChange();
+      spammer.go(emitTheChange, 1000);
 
       break;
 
@@ -93,5 +95,9 @@ UserStore.dispatchToken = AppDispatcher.register(function (payload) {
 
   return true;
 });
+
+function emitTheChange(){
+  UserStore.emitChange();
+}
 
 export default UserStore;

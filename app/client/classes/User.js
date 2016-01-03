@@ -3,7 +3,7 @@ import { Map, fromJS } from 'immutable';
 import assign from 'object-assign'
 
 class User {
-  
+
   constructor() {
   }
 

@@ -10,7 +10,7 @@ import noSpam from '../../shared/utils/noSpam';
 import defaults from '../config/Defaults';
 
 const CHANGE_EVENT = 'change';
-
+const spammer = new noSpam();
 
 import { getModuleSaveData } from '../../shared/helpers/autosave/saveModule';
 
@@ -28,7 +28,7 @@ const AutoSaveStore = assign({}, EventEmitter.prototype, {
 
   saveModuleSetting(module) {
 
-    noSpam(()=> {
+    spammer.go(()=> {
 
       let saveData = getModuleSaveData(module);
       UserActionCreators.saveData(saveData);

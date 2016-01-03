@@ -19,7 +19,7 @@ import HistoricalActions from '../actions/HistoricalActionCreators';
 import noSpam from '../../shared/utils/noSpam'
 
 
-
+const spammer = new noSpam();
 let _portfolio = null;
 
 const PortfolioStore = assign({}, EventEmitter.prototype, {
@@ -52,13 +52,13 @@ PortfolioStore.dispatchToken = AppDispatcher.register(function (payload) {
     case HistoricalConstants.HISTORICAL_DIVIDENDS_UPDATE:
       let dividends = new DividendCollection(action.data.result);
       _portfolio.updatePortfolioWithDividends(action.data.symbol, dividends.dividends);
-      noSpam(emitTheChange, 500);
+      spammer.go(emitTheChange, 100);
       break;
 
     // Update the portfolio with historical prices
     case HistoricalConstants.HISTORICAL_PRICES_UPDATE:
       _portfolio.updateHistoricalPrices(action.data);
-      noSpam(emitTheChange, 500);
+      spammer.go(emitTheChange, 500);
       break;
 
     // Update the portfolio with real-time information
@@ -66,13 +66,13 @@ PortfolioStore.dispatchToken = AppDispatcher.register(function (payload) {
       action.data.map(symbol => {
         if (symbol) _portfolio.updatePortfolioWithRTData(symbol);
       });
-      noSpam(emitTheChange, 500);
+      spammer.go(emitTheChange, 500);
       break;
 
     case UserConstants.USER_LOADED:  // Load the users portfolio
       let uid = action.data.objectId;
       loadUserPortfolioData(uid);
-      PortfolioStore.emitChange();
+      spammer.go(emitTheChange, 500);
       break;
 
     case PortfolioConstants.PORTFOLIO_LOADED:
@@ -82,7 +82,7 @@ PortfolioStore.dispatchToken = AppDispatcher.register(function (payload) {
         HistoricalActions.getHistoricalDividends({symbol});
         HistoricalActions.getHistoricalPrices({symbol, options: 'monthly', from: _portfolio.firstBuyDate.format("DD-MM-YYYY")});
       });
-      PortfolioStore.emitChange();
+      spammer.go(emitTheChange, 500);
       break;
 
     default:

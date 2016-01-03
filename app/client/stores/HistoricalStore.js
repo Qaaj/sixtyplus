@@ -43,21 +43,15 @@ HistoricalStore.dispatchToken = AppDispatcher.register(function (payload) {
   switch (action.actionType) {
 
     case HistoricalConstants.HISTORICAL_PRICES_UPDATE:
-
       _historicalData = _historicalData.setIn([action.data.symbol, action.data.option], action.data.result);
       if(_historicalData)
-
-      HistoricalStore.emitChange();
 
       break;
 
     case HistoricalConstants.HISTORICAL_DIVIDENDS_UPDATE:
 
       let dividends = new DividendCollection(action.data.result);
-
       _historicalData = _historicalData.setIn([action.data.symbol, 'dividends'], dividends);
-
-      HistoricalStore.emitChange();
 
       break;
 

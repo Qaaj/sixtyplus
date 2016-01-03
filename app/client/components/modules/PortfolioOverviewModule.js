@@ -77,6 +77,8 @@ class PortfolioOverview extends React.Component {
 
   render() {
 
+    console.log("Rendering");
+
     if (this.shouldILoad()) return this.shouldILoad();
 
     let portfolio = this.props.portfolio;

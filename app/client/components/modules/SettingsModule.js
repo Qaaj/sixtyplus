@@ -16,16 +16,13 @@ class SettingsModule extends React.Component {
 
     let user = this.props.user.get('class').init(this.props.user);
 
-    console.log(user);
-
-
     return (
       <div className="settings_page">
         <Grid>
           <ListGroup className="settings_group">
             <ListGroupItem>
               <span className="prop">Username: </span>
-              <div className="val">{this.props.user.username}</div>
+              <div className="val">{this.props.user.get('username')}</div>
             </ListGroupItem>
             <ListGroupItem className="higher">
               <span className="prop">Currency: </span>

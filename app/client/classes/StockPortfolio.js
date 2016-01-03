@@ -8,8 +8,8 @@ let _symbolMap = new Map();
 
 class StockPortfolio {
 
-  constructor(rawUserDataObject) {
-    rawUserDataObject.map(entry => {
+  constructor(rawPortfolioObject) {
+    rawPortfolioObject.map(entry => {
       let stockEntry = new StockEntry(entry);
       if (!_symbolMap.get(entry.symbol)) {
         _symbolMap = _symbolMap.set(entry.symbol, new StockSymbol(entry.symbol));
