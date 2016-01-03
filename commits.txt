@@ -1,9 +1,14 @@
-60e4559 - Jan Jorissen, 19 seconds ago : fixed sorting. also the way data and performance is handled for profit and loss
-78cabc4 - Jan Jorissen, 25 minutes ago : fixed sorting and changed performance with or without div
-4a3fb7f - Jan Jorissen, 3 hours ago : the average price is now correctly used in the portfolio charts
-861785e - Jan Jorissen, 4 hours ago : more refactoring. modal working again
-f6334de - Jan Jorissen, 20 hours ago : immutable all over the place
-1b105e1 - Jan Jorissen, 28 hours ago : removed logs
+94f196a - Jan Jorissen, 2 minutes ago : fixed noSpam, reduced re-rendering to the minimum. fixed sorting error on div table
+6be78cf - Jan Jorissen, 36 minutes ago : added translations to seperate file. created basic version of class assisted immutable, using the user class
+fdbfd60 - Jan Jorissen, 6 hours ago : fixed mogal
+721bb12 - Jan Jorissen, 6 hours ago : fixed modal
+a310951 - Jan Jorissen, 6 hours ago : only refreshing performance objects when needed
+60e4559 - Jan Jorissen, 6 hours ago : fixed sorting. also the way data and performance is handled for profit and loss
+78cabc4 - Jan Jorissen, 6 hours ago : fixed sorting and changed performance with or without div
+4a3fb7f - Jan Jorissen, 9 hours ago : the average price is now correctly used in the portfolio charts
+861785e - Jan Jorissen, 9 hours ago : more refactoring. modal working again
+f6334de - Jan Jorissen, 26 hours ago : immutable all over the place
+1b105e1 - Jan Jorissen, 33 hours ago : removed logs
 ff3a617 - Jan Jorissen, 3 days ago : updated copy
 c35d0dd - Jan Jorissen, 3 days ago : basic version of quickstart
 73ee0eb - Jan Jorissen, 10 days ago : test build
@@ -18,7 +23,7 @@ df5ed9e - Jan Jorissen, 10 days ago : working preview
 7764abd - Jan Jorissen, 10 days ago : add immutable to StockPortfolio class
 6d5446e - Jan Jorissen, 10 days ago : loading stocks also works
 f837df1 - Jan Jorissen, 10 days ago : user is working, adding stocks working
-43a87f1 - Jan Jorissen, 10 days ago : todo updated
+43a87f1 - Jan Jorissen, 11 days ago : todo updated
 af7cb59 - Jan Jorissen, 11 days ago : support for middleware
 157ee92 - Jan Jorissen, 11 days ago : superbad-ass middleware
 0c45e20 - Jan Jorissen, 11 days ago : added suuport for offline
@@ -33,12 +38,12 @@ f288fcf - Jan Jorissen, 12 days ago : URL change
 f4d978b - Jan Jorissen, 12 days ago : addded script
 2766f3f - Jan Jorissen, 12 days ago : added SaveAnalystRatings. now add scheduler job
 9d7827f - Jan Jorissen, 12 days ago : added SaveAnalystRatings. now add scheduler job
-19173e0 - Jan Jorissen, 12 days ago : test build
-a959970 - Jan Jorissen, 12 days ago : fix for news fetching
-997a97a - WWWillems, 12 days ago : Merged in date_fix (pull request #9)
-a137bc5 - Jan Jorissen, 12 days ago : fixed first buy entry date
-4695a11 - Jan Jorissen, 12 days ago : Merge branch 'master' of https://bitbucket.org/mordhau/60plus
-cd69c15 - Jaaq Jorissen, 12 days ago : Merged in feature/modal_chart (pull request #8)
+19173e0 - Jan Jorissen, 13 days ago : test build
+a959970 - Jan Jorissen, 13 days ago : fix for news fetching
+997a97a - WWWillems, 13 days ago : Merged in date_fix (pull request #9)
+a137bc5 - Jan Jorissen, 13 days ago : fixed first buy entry date
+4695a11 - Jan Jorissen, 13 days ago : Merge branch 'master' of https://bitbucket.org/mordhau/60plus
+cd69c15 - Jaaq Jorissen, 13 days ago : Merged in feature/modal_chart (pull request #8)
 20315b5 - Jan Jorissen, 13 days ago : release build
 68f30d4 - Jan Jorissen, 13 days ago : test build
 98a615e - Jan Jorissen, 13 days ago : styling the news pagE
