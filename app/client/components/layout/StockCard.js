@@ -25,68 +25,71 @@ class StockCard extends React.Component {
     ModalActionCreators.setModal({
       isVisible: true,
       type: ModalConstants.PORTFOLIO_DETAIL,
-      data: this.props.entries.data
+      data: this.props.symbol
     });
   }
 
   render() {
+    let symbol = this.props.symbol;
 
-    if (!this.props.entries || this.props.entries.length == 0) return null;
-
-    //let entries = this.props.entries;
-    let entries = this.props.entries.data;
-    if (this.props.includeDiv) entries = this.props.entries.dataWithDividends;
+    let performance = {};
+    if (this.props.includeDiv) {
+      performance = this.props.symbol.performanceWithDividends;
+    }else{
+      performance = this.props.symbol.performance;
+    }
 
     let sectorClass = '';
-    let profitColorClass = getProfitLossClassname(entries.first.isUpToday);
+    let profitColorClass = getProfitLossClassname(performance.isUpToday);
 
-    if (entries.sector) {
-      sectorClass = getClassBySector(entries.sector)
+    if (performance.sector) {
+      sectorClass = getClassBySector(symbol.performance.sector)
     }
 
     let column = {xs: 6, md: 4};
-    let sector = entries.sector;
+    let sector = performance.sector;
+
+    if(!performance.profitLoss) return (<div></div>)
 
     var listGroupToRender = [[
       {
         prop: this.props.lang('averagePrice'),
-        value: numeral(entries.averagePrice).format('$0,0.00') + ' x ' + entries.amount,
+        value: numeral(performance.averagePrice).format('$0,0.00') + ' x ' + performance.amount,
       },
 
       {
         prop: this.props.lang('costBase'),
-        value: numeral(entries.costBase).format('$0,0.00'),
+        value: numeral(performance.costBase).format('$0,0.00'),
       },
       {
         prop: this.props.lang('marketValue'),
-        value: numeral(entries.marketValue).format('$0,0.00'),
+        value: numeral(performance.marketValue).format('$0,0.00'),
       },
 
       {
         prop: this.props.lang('dividendsCollected'),
-        value: entries.total_dividends,
+        value: performance.total_dividends,
       },
 
       {
         prop: this.props.lang('profitLoss'),
-        value: ('' + numeral(entries.profitLoss).format('0,0.00') + ' (' + entries.totalChangePercentageString + ')'),
-        listGroupItemStyle: entries.style,
+        value: ('' + numeral(performance.profitLoss).format('0,0.00') + ' (' + performance.totalChangePercentageString + ')'),
+        listGroupItemStyle: performance.style,
       }]
     ];
 
     let body = (
       <Col onClick={this.handleClick.bind(this)} xs={column.xs} md={column.md}>
         <div className={"stockCard"}>
-          <h4>{entries.symbol} <span className="stockName">{entries.name} </span></h4>
+          <h4>{symbol.symbol} <span className="stockName">{symbol.name} </span></h4>
 
           <div className={"basics"}>
 
 
             <div className="cardContent">
               <Well>
-                <span className="lastPrice">{entries.lastPrice}</span> <span
-                className={"symbolUpDown  " + profitColorClass}> {entries.first.changeString}
-                ({entries.first.percentChangeString})</span>
+                <span className="lastPrice">{performance.lastPrice}</span> <span
+                className={"symbolUpDown  " + profitColorClass}> {performance.changeString} ({performance.percentChangeString})</span>
               </Well>
 
               <ListGroupRenderer data={listGroupToRender} />

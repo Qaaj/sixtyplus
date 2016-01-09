@@ -25,7 +25,8 @@ class App extends React.Component {
     super(props);
 
     this.state = {
-      user: UserStore.getUser()
+      user: UserStore.getUser(),
+      portfolio: PortfolioStore.getPortfolio()
     };
 
     this._handleUserStoreChange = this._handleUserStoreChange.bind(this);
@@ -75,34 +76,31 @@ class App extends React.Component {
     const location = this.props.location;
     const params = this.props.params;
 
+
     return (<div>
 
-      <Menu history={history} location={location} urlParams={params} lang={this.state.user.lang}/>
+      <Menu history={history} location={location} urlParams={params} lang={this.state.user.get('lang')}/>
       <Notification />
 
       <div className="application">
         {React.cloneElement(
           this.props.children, {
-            lang: this.state.user.lang,
+            lang: this.state.user.get('lang'),
             history: history,
             location: location,
             urlParams: params,
             user: this.state.user,
-            rt: this.state.rt,
-            historical: this.state.historical,
             portfolio: this.state.portfolio,
           }
         )}
       </div>
 
       <Modal
-        lang={this.state.user.lang}
+        lang={this.state.user.get('lang')}
         history={history}
         location={location}
         urlParams={params}
         user={this.state.user}
-        rt={ this.state.rt}
-        historical={this.state.historical}
         portfolio={this.state.portfolio}
       />
 

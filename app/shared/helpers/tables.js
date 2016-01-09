@@ -3,7 +3,7 @@ import {sortByKey} from './sorting';
 import {round} from './formatting';
 import assign from 'object-assign';
 
-export function createDividendTableData(portfolio, historical){
+export function createDividendTableData(portfolio){
 
   let divvies = {};
 
@@ -27,6 +27,6 @@ export function createDividendTableData(portfolio, historical){
   });
 
   let divs = Object.keys(divvies).map(key => divvies[key]);
-  return sortByKey(divs,'date');
+  return sortByKey({array:divs,key:'date'});
 
 }

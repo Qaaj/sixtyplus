@@ -6,7 +6,7 @@ import { createRegularFields, createCurrencyFields, createPercentageFields } fro
 import Slider from '../ui/Slider';
 import { calculateYears,calculatePortfolio,calculatePieData,calculateMonthlyBudget } from '../../../shared/helpers/calculators/SavingsGoalCalculator';
 import UserActionCreators from '../../actions/UserActionCreators';
-import StockTable from '../tables/StockTable';
+import StockTable from '../tables/StockCardTable';
 import Importer from './ImporterModule';
 import {fromJS } from 'immutable';
 import AutoSaveStore from '../../stores/AutoSaveStore';
@@ -70,8 +70,8 @@ class Quickstart extends React.Component {
     if (!newProps) newProps = this.props;
     var state = {};
 
-    if (newProps.user.financial_profile) {
-      state = newProps.user.financial_profile;
+    if (newProps.user.toJS().financial_profile) {
+      state = newProps.user.toJS().financial_profile;
     }
     this.setState(state);
   }

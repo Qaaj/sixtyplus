@@ -13,13 +13,15 @@ let timer = null;
 
 let _historicalData = Map();
 
-
 const HistoricalStore = assign({}, EventEmitter.prototype, {
 
   getHistoricalData() {
     return _historicalData.toJS();
   },
 
+  getHistoricalDataMap() {
+    return _historicalData;
+  },
   emitChange() {
     this.emit(CHANGE_EVENT);
   },
@@ -41,20 +43,15 @@ HistoricalStore.dispatchToken = AppDispatcher.register(function (payload) {
   switch (action.actionType) {
 
     case HistoricalConstants.HISTORICAL_PRICES_UPDATE:
-
       _historicalData = _historicalData.setIn([action.data.symbol, action.data.option], action.data.result);
-
-      HistoricalStore.emitChange();
+      if(_historicalData)
 
       break;
 
     case HistoricalConstants.HISTORICAL_DIVIDENDS_UPDATE:
 
       let dividends = new DividendCollection(action.data.result);
-
       _historicalData = _historicalData.setIn([action.data.symbol, 'dividends'], dividends);
-
-      HistoricalStore.emitChange();
 
       break;
 

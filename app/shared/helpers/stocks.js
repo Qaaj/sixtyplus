@@ -1,25 +1,6 @@
 import defaults from '../../client/config/Defaults';
-import StockEntryCollection from '../../client/classes/StockEntryCollection';
-import HistoricalActions from '../../client/actions/HistoricalActionCreators';
+import {round} from '../helpers/formatting';
 
-export function collectionsToPortfolioMap(stockEntryCollections) {
-
-  let portfolio = {};
-
-  stockEntryCollections.map((entryCollection) => {
-
-    portfolio[entryCollection.symbol] = entryCollection.entries.map(entry => {
-      let final = {};
-      final.symbol = entry.symbol;
-      final.price = entry.price;
-      final.amount = entry.amount;
-      final.date = entry.date.format();
-      return final;
-    })
-  });
-
-  return portfolio;
-}
 
 export function mapBysymbol(array) {
 
@@ -41,82 +22,60 @@ export function mapBysymbol(array) {
 
 }
 
-// Update the collection of stock transactions with latest realtime data
+export function createPerformanceObjectFromEntries({entries,rt,dividends, symbol, doDiv}) {
 
-export function updateArrayOfEntryCollectionsWithRT(portfolio, rt) {
+  let performance = {};
+  performance.costBase = 0;
+  performance.amount = 0;
 
-  let entries = portfolio.collectionList;
-
-  return entries.map((entry) => {
-    let symbol = entry.symbol;
-
-    if (rt && rt[symbol]) {
-      entry.sector = rt[symbol].sector;
-      entry.industry = rt[symbol].industry;
-      entry.name = rt[symbol].name;
-      entry.calculateProfitLoss(rt[symbol]);
-    }
-
-    entry.entries.map(single => {
-      single.updateWithRealtimeData(rt);
-    })
-
-    return entry;
+  entries.forEach(entry => {
+    performance.amount += entry.amount;
+    performance.costBase += entry.price * entry.amount;
   });
 
-}
+  performance.costBase = round(performance.costBase);
+  performance.averagePrice = round(performance.costBase / performance.amount);
 
-export function updateSingeEntryCollectionWithRT(entry, rt) {
-
-
-  let symbol = entry.symbol;
-
-  if (rt && rt[symbol]) {
-    entry.sector = rt[symbol].sector;
-    entry.industry = rt[symbol].industry;
-    entry.name = rt[symbol].name;
-    entry.calculateProfitLoss(rt[symbol]);
+  if(dividends){
+    performance.total_dividends = dividends;
+  }else{
+    performance.total_dividends = 0;
   }
 
-  entry.entries.map(single => {
-    single.updateWithRealtimeData(rt);
-  })
+  if (rt) {
+    performance.sector = rt.sector;
+    performance.marketValue = round(rt.lastTradePriceOnly * performance.amount);
+    performance.profitLoss = round(performance.marketValue - performance.costBase);
 
-  return entry;
-
-
-}
-
-export function createEntriesFromUserObjectPortfolio(portfolio) {
-
-  let collection = [];
-  for (let key in portfolio) {
-    collection.push(new StockEntryCollection(portfolio[key]));
-  }
-
-  return collection;
-}
-
-export function updatePortfolioDividends(portfolio, historical) {
-
-  if(!historical) return portfolio;
-
-  let entryList = portfolio.collectionList;
-
-  entryList.map(entry =>{
-
-    if(!historical[entry.symbol]){  // if divvies not available, try at least ONCE to get the dividends
-      HistoricalActions.getHistoricalDividends({
-        symbol: entry.symbol
-      });
-    }else{ // if divvies available, add them to the entry
-      entry.calculateDividends(historical[entry.symbol]);
+    if(doDiv){
+      performance.profitLoss += dividends;
     }
 
-  })
 
-  return portfolio;
+    performance.style = 'success';
+    if (performance.profitLoss < 0) performance.style = 'danger';
+    if (performance.profitLoss < 0 && Math.abs(performance.profitLoss) < 100) performance.style = 'warning';
+    performance.totalChangePercentage = round(100 * performance.profitLoss / performance.costBase);
+    performance.percent_change = round(100 * (rt.change / rt.previousClose), 2);
+    performance.percentChangeString = performance.percent_change + '%';
+    performance.totalChangePercentageString = performance.totalChangePercentage + '%';
+    if (performance.totalChangePercentage >= 0) performance.totalChangePercentageString = '+' + performance.totalChangePercentage + '%';
+
+    performance.changeString = performance.percent_change;
+    if (performance.percent_change >= 0) performance.changeString = '+' + performance.percent_change;
+
+    performance.isUpToday = false;
+    if (rt.change >= 0) performance.isUpToday = true;
+
+    performance.lastPrice = rt.lastTradePriceOnly;
+  }else{
+    performance.marketValue = performance.costBase;
+    performance.profitLoss = 0;
+    performance.sector = "N/A";
+  }
+
+  // for sorting
+  performance.symbol = symbol.symbol;
+
+  return performance;
 }
-
-
-

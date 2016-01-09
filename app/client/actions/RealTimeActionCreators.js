@@ -21,8 +21,8 @@ var RealTimeActionCreators = {
       getStockPrice(symbol);
   },
 
-  getStockData(symbol){
-    getStockData(symbol);
+  getStockData(symbols){
+    getStockData(symbols);
   },
 
 };

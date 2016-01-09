@@ -42,7 +42,6 @@ class ModalModule extends React.Component {
 
   render() {
 
-
     let cx = 'modal';
     let modalNode = null;
 

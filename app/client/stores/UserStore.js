@@ -4,21 +4,26 @@ import assign from 'object-assign';
 import { EventEmitter } from 'events';
 import { Map, fromJS } from 'immutable';
 import asap from 'asap';
-import StockEntry from '../classes/StockEntry';
+import User from '../classes/User';
 import NotificationActionCreators from '../actions/NotificationActionCreators';
 import {getTranslation, setLanguageMap } from '../utils/LangUtils';
 import { loadUserFinancialProfile,saveUserFinancialProfile } from '../api/UserAPI';
+import noSpam from '../../shared/utils/noSpam'
 
 const CHANGE_EVENT = 'change';
 
 let _userObject = Map();
+const spammer = new noSpam();
 
 let newLangInstance = (...args)=>{return getTranslation(...args)};
+
 _userObject = _userObject.set('lang', newLangInstance);
+_userObject = _userObject.set("class",new User());
+
 
 const UserStore = assign({}, EventEmitter.prototype, {
   getUser() {
-    return _userObject.toJS();
+    return _userObject;
   },
 
   emitChange() {
@@ -62,7 +67,8 @@ UserStore.dispatchToken = AppDispatcher.register(function (payload) {
 
     case UserConstants.USER_FINANCIAL_PROFILE_LOADED:
       _userObject = _userObject.set('financial_profile',fromJS(action.data));
-      UserStore.emitChange();
+      spammer.go(emitTheChange, 1000);
+
       break;
 
     case UserConstants.USER_LOADED:
@@ -72,13 +78,14 @@ UserStore.dispatchToken = AppDispatcher.register(function (payload) {
 
       localStorage.setItem('uid', action.data.objectId);
       _userObject = fromJS(action.data);
+      _userObject = _userObject.set("class",new User());
 
       // Translation stuff
       let newLangInstance = (...args)=>{return getTranslation(...args)};
       _userObject = _userObject.set('lang',newLangInstance);
 
-      NotificationActionCreators.userLoggedIn(_userObject.toJS());
-      UserStore.emitChange();
+      NotificationActionCreators.userLoggedIn(_userObject);
+      spammer.go(emitTheChange, 1000);
 
       break;
 
@@ -88,5 +95,9 @@ UserStore.dispatchToken = AppDispatcher.register(function (payload) {
 
   return true;
 });
+
+function emitTheChange(){
+  UserStore.emitChange();
+}
 
 export default UserStore;
