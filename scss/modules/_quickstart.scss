@@ -1,4 +1,30 @@
 
-.quickstart{
-  margin-top:30px;
+.quickstart_page{
+
+  font-size: 16px;
+
+  .title{
+    margin-top:10px;
+    font-weight:bolder;
+    font-size: 18px;
+  }
+  .screenie{
+    margin-top:10px;
+    text-align: center;
+    margin-bottom: 25px;
+  }
+
+
+  .image{
+    margin-top:10px;
+    -webkit-box-shadow: 0 0 5px 1px rgba(0,0,0,.1);
+    box-shadow: 0 0 5px 1px rgba(0,0,0,.1);
+  }
+
+  .explanation{
+    margin-top:10px;
+    font-size:14px;
+    max-width: 400px;
+    padding:10px;
+  }
 }

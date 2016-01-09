@@ -6,9 +6,10 @@ import redis from 'redis';
 import bluebird from 'bluebird';
 import noSpam from '../../app/shared/utils/noSpam';
 
+
 bluebird.promisifyAll(redis.RedisClient.prototype);
 
-
+const spammer = new noSpam();
 const CHANGE_EVENT = 'change';
 
 let dataMap = Map();
@@ -33,15 +34,14 @@ const DataStore = {
   },
 
 
-
   setCachedData({option,symbol,json}){
-    client.set(option+':'+symbol, JSON.stringify(json));
+    if (option && symbol && json) client.set(option + ':' + symbol, JSON.stringify(json));
     // Refresh news every 10 minutes
-    if (option == 'news') client.expire(option+':'+symbol,3 * HOUR);
-    if (option == 'stockdata') client.expire(option+':'+symbol,10);
-    if (option == 'historical:v' || option == 'historical:m') client.expire(option+':'+symbol,DAY);
+    if (option == 'news') client.expire(option + ':' + symbol, 3 * HOUR);
+    if (option == 'stockdata') client.expire(option + ':' + symbol, 10);
+    if (option == 'historical:v' || option == 'historical:m') client.expire(option + ':' + symbol, DAY);
     //save the data in our localhost redis. gets saved automatically online;
-    if (process.env.NODE_ENV !== 'production') noSpam(this.saveClient,1000);
+    if (process.env.NODE_ENV !== 'production') spammer.go(this.saveClient, 1000);
   },
 
   saveClient(){
@@ -49,7 +49,7 @@ const DataStore = {
   },
 
   getCachedData({option,symbol}){
-    return client.getAsync(option+':'+symbol).then(function(raw) {
+    return client.getAsync(option + ':' + symbol).then(function (raw) {
       return JSON.parse(raw);
     });
   },

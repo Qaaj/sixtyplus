@@ -5,6 +5,7 @@ import Importer from '../components/modules/ImporterModule';
 import News from '../components/modules/NewsModule';
 import Dividends from '../components/modules/DividendModule';
 import Settings from '../components/modules/SettingsModule';
+import Quickstart from '../components/modules/QuickstartModule';
 import PortfolioOverview from '../components/modules/PortfolioOverviewModule';
 
 export default (App, uiLanguage) => {
@@ -16,7 +17,8 @@ export default (App, uiLanguage) => {
             <Route path='News' component={News} />
             <Route path='Dividends' component={Dividends} />
             <Route path='Settings' component={Settings} />
-            <Redirect from='/' to={`/Portfolio`} />
+            <Route path='Quickstart' component={Quickstart} />
+            <Redirect from='/' to={`/Quickstart`} />
         </Route>
     );
 };

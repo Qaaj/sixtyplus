@@ -41,14 +41,13 @@ class C3PortfolioChart extends React.Component {
 
   render() {
 
-    console.log(this.props.entries);
     let symbolArray = this.props.filterBysymbolsArray;
     if(this.props.entries) {
       symbolArray = this.props.entries.map(entry =>{
         return entry.symbol;
       })
     }
-    let chartData = this.state.currentChart(this.props.portfolio, this.props.historical, this.state.compound_div, symbolArray);
+    let chartData = this.state.currentChart(this.props.portfolio, this.state.compound_div, symbolArray);
 
     let compounding_divs = null;
     if(this.state.currentChart == getDividendChart) compounding_divs = <Input type="checkbox" label="Compound Dividends" checked={this.state.compound_div}

@@ -22,7 +22,9 @@
  //OK Integrate "fake" backend service for offline dev
  //OK Store the analyst ratings over time so we can use the data to see what the trend is
  //OK Draw the graph only with filtered data
- // Use immutable in the components
+ //OK Use immutable in the components
+ //OK Make the quickstart a real quickstart explaining the steps and doing the first import
+ // Translations in seperate JSON file
  // How many stocks make up how much of the loss / profit?
  // What is the best performing sector? Sectors?
  // Implement growth and salary stuff
@@ -34,5 +36,4 @@
  // Use the same detailpage for stock entries as for your portfolio
  // Notification for when analyst rating drops or divdends is cut/late
  // filtering by good / bad news for news
- // Make the quickstart a real quickstart explaining the steps and doing the first import
  // Hover and explanations for the dividend table. Add sorting for the dividend table

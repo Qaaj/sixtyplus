@@ -57,7 +57,7 @@ RealTimeStore.dispatchToken = AppDispatcher.register(function (payload) {
 
     case PortfolioConstants.PORTFOLIO_LOADED:
 
-      refreshPortfolio(action.data);
+      refreshPortfolio();
       startTimer();
 
   break;
@@ -68,7 +68,6 @@ RealTimeStore.dispatchToken = AppDispatcher.register(function (payload) {
     if(symbol) _realTimeObject = _realTimeObject.set(symbol.symbol, symbol)
   });
 
-  RealTimeStore.emitChange();
 
   break;
 
@@ -76,7 +75,6 @@ RealTimeStore.dispatchToken = AppDispatcher.register(function (payload) {
 
   if(action.data.symbol && action.data.symbol.symbol){
     _realTimeObject = _realTimeObject.set(action.data.symbol.symbol, action.data.symbol);
-    RealTimeStore.emitChange();
   }
 
   break;

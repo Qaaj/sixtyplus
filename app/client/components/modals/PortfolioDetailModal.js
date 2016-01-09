@@ -3,7 +3,6 @@ import ModalActionCreators from '../../actions/ModalActionCreators';
 import ModalConstants from '../../constants/ModalConstants';
 import {getUniqueColor, getClassBySector} from '../../../shared/helpers/colors/ColorUtils';
 import SectorComponent from '../ui/SectorComponent';
-import {getMonthlyChart} from '../../../shared/helpers/charts/getMonthlyChart';
 import C3PortfolioChart from '../charts/C3PortfolioChart';
 import {updateArrayOfEntryCollectionsWithRT, updatePortfolioDividends} from '../../../shared/helpers/stocks';
 import ListGroupRenderer from '../layout/ListGroupRenderer.js';
@@ -16,8 +15,8 @@ class PortfolioDetailModal extends React.Component {
   constructor(props) {
     super(props);
 
-    let symbolData = this.props.data;
-    let symbolExtendedInformation = this.props.rt[symbolData.symbol];
+    let symbolData = this.props.data.performance;
+    //let symbolExtendedInformation = this.props.rt[symbolData.symbol];
 
     const listGroupsToRender = [
       // COLUMN 1
@@ -81,7 +80,7 @@ class PortfolioDetailModal extends React.Component {
       },
     ];
 
-    const arr = Object.keys(symbolExtendedInformation);
+    const arr = [];//Object.keys(symbolExtendedInformation);
     const amountInFirstColumn = (arr.length / 2);
 
     const column1 = arr.slice(0, amountInFirstColumn);
@@ -135,8 +134,8 @@ class PortfolioDetailModal extends React.Component {
   }
 
   render() {
-    let symbolData = this.props.data;
-    console.log(symbolData);
+    let symbolData = this.props.data.performance;
+
     console.log("> Showing ", symbolData);
 
     let sectorClass = '';
@@ -145,7 +144,7 @@ class PortfolioDetailModal extends React.Component {
     }
 
     let sector = symbolData.sector;
-    let entries = symbolData.entries.map((stockEntry, i) => {
+    let entries = this.props.data.entries.map((stockEntry, i) => {
 
       return (<tr key={i}>
         <td>{stockEntry.amount}</td>
@@ -160,14 +159,9 @@ class PortfolioDetailModal extends React.Component {
       </tr>);
     });
 
-    if (!this.props.user.stockPortfolio) return (
-      <Grid style={{'textAlign':'center','padding':'20px'}}> Whoops! You don't seem to have a portfolio. Head over to <a
-        href={"#/Import"}>Importer</a> to change that.</Grid>);
 
-    let portfolio = this.props.user.stockPortfolio;
+    let portfolio = this.props.portfolio;
 
-    updateArrayOfEntryCollectionsWithRT(portfolio, this.props.rt);
-    updatePortfolioDividends(portfolio, this.props.historical);
 
     return (<Modal show={true} onHide={this.props.onCancel} dialogClassName="portfolio-modal">
       <Modal.Header closeButton>
@@ -227,10 +221,5 @@ class PortfolioDetailModal extends React.Component {
 }
 
 PortfolioDetailModal.displayName = 'PortfolioDetailModal';
-
-PortfolioDetailModal.PropTypes = {
-  rt: React.PropTypes.obj,
-  user: React.PropTypes.string,
-};
 
 export default PortfolioDetailModal;

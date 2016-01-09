@@ -4,7 +4,6 @@ import { pureRenderDecorator } from '../../../../shared/helpers/decorators';
 import { getStockEntriesData } from '../../../../shared/helpers/stocks';
 import {getUniqueColor, getClassBySector} from '../../../../shared/helpers/colors/ColorUtils';
 import SectorComponent from '../../ui/SectorComponent';
-import StockEntryCollection from '../../../classes/StockEntryCollection';
 import { updateArrayOfEntryCollectionsWithRT, updateSingeEntryCollectionWithRT} from '../../../../shared/helpers/stocks';
 
 @pureRenderDecorator

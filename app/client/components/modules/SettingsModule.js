@@ -1,7 +1,7 @@
 import { Input,Button,Grid,ListGroup, ListGroupItem,  DropdownButton, MenuItem} from 'react-bootstrap';import {} from 'react-bootstrap';
 
 import HelpIcon from '../ui/HelpIcon';
-
+import User from '../../classes/User'
 
 class SettingsModule extends React.Component {
   constructor(props) {
@@ -14,13 +14,15 @@ class SettingsModule extends React.Component {
 
   render() {
 
+    let user = this.props.user.get('class').init(this.props.user);
+
     return (
       <div className="settings_page">
         <Grid>
           <ListGroup className="settings_group">
             <ListGroupItem>
-              <span className="prop">UserID: </span>
-              <div className="val">{this.props.user.uid}</div>
+              <span className="prop">Username: </span>
+              <div className="val">{this.props.user.get('username')}</div>
             </ListGroupItem>
             <ListGroupItem className="higher">
               <span className="prop">Currency: </span>
