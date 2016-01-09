@@ -1,53 +1,129 @@
 const debug = require('debug')('debug:user/LoadUser');
-var Firebase = require("firebase");
-import moment from 'moment';
+var Rnd = require('random-word-generator');
 
-var ref = new Firebase("https://crackling-torch-5091.firebaseio.com/");
-var usersRef = ref.child("users");
+import Parse from 'parse/node';
 
-export default (req, res) => {
+var UserSettingsObject = Parse.Object.extend("UserSettingsObject");
 
-  debug("loading user with uid: ", req.body.uid);
+export default (req, res, next) => {
 
-  let userObject = {uid: req.body.uid};
+  let userId = req.body.uid;
 
-  var user = new Firebase('https://crackling-torch-5091.firebaseio.com/users/' + req.body.uid);
+  if(!userId){
+    debug("Creating user with uid: ", req.body.uid);
+    createUser(req,res,next);
 
-  user.once('value', function (snapshot) {
-    if (snapshot.val()) {
-
-      userObject = snapshot.val();
-
-      usersRef.child(req.body.uid + "").update({
-        last_login: moment().format('LLLL'),
-      });
-
-      let data = userObject.userData;
-
-      // Sanitise keys
-      if(data && data.portfolio){
-        let portfolio = {};
-        for (let key in data.portfolio) {
-          let newKey = key.replace("_",".");
-          portfolio[newKey] = data.portfolio[key];
+  }else{
+    debug("loading user with uid: ", req.body.uid);
+    var query = new Parse.Query('User');
+    query.equalTo("objectId", userId);
+    query.find({
+      success: function(results) {
+        if(results.length === 0){
+          debug("No user with that ID found. Creating user.");
+          createUser(req,res,next);
+        }else{
+          debug("Successfully retrieved user.", results);
+          loadUserSettings(req,res,next,results[0])
         }
-        userObject.userData.portfolio = portfolio;
+      },
+      error: function(error) {
+        console.log("Error: " + error.code + " " + error.message);
       }
+    });
+  }
 
-      res.send(userObject);
+};
 
-    } else {
+function createUser(req,res,next){
 
-      // User does not exist. Create default settings.
-      userObject.currency = "EURO";
-      userObject.language = "EN";
-      userObject.last_login = moment().format('LLLL');
-      userObject.userData = { uid: req.body.uid};
-      usersRef.child(req.body.uid + "").set(userObject);
+  var user = new Parse.User();
 
-      userObject.last_login = null;
-      res.send(userObject);
+  let username = new Rnd().generate();
+  let password = "change_me";
+
+  user.set('username',username);
+  user.set('password',password);
+
+  user.signUp(null, {
+    success: function(user) {
+      debug("user created: " + user.id)
+      loadUserSettings(req,res,next,user)
+    },
+    error: function(user, error) {
+      req.app.set('response', "Error: " + error.code + " " + error.message);
+      next();
     }
   });
 
-};
+}
+
+function loadUserSettings(req,res,next,user){
+
+  // Get the user settings
+
+
+  var query = new Parse.Query(UserSettingsObject);
+  query.equalTo("userPointer", user.toPointer());
+
+  query.find({
+      success: function(results) {
+        if(results.length === 0){
+          debug("No settings found. Creating defaults.");
+          createUserSettings(req,res,next,user);
+        }else{
+          let settings = results[0];
+          debug("Successfully retrieved settings.", settings.id);
+          settings.set('last_login', new Date());
+          settings.save();
+          makeResponseObject(req,res,next,user,settings);
+        }
+
+      },
+      error: function(error) {
+        console.log("OOPS",error)
+        req.app.set('response', "Error: " + error.code + " " + error.message);
+        next();      }
+  });
+}
+
+
+function createUserSettings(req,res,next,user){
+
+  var settings = new UserSettingsObject();
+
+  settings.set('userPointer',user.toPointer());
+  settings.set('currency','USD');
+  settings.set('language','EN');
+
+  settings.save(null, {
+    success: function(setting) {
+      debug("settings created: " + setting.id)
+      makeResponseObject(req,res,next,user,settings);
+    },
+    error: function(user, error) {
+      debug(error);
+      req.app.set('response', "Error: " + error.code + " " + error.message);
+      next();
+    }
+  });
+}
+
+function makeResponseObject(req,res,next,user,settings){
+
+  let userObject = user.toJSON();
+  let settingsObject = settings.toJSON();
+
+  delete userObject['createdAt'];
+  delete userObject['updatedAt'];
+  delete userObject['password'];
+  delete settingsObject['createdAt'];
+  delete settingsObject['updatedAt'];
+
+  if(settingsObject.last_login) settingsObject.last_login = settingsObject.last_login.iso;
+
+  userObject.settings = settingsObject;
+  req.app.set('response', userObject);
+
+  next();
+}

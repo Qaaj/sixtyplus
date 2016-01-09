@@ -1,7 +1,8 @@
 import { Input,Button } from 'react-bootstrap';
 import UserActionCreators from '../../actions/UserActionCreators';
+import PortfolioAction from '../../actions/PortfolioActionCreators';
 import { doImport } from '../../../shared/helpers/importers/IB_importer';
-import { mapByTicker, updateArrayOfEntryCollectionsWithRT} from '../../../shared/helpers/stocks';
+import { mapBysymbol, updateArrayOfEntryCollectionsWithRT} from '../../../shared/helpers/stocks';
 import NotificationActionCreators from '../../actions/NotificationActionCreators';
 import RealTimeActionCreators from '../../actions/RealTimeActionCreators';
 import SingleStock from '../importer/ui/SinglePreviewImportStock';
@@ -57,7 +58,8 @@ class Importer extends React.Component {
       tryingImport: true
     })
 
-    UserActionCreators.addStockEntryCollectionToPortfolio(this.state.stockEntryCollections,resultObject);
+    //UserActionCreators.addStockEntryCollectionToPortfolio(this.state.stockEntryCollections,resultObject);
+    PortfolioAction.addStockEntryCollections(this.state.stockEntryCollections,resultObject);
 
   }
 
@@ -74,16 +76,15 @@ class Importer extends React.Component {
     }
 
     let stockData = doImport(this.state.rawIBData);
-    let sortedStocks = mapByTicker(stockData);
+    let sortedStocks = mapBysymbol(stockData);
     RealTimeActionCreators.getStockPrices(Object.keys(sortedStocks));
     this._refreshList(sortedStocks);
 
   }
 
   _onManualImportPreview(data, line) {
-
     this.previewStocks[line] = data;
-    let sortedStocks = mapByTicker(this.previewStocks);
+    let sortedStocks = mapBysymbol(this.previewStocks);
     RealTimeActionCreators.getStockPrices(Object.keys(sortedStocks));
     this._refreshList(sortedStocks);
   }

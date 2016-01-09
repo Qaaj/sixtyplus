@@ -42,7 +42,7 @@ class ManualStockImporter extends React.Component {
         <Table striped bordered condensed hover>
           <thead>
           <tr>
-            <th>Ticker</th>
+            <th>symbol</th>
             <th># Shares</th>
             <th>Price</th>
             <th>Date</th>

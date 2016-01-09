@@ -2,8 +2,8 @@ import NewsItem from './NewsItem';
 
 class NewsItemCollection {
 
-  constructor(news,ticker) {
-    this.ticker = ticker;
+  constructor(news,symbol) {
+    this.symbol = symbol;
     this.parseNews(news)
   }
 
@@ -15,7 +15,7 @@ class NewsItemCollection {
         title: newsItem.title,
         url: newsItem.link,
         summary: newsItem.summary,
-        ticker: this.ticker,
+        symbol: this.symbol,
       })
     });
   }

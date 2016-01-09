@@ -13,8 +13,8 @@ export function createDividendTableData(portfolio, historical){
 
       entry.receivedDividends.forEach(orig_div =>{
         let div = assign({},orig_div);
-        let date = entry.ticker + orig_div.date.format("YYYY-MM-DD");
-        div.ticker = entry.ticker;
+        let date = entry.symbol + orig_div.date.format("YYYY-MM-DD");
+        div.symbol = entry.symbol;
         div.amount = round(entry.amount);
         if(!divvies[date]) {
           divvies[date] = div;

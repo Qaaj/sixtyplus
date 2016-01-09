@@ -5,8 +5,12 @@ var app = require('./stock_csv_parser_es6.js');
 //app.createMappedJSON();
 
 
-// Parse all the ticker CSV's
-//app.parseTickerCSVs();
+// Parse all the symbol CSV's
+//app.parsesymbolCSVs();
 
 // Get all the users and analyse portfolios
-app.getCurrentTickersInApplication();
+//app.getCurrentsymbolsInApplication();
+
+
+// Update the analyst ratings for all the symbols in all portfolios.
+app.updateRatings();

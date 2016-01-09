@@ -3,10 +3,12 @@
  */
 import C3Chart from './C3Chart';
 import {Input} from 'react-bootstrap';
-import {getPortfolioChart, getTickerDetailChart} from '../../../shared/helpers/charts/getPortfolioChart';
+import {getPortfolioChart, getsymbolDetailChart} from '../../../shared/helpers/charts/getPortfolioChart';
 import {getProfitLossChart} from '../../../shared/helpers/charts/getProfitLossChart';
 import {getDividendChart} from '../../../shared/helpers/charts/getDividendChart';
 import Filter from '../ui/FilterButtons';
+import stack from '../../../shared/utils/stack';
+
 
 class C3PortfolioChart extends React.Component {
 
@@ -38,7 +40,15 @@ class C3PortfolioChart extends React.Component {
   }
 
   render() {
-    let chartData = this.state.currentChart(this.props.portfolio, this.props.historical, this.state.compound_div, this.props.filterByTickersArray);
+
+    console.log(this.props.entries);
+    let symbolArray = this.props.filterBysymbolsArray;
+    if(this.props.entries) {
+      symbolArray = this.props.entries.map(entry =>{
+        return entry.symbol;
+      })
+    }
+    let chartData = this.state.currentChart(this.props.portfolio, this.props.historical, this.state.compound_div, symbolArray);
 
     let compounding_divs = null;
     if(this.state.currentChart == getDividendChart) compounding_divs = <Input type="checkbox" label="Compound Dividends" checked={this.state.compound_div}
@@ -47,7 +57,7 @@ class C3PortfolioChart extends React.Component {
     return (
       <div>
         <div className="protfolio_chart_menu">
-          <Filter onSelect={::this._setFilter} keys={this.options} lang={this.props.lang} translate={true}/>
+          <Filter toggle={false} onSelect={::this._setFilter} keys={this.options} lang={this.props.lang} translate={true}/>
           {compounding_divs}
         </div>
         <C3Chart data={chartData} className="portfolio-chart">

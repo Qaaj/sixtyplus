@@ -1,5 +1,3 @@
-'use strict';
-
 import AppDispatcher from '../dispatcher/AppDispatcher';
 import assign from 'object-assign';
 import { EventEmitter } from 'events';

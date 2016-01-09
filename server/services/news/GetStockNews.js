@@ -1,35 +1,44 @@
 const debug = require('debug')('debug:news/getStockNews');
 var rsj = require('rsj');
 import DataStore from '../../stores/DataStore'
+import OfflineStore from '../../stores/OfflineStore'
 
-export default (req, res) => {
+export default (req, res, next) => {
 
-  let list = req.body.tickers;
+  let list = req.body.symbols;
 
   if (!Array.isArray(list)) list = [list];
   debug("getting stock news: ", list);
 
   var promise = new Promise(function (resolve, reject) {
     let returnList = {};
-    list.map(ticker => {
+    list.map(symbol => {
 
-      let cache = DataStore.getCachedData({option: "news", ticker});
+      let cache = DataStore.getCachedData({option: "news", symbol});
 
       cache.then(function (json) {
 
         if (json) {
           // Item was found in the cache, return it
-          debug('news from cache: ', ticker);
-          returnList[ticker] = json;
-          if (Object.keys(returnList).length == req.body.tickers.length) resolve(returnList);
+          debug('news from cache: ', symbol);
+          returnList[symbol] = json;
+          if (Object.keys(returnList).length == req.body.symbols.length) resolve(returnList);
 
         } else {
           // Item was not found in the cache, get it and then save it
-          debug('news from server: ', ticker);
-          rsj.r2j('http://www.google.com/finance/company_news?q=' + ticker + '&output=rss', function (json) {
-            DataStore.setCachedData({option: "news", ticker, json:JSON.parse(json)});
-            returnList[ticker] = JSON.parse(json);
-            if (Object.keys(returnList).length == req.body.tickers.length) resolve(returnList);
+          debug('news from server: ', symbol);
+          // Hack for Google Finance vs Yahoo Finance
+          let symbolURL = symbol;
+          if(symbolURL.indexOf(".AS") !== -1){
+            symbolURL = 'AMS:' + symbolURL.split('.')[0];
+          }else{
+            //symbolURL = 'NYSE:' + symbolURL;
+          }
+          let url = 'http://www.google.com/finance/company_news?q=' + symbolURL + '&output=rss'
+          rsj.r2j(url, function (json) {
+            DataStore.setCachedData({option: "news", symbol, json:JSON.parse(json)});
+            returnList[symbol] = JSON.parse(json);
+            if (Object.keys(returnList).length == req.body.symbols.length) resolve(returnList);
           });
 
         }
@@ -40,7 +49,8 @@ export default (req, res) => {
   });
 
   promise.then(function (result) {
-    res.send(result);
+    req.app.set('response',result);
+    next();
   }, function (err) {
     debug(err); // Error: "It broke"
   });

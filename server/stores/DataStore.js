@@ -4,6 +4,7 @@ import fs from 'fs';
 import moment from 'moment';
 import redis from 'redis';
 import bluebird from 'bluebird';
+import noSpam from '../../app/shared/utils/noSpam';
 
 bluebird.promisifyAll(redis.RedisClient.prototype);
 
@@ -33,17 +34,22 @@ const DataStore = {
 
 
 
-  setCachedData({option,ticker,json}){
-    client.set(option+':'+ticker, JSON.stringify(json));
+  setCachedData({option,symbol,json}){
+    client.set(option+':'+symbol, JSON.stringify(json));
     // Refresh news every 10 minutes
-    if (option == 'news') client.expire(option+':'+ticker,3 * HOUR);
-    if (option == 'stockdata') client.expire(option+':'+ticker,10);
-    if (option == 'historical:v' || option == 'historical:m') client.expire(option+':'+ticker,DAY);
-    if (!process.env.REDISCLOUD_URL) client.save();
+    if (option == 'news') client.expire(option+':'+symbol,3 * HOUR);
+    if (option == 'stockdata') client.expire(option+':'+symbol,10);
+    if (option == 'historical:v' || option == 'historical:m') client.expire(option+':'+symbol,DAY);
+    //save the data in our localhost redis. gets saved automatically online;
+    if (process.env.NODE_ENV !== 'production') noSpam(this.saveClient,1000);
   },
 
-  getCachedData({option,ticker}){
-    return client.getAsync(option+':'+ticker).then(function(raw) {
+  saveClient(){
+    client.save();
+  },
+
+  getCachedData({option,symbol}){
+    return client.getAsync(option+':'+symbol).then(function(raw) {
       return JSON.parse(raw);
     });
   },

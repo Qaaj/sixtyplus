@@ -1,5 +1,3 @@
-'use strict';
-
 import AppDispatcher from '../dispatcher/AppDispatcher';
 import UserConstants from '../constants/UserConstants';
 import assign from 'object-assign';
@@ -7,18 +5,13 @@ import { EventEmitter } from 'events';
 import { Map, fromJS } from 'immutable';
 import asap from 'asap';
 import StockEntry from '../classes/StockEntry';
-import StockPortfolio from '../classes/StockPortfolio';
-import { createEntriesFromUserObjectPortfolio } from '../../shared/helpers/stocks'
-import RealTimeActionCreators from '../actions/RealTimeActionCreators';
 import NotificationActionCreators from '../actions/NotificationActionCreators';
 import {getTranslation, setLanguageMap } from '../utils/LangUtils';
-import { saveUserData,saveUserPortfolioData } from '../utils/ApiUtils';
+import { loadUserFinancialProfile,saveUserFinancialProfile } from '../api/UserAPI';
 
 const CHANGE_EVENT = 'change';
 
 let _userObject = Map();
-let _userData = Map();
-let _stockPortfolio = null;
 
 let newLangInstance = (...args)=>{return getTranslation(...args)};
 _userObject = _userObject.set('lang', newLangInstance);
@@ -47,49 +40,38 @@ UserStore.dispatchToken = AppDispatcher.register(function (payload) {
   switch (action.actionType) {
 
     case UserConstants.USER_CHANGE_LANGUAGE:
-
-      UserStore.emitChange();
-      break;
-
-    case UserConstants.USER_ADD_STOCK_ENTRY_COLLECTION:
-
-      _stockPortfolio.addStockEntryCollection(action.data.entries);
-      // Save the client-side object
-      _userObject = _userObject.set("stockPortfolio", _stockPortfolio);
-      // Save the server-side object
-      _userObject = _userObject.setIn(['userData','portfolio'],_stockPortfolio.userDataObject);
-
-      saveUserPortfolioData(_userObject.get('userData'),_userObject.get('uid'),action.data.resultObject);
-
-      UserStore.emitChange();
       break;
 
     case UserConstants.USER_SAVE_DATA:
-      _userData = _userData.merge(fromJS(action.data));
-      _userObject = _userObject.set("userData",_userData);
+
+      let saveObjects = action.data;
+      let dataChanged = {};
+
+      saveObjects.forEach(save =>{
+        dataChanged[save.root] = "CHANGED";
+        _userObject = _userObject.setIn(save.location,save.value);
+      });
+
+      Object.keys(dataChanged).forEach(changed =>{
+        if(changed === 'financial_profile') saveUserFinancialProfile(_userObject.get('financial_profile'));
+      })
+
       UserStore.emitChange();
+
       break;
 
-    case UserConstants.USER_DELETE_PORTFOLIO_DATA:
-      console.log("> Trying to delete data ");
-
-      _stockPortfolio = new StockPortfolio();
-      _userObject = _userObject.set("stockPortfolio", _stockPortfolio);
-
-        UserStore.emitChange();
+    case UserConstants.USER_FINANCIAL_PROFILE_LOADED:
+      _userObject = _userObject.set('financial_profile',fromJS(action.data));
+      UserStore.emitChange();
       break;
 
     case UserConstants.USER_LOADED:
 
-      if (action.data.currency == "EURO") action.data.currency = "€";
-      if (action.data.currency == "DOLLAR") action.data.currency = "$";
-      if (action.data.currency == "POUND") action.data.currency = "£";
+      // Load the User's financial profile if it's available (from the Planner page)
+      loadUserFinancialProfile({ uid:action.data.objectId});
 
+      localStorage.setItem('uid', action.data.objectId);
       _userObject = fromJS(action.data);
-
-      // Create the stockportfolio object using the data from the server
-      _stockPortfolio = new StockPortfolio(_userObject.toJS().userData.portfolio);
-      _userObject = _userObject.set("stockPortfolio", _stockPortfolio);
 
       // Translation stuff
       let newLangInstance = (...args)=>{return getTranslation(...args)};

@@ -8,9 +8,9 @@ export function collectionsToPortfolioMap(stockEntryCollections) {
 
   stockEntryCollections.map((entryCollection) => {
 
-    portfolio[entryCollection.ticker] = entryCollection.entries.map(entry => {
+    portfolio[entryCollection.symbol] = entryCollection.entries.map(entry => {
       let final = {};
-      final.ticker = entry.ticker;
+      final.symbol = entry.symbol;
       final.price = entry.price;
       final.amount = entry.amount;
       final.date = entry.date.format();
@@ -21,14 +21,14 @@ export function collectionsToPortfolioMap(stockEntryCollections) {
   return portfolio;
 }
 
-export function mapByTicker(array) {
+export function mapBysymbol(array) {
 
   let sortedStocks = {};
 
   try {
     array.map(tx => {
-      if (!sortedStocks[tx.ticker]) sortedStocks[tx.ticker] = [];
-      sortedStocks[tx.ticker].push(tx);
+      if (!sortedStocks[tx.symbol]) sortedStocks[tx.symbol] = [];
+      sortedStocks[tx.symbol].push(tx);
     });
 
   } catch (err) {
@@ -48,13 +48,13 @@ export function updateArrayOfEntryCollectionsWithRT(portfolio, rt) {
   let entries = portfolio.collectionList;
 
   return entries.map((entry) => {
-    let ticker = entry.ticker;
+    let symbol = entry.symbol;
 
-    if (rt && rt[ticker]) {
-      entry.sector = rt[ticker].sector;
-      entry.industry = rt[ticker].industry;
-      entry.name = rt[ticker].name;
-      entry.calculateProfitLoss(rt[ticker]);
+    if (rt && rt[symbol]) {
+      entry.sector = rt[symbol].sector;
+      entry.industry = rt[symbol].industry;
+      entry.name = rt[symbol].name;
+      entry.calculateProfitLoss(rt[symbol]);
     }
 
     entry.entries.map(single => {
@@ -69,13 +69,13 @@ export function updateArrayOfEntryCollectionsWithRT(portfolio, rt) {
 export function updateSingeEntryCollectionWithRT(entry, rt) {
 
 
-  let ticker = entry.ticker;
+  let symbol = entry.symbol;
 
-  if (rt && rt[ticker]) {
-    entry.sector = rt[ticker].sector;
-    entry.industry = rt[ticker].industry;
-    entry.name = rt[ticker].name;
-    entry.calculateProfitLoss(rt[ticker]);
+  if (rt && rt[symbol]) {
+    entry.sector = rt[symbol].sector;
+    entry.industry = rt[symbol].industry;
+    entry.name = rt[symbol].name;
+    entry.calculateProfitLoss(rt[symbol]);
   }
 
   entry.entries.map(single => {
@@ -105,12 +105,12 @@ export function updatePortfolioDividends(portfolio, historical) {
 
   entryList.map(entry =>{
 
-    if(!historical[entry.ticker]){  // if divvies not available, try at least ONCE to get the dividends
+    if(!historical[entry.symbol]){  // if divvies not available, try at least ONCE to get the dividends
       HistoricalActions.getHistoricalDividends({
-        ticker: entry.ticker
+        symbol: entry.symbol
       });
     }else{ // if divvies available, add them to the entry
-      entry.calculateDividends(historical[entry.ticker]);
+      entry.calculateDividends(historical[entry.symbol]);
     }
 
   })

@@ -8,6 +8,7 @@
     "app/shared/*",
     "scss/*",
     "node_modules/**/node_modules",
+    "server/mock_data/",
     "*.rdb"
   ],
   "verbose": true

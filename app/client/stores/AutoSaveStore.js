@@ -1,5 +1,3 @@
-'use strict';
-
 import AppDispatcher from '../dispatcher/AppDispatcher';
 import UserConstants from '../constants/UserConstants';
 import assign from 'object-assign';
@@ -8,10 +6,10 @@ import { Map, fromJS } from 'immutable';
 import asap from 'asap';
 import RealTimeActionCreators from '../actions/RealTimeActionCreators';
 import UserActionCreators from '../actions/UserActionCreators';
-const CHANGE_EVENT = 'change';
-
+import noSpam from '../../shared/utils/noSpam';
 import defaults from '../config/Defaults';
-let lastTimeOut = 0;
+
+const CHANGE_EVENT = 'change';
 
 
 import { getModuleSaveData } from '../../shared/helpers/autosave/saveModule';
@@ -30,13 +28,12 @@ const AutoSaveStore = assign({}, EventEmitter.prototype, {
 
   saveModuleSetting(module) {
 
-    clearTimeout(lastTimeOut);
+    noSpam(()=> {
 
-    // Don't spam the API, set a timeout for saving
-    lastTimeOut = setTimeout(()=> {
       let saveData = getModuleSaveData(module);
-      UserActionCreators.saveUserData(saveData);
-    }, defaults.saveTimeout);
+      UserActionCreators.saveData(saveData);
+
+    },defaults.saveTimeout)
 
   },
 

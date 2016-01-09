@@ -4,22 +4,22 @@ import d3 from 'd3';
 
 export function getMonthlyChart(portfolio, historical) {
 
-  let tickers = portfolio.flatTickerList;
+  let symbols = portfolio.flatsymbolList;
   let info_per_date = {};
 
-  // Go over all the tickers and collect their value per month
-  tickers.forEach(ticker => {
+  // Go over all the symbols and collect their value per month
+  symbols.forEach(symbol => {
 
-    // get the current monthly prices of this ticke. curr = ticker
-    let monthly = JSON.parse(historical[ticker].monthly);
+    // get the current monthly prices of this ticke. curr = symbol
+    let monthly = JSON.parse(historical[symbol].monthly);
 
-    //  get all of the data for this ticker
+    //  get all of the data for this symbol
     monthly.forEach(month => {
 
       // Normalised Date (Some dates are on a different day of the month)
       let date = month.Date.substring(0, 7) + '-01';
       // Amount of stock at that date
-      let amount = portfolio.getEntryCollectionByTicker(ticker).getAmountAtDate(month);
+      let amount = portfolio.getEntryCollectionBysymbol(symbol).getAmountAtDate(month);
       // Price of the stock at that date
       let res = amount * parseFloat(month['Adj Close']);
 
@@ -27,8 +27,8 @@ export function getMonthlyChart(portfolio, historical) {
       let info_for_this_date = info_per_date[date];
       if (!info_for_this_date) info_for_this_date = {};
       if (!info_for_this_date['Cost Base']) info_for_this_date['Cost Base'] = 0;
-      info_for_this_date['Cost Base'] += round(portfolio.getEntryCollectionByTicker(ticker).getAmountAtDate(month) * portfolio.getEntryCollectionByTicker(ticker).averagePrice, 2);
-      info_for_this_date[ticker] = round(res);
+      info_for_this_date['Cost Base'] += round(portfolio.getEntryCollectionBysymbol(symbol).getAmountAtDate(month) * portfolio.getEntryCollectionBysymbol(symbol).averagePrice, 2);
+      info_for_this_date[symbol] = round(res);
       info_per_date[date] = info_for_this_date;
     });
 
@@ -39,19 +39,19 @@ export function getMonthlyChart(portfolio, historical) {
     return ( {date, data: info_per_date[date]});
   })
 
-  // Add cost base as a 'ticker' so we can parse it with the rest
-  tickers.push("Cost Base");
+  // Add cost base as a 'symbol' so we can parse it with the rest
+  symbols.push("Cost Base");
 
-  const chart = tickers.map(ticker => {
-    let ticker_array = [];
+  const chart = symbols.map(symbol => {
+    let symbol_array = [];
     array_of_dates.forEach(date => {
-      let value = date.data[ticker];
+      let value = date.data[symbol];
       if (!value) value = 0;
-      ticker_array.push(value);
+      symbol_array.push(value);
     })
-    ticker_array.reverse();
-    ticker_array.unshift(ticker)
-    return ticker_array;
+    symbol_array.reverse();
+    symbol_array.unshift(symbol)
+    return symbol_array;
   });
 
   // Set up the labels for the x-axis
@@ -61,6 +61,6 @@ export function getMonthlyChart(portfolio, historical) {
   let columns = [month_labels];
   columns = columns.concat(chart);
 
-  return {columns, tickers, portfolio};
+  return {columns, symbols, portfolio};
 
 }

@@ -15,16 +15,16 @@ class StockEntryCollection {
 
     this.entries = entries.map(entry =>{
       this.sector = entry.sector;
-      this.ticker = entry.ticker;
+      this.symbol = entry.symbol;
       this.amount += entry.amount;
       this.costBase += entry.price * entry.amount;
       if(entry instanceof StockEntry) return entry;
       let amount = entry.amount;
       let price = entry.price;
-      let ticker = entry.ticker;
+      let symbol = entry.symbol;
       let date = entry.date;
       let name = entry.name;
-      return new StockEntry({ amount, price,ticker,date,name});
+      return new StockEntry({ amount, price,symbol,date,name});
     });
 
     this.costBase = round(this.costBase);
@@ -45,7 +45,7 @@ class StockEntryCollection {
 
   get firstBuyEntry(){
    return this.entries.reduce((prev,curr) =>{
-      if(curr.date.isBefore(prev)) prev = curr;
+      if(curr.date.isBefore(prev)) prev = curr.date;
       return prev;
     },moment('29991212','YYYYMMDD'));
   }

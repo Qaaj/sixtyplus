@@ -24,7 +24,37 @@ class Quickstart extends React.Component {
     }
     // Decorators not working on production
     this.name = "Quickstart";
-    this.saveObject = ['monthlyBudget','monthlyCostsFixed','monthlyCostsVariable','currentSavings','monthlyIncome','risk','savingsGoal'];
+
+    this.saveObject = [
+      {
+        save_prop: 'monthlyBudget',
+        save_location: 'financial_profile',
+      }
+      , {
+        save_prop: 'monthlyCostsFixed',
+        save_location: 'financial_profile',
+      }
+      , {
+        save_prop: 'monthlyCostsVariable',
+        save_location: 'financial_profile',
+      }
+      , {
+        save_prop: 'currentSavings',
+        save_location: 'financial_profile',
+      }
+      , {
+        save_prop: 'monthlyIncome',
+        save_location: 'financial_profile',
+      }
+      , {
+        save_prop: 'risk',
+        save_location: 'financial_profile',
+      }
+      , {
+        save_prop: 'savingsGoal',
+        save_location: 'financial_profile',
+      }
+    ];
   }
 
   componentWillReceiveProps(newProps) {
@@ -40,18 +70,16 @@ class Quickstart extends React.Component {
     if (!newProps) newProps = this.props;
     var state = {};
 
-    if (newProps.user.userData) {
-      state = newProps.user.userData;
+    if (newProps.user.financial_profile) {
+      state = newProps.user.financial_profile;
     }
-
     this.setState(state);
-    this.setState({cool:'guy'});
   }
 
   _saveStateFromInput(e) {
-    this.setState({[e.target.name]: e.target.value});
-    if (this.state[e.target.name] != e.target.value) {
-      this.state[e.target.name] = e.target.value;
+    this.setState({[e.target.name]: parseInt(e.target.value)});
+    if (this.state[e.target.name] != parseInt(e.target.value)) {
+      this.state[e.target.name] = parseInt(e.target.value);
       AutoSaveStore.saveModuleSetting(this);
     }
   }
@@ -75,8 +103,8 @@ class Quickstart extends React.Component {
 
     let state = this._calculateResults();
 
-    this.inputFields = createCurrencyFields(['savingsGoal', 'monthlyIncome', 'monthlyCostsFixed', 'monthlyCostsVariable', 'currentSavings'],::this._handleInput, state);
-    this.advancedInputFields = createPercentageFields(['stockReturns', 'intrestRate', 'bondYield', 'taxRate', 'salaryIncrease'],::this._handleInput, state);
+    this.inputFields = createCurrencyFields(['savingsGoal', 'monthlyIncome', 'monthlyCostsFixed', 'monthlyCostsVariable', 'currentSavings'], ::this._handleInput, state);
+    this.advancedInputFields = createPercentageFields(['stockReturns', 'intrestRate', 'bondYield', 'taxRate', 'salaryIncrease'], ::this._handleInput, state);
     let cx = 'success';
     if (state.monthlyBudget < 1) cx = 'warning';
 
@@ -89,7 +117,8 @@ class Quickstart extends React.Component {
         <Col md={6}>
           <Panel header={<h3>Basics <small>Enter your basic information</small></h3>}>
             {this.inputFields}
-            <Slider value={state['risk']} min={0} max={10} minLabel='Low' maxLabel='High' label='Risk Tolerance' name='risk' onChange={::this._handleInput} step={1}/>
+            <Slider value={state['risk']} min={0} max={10} minLabel='Low' maxLabel='High' label='Risk Tolerance'
+                    name='risk' onChange={::this._handleInput} step={1}/>
           </Panel>
         </Col>
         <Col md={6}>

@@ -1,20 +1,19 @@
-'use strict';
-
 import AppDispatcher from '../dispatcher/AppDispatcher.js';
 import UserConstants from '../constants/UserConstants.js';
 import RealTimeConstants from '../constants/RealTimeConstants.js';
 import HistoricalConstants from '../constants/HistoricalConstants.js';
+import PortfolioConstants from '../constants/PortfolioConstants.js';
 
 var ServerActionCreators = {
 
-  tickersLoaded(data){
+  symbolsLoaded(data){
     AppDispatcher.handleServerAction({
       actionType: RealTimeConstants.REAL_TIME_STOCKS_UPDATE,
       data: data,
     });
   },
 
-  tickerLoaded(data){
+  symbolLoaded(data){
     AppDispatcher.handleServerAction({
       actionType: RealTimeConstants.REAL_TIME_STOCK_UPDATE,
       data: data,
@@ -24,6 +23,13 @@ var ServerActionCreators = {
   userLoaded(data) {
     AppDispatcher.handleServerAction({
       actionType: UserConstants.USER_LOADED,
+      data: data,
+    });
+  },
+
+  userFinancialProfileLoaded(data) {
+    AppDispatcher.handleServerAction({
+      actionType: UserConstants.USER_FINANCIAL_PROFILE_LOADED,
       data: data,
     });
   },
@@ -48,6 +54,13 @@ var ServerActionCreators = {
       data: data,
     });
   },
+
+  portfolioLoaded(data){
+    AppDispatcher.handleServerAction({
+      actionType: PortfolioConstants.PORTFOLIO_LOADED,
+      data:data,
+    })
+  }
 
 
 };

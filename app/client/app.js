@@ -11,6 +11,7 @@ import UserActionCreators from './actions/UserActionCreators';
 import UserStore from './stores/UserStore';
 import RealTimeStore from './stores/RealTimeStore';
 import HistoricalStore from './stores/HistoricalStore';
+import PortfolioStore from './stores/PortfolioStore';
 
 import Notification from './components/modules/NotificationModule';
 
@@ -30,6 +31,7 @@ class App extends React.Component {
     this._handleUserStoreChange = this._handleUserStoreChange.bind(this);
     this._handleRealTimeStoreChange = this._handleRealTimeStoreChange.bind(this);
     this._handleHistoricalStoreChange = this._handleHistoricalStoreChange.bind(this);
+    this._handlePortfolioStoreChange = this._handlePortfolioStoreChange.bind(this);
 
     UserActionCreators.loadUser();
   }
@@ -39,6 +41,11 @@ class App extends React.Component {
     this.setState({
       user: user,
     });
+  }
+
+  _handlePortfolioStoreChange() {
+    let portfolio = PortfolioStore.getPortfolio();
+    this.setState({ portfolio });
   }
 
   _handleRealTimeStoreChange() {
@@ -59,6 +66,7 @@ class App extends React.Component {
     UserStore.addChangeListener(this._handleUserStoreChange);
     RealTimeStore.addChangeListener(this._handleRealTimeStoreChange);
     HistoricalStore.addChangeListener(this._handleHistoricalStoreChange);
+    PortfolioStore.addChangeListener(this._handlePortfolioStoreChange);
   }
 
   render() {
@@ -82,6 +90,7 @@ class App extends React.Component {
             user: this.state.user,
             rt: this.state.rt,
             historical: this.state.historical,
+            portfolio: this.state.portfolio,
           }
         )}
       </div>
@@ -94,6 +103,7 @@ class App extends React.Component {
         user={this.state.user}
         rt={ this.state.rt}
         historical={this.state.historical}
+        portfolio={this.state.portfolio}
       />
 
     </div>);

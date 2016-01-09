@@ -4,9 +4,10 @@ import http from 'http';
 import {CSVtoJSON} from '../../helpers/json';
 import moment from 'moment';
 import DataStore from '../../stores/DataStore'
+import OfflineStore from '../../stores/OfflineStore'
 
 
-export default (req, res) => {
+export default (req, res, next) => {
 
   let from = moment("01-01-1970", "DD-MM-YYYY");
   let to = moment("31-12-2020", "DD-MM-YYYY");
@@ -14,9 +15,9 @@ export default (req, res) => {
   let option_string = 'daily';
 
 
-  if (!req.body.ticker) {
-    res.send("No ticker");
-    debug("No ticker provided");
+  if (!req.body.symbol) {
+    res.send("No symbol");
+    debug("No symbol provided");
     return;
   }
 
@@ -31,7 +32,7 @@ export default (req, res) => {
     option_string = req.body.options;
   }
 
-  let query = '/table.csv?s=' + req.body.ticker
+  let query = '/table.csv?s=' + req.body.symbol
     + '&a=' + from.month() //zero indexed
     + '&b=' + from.date()
     + '&c=' + from.year()
@@ -48,21 +49,23 @@ export default (req, res) => {
   }
 
   let cacheID = "historical" + ":" + options;
-  let cache = DataStore.getCachedData({option: cacheID, ticker: req.body.ticker});
+  let cache = DataStore.getCachedData({option: cacheID, symbol: req.body.symbol});
 
   cache.then(function (json) {
     if (json) {
 
       if (req.body.from) {
         json = DataStore.getPartialHistoricalData({json: JSON.parse(json), from: moment(req.body.from, "DD-MMYYYY")});
-        debug("getting historical " + option_string + " data for " + req.body.ticker + " from " + req.body.from + ' from CACHE');
+        debug("getting historical " + option_string + " data for " + req.body.symbol + " from " + req.body.from + ' from CACHE');
       }
-      let returnObject = {result: json, option: option_string, ticker: req.body.ticker};
-      res.send(returnObject);
+
+      let returnObject = {result: json, option: option_string, symbol: req.body.symbol};
+      req.app.set('response',returnObject);
+      next();
 
     } else {
 
-      debug("getting historical " + option_string + " data for " + req.body.ticker + " from " + from.format('DD-MM-YYYY') + " to " + to.format('DD-MM-YYYY') + 'from SERVER');
+      debug("getting historical " + option_string + " data for " + req.body.symbol + " from " + from.format('DD-MM-YYYY') + " to " + to.format('DD-MM-YYYY') + 'from SERVER');
 
       http.get(url, function (rs) {
         var data = ''
@@ -74,16 +77,17 @@ export default (req, res) => {
           var json = CSVtoJSON(data);
 
           // Save the all-time data in the cache
-          DataStore.setCachedData({option: cacheID, ticker: req.body.ticker, json});
+          DataStore.setCachedData({option: cacheID, symbol: req.body.symbol, json});
 
           // Retrieve the correct timeframe
           if (req.body.from) json = DataStore.getPartialHistoricalData({
             json: JSON.parse(json),
             from: moment(req.body.from, "DD-MMYYYY")
           });
-          let returnObject = {result: json, option: option_string, ticker: req.body.ticker};
-          res.setHeader('Content-Type', 'application/json');
-          res.send(returnObject);
+          let returnObject = {result: json, option: option_string, symbol: req.body.symbol};
+
+          req.app.set('response',returnObject);
+          next();
         })
       });
 

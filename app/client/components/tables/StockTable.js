@@ -22,7 +22,7 @@ class StockTable extends React.Component {
 
     let fields = stockEntries.map((entries, i) => {
       return (
-        <StockCard key={'singlestock_' + i  + entries.ticker} rt={this.props.rt} historical={this.props.historical}
+        <StockCard key={'singlestock_' + i  + entries.symbol} rt={this.props.rt} historical={this.props.historical}
                    entries={entries} includeDiv={this.props.includeDiv} lang={this.props.lang}/>);
     });
 

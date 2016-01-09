@@ -1,8 +1,6 @@
-'use strict';
-
 import AppDispatcher from '../dispatcher/AppDispatcher.js';
 import UserConstants from '../constants/UserConstants.js';
-import { getStockPrice, getStockPrices, getStockSuggestions, getStockData } from '../utils/ApiUtils';
+import { getStockPrice, getStockPrices, getStockSuggestions, getStockData } from '../api/StockAPI';
 import UserStore from '../stores/UserStore.js';
 import defaults from '../config/Defaults';
 
@@ -19,12 +17,12 @@ var RealTimeActionCreators = {
     getStockPrices(list);
   },
 
-  getStockPrice(ticker){
-      getStockPrice(ticker);
+  getStockPrice(symbol){
+      getStockPrice(symbol);
   },
 
-  getStockData(ticker){
-    getStockData(ticker);
+  getStockData(symbol){
+    getStockData(symbol);
   },
 
 };

@@ -3,14 +3,14 @@ import {round} from '../../shared/helpers/formatting';
 
 class StockEntry {
 
-  constructor({ amount, date, name, price, ticker, sector}) {
+  constructor({ amount, date, price, symbol}) {
     this.amount = amount;
     this.date = moment(date,'YYYYMMDD');
     if(date.indexOf('/') !== -1) this.date = moment(date,'MM/YY/YYYY');
-    this.name = name;
     this.price = price;
-    this.ticker = ticker;
-    this.sector = sector;
+    this.symbol = symbol;
+    this.name = "NO NAME";
+    this.sector = "NO SECTOR";
   }
 
   get dateString() {
@@ -32,7 +32,7 @@ class StockEntry {
 
   updateWithRealtimeData(rt){
 
-    let data = rt[this.ticker];
+    let data = rt[this.symbol];
 
     if(data){
       this.change = data.change;

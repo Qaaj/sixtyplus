@@ -41,16 +41,16 @@ class SingleManualImportLine extends React.Component {
     if(!Number.isInteger(parseInt(row[1]))) return;
     if(!Number.isInteger(parseInt(row[2]))) return;
 
-    let ticker = row[0];
+    let symbol = row[0];
     let amount = parseFloat(row[1]);
     let price = parseFloat(row[2]);
     let date = row[3];
 
-    ticker = ticker.toUpperCase();
-    ticker = ticker.trim();
+    symbol = symbol.toUpperCase();
+    symbol = symbol.trim();
 
 
-    this.entry = new StockEntry({ticker,amount,price,date});
+    this.entry = new StockEntry({symbol,amount,price,date});
 
     this.props.onSuccess.call(null,this.entry,this.props.line_id);
   }
@@ -67,7 +67,7 @@ class SingleManualImportLine extends React.Component {
     this.stockRow[3] = date;
 
     const inputAttributes = {
-      className: 'ticker',
+      className: 'symbol',
       placeholder: name,
       onChange: this._handleInput.bind(this,line,0),
       alt:0
