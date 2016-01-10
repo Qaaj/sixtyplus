@@ -60,30 +60,32 @@ RealTimeStore.dispatchToken = AppDispatcher.register(function (payload) {
       refreshPortfolio();
       startTimer();
 
-  break;
+      break;
 
-  case RealTimeConstants.REAL_TIME_STOCKS_UPDATE:
+    case RealTimeConstants.REAL_TIME_STOCKS_UPDATE:
 
-  action.data.map(symbol => {
-    if(symbol) _realTimeObject = _realTimeObject.set(symbol.symbol, symbol)
-  });
+      action.data.map(symbol => {
+        if (symbol) _realTimeObject = _realTimeObject.set(symbol.symbol, symbol)
+      });
+      RealTimeStore.emitChange();
+
+      break;
+
+    case RealTimeConstants.REAL_TIME_STOCK_UPDATE:
+
+      if (action.data.symbol && action.data.symbol.symbol) {
+        _realTimeObject = _realTimeObject.set(action.data.symbol.symbol, action.data.symbol);
+      }
+      RealTimeStore.emitChange();
 
 
-  break;
+      break;
 
-  case RealTimeConstants.REAL_TIME_STOCK_UPDATE:
-
-  if(action.data.symbol && action.data.symbol.symbol){
-    _realTimeObject = _realTimeObject.set(action.data.symbol.symbol, action.data.symbol);
+    default:
+      return true;
   }
 
-  break;
-
-  default:
   return true;
-}
-
-return true;
 })
 ;
 

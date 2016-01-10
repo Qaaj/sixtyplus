@@ -30,7 +30,6 @@ class App extends React.Component {
     };
 
     this._handleUserStoreChange = this._handleUserStoreChange.bind(this);
-    this._handleRealTimeStoreChange = this._handleRealTimeStoreChange.bind(this);
     this._handleHistoricalStoreChange = this._handleHistoricalStoreChange.bind(this);
     this._handlePortfolioStoreChange = this._handlePortfolioStoreChange.bind(this);
 
@@ -49,12 +48,7 @@ class App extends React.Component {
     this.setState({ portfolio });
   }
 
-  _handleRealTimeStoreChange() {
-    let rt = RealTimeStore.getRealTimeData();
-    this.setState({
-      rt: rt,
-    });
-  }
+
 
   _handleHistoricalStoreChange() {
     let historical = HistoricalStore.getHistoricalData();
@@ -65,7 +59,6 @@ class App extends React.Component {
 
   componentDidMount() {
     UserStore.addChangeListener(this._handleUserStoreChange);
-    RealTimeStore.addChangeListener(this._handleRealTimeStoreChange);
     HistoricalStore.addChangeListener(this._handleHistoricalStoreChange);
     PortfolioStore.addChangeListener(this._handlePortfolioStoreChange);
   }

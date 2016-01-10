@@ -38,6 +38,7 @@ export function addEntry(data,resultObject){
   post({url, data})
     .then(
       (response) => {
+        ServerActionCreators.entryAdded(response.body);
         resultObject.success();
         NotificationActions.setNotification({
           isVisible: true,

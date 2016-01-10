@@ -60,7 +60,15 @@ var ServerActionCreators = {
       actionType: PortfolioConstants.PORTFOLIO_LOADED,
       data:data,
     })
+  },
+
+  entryAdded(data){
+    AppDispatcher.handleServerAction({
+      actionType: PortfolioConstants.PORTFOLIO_ADD_ENTRY,
+      data:data,
+    })
   }
+
 
 
 };

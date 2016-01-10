@@ -12,6 +12,7 @@ class StockSymbol {
     this._performanceWithDividends = {};
     this.latestRT = null;
     this.entries = new List();
+    return this;
   }
 
   addEntry(stockEntry) {

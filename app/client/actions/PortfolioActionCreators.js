@@ -45,7 +45,7 @@ var PortfolioActionCreators = {
       "isBuy": isBuy,
     }
 
-    data.uid = UserStore.getUser().objectId;
+    data.uid = UserStore.getUser().get('objectId');
     data.type = "STOCK";
 
     addEntry(data,resultObject);

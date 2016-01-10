@@ -82,6 +82,15 @@ class StockPortfolio {
 
   /////// Functions that are called from the Portfolio Store
 
+  // Add an entry to a stocksmbol or create a new one
+  addStockEntry(entry){
+    let stockEntry = new StockEntry(entry);
+    if (!_symbolMap.get(entry.symbol)) {
+      _symbolMap = _symbolMap.set(entry.symbol, new StockSymbol(entry.symbol));
+    }
+    _symbolMap.get(entry.symbol).addEntry(stockEntry);
+  }
+
   // Update the stocksymbols with their historical information (monthly/yearly etc)
   updateHistoricalPrices({symbol,option,result}) {
     let stockSymbol = _symbolMap.get(symbol);

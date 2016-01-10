@@ -22,6 +22,10 @@ export function mapBysymbol(array) {
 
 }
 
+export function updateEntriesWithRT(entries,rt){
+  console.log(entries);
+}
+
 export function createPerformanceObjectFromEntries({entries,rt,dividends, symbol, doDiv}) {
 
   let performance = {};

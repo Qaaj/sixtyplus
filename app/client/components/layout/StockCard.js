@@ -49,7 +49,7 @@ class StockCard extends React.Component {
     let column = {xs: 6, md: 4};
     let sector = performance.sector;
 
-    if(!performance.profitLoss) return (<div></div>)
+    if(!performance.profitLoss) performance.profitLoss = 0;
 
     var listGroupToRender = [[
       {

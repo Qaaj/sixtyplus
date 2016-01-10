@@ -75,6 +75,13 @@ PortfolioStore.dispatchToken = AppDispatcher.register(function (payload) {
       spammer.go(emitTheChange, 500);
       break;
 
+    case PortfolioConstants.PORTFOLIO_ADD_ENTRY:
+      _portfolio.addStockEntry(action.data);
+      HistoricalActions.getHistoricalDividends({symbol: action.data.symbol});
+      HistoricalActions.getHistoricalPrices({symbol: action.data.symbol, options: 'monthly', from: _portfolio.firstBuyDate.format("DD-MM-YYYY")});
+      spammer.go(emitTheChange, 500);
+      break;
+
     case PortfolioConstants.PORTFOLIO_LOADED:
 
       _portfolio = new StockPortfolio(action.data)

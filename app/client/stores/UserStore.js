@@ -12,18 +12,18 @@ import noSpam from '../../shared/utils/noSpam'
 
 const CHANGE_EVENT = 'change';
 
-let _userObject = Map();
+let _userMap = Map();
 const spammer = new noSpam();
 
 let newLangInstance = (...args)=>{return getTranslation(...args)};
 
-_userObject = _userObject.set('lang', newLangInstance);
-_userObject = _userObject.set("class",new User());
+_userMap = _userMap.set('lang', newLangInstance);
+_userMap = _userMap.set("class",new User());
 
 
 const UserStore = assign({}, EventEmitter.prototype, {
   getUser() {
-    return _userObject;
+    return _userMap;
   },
 
   emitChange() {
@@ -54,11 +54,11 @@ UserStore.dispatchToken = AppDispatcher.register(function (payload) {
 
       saveObjects.forEach(save =>{
         dataChanged[save.root] = "CHANGED";
-        _userObject = _userObject.setIn(save.location,save.value);
+        _userMap = _userMap.setIn(save.location,save.value);
       });
 
       Object.keys(dataChanged).forEach(changed =>{
-        if(changed === 'financial_profile') saveUserFinancialProfile(_userObject.get('financial_profile'));
+        if(changed === 'financial_profile') saveUserFinancialProfile(_userMap.get('financial_profile'));
       })
 
       UserStore.emitChange();
@@ -66,7 +66,7 @@ UserStore.dispatchToken = AppDispatcher.register(function (payload) {
       break;
 
     case UserConstants.USER_FINANCIAL_PROFILE_LOADED:
-      _userObject = _userObject.set('financial_profile',fromJS(action.data));
+      _userMap = _userMap.set('financial_profile',fromJS(action.data));
       spammer.go(emitTheChange, 1000);
 
       break;
@@ -77,14 +77,14 @@ UserStore.dispatchToken = AppDispatcher.register(function (payload) {
       loadUserFinancialProfile({ uid:action.data.objectId});
 
       localStorage.setItem('uid', action.data.objectId);
-      _userObject = fromJS(action.data);
-      _userObject = _userObject.set("class",new User());
+      _userMap = fromJS(action.data);
+      _userMap = _userMap.set("class",new User());
 
       // Translation stuff
       let newLangInstance = (...args)=>{return getTranslation(...args)};
-      _userObject = _userObject.set('lang',newLangInstance);
+      _userMap = _userMap.set('lang',newLangInstance);
 
-      NotificationActionCreators.userLoggedIn(_userObject);
+      NotificationActionCreators.userLoggedIn(_userMap);
       spammer.go(emitTheChange, 1000);
 
       break;

@@ -10,6 +10,7 @@ import { Grid, Panel, ListGroup,Accordion, Table } from 'react-bootstrap';
 import { createRegularFields, createCurrencyFields, createPercentageFields, createRegularFieldsNoLabel } from '../../helpers/InputFactory';
 import ManualStockImporter from '../../components/importer/ManualStockImporter'
 import StockSymbol from '../../classes/StockSymbol';
+import RealTimeStore from '../../stores/RealTimeStore';
 
 
 class Importer extends React.Component {
@@ -19,13 +20,31 @@ class Importer extends React.Component {
 
     this.state = {
       tryingImport: false,
+      rt: RealTimeStore.getRealTimeData()
     };
     this.previewStocks = [];
 
     this._handleChange = this._handleChange.bind(this);
     this._onImportClickHandler = this._onImportClickHandler.bind(this);
     this._onSaveClickHandler = this._onSaveClickHandler.bind(this);
+    this._handleRealTimeStoreChange = this._handleRealTimeStoreChange.bind(this);
 
+  }
+
+  componentDidMount() {
+    RealTimeStore.addChangeListener(this._handleRealTimeStoreChange);
+  }
+
+  componentWillUnmount() {
+    RealTimeStore.removeChangeListener(this._handleRealTimeStoreChange);
+  }
+
+
+  _handleRealTimeStoreChange() {
+    let rt = RealTimeStore.getRealTimeData();
+    this.setState({
+      rt: rt,
+    });
   }
 
   _handleChange(e) {
@@ -33,14 +52,14 @@ class Importer extends React.Component {
 
   }
 
-  _onSuccessImport(){
+  _onSuccessImport() {
     this.setState({
       tryingImport: false,
       stockEntryCollections: null
     })
   }
 
-  _onFailImport(){
+  _onFailImport() {
     this.setState({
       tryingImport: false
     })
@@ -58,17 +77,17 @@ class Importer extends React.Component {
     })
 
     //UserActionCreators.addStockEntryCollectionToPortfolio(this.state.stockEntryCollections,resultObject);
-    PortfolioAction.addStockEntryCollections(this.state.stockEntryCollections,resultObject);
+    PortfolioAction.addStockEntryCollections(this.state.stockEntryCollections, resultObject);
 
   }
 
   _onImportClickHandler(e) {
 
-    if(!this.state.rawIBData){
+    if (!this.state.rawIBData) {
       NotificationActionCreators.setNotification({
         isVisible: true,
         type: 'warning',
-        message:"Something went wrong importing the data.",
+        message: "Something went wrong importing the data.",
         delay: 3000
       });
       return;
@@ -88,15 +107,19 @@ class Importer extends React.Component {
     this._refreshList(sortedStocks);
   }
 
-  _refreshList(sortedStocks){
-    let stockEntryCollections = [];
+  _refreshList(sortedStocks) {
+    let stockSymbols = [];
 
     for (let key in sortedStocks) {
-      stockEntryCollections.push(new StockSymbol(sortedStocks[key]));
+      let symbol = new StockSymbol(key);
+      sortedStocks[key].forEach(entry => {
+        symbol.addEntry(entry);
+      })
+      stockSymbols.push(symbol);
     }
 
     this.setState({
-      stockEntryCollections: stockEntryCollections
+      stockEntryCollections: stockSymbols
     })
   }
 
@@ -104,9 +127,9 @@ class Importer extends React.Component {
 
     let fields = [];
 
-    if(this.state.stockEntryCollections && this.props.rt){
-      this.state.stockEntryCollections.map(entries =>{
-        let single = (<SingleStock key={Math.random()} stockEntries={entries} rt={this.props.rt}/>);
+    if (this.state.stockEntryCollections) {
+      this.state.stockEntryCollections.map(symbol => {
+        let single = (<SingleStock key={Math.random()} symbol={symbol} rt={this.state.rt}/>);
         fields.push(single)
       })
     }
@@ -117,7 +140,8 @@ class Importer extends React.Component {
       btn = <Button onClick={this._onSaveClickHandler} bsStyle="primary" bsSize="large">Save</Button>;
     }
 
-    if(this.state.tryingImport){
+
+    if (this.state.tryingImport) {
       fields = <div className="loader"></div>;
     }
     return (

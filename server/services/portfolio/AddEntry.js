@@ -18,7 +18,9 @@ export default (req, res, next) => {
   entry.save(data,  {
     success: function(entry) {
       debug("Portfolio entry added: " + entry.id)
-      req.app.set('response', entry.toJSON());
+      let result = entry.toJSON();
+      result.date = result.date.iso;
+      req.app.set('response', result);
       next();
     },
     error: function(user, error) {

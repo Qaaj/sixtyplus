@@ -16,7 +16,6 @@ import Sorter from '../ui/Sorter';
 import Filter from '../ui/FilterButtons';
 import numeral from 'numeral';
 import {filterSymbols} from '../../../shared/helpers/filtering';
-import { pureRenderDecorator } from '../../../shared/helpers/decorators';
 
 class PortfolioOverview extends React.Component {
 

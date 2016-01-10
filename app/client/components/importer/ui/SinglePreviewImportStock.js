@@ -4,7 +4,7 @@ import { pureRenderDecorator } from '../../../../shared/helpers/decorators';
 import { getStockEntriesData } from '../../../../shared/helpers/stocks';
 import {getUniqueColor, getClassBySector} from '../../../../shared/helpers/colors/ColorUtils';
 import SectorComponent from '../../ui/SectorComponent';
-import { updateArrayOfEntryCollectionsWithRT, updateSingeEntryCollectionWithRT} from '../../../../shared/helpers/stocks';
+import {updateEntriesWithRT} from '../../../../shared/helpers/stocks'
 
 @pureRenderDecorator
 class SinglePreviewImportStock extends React.Component {
@@ -16,32 +16,32 @@ class SinglePreviewImportStock extends React.Component {
 
   render() {
 
-    if (!this.props.stockEntries || this.props.stockEntries.entries.length == 0) return null;
+    if (!this.props.symbol || this.props.symbol.entries.count() == 0) return null;
 
-    let stockEntries = this.props.stockEntries;
+    let symbol = this.props.symbol;
 
-    stockEntries = updateSingeEntryCollectionWithRT(stockEntries,this.props.rt);
+    symbol.updateEntriesWithRTData(this.props.rt[symbol.symbol]);
 
-    let list = stockEntries.entries.map((entry, i) => {
-      return (<h5 key={'stock_entry_' + entry.name + i}>{entry.amount} @ {entry.price}</h5>);
+    let list = symbol.entries.map((entry, i) => {
+      return (<h5 key={'stock_entry_' + entry.name + i}>{symbol.performance.amount} @ {symbol.performance.price}</h5>);
     });
 
-    let cx = stockEntries.profitLoss < 0 ? 'danger' : 'success';
+    let cx = symbol.performance.profitLoss < 0 ? 'danger' : 'success';
 
     let sectorClass = '';
 
-    if (stockEntries.sector) {
-     sectorClass = getClassBySector(stockEntries.sector)
+    if (symbol.performance.sector) {
+      sectorClass = getClassBySector(symbol.performance.sector)
     }
 
-    let name = stockEntries.name;
-    if(!stockEntries.name) name = stockEntries.symbol;
+    let name = symbol.performance.name;
+    if (!symbol.performance.name) name = symbol.performance.symbol;
 
     let body = (<div>
         <Panel className='singlestock-panel' collapsible defaultExpanded={false}
-               header={<h4>{this.props.symbol} <span className="stockName">{name} | {stockEntries.amount} @ {stockEntries.averagePrice}</span>
-          <div className="profitLoss">P/L: <Label bsStyle={cx}>{stockEntries.profitLoss}</Label></div>
-          <SectorComponent cx={sectorClass} sector={stockEntries.sector} />
+               header={<h4>{this.props.symbol.symbol} <span className="stockName">{name} | {symbol.performance.amount} @ {symbol.performance.averagePrice}</span>
+          <div className="profitLoss">P/L: <Label bsStyle={cx}>{symbol.performance.profitLoss}</Label></div>
+          <SectorComponent cx={sectorClass} sector={symbol.performance.sector} />
           </h4>}>
 
           {list}
