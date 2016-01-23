@@ -1,0 +1,126 @@
+// FIXED DATA TABLE
+
+.public_fixedDataTable_header, .public_fixedDataTable_header .public_fixedDataTableCell_main {
+  background-color: #f6f7f8;
+  background-image: none !important;
+}
+
+
+// INPUT FIELDS
+
+.form-control{
+  border-radius: 0px;
+}
+
+.input-group-addon{
+  border-radius: 0px;
+}
+
+.form-control:focus {
+  border-color: #0288D1;
+  outline: 0;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+}
+
+
+// BUTTONS
+
+.btn {
+  border-radius: 0px !important;
+}
+
+.btn-primary {
+  color: #fff;
+  background-color: #0288D1;
+  border-color: #0277BD;
+}
+
+.btn-primary:focus,.btn-primary:active {
+  background-color: #0288D1;
+  border-color: #0277BD;
+}
+
+// DROPDOWN
+
+.dropdown-menu{
+  border-radius: 0px;
+  margin-top: -1px;
+}
+
+
+// LIST GROUP
+
+.list-group-item-success {
+  color: #2E7D32;
+  background-color: #E8F5E9;
+}
+.list-group-item-danger {
+  color: #BF360C;
+  background-color: #FBE9E7;
+}
+
+.list-group-item{
+  border: lightgrey 1px solid;
+  border-radius: 0px;
+}
+
+.list-group-item:first-child {
+  border-top-right-radius: 0px;
+  border-top-left-radius: 0px;
+}
+
+.list-group-item:last-child {
+  margin-bottom: 0;
+  border-bottom-right-radius: 0px;
+  border-bottom-left-radius: 0px;
+}
+
+// PANEL
+
+.panel-group .panel {
+  border-radius: 0px;
+  margin-bottom: 10px;
+}
+
+.panel {
+  margin-bottom: 20px;
+  background-color: #fff;
+  border: 1px solid lightgrey;
+  border-radius: 0px;
+  -webkit-box-shadow: none;
+  //box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.15);
+}
+
+.panel-default > .panel-heading {
+  color: #757171;
+  background-color: #F3F3F3;
+  text-transform: uppercase;
+}
+
+.panel-title a:hover,a:focus{
+  text-decoration: none;
+}
+
+.panel-heading {
+  padding: 10px 15px;
+  border-bottom: 1px solid lightgrey;
+  border-top-right-radius: 0px;
+  border-top-left-radius: 0px;
+}
+
+
+// WELL
+
+.well {
+  min-height: 20px;
+  padding: 19px;
+  margin-bottom: 20px;
+  background-color: #FAFAFA;
+  border: 1px solid #B0BEC5;
+  border-radius: 0px;
+  -webkit-box-shadow:none;
+  box-shadow: none;
+}
+
+

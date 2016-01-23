@@ -168,10 +168,7 @@ STK_LOT|U1418343|XOM|EXXON MOBIL CORP|USD|20150724|12:42:07|10.00|1.00|80.11|801
 ..."/>
             <Button onClick={this._onImportClickHandler} bsStyle="primary" bsSize="large">Import</Button>
           </Panel>
-
         </Accordion>
-
-        <hr />
 
         {fields}
         {btn}

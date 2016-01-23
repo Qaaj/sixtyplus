@@ -1,6 +1,6 @@
 
 .stockCard{
-  margin-left:-15px;
+
   padding:5px;
   position: relative;
   display: inline-block;
@@ -8,12 +8,15 @@
   height: auto;
   margin-bottom:25px;
   background-color: #fff;
-  box-shadow: $grayVeryLight ;
-  -webkit-box-shadow: 0 0 10px -2px rgba(0,0,0,.4);
-  box-shadow: 0 0 10px -2px rgba(0,0,0,.4);
+  //-webkit-box-shadow: 0 0 10px -2px rgba(0,0,0,.4);
+  box-shadow: 0 0 1px 1px rgba(0,0,0,.1);
+
 
   cursor: pointer;
 
+  &:hover{
+    box-shadow: 0 0 2px 2px rgba(0,0,0,.2);
+  }
 
   .basics.expanded{
       max-width: 300px;
@@ -23,16 +26,21 @@
   }
   .symbolUpDown{
     margin-left:5px;
-
+    font-size: 16px;
   }
   h4{
     margin-left:8px;
     margin-top:8px;
   }
 
-  .well{
-    margin-bottom: 10px;
-    padding:5px 10px;
+  .well {
+    margin-bottom: 0px;
+    padding: 6px 0px;
+    font-size: 20px;
+    border: 1px solid #B0BEC5;
+    border-bottom-width: 0px;
+    text-align: center;
+
   }
 
   .list-group-item{

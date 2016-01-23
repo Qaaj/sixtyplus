@@ -15,14 +15,6 @@ class Menu extends React.Component {
         url: 'Portfolio'
       },
       {
-        key: 'settings',
-        url: 'Settings'
-      },
-      {
-        key: 'import',
-        url: 'Import'
-      },
-      {
         key: 'news',
         url: 'News'
       },
@@ -34,7 +26,22 @@ class Menu extends React.Component {
         key: 'planner',
         url: 'Planner'
       },
+      {
+        key: 'import',
+        url: 'Import'
+      },
     ];
+
+    this.settings = [
+      {
+        key: 'settings',
+        url: 'Settings'
+      },
+      {
+        key: 'import',
+        url: 'Import'
+      },
+    ]
   }
 
   render() {
@@ -44,8 +51,10 @@ class Menu extends React.Component {
       let cx = '';
       if (item.url === current) cx = ' selected';
 
-      return (<Button key={'menu_' + i} bsSize="large" className={item.key+"-button" + cx}
-                      onClick={()=>{ this.props.history.replaceState(null, `/${item.url}`); }}>{this.props.lang(item.key)}</Button>);
+      return (<a key={'menu_' + i} className={item.key+"-button special_button special_button-1" + cx}
+                      onClick={()=>{ this.props.history.replaceState(null, `/${item.url}`); }}> <svg>
+        <rect x="0" y="0" fill="none" width="100%" height="100%"/>
+      </svg>{this.props.lang(item.key)}</a>);
     })
 
     let menu = (

@@ -134,8 +134,6 @@ class PortfolioOverview extends React.Component {
                               lang={this.props.lang}/>
           </Panel>
 
-          <hr />
-
           <Filter onSelect={::this._setFilter} keys={this.filterKeys} lang={this.props.lang} translate={true}/>
           <Sorter onSelect={::this._onSelect} lang={this.props.lang} keys={this.sortingKeys}/>
 
@@ -145,14 +143,12 @@ class PortfolioOverview extends React.Component {
           </div>
         </Grid>
 
-        <Grid>
           <div className='portfolioOverview'>
             <StockCardTable user={this.props.user} sorter={this.state.sorter}
                             filter={this.state.filter}
                             includeDiv={this.state.includeDiv} lang={this.props.lang}
                             symbols={this.props.portfolio.symbols}/>
           </div>
-        </Grid>
       </div>
     );
   }

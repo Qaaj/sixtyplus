@@ -5,7 +5,7 @@ $animation-time: .5s;
     height: 90px;
     z-index: 100;
     position: fixed;
-    top: 0;
+    bottom: 0;
     left: 0;
     width: 100%;
     font-size: 15px;
@@ -81,16 +81,16 @@ $animation-time: .5s;
 }
 
 .notification-animation-enter {
-    transform: translate(0, -106px);
+    transform: translate(0, -100px);
     transition: transform $animation-time ease-in;
 }
 .notification-animation-enter.notification-animation-enter-active {
-    transform: translate(0, 0);
+    transform: translate(0, -100px);
 }
 .notification-animation-leave {
-    transform: translate(0, 0);
+    transform: translate(0, 300px);
     transition: transform $animation-time ease-in;
 }
 .notification-animation-leave.notification-animation-leave-active {
-    transform: translate(0, -106px);
+    transform: translate(0, 300px);
 }

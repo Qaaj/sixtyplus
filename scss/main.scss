@@ -4,6 +4,7 @@ $icon-font-path: '~bootstrap-sass/assets/fonts/bootstrap/';
 @import './base/stockdata';
 // Bootstrap styles
 @import "../node_modules/bootstrap-sass/assets/stylesheets/_bootstrap.scss";
+@import "./base/custom_bootstrap";
 // Fonts
 @import './fonts/material_icons';
 @import './fonts/roboto';

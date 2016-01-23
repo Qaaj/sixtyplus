@@ -1,6 +1,11 @@
 body {
-  background-color: #EFEFEF;
+
+  background: white;
   font-family: 'robotomedium';
+  min-height:100vh;
+  min-width:99vw;
+  margin: 0px;
+  padding-bottom: 100px;
 }
 
 *:focus {

@@ -12,11 +12,15 @@
   .news_item:nth-child(odd) { background: #f0f0f0; }
 
   .news_item{
-    border-radius: 3px;
+    border-radius: 0px;
     a{
       cursor: pointer;
     }
     transition: height .1s ease 0s;
+
+    border: lightgrey 1px solid;
+    border-bottom: none;
+    border-top:none;
 
     overflow: hidden;
     height: 25px;
@@ -47,10 +51,18 @@
 
   }
 
+  .news_item:nth-child(2) {
+    border-top: lightgrey 1px solid;;
+  }
+
+  .news_item:last-child {
+    border-bottom: lightgrey 1px solid;;
+  }
+
   .news_item:hover{
     transition: height .1s ease 0s;
-    margin-top:2px;
-    margin-bottom:2px;
+    margin-top:0px;
+    margin-bottom:0px;
     background-color: white;
     height:120px;
   }

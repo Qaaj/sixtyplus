@@ -93,7 +93,7 @@ class DividendModule extends React.Component {
             maxHeight={500}
             {...this.props}>
             <Column
-              header={<Cell>symbol</Cell>}
+              header={<Cell>Symbol</Cell>}
               cell={<TextCell data={divs} col="symbol" />}
               fixed={true}
               width={100}
